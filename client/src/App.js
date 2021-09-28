@@ -1,4 +1,3 @@
-import './App.css';
 import { Route } from "react-router-dom";
 import Landing from "./components/landingPage/index";
 

@@ -1,3 +1,210 @@
-.container{
-    background-color: red;
-};
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+
+.container {
+  background-color: rgb(79, 79, 79);
+  background: url("../../assets/background_1.svg") no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: "Raleway", sans-serif;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  padding: 50px;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .header_title {
+  width: 10rem;
+  height: 40px;
+  background-color: rgb(255, 0, 102);
+  border-radius: 40px;
+  text-align: center;
+}
+
+.header .header_title h2 {
+  margin: 10px 0 0 0;
+  color: rgb(255, 255, 255);
+  font-size: 1.125rem;
+}
+
+.header .header_nav ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0 22px;
+  list-style: none;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.header .header_nav ul a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.header .header_nav ul a:hover {
+  text-decoration: underline solid rgb(255, 255, 255);
+}
+
+.header .header_nav ul li button,
+.footer_right button {
+  width: 7.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.header .header_nav ul li .login_button {
+  background-color: transparent;
+  transition: all 350ms ease-out;
+}
+
+.header .header_nav ul li .login_button:hover {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+.header .header_nav ul li .signup_button {
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0, 0.19);
+  transition: all 350ms ease-out;
+}
+
+.header .header_nav ul li .signup_button:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+.main_content {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  height: 70%;
+  color: rgb(255, 255, 255);
+}
+
+.main_title {
+  text-align: center;
+  font-size: 3rem;
+  grid-column: 2 / span 3;
+  grid-row: 5 / span 3;
+  justify-self: center;
+  z-index: 2;
+}
+
+.main_button {
+  width: 45%;
+  height: 50px;
+  padding: 0;
+  justify-self: center;
+  grid-row: 9;
+  grid-column: 2 / span 3;
+  background-color: rgb(255, 0, 102);
+  border-radius: 12px;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main_content .blob_1 {
+  background: rgb(255, 0, 102);
+  border: 10px solid rgb(255, 0, 102);
+  height: 300px;
+  grid-row: 3 / span 5;
+  grid-column: 2;
+  z-index: 0;
+  border-radius: 73% 27% 33% 67% / 65% 31% 69% 35%;
+  animation: blob_to_square_2 10s ease-in-out infinite both;
+}
+
+.main_content .blob_2 {
+  background: rgb(255, 0, 102);
+  border: 10px solid rgb(255, 0, 102);
+  height: 200px;
+  grid-row: 6 / span 2;
+  grid-column: 4 / 5;
+  border-radius: 26% 74% 30% 70% / 66% 67% 33% 34%;
+  animation: blob_to_square 10s ease-in-out 1.5s infinite both;
+}
+
+.footer {
+  width: calc(100vw - 100px);
+  position: absolute;
+  bottom: 0;
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer_right {
+  display: flex;
+  gap: 0 30px;
+}
+
+.footer_right .login_button {
+  width: 110px;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.footer_right .signup_button {
+  width: 110px;
+  background-color: rgb(255, 0, 102);
+}
+
+.footer_left {
+  display: flex;
+  gap: 0 120px;
+}
+
+.footer_left a {
+  font-size: 1.4rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer_left a:hover {
+  text-decoration: underline solid rgb(255, 255, 255);
+}
+
+@keyframes blob_to_square {
+  0% {
+    border-radius: 73% 27% 33% 67% / 65% 31% 69% 35%;
+  }
+  50% {
+    border-radius: 0% 100% 0% 100% / 100% 0% 100% 0%;
+  }
+  100% {
+    border-radius: 73% 27% 33% 67% / 65% 31% 69% 35%;
+  }
+}
+@keyframes blob_to_square_2 {
+  0% {
+    border-radius: 26% 74% 30% 70% / 66% 67% 33% 34%;
+  }
+  50% {
+    border-radius: 0% 100% 0% 100% / 100% 0% 100% 0%;
+  }
+  100% {
+    border-radius: 26% 74% 30% 70% / 66% 67% 33% 34%;
+  }
+}
