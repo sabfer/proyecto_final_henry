@@ -48,4 +48,14 @@ router.post("/", async function (req, res) {
   res.status(404).send("Incomplete required inputs");
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Users.deleteOne({ _id: id });
+    res.status(200).send("User deleted successfully!");
+  } catch (err) {
+    res.status(404).send("Could not delete user");
+  }
+});
+
 module.exports = router;
