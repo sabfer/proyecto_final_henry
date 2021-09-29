@@ -8,11 +8,11 @@ const Products = require("../models/Products");
 
 router.get("/", async function (req, res) {
 
-    const {type} = req.query;
+    const {name} = req.query;
 
-    if (type){
+    if (name){
         try{
-            const product = await Products.findOne({ type:type });
+            const product = await Products.findOne({ name:name });
             product ? res.send(product)
             : res.status(404).send("Product not exists");
         } catch(err){
@@ -31,26 +31,25 @@ router.get("/", async function (req, res) {
 }); 
 
 router.post("/", async function (req, res) {
+    const {price, name} = req.body;
     try{
-        const {price, type} = req.body;
-        const product = await new Products({
-            price,
-            type,
-        })
-        await product.save();
-        product && product
-        ? res.status(400).send("The product already exists")
-        : res.send(product);
+        const searchProduct = await Products.findOne({name:name});
+
+        if(searchProduct){
+            res.status(400).send("Product already exists") 
+        }  else {
+            const product = await new Products({
+                price,
+                name,
+            })
+            await product.save();
+            res.send(product);    
+        }
+        
     } catch (err) {
         console.log(err);
     }
 })
-
-/* router.delete("/", async function (req, res) {
-
-    const 
-
-}) */
 
 
 module.exports = router;
