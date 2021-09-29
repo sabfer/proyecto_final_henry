@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 
 .container {
-  background: url("../../assets/background_1.png") no-repeat;
+  background: url("https://i.imgur.com/KMouNmX.png") no-repeat;
   background-size: cover;
   height: 100vh;
   font-family: "Raleway", sans-serif;
@@ -201,7 +201,7 @@
 .login_top,
 .register_top {
   height: 275px;
-  background: url("../../assets/login_top.png");
+  background: url("https://i.imgur.com/08F3jYj.png");
   background-size: 110%;
   display: flex;
   justify-content: center;
@@ -348,7 +348,7 @@
 }
 
 .customGPlusSignIn .icon {
-  background-image: url("../../assets/google.svg");
+  background-image: url("https://i.imgur.com/fhnjiVz.png");
   background-size: cover;
   width: 30px;
   height: 30px;
