@@ -1,12 +1,13 @@
-const express = require("express")
-const mongoose = require('mongoose');
-const router = express.Router()
+const express = require("express");
+const mongoose = require("mongoose");
+const router = express.Router();
 
 const Products = require("../models/Products");
 
 
 
 router.get("/", async function (req, res) {
+
     const {type} = req.query;
 
     if (type){
@@ -50,5 +51,6 @@ router.post("/", async function (req, res) {
     const 
 
 }) */
+
 
 module.exports = router;
