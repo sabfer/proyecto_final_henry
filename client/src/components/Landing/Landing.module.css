@@ -1,0 +1,367 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+
+.container {
+  background: url("https://i.imgur.com/KMouNmX.png") no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: "Raleway", sans-serif;
+  position: relative;
+}
+
+.Link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.Link_Home:hover {
+  text-decoration: underline solid white;
+}
+
+.vignette_top {
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.header {
+  display: flex;
+  padding: 50px;
+  height: 65px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_title {
+  width: 10rem;
+  height: 40px;
+  background-color: rgba(0, 41, 107, 1);
+  border-radius: 40px;
+  text-align: center;
+}
+
+.header_title h2 {
+  margin: 10px 0 0 0;
+  color: rgb(255, 255, 255);
+  font-size: 1.125rem;
+}
+
+.header_nav ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0 22px;
+  list-style: none;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.header_nav ul li a button,
+.footer_right button {
+  width: 7.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header_nav .login_button {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  transition: all 350ms ease-out;
+}
+
+.header_nav .login_button:hover {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.header_nav .signup_button {
+  background-color: rgba(0, 41, 107, 1);
+  border: 2px solid rgba(0, 0, 0, 0.19);
+  transition: all 350ms ease-out;
+}
+
+.header_nav .signup_button:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+.main_content {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  height: 70%;
+  color: rgb(255, 255, 255);
+}
+
+.main_ribbon {
+  grid-column: 1 / span 5;
+  grid-row: 5 / span 4;
+  height: 250px;
+  background-color: rgba(252, 175, 60, 0.5);
+}
+
+.main_title {
+  text-align: center;
+  font-size: 4rem;
+  grid-column: 1 / span 5;
+  grid-row: 5 / span 3;
+  justify-self: center;
+  z-index: 2;
+}
+
+.Link_Main {
+  grid-row: 10;
+  grid-column: 2 / span 3;
+  width: 45%;
+  justify-self: center;
+}
+
+.main_button {
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  background-color: rgba(0, 41, 107, 1);
+  border-radius: 12px;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.footer {
+  width: calc(100vw - 100px);
+  position: absolute;
+  bottom: 0;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer_right {
+  display: flex;
+  gap: 0 30px;
+}
+
+.footer_right .login_button {
+  width: 110px;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.footer_right .signup_button {
+  width: 110px;
+  background-color: rgba(0, 41, 107, 1);
+}
+
+.footer_left {
+  display: flex;
+  gap: 0 120px;
+}
+
+.footer_left a {
+  font-size: 1.125rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer_left a:hover {
+  text-decoration: underline solid rgb(255, 255, 255);
+}
+
+.vignette_bottom {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+}
+
+.login_form,
+.register_form {
+  margin: 0 auto;
+  width: 460px;
+  min-height: 570px;
+  background-color: rgba(0, 41, 107, 1);
+  border-radius: 16px;
+  box-shadow: 4px -4px 6px 1px rgba(0, 0, 0, 0.25),
+    -4px 4px 6px 1px rgba(0, 0, 0, 0.25);
+}
+
+.login_top,
+.register_top {
+  height: 275px;
+  background: url("https://i.imgur.com/08F3jYj.png");
+  background-size: 110%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  background-color: rgb(0, 0, 0, 0.3);
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.login_top h2 {
+  z-index: 2;
+  color: rgb(255, 255, 255);
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+.register_top h2 {
+  margin: 0;
+  z-index: 2;
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.login_bottom,
+.register_bottom {
+  padding: 0 20px;
+}
+
+.form {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 1.2rem 0 1.5rem 0;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.input_container {
+  text-align: center;
+  height: 50px;
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.input {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 75%;
+  padding: 0 20px 0;
+  border-radius: 12px;
+  border: 2px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  height: 35px;
+}
+
+.placeholder {
+  color: rgb(255, 255, 255);
+  font-family: sans-serif;
+  left: 50px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 15px;
+  font-weight: 700;
+}
+
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+  transform: translateY(-38px) translateX(-10px) scale(0.8);
+}
+
+.input:not(:placeholder-shown) ~ .placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.input:focus ~ .placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+}
+
+.signUpContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0 1rem;
+}
+
+.submit,
+.registerSubmit {
+  width: 90%;
+  margin: 0 0 25px 0;
+  height: 35px;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 6px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.registerSubmit {
+  margin-bottom: 25px;
+}
+
+.gSignInWrapper {
+  width: 90%;
+  height: 35px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 6px;
+  margin-bottom: 45px;
+  cursor: pointer;
+}
+
+.customGPlusSignIn {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.customGPlusSignIn .icon {
+  background-image: url("https://i.imgur.com/fhnjiVz.png");
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  justify-self: flex-start;
+}
+
+.buttonText {
+  width: 100%;
+  font-weight: 700;
+  text-align: center;
+}
+
+.submit:active,
+.registerSubmit:active {
+  background-color: rgb(202, 202, 202);
+}
