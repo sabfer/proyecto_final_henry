@@ -7,7 +7,7 @@ function Landing() {
     <div className={style.container}>
       <header className={style.header + " " + style.vignette_top}>
         <div className={style.header_title}>
-          <h2>NOMBRE</h2>
+          <h2>Proyecto X</h2>
         </div>
         <nav className={style.header_nav}>
           <ul>
@@ -39,14 +39,6 @@ function Landing() {
         <div className={style.footer_left}>
           <a href="/">Productos</a>
           <a href="/">Sobre nosotros</a>
-        </div>
-        <div className={style.footer_right}>
-          <Link to="/login" className={style.Link}>
-            <button className={style.login_button}>Ingresar</button>
-          </Link>
-          <Link to="/register" className={style.Link}>
-            <button className={style.signup_button}>Registro</button>
-          </Link>
         </div>
       </footer>
     </div>

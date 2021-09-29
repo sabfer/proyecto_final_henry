@@ -267,7 +267,7 @@
 .input {
   background-color: rgba(0, 0, 0, 0.5);
   width: 75%;
-  padding: 4px 20px 0;
+  padding: 0 20px 0;
   border-radius: 12px;
   border: 2px solid rgb(255, 255, 255);
   color: rgb(255, 255, 255);
@@ -304,10 +304,18 @@
   color: rgb(255, 255, 255);
 }
 
+.signUpContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0 1rem;
+}
+
 .submit,
 .registerSubmit {
-  width: 50%;
-  margin: 0 0 45px 0;
+  width: 90%;
+  margin: 0 0 25px 0;
   height: 35px;
   background-color: rgb(255, 255, 255);
   border: none;
@@ -320,7 +328,37 @@
 }
 
 .registerSubmit {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
+}
+
+.gSignInWrapper {
+  width: 90%;
+  height: 35px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 6px;
+  margin-bottom: 45px;
+  cursor: pointer;
+}
+
+.customGPlusSignIn {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.customGPlusSignIn .icon {
+  background-image: url("../../assets/google.svg");
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  justify-self: flex-start;
+}
+
+.buttonText {
+  width: 100%;
+  font-weight: 700;
+  text-align: center;
 }
 
 .submit:active,
