@@ -4,8 +4,6 @@ const router = express.Router()
 
 const Products = require("../models/Products");
 
-
-
 router.get("/", async function (req, res) {
     const {type} = req.query;
 
