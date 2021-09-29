@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
-import Landing from "./components/LandingPage/Landing";
-import Login from "./components/LandingPage/Login";
-import Register from "./components/LandingPage/RegisterPage";
+import Landing from "./components/Landing/Landing";
+import Login from "./components/Landing/Login";
+import Register from "./components/Landing/RegisterPage";
 
 function App() {
   return (

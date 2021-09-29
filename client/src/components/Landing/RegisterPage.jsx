@@ -1,8 +1,8 @@
 import React from "react";
-import style from "../LandingPage/Landing.module.css";
+import style from "./Landing.module.css";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Register() {
   return (
     <div className={style.container}>
       <header className={style.header + " " + style.vignette_top}>
@@ -30,14 +30,28 @@ function Login() {
         </nav>
       </header>
 
-      <section className={style.login_form}>
-        <div className={style.login_top}>
-          <h2>Bienvenido</h2>
+      <section className={style.register_form}>
+        <div className={style.register_top}>
+          <h2>
+            Registrate y conoce las <br /> bondades de una buena <br /> gestión
+          </h2>
           <div className={style.overlay}></div>
         </div>
-        <div className={style.login_bottom}>
+        <div className={style.register_bottom}>
           <div className={style.form}>
-            <h2 className={style.title}>Iniciar sesión</h2>
+            <h2 className={style.title}>Registro</h2>
+            <div className={style.input_container}>
+              <input
+                id="email"
+                className={style.input}
+                type="text"
+                placeholder=" "
+                autoComplete="off"
+              />
+              <label htmlFor="email" className={style.placeholder}>
+                Correo electrónico
+              </label>
+            </div>
             <div className={style.input_container}>
               <input
                 id="firstname"
@@ -62,20 +76,8 @@ function Login() {
                 Contraseña
               </label>
             </div>
-            {/* <div className={style.input_container}>
-              <input
-                id="email"
-                className={style.input}
-                type="text"
-                placeholder=" "
-                autoComplete="off"
-              />
-              <label htmlFor="email" className={style.placeholder}>
-                Email
-              </label>
-            </div> */}
-            <button type="submit" className={style.submit}>
-              Ingresar
+            <button type="submit" className={style.registerSubmit}>
+              Registrarme
             </button>
           </div>
         </div>
@@ -99,4 +101,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
