@@ -58,4 +58,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const fieldsUpdate = req.body;
+
+  try {
+    const updateUser = await Users.findOneAndUpdate({ _id: id }, fieldsUpdate, {
+      new: true,
+    });
+    updateUser
+      ? res.status(200).send("User updated successfully!")
+      : res.status(404).send("Could not updated user");
+  } catch (err) {
+    res.status(404).send("Could not updated user");
+  }
+});
+
 module.exports = router;
