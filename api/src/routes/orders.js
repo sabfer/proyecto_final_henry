@@ -34,14 +34,14 @@ router.post("/", async function (req, res) {
   res.send(order);
 });
 
-router.delete("/:id", async function(req, res) {
-  const {id} = req.params;
-  try{
-      await Orders.deleteOne({_id:id});
-      res.send('Order deleted successfully!');
+router.delete("/:id", async function (req, res) {
+  const { id } = req.params;
+  try {
+    await Orders.deleteOne({ _id: id });
+    res.send("Order deleted successfully!");
   } catch (err) {
-      console.log(err);
+    console.log(err);
   }
-})
+});
 
 module.exports = router;

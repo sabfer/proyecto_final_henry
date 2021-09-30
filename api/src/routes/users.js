@@ -2,7 +2,11 @@ const express = require("express");
 // const mongoose = require("mongoose");
 const router = express.Router();
 const Users = require("../models/Users");
-const { filterByName, findUsers } = require("../controllers/users");
+const {
+  filterByEmail,
+  findUsers,
+  createUser,
+} = require("../controllers/users");
 
 router.get("/", async function (req, res) {
   const { userName } = req.query;
@@ -23,19 +27,21 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.post("/", async function (req, res) {
-  const { password, username, email, post } = req.body;
+router.post("/register", async function (req, res) {
+  const { password, email } = req.body; //sacar username y puesto
 
-  if (password && username && email && post) {
+  if (password && email) {
     try {
-      const user = await new Users({
-        password,
-        username,
-        email,
-        post,
-      });
-      await user.save();
-      return res.status(200).send(user);
+      const users = await findUsers();
+      const checkUserExist = await filterByEmail(users, email); //validar por email
+      if (checkUserExist) {
+        return res.status(404).send("User already exists");
+      }
+      const newUser = await createUser(password, email);
+      if (newUser) {
+        return res.status(200).send("User created succesfully");
+      }
+      return res.status(404).status("User could not be created");
     } catch (err) {
       console.error(err);
     }
@@ -46,8 +52,18 @@ router.post("/", async function (req, res) {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    await Users.deleteOne({ _id: id });
-    res.status(200).send("User deleted successfully!");
+    const userDelete = await Users.deleteOne({ _id: id });
+    res.status(200).send(userDelete);
+  } catch (err) {
+    res.status(404).send("Could not delete user");
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userDelete = await Users.deleteOne({ _id: id });
+    res.status(200).send(userDelete);
   } catch (err) {
     res.status(404).send("Could not delete user");
   }
