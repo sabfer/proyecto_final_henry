@@ -1,25 +1,20 @@
 const express = require("express");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const router = express.Router();
-
 const Users = require("../models/Users");
+const { filterByName, findUsers } = require("../controllers/users");
 
 router.get("/", async function (req, res) {
   const { userName } = req.query;
-  console.log(typeof userName);
   try {
-    const listUsers = await Users.find();
+    const listUsers = await findUsers();
     if (userName) {
-      const filterByName = listUsers.filter((user) => {
-        return user.username
-          .toLocaleLowerCase()
-          .includes(userName.toLocaleLowerCase());
-      });
-      filterByName.length
-        ? res.status(200).send(filterByName)
+      const usersfilterByName = await filterByName(listUsers, userName);
+      usersfilterByName
+        ? res.status(200).send(usersfilterByName)
         : res.status(404).send("No users with that name were found");
     } else {
-      listUsers.length
+      listUsers
         ? res.status(200).send(listUsers)
         : res.status(404).send("No users found");
     }
@@ -70,7 +65,7 @@ router.put("/:id", async (req, res) => {
       ? res.status(200).send("User updated successfully!")
       : res.status(404).send("Could not updated user");
   } catch (err) {
-    res.status(404).send("Could not updated user");
+    res.status(404).send(err);
   }
 });
 
