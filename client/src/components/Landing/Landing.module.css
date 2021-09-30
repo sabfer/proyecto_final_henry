@@ -1,14 +1,17 @@
-
 .container {
   background: url("https://i.imgur.com/KMouNmX.png") no-repeat;
   background-size: cover;
-  height: 100vh;
   position: relative;
+  min-height: 100vh;
 }
 
 .Link {
   color: rgb(255, 255, 255);
   text-decoration: none;
+}
+
+.Link_Home {
+  margin-right: 12px;
 }
 
 .Link_Home:hover {
@@ -21,8 +24,8 @@
 
 .header {
   display: flex;
-  padding: 50px;
-  height: 65px;
+  padding: 0 50px;
+  height: 120px;
   align-items: center;
   justify-content: space-between;
 }
@@ -95,15 +98,15 @@
   width: 100%;
   margin: 0 auto;
   display: grid;
+  align-items: center;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  height: 70%;
+  grid-template-rows: repeat(5, 150px);
   color: rgb(255, 255, 255);
 }
 
 .main_ribbon {
   grid-column: 1 / span 5;
-  grid-row: 5 / span 4;
+  grid-row: 2 / span 2;
   height: 250px;
   background-color: rgba(252, 175, 60, 0.5);
 }
@@ -112,13 +115,13 @@
   text-align: center;
   font-size: 4rem;
   grid-column: 1 / span 5;
-  grid-row: 5 / span 3;
+  grid-row: 2 / span 2;
   justify-self: center;
   z-index: 2;
 }
 
 .Link_Main {
-  grid-row: 10;
+  grid-row: 4 / 5;
   grid-column: 2 / span 3;
   width: 45%;
   justify-self: center;
@@ -128,6 +131,7 @@
   width: 100%;
   height: 50px;
   padding: 0;
+  align-self: center;
   background-color: rgba(0, 41, 107, 1);
   border-radius: 12px;
   color: rgb(255, 255, 255);
@@ -139,10 +143,11 @@
 }
 
 .footer {
-  width: calc(100vw - 100px);
   position: absolute;
   bottom: 0;
-  padding: 50px;
+  padding: 0 50px;
+  height: 60px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -185,6 +190,11 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
 }
 
+.register_container,
+.login_container {
+  padding: 50px;
+}
+
 .login_form,
 .register_form {
   margin: 0 auto;
@@ -192,8 +202,7 @@
   min-height: 570px;
   background-color: rgba(0, 41, 107, 1);
   border-radius: 16px;
-  box-shadow: 4px -4px 6px 1px rgba(0, 0, 0, 0.25),
-    -4px 4px 6px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px -4px 6px 1px rgba(0, 0, 0, 0.25), -4px 4px 6px 1px rgba(0, 0, 0, 0.25);
 }
 
 .login_top,
@@ -214,6 +223,7 @@
   height: 100%;
   width: 100%;
   z-index: 1;
+  border-radius: 16px 16px 0 0;
 }
 
 .login_top h2 {
@@ -229,13 +239,7 @@
   color: rgb(255, 255, 255);
   font-size: 2rem;
   font-weight: 700;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-    0px 5px 2px rgba(0, 0, 0, 0.5);
-}
-
-.login_bottom,
-.register_bottom {
-  padding: 0 20px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 5px 2px rgba(0, 0, 0, 0.5);
 }
 
 .form {
@@ -247,7 +251,7 @@
 }
 
 .title {
-  margin: 1.2rem 0 1.5rem 0;
+  margin: 1.2rem 0 2rem 0;
   text-align: center;
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
@@ -259,36 +263,36 @@
   height: 50px;
   position: relative;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .input {
   background-color: rgba(0, 0, 0, 0.5);
-  width: 75%;
+  width: 80%;
   padding: 0 20px 0;
   border-radius: 12px;
   border: 2px solid rgb(255, 255, 255);
   color: rgb(255, 255, 255);
-  font-size: 18px;
+  font-size: 16px;
   height: 35px;
 }
 
 .placeholder {
+  position: absolute;
+  top: 10px;
+  left: 60px;
   color: rgb(255, 255, 255);
-  font-family: sans-serif;
-  left: 50px;
+  font-size: 14px;
   line-height: 14px;
   pointer-events: none;
-  position: absolute;
   transform-origin: 0 50%;
   transition: transform 200ms, color 200ms;
-  top: 15px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .input:focus ~ .placeholder,
 .input:not(:placeholder-shown) ~ .placeholder {
-  transform: translateY(-38px) translateX(-10px) scale(0.8);
+  transform: translateY(-30px) translateX(-10px) scale(0.9);
 }
 
 .input:not(:placeholder-shown) ~ .placeholder {
@@ -312,7 +316,7 @@
 
 .submit,
 .registerSubmit {
-  width: 90%;
+  width: 100%;
   margin: 0 0 25px 0;
   height: 35px;
   background-color: rgb(255, 255, 255);
@@ -330,7 +334,7 @@
 }
 
 .gSignInWrapper {
-  width: 90%;
+  width: 100%;
   height: 35px;
   background-color: rgb(255, 255, 255);
   border-radius: 6px;
