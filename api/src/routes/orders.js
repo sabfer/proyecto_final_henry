@@ -34,20 +34,14 @@ router.post("/", async function (req, res) {
   res.send(order);
 });
 
-// router.delete("/", async (req, res) => {
-//   const { idOrder } = req.body;
-
-//   if (idOrder) {
-//     const order = await Orders.findByIdAndDelete(idOrder, function (err) {
-//       if (err) res.status(404).send(err);
-//     });
-
-//     if (order) {
-//       res.status(200).json(order);
-//     }
-//   }
-
-//   send.status(400).json({ error: "Falta input requerido" });
-// });
+router.delete("/:id", async function(req, res) {
+  const {id} = req.params;
+  try{
+      await Orders.deleteOne({_id:id});
+      res.send('Order deleted successfully!');
+  } catch (err) {
+      console.log(err);
+  }
+})
 
 module.exports = router;

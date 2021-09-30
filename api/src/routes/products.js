@@ -1,54 +1,74 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
+<<<<<<< HEAD
 
 const Products = require("../models/Products");
+=======
+const {
+    searchProduct, 
+    searchProducts,
+    filterProduct,
+    addProduct,
+    deleteProduct,
+    updateProduct
+} = require("../controllers/products.js");
+>>>>>>> cab8478caf543abebfbfc0a25d89a1a76c4336d7
 
 router.get("/", async function (req, res) {
-
-    const {type} = req.query;
-
-    if (type){
-        try{
-            const product = await Products.findOne({ type:type });
-            product ? res.send(product)
-            : res.status(404).send("Product not exists");
-        } catch(err){
-            console.error(err);
-        }
-    }
-    else {
-        try {
-            const listProducts = await Products.find();
-            listProducts ? res.send(listProducts)
-            : res.status(404).send("Products not exists");
-        } catch (err) {
-            console.error(err);
-        }
+    const {name} = req.query;
+    try{
+        if (name){
+                const product = await searchProduct(name);
+                product ? res.send(product)
+                : res.status(404).send("Product not exists!");
+        } else {
+                const listProducts = await searchProducts();
+                listProducts ? res.send(listProducts)
+                : res.status(404).send("Products not exists");
+        } 
+    } catch (err) {
+        console.error(err);
     }
 }); 
 
 router.post("/", async function (req, res) {
+    const {price, name} = req.body;
     try{
-        const {price, type} = req.body;
-        const product = await new Products({
-            price,
-            type,
-        })
-        await product.save();
-        product && product
-        ? res.status(400).send("The product already exists")
-        : res.send(product);
+        const newProduct = await filterProduct(name);
+
+        if(newProduct){
+            res.status(400).send("Product already exists") 
+        }  else {
+            const product = await addProduct(price, name);
+            res.send(product);    
+        }
     } catch (err) {
         console.log(err);
     }
 })
 
-/* router.delete("/", async function (req, res) {
+router.delete("/:id", async function(req, res) {
+    const {id} = req.params;
+    try{
+        const eliminated = await deleteProduct(id);
+        eliminated ? res.send('Product deleted successfully!')
+        : null; 
+    } catch (err) {
+        res.status(400).send("Product not exists");
+    }
+})
 
-    const 
+router.put("/:id", async function(req, res) {
+    const {id} = req.params;
+    const productsUpdate = req.body;
 
-}) */
-
+    try {
+        const update = await updateProduct(id, productsUpdate)
+        update ? res.send('Product updated successfully!')
+        : null; 
+    } catch (err) {
+        res.status(400).send("Product not exist") 
+    }
+}) 
 
 module.exports = router;
