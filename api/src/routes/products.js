@@ -1,9 +1,5 @@
 const express = require("express");
 const router = express.Router();
-<<<<<<< HEAD
-
-const Products = require("../models/Products");
-=======
 const {
     searchProduct, 
     searchProducts,
@@ -12,7 +8,6 @@ const {
     deleteProduct,
     updateProduct
 } = require("../controllers/products.js");
->>>>>>> cab8478caf543abebfbfc0a25d89a1a76c4336d7
 
 router.get("/", async function (req, res) {
     const {name} = req.query;
