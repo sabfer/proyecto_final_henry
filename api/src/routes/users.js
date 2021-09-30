@@ -6,17 +6,21 @@ const {
   filterByEmail,
   findUsers,
   createUser,
+  deleteUserById,
+  updateById,
 } = require("../controllers/users");
 
+const { verifyInputsToUpdate } = require("../controllers/functions");
+
 router.get("/", async function (req, res) {
-  const { userName } = req.query;
+  const { userEmail } = req.query;
   try {
     const listUsers = await findUsers();
-    if (userName) {
-      const usersfilterByName = await filterByName(listUsers, userName);
-      usersfilterByName
-        ? res.status(200).send(usersfilterByName)
-        : res.status(404).send("No users with that name were found");
+    if (userEmail) {
+      const usersfilterByEmail = await filterByEmail(listUsers, userEmail);
+      usersfilterByEmail
+        ? res.status(200).send(usersfilterByEmail)
+        : res.status(404).send("No users with that email were found");
     } else {
       listUsers
         ? res.status(200).send(listUsers)
@@ -28,12 +32,12 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/register", async function (req, res) {
-  const { password, email } = req.body; //sacar username y puesto
+  const { password, email } = req.body;
 
   if (password && email) {
     try {
       const users = await findUsers();
-      const checkUserExist = await filterByEmail(users, email); //validar por email
+      const checkUserExist = await filterByEmail(users, email);
       if (checkUserExist) {
         return res.status(404).send("User already exists");
       }
@@ -41,7 +45,7 @@ router.post("/register", async function (req, res) {
       if (newUser) {
         return res.status(200).send("User created succesfully");
       }
-      return res.status(404).status("User could not be created");
+      return res.status(404).send("User could not be created");
     } catch (err) {
       console.error(err);
     }
@@ -52,37 +56,30 @@ router.post("/register", async function (req, res) {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const userDelete = await Users.deleteOne({ _id: id });
-    res.status(200).send(userDelete);
+    const userDelete = await deleteUserById(id);
+    userDelete
+      ? res.status(200).send("User delete succesfully")
+      : res.status(404).send("Cannot delete user");
   } catch (err) {
-    res.status(404).send("Could not delete user");
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const userDelete = await Users.deleteOne({ _id: id });
-    res.status(200).send(userDelete);
-  } catch (err) {
-    res.status(404).send("Could not delete user");
+    res.status(404).send(err);
   }
 });
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const fieldsUpdate = req.body;
-
-  try {
-    const updateUser = await Users.findOneAndUpdate({ _id: id }, fieldsUpdate, {
-      new: true,
-    });
-    updateUser
-      ? res.status(200).send("User updated successfully!")
-      : res.status(404).send("Could not updated user");
-  } catch (err) {
-    res.status(404).send(err);
+  const fieldsToUpdate = req.body;
+  if (verifyInputsToUpdate(fieldsToUpdate, ["email", "password"])) {
+    try {
+      const userUpdated = await updateById(id, fieldsToUpdate);
+      if (userUpdated) {
+        return res.status(200).send("User updated successfully!");
+      }
+      return res.status(404).send("The user could not be modified");
+    } catch (err) {
+      return res.status(404).send(err);
+    }
   }
+  res.status(404).send("The fields to modify are not valid");
 });
 
 module.exports = router;
