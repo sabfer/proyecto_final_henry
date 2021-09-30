@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Users = require("../models/Users");
+const { verifyInputsToUpdate } = require("./functions");
 
 const findUsers = async () => {
   const results = await Users.find();
@@ -23,7 +24,17 @@ const createUser = async function (password, email) {
 };
 
 const deleteUserById = async function (id) {
-  await Users.deleteOne({ _id: `${id}` });
+  const userDelete = await Users.deleteOne({ _id: `${id}` });
+  return userDelete.deletedCount === 1 ? true : false;
+};
+
+const updateById = async function (id, fieldsToUpdate) {
+  const userUpdated = await Users.findOneAndUpdate(
+    { _id: `${id}` },
+    fieldsToUpdate,
+    { new: true }
+  );
+  return userUpdated ? true : false;
 };
 
 module.exports = {
@@ -31,4 +42,5 @@ module.exports = {
   filterByEmail,
   createUser,
   deleteUserById,
+  updateById,
 };
