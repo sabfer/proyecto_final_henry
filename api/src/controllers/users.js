@@ -6,14 +6,29 @@ const findUsers = async () => {
   return results.length ? results : null;
 };
 
-const filterByName = async (list, name) => {
-  const filterByName = list.filter((user) => {
-    return user.username.toLocaleLowerCase().includes(name.toLocaleLowerCase());
+const filterByEmail = async (list, email) => {
+  const filterByEmail = list.filter((user) => {
+    return user.email.toLocaleLowerCase().includes(email.toLocaleLowerCase());
   });
-  return filterByName.length ? filterByName : null;
+  return filterByEmail.length ? filterByEmail : null;
+};
+
+const createUser = async function (password, email) {
+  const newUser = await new Users({
+    password,
+    email,
+  });
+  await newUser.save();
+  return newUser ? newUser : null;
+};
+
+const deleteUserById = async function (id) {
+  await Users.deleteOne({ _id: `${id}` });
 };
 
 module.exports = {
   findUsers,
-  filterByName,
+  filterByEmail,
+  createUser,
+  deleteUserById,
 };

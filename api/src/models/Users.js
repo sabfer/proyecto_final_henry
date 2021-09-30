@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
@@ -6,9 +5,7 @@ const saltRounds = 10;
 
 const users = new Schema({
   password: String,
-  username: String,
   email: String,
-  post: String,
 });
 
 users.pre("save", function (next) {
@@ -33,6 +30,5 @@ users.pre("save", function (next) {
     return next();
   }
 });
-
 
 module.exports = mongoose.model("User", users);
