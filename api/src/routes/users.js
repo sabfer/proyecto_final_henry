@@ -91,7 +91,11 @@ router.delete("/:id", async (req, res) => {
           msg: "Usuario eliminado exitosamente",
           payload: null,
         })
-      : res.json({ success: false, msg: "Cannot delete user", payload: null });
+      : res.json({
+          succes: false,
+          msg: "No se pudo eliminar el usuario",
+          payload: null,
+        });
   } catch (err) {
     res.status(404);
   }

@@ -1,21 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const {
-  createComerceType,
-  searchTypeComerceByName,
-  searchTypeComerce,
-  updateComerceType,
-  deleteTypeComerce,
-} = require("../controllers/comerceType");
+  createCommerceType,
+  searchTypeCommerceByName,
+  searchTypeCommerce,
+  updateCommerceType,
+  deleteTypeCommerce,
+} = require("../controllers/commerceType");
 
 router.post("/", async (req, res) => {
   const { name } = req.body;
   try {
-    const newComerceType = await createComerceType(name);
+    const newCommerceType = await createCommerceType(name);
     res.json({
       succes: true,
       msg: "El tipo de comercio fue creado",
-      payload: newComerceType,
+      payload: newCommerceType,
     });
   } catch (err) {
     res.json({
@@ -30,12 +30,12 @@ router.get("/", async (req, res) => {
   const { name } = req.query;
   try {
     if (name) {
-      const comerceTypeByName = await searchTypeComerceByName(name);
-      comerceTypeByName
+      const commerceTypeByName = await searchTypeCommerceByName(name);
+      commerceTypeByName
         ? res.json({
             succes: true,
             msg: "Tipo de comercio encontrado",
-            payload: comerceTypeByName,
+            payload: commerceTypeByName,
           })
         : res.json({
             succes: false,
@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
             payload: null,
           });
     } else {
-      const listTypes = await searchTypeComerce();
+      const listTypes = await searchTypeCommerce();
       listTypes
         ? res.json({
             succes: true,
@@ -66,7 +66,7 @@ router.put("/:id", async (req, res) => {
   const { name } = req.body;
 
   try {
-    const updatedType = await updateComerceType(id, name);
+    const updatedType = await updateCommerceType(id, name);
     updatedType
       ? res.json({
           succes: true,
@@ -86,7 +86,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const deleteType = await deleteTypeComerce(id);
+    const deleteType = await deleteTypeCommerce(id);
     deleteType
       ? res.json({
           succes: true,
