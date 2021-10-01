@@ -6,8 +6,9 @@ const cors = require("cors");
 
 const users = require("./routes/users");
 // const login = require("./routes/login");  //lo use para probar compare
-const clients = require("./routes/clients");
 const comerceType = require("./routes/comerceType");
+const comerce = require("./routes/comerce");
+const clients = require("./routes/clients");
 const productTypes = require("./routes/productsType");
 const products = require("./routes/products");
 const orders = require("./routes/orders");
@@ -36,6 +37,7 @@ server.use((_req, res, next) => {
 server.use("/users", users);
 // server.use("/login", login); //lo use para probar compare
 server.use("/comerceType", comerceType);
+server.use("/comerce", comerce);
 server.use("/clients", clients);
 server.use("/products", products);
 server.use("/productTypes", productTypes);

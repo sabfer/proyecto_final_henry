@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Users = require("../models/Users");
-const { verifyInputsToUpdate } = require("./functions");
 
 const findUsers = async () => {
   const results = await Users.find();
