@@ -31,6 +31,7 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/", async function (req, res) {
+
   const { price, name } = req.body;
   try {
     const newProduct = await filterProduct(name);
