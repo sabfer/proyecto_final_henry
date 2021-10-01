@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Header, Title, Button, OptionsBar, Body, BodyTop } from "./HomeStyles";
+import { BodyTop, SelectContainer, DivSelect, Select } from "./HomeStyles";
+import {
+  OptionsBar,
+  Body,
+  Header,
+  Title,
+  Button,
+  StyledLink,
+} from "../StyledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
 import DeliveryModule from "./Delivery";
 import TakeOutModule from "./TakeOutModule";
 import SalonModule from "./SalonModule";
@@ -53,9 +61,30 @@ export default function Home() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear producto
         </Button>
+        <StyledLink to="/settings">
+          <Button
+            width="8rem"
+            justify="space-between"
+            padding="0.625rem"
+            buttonColor="rgb(128, 128, 128)"
+            hoverColor="rgb(166, 166, 166)"
+          >
+            <FontAwesomeIcon icon={faCog} size="lg" />
+            Ajustes
+          </Button>
+        </StyledLink>
       </OptionsBar>
 
       <Body>
+        <SelectContainer>
+          <DivSelect>
+            <Select>
+              <option hidden>Type of diet</option>
+              <option value="All">Everything</option>
+              <span className="Focus"></span>
+            </Select>
+          </DivSelect>
+        </SelectContainer>
         <BodyTop>
           <DeliveryModule />
           <TakeOutModule />
@@ -93,7 +122,7 @@ export default function Home() {
         label2="Descripción"
         label3="Precio"
         modalContainerBox={true}
-        modalDispatch= {postProduct}
+        modalDispatch={postProduct}
       />
 
       {/* props Modal 4 para cuando esté habilitada */}

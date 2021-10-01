@@ -25,7 +25,7 @@ const Modal = ({
     </svg>
   );
 
-  const [close, setClose] = useState(false)
+  /* const [close, setClose] = useState(false) */
 
   const conditionalForm = (label3, label2) => {
     if (label3) {
