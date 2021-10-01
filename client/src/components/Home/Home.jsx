@@ -65,6 +65,7 @@ export default function Home() {
 
       {/* Modal 1 */}
       <Modal
+        id={1}
         state={stateModal1}
         setStateModal={setStateModal1}
         title="Crear Usuario Nuevo"
@@ -76,6 +77,7 @@ export default function Home() {
 
       {/* Modal 2 */}
       <Modal
+        id={2}
         state={stateModal2}
         setStateModal={setStateModal2}
         title="Crear Comercio"
@@ -86,14 +88,16 @@ export default function Home() {
 
       {/* Modal 3 */}
       <Modal
+        id={3}
         state={stateModal3}
         setStateModal={setStateModal3}
         title="Crear un Producto"
         label1="Nombre"
         label2="Descripción"
         label3="Precio"
+        label4="Tipo de Producto"
         modalContainerBox={true}
-        modalDispatch= {postProduct}
+        modalDispatch={postProduct}
       />
 
       {/* props Modal 4 para cuando esté habilitada */}

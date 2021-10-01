@@ -1,17 +1,19 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 
-
-const Modal = ({
+export default function Modal({
   state,
   setStateModal,
   title,
   label1,
   label2,
   label3,
+  label4,
   modalContainerBox,
   modalDispatch,
-}) => {
+  id,
+}) {
+  // const dispatch=useDispatch();
   const closeIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -25,12 +27,56 @@ const Modal = ({
     </svg>
   );
 
-  const [close, setClose] = useState(false)
+  const[inputMod1, setInputMod1] = useState({
+    name:"",
+    user:"",
+    pass:"",
+  })
 
-  const conditionalForm = (label3, label2) => {
-    if (label3) {
+  const[inputMod2, setInputMod2] = useState({
+    name:"",
+    location:"",
+  })
+
+  const[inputMod3, setInputMod3] = useState({
+    name:"",
+    description:"",
+    price:"",
+    type:""
+  })
+  
+
+  const conditionalForm = () => {
+    if (id === 1) {
       return (
         <form >
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="name" value={inputMod1.name} onChange={handleChange}/>
+          <label>{label2}</label>
+          <br />
+          <input type="text" />
+          <label>{label3}</label>
+          <br />
+          <input type="text" />
+        </form>
+      );
+    }
+    if (id === 2) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" />
+          <label>{label2}</label>
+          <br />
+          <input type="text" />
+        </form>
+      );
+    }
+    if (id === 3) {
+      return (
+        <form>
           <label>{label1}</label>
           <br />
           <input type="text" />
@@ -40,35 +86,90 @@ const Modal = ({
           <label>{label3}</label>
           <br />
           <input type="text" />
-        </form>
-      );
-    } else if (label2) {
-      return (
-        <form action="">
-          <label>{label1}</label>
+          <label>{label4}</label>
           <br />
-          <input type="text" />
-          <label>{label2}</label>
-          <br />
-          <input type="text" />
-        </form>
-      );
-    } else {
-      return (
-        <form action="">
-          <label>{label1}</label>
           <input type="text" />
         </form>
       );
     }
+    // if ("Modal4") {
+    //   return (
+    //     <form>
+    //       <label>{label1}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label2}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label3}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label4}</label>
+    //       <br />
+    //       <input type="text" />
+    //     </form>
+    //   );
+    // }
+    // if ("Modal5") {
+    //   return (
+    //     <form>
+    //       <label>{label1}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label2}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label3}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label4}</label>
+    //       <br />
+    //       <input type="text" />
+    //     </form>
+    //   );
+    // }
+    // if ("Modal6") {
+    //   return (
+    //     <form>
+    //       <label>{label1}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label2}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label3}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label4}</label>
+    //       <br />
+    //       <input type="text" />
+    //     </form>
+    //   );
+    // }
+    // if ("Modal7") {
+    //   return (
+    //     <form>
+    //       <label>{label1}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label2}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label3}</label>
+    //       <br />
+    //       <input type="text" />
+    //       <label>{label4}</label>
+    //       <br />
+    //       <input type="text" />
+    //     </form>
+    //   );
+    // }
   };
 
-  // const dispatch=useDispatch();
-
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   dispatch(postProduct(inputProduct, setInputProduct))
-  // }
+  function handleSubmit(e) {
+    // e.preventDefault();
+    alert("acepté el formulario");
+  }
 
   return (
     <>
@@ -82,15 +183,13 @@ const Modal = ({
               {closeIcon}
             </CloseButton>
             {conditionalForm(label3, label2)}
-            <button>Aceptar</button>
+            <button onClick={(e)=> handleSubmit(e)}>Aceptar</button>
           </ModalContainer>
         </Overlay>
       )}
     </>
   );
-};
-
-export default Modal;
+}
 
 const Overlay = styled.div`
   width: 100vw;

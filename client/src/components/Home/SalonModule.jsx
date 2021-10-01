@@ -24,7 +24,7 @@ export default function SalonModule() {
         state={stateModal5}
         setStateModal={setStateModal5}
         title="Crear pedido de Salón"
-        label1="Mesa  "
+        label1="Mesa"
         label2="Productos"
         label3="Usuario"
         modalContainerBox={true}

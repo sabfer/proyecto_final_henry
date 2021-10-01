@@ -9,6 +9,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
 
+      
     default:
       return state;
   }
