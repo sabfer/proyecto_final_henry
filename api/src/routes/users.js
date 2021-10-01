@@ -35,11 +35,14 @@ router.post("/register", async function (req, res) {
       const users = await findUsers();
       const checkUserExist = await filterByEmail(users, email); //validar por email
       if (checkUserExist) {
-        return res.status(404).send("User already exists");
+        return res.json({
+          status: false,
+          msg: "Ya existe una cuenta con ese correo",
+        });
       }
       const newUser = await createUser(password, email);
       if (newUser) {
-        return res.status(200).send("User created succesfully");
+        return res.json({ status: true, msg: "User created succesfully" });
       }
       return res.status(404).status("User could not be created");
     } catch (err) {
