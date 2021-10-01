@@ -11,6 +11,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         singUpErrors: action.payload,
       };
+    case "POST_PRODUCTS":
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
