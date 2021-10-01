@@ -34,7 +34,7 @@ const updateById = async function (id, fieldsToUpdate) {
     fieldsToUpdate,
     { new: true }
   );
-  return userUpdated ? true : false;
+  return userUpdated ? userUpdated : false;
 };
 
 module.exports = {
