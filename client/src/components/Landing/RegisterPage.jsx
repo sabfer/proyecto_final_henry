@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../actions/index";
+import { useHistory } from "react-router";
 import {
   Container,
   Header,
@@ -25,6 +26,7 @@ import {
 
 function Register() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const singUpError = useSelector((state) => state.singUpErrors);
   const [input, setInput] = useState({
     email: "",
@@ -38,6 +40,12 @@ function Register() {
       [e.target.name]: e.target.value,
     });
   }
+
+  useEffect(() => {
+    if (singUpError.status) {
+      history.push("/home");
+    }
+  }, [history, singUpError]);
 
   function handleSubmit(e) {
     e.preventDefault();
