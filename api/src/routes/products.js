@@ -27,14 +27,14 @@ router.get("/", async function (req, res) {
 }); 
 
 router.post("/", async function (req, res) {
-    const {price, name} = req.body;
+    const {price, name, productType} = req.body;
     try{
         const newProduct = await filterProduct(name);
 
         if(newProduct){
             res.status(400).send("Product already exists") 
         }  else {
-            const product = await addProduct(price, name);
+            const product = await addProduct(price, name, productType);
             res.send(product);    
         }
     } catch (err) {

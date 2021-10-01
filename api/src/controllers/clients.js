@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Clients = require("../models/Clients");
 
 // GETS
