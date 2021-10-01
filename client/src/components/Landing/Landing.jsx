@@ -1,47 +1,72 @@
 import React from "react";
-import style from "./Landing.module.css";
-import { Link } from "react-router-dom";
+import {
+  Container,
+  Header,
+  Title,
+  NavBar,
+  MainContainer,
+  StyledLink,
+  Footer,
+  Button,
+} from "./LandingStyles";
 
 function Landing() {
   return (
-    <div className={style.container}>
-      <header className={style.header + " " + style.vignette_top}>
-        <div className={style.header_title}>
+    <Container>
+      <Header>
+        <Title>
           <h2>Proyecto X</h2>
-        </div>
-        <nav className={style.header_nav}>
+        </Title>
+        <NavBar>
           <ul>
             <li>
-              <Link to="/login" className={style.Link}>
-                <button className={style.login_button}>Ingresar</button>
-              </Link>
+              <StyledLink to="/login">
+                <Button border="1px solid white" bgColor="transparent">
+                  Ingresar
+                </Button>
+              </StyledLink>
             </li>
             <li>
-              <Link to="/register" className={style.Link}>
-                <button className={style.signup_button}>Registro</button>
-              </Link>
+              <StyledLink to="/register">
+                <Button border="2px solid rgba(0, 0, 0, 0.19)">Registro</Button>
+              </StyledLink>
             </li>
           </ul>
-        </nav>
-      </header>
+        </NavBar>
+      </Header>
 
-      <section className={style.main_content}>
-        <div className={style.main_ribbon}></div>
-        <h1 className={style.main_title}>
+      <MainContainer>
+        <div className="ribbon"></div>
+        <h1>
           Gestionar tu restaurante, <br /> nunca fue tan sencillo.
         </h1>
-        <Link to="/login" className={style.Link + " " + style.Link_Main}>
-          <button className={style.main_button}>Ingresar</button>
-        </Link>
-      </section>
+        <StyledLink
+          to="/login"
+          gridRow="4 / 5"
+          gridColumn="2 / span 3"
+          width="45%"
+          justifySelf="center"
+          alignSelf="center"
+        >
+          <Button
+            width="100%"
+            height="50px"
+            fontSize="1.5rem"
+            borderRadius="12px"
+            upper="uppercase"
+          >
+            Ingresar
+          </Button>
+        </StyledLink>
+      </MainContainer>
 
-      <footer className={style.footer + " " + style.vignette_bottom}>
-        <div className={style.footer_left}>
+      <Footer>
+        <div className="footer_left">
           <a href="/">Productos</a>
           <a href="/">Sobre nosotros</a>
         </div>
-      </footer>
-    </div>
+      </Footer>
+    </Container>
   );
 }
 

@@ -6,8 +6,10 @@ const cors = require('cors');
 
 const users = require('./routes/users');
 const clients = require('./routes/clients');
+const productTypes = require('./routes/productsType');
 const products = require('./routes/products');
 const orders = require('./routes/orders');
+
 
 require('./db.js');
 
@@ -30,6 +32,7 @@ server.use((_req, res, next) => {
 server.use('/users', users);
 server.use('/clients', clients);
 server.use('/products', products);
+server.use('/productTypes', productTypes);
 server.use('/orders', orders);
 
 
