@@ -19,12 +19,15 @@ router.get("/", async function (req, res) {
     if (userEmail) {
       const usersfilterByEmail = await filterByEmail(listUsers, userEmail);
       usersfilterByEmail
-        ? res.status(200).send(usersfilterByEmail)
-        : res.status(404).send("No users with that email were found");
+        ? res.status(200).json(usersfilterByEmail)
+        : res.status(404).json({
+            status: false,
+            msg: "No users with that email were found",
+          });
     } else {
       listUsers
-        ? res.status(200).send(listUsers)
-        : res.status(404).send("No users found");
+        ? res.status(200).json(listUsers)
+        : res.status(404).json({ status: false, msg: "No users found" });
     }
   } catch (err) {
     console.error(err);
@@ -39,18 +42,24 @@ router.post("/register", async function (req, res) {
       const users = await findUsers();
       const checkUserExist = await filterByEmail(users, email);
       if (checkUserExist) {
-        return res.status(404).send("User already exists");
+        return res
+          .status(404)
+          .send({ status: false, msg: "User already exists" });
       }
       const newUser = await createUser(password, email);
       if (newUser) {
-        return res.status(200).send("User created succesfully");
+        return res
+          .status(200)
+          .json({ status: true, msg: "User created succesfully" });
       }
-      return res.status(404).send("User could not be created");
+      return res
+        .status(404)
+        .json({ status: false, msg: "User could not be created" });
     } catch (err) {
       console.error(err);
     }
   }
-  res.status(404).send("Incomplete required inputs");
+  res.status(404).json("Incomplete required inputs");
 });
 
 router.delete("/:id", async (req, res) => {
@@ -58,10 +67,10 @@ router.delete("/:id", async (req, res) => {
   try {
     const userDelete = await deleteUserById(id);
     userDelete
-      ? res.status(200).send("User delete succesfully")
-      : res.status(404).send("Cannot delete user");
+      ? res.status(200).json({ status: true, msg: "User delete succesfully" })
+      : res.status(404).json({ status: false, msg: "Cannot delete user" });
   } catch (err) {
-    res.status(404).send(err);
+    res.status(404).json(err);
   }
 });
 
@@ -72,14 +81,20 @@ router.put("/:id", async (req, res) => {
     try {
       const userUpdated = await updateById(id, fieldsToUpdate);
       if (userUpdated) {
-        return res.status(200).send("User updated successfully!");
+        return res
+          .status(200)
+          .json({ status: true, msg: "User updated successfully!" });
       }
-      return res.status(404).send("The user could not be modified");
+      return res
+        .status(404)
+        .json({ status: false, msg: "The user could not be modified" });
     } catch (err) {
-      return res.status(404).send(err);
+      return res.status(404).json({ status: false, msg: err });
     }
   }
-  res.status(404).send("The fields to modify are not valid");
+  res
+    .status(404)
+    .json({ status: false, msg: "The fields to modify are not valid" });
 });
 
 module.exports = router;
