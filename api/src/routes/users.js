@@ -1,7 +1,5 @@
 const express = require("express");
-// const mongoose = require("mongoose");
 const router = express.Router();
-const Users = require("../models/Users");
 const {
   filterByEmail,
   findUsers,
@@ -15,9 +13,8 @@ const { verifyInputsToUpdate } = require("../controllers/functions");
 router.get("/", async function (req, res) {
   const { userEmail } = req.query;
   try {
-    const listUsers = await findUsers();
     if (userEmail) {
-      const usersfilterByEmail = await filterByEmail(listUsers, userEmail);
+      const usersfilterByEmail = await filterByEmail(userEmail);
       usersfilterByEmail
         ? res.json({
             succes: true,
@@ -30,6 +27,7 @@ router.get("/", async function (req, res) {
             payload: null,
           });
     } else {
+      const listUsers = await findUsers();
       listUsers
         ? res.json({
             succes: true,
