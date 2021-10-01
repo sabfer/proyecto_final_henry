@@ -50,8 +50,7 @@ router.post("/register", async function (req, res) {
 
   if (password && email) {
     try {
-      const users = await findUsers();
-      const checkUserExist = await filterByEmail(users, email);
+      const checkUserExist = await filterByEmail(email);
       if (checkUserExist) {
         return res.json({
           succes: false,
