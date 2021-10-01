@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var ComerceTypeSchema = new Schema({
+var CommerceTypeSchema = new Schema({
   name: { type: String, required: true },
 });
 
-module.exports = mongoose.model("ComerceType", ComerceTypeSchema);
+module.exports = mongoose.model("CommerceType", CommerceTypeSchema);
