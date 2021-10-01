@@ -1,7 +1,5 @@
 const express = require("express");
-// const mongoose = require("mongoose");
 const router = express.Router();
-const Users = require("../models/Users");
 const {
   filterByEmail,
   findUsers,
@@ -15,16 +13,32 @@ const { verifyInputsToUpdate } = require("../controllers/functions");
 router.get("/", async function (req, res) {
   const { userEmail } = req.query;
   try {
-    const listUsers = await findUsers();
     if (userEmail) {
-      const usersfilterByEmail = await filterByEmail(listUsers, userEmail);
+      const usersfilterByEmail = await filterByEmail(userEmail);
       usersfilterByEmail
-        ? res.status(200).send(usersfilterByEmail)
-        : res.status(404).send("No users with that email were found");
+        ? res.json({
+            succes: true,
+            msg: "Usuario encontrado",
+            payload: usersfilterByEmail,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontro un usuario con ese email",
+            payload: null,
+          });
     } else {
+      const listUsers = await findUsers();
       listUsers
-        ? res.status(200).send(listUsers)
-        : res.status(404).send("No users found");
+        ? res.json({
+            succes: true,
+            msg: "Usuarios encontrados",
+            payload: listUsers,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron usuarios",
+            payload: null,
+          });
     }
   } catch (err) {
     console.error(err);
@@ -36,24 +50,35 @@ router.post("/register", async function (req, res) {
 
   if (password && email) {
     try {
-      const users = await findUsers();
-      const checkUserExist = await filterByEmail(users, email);
+      const checkUserExist = await filterByEmail(email);
       if (checkUserExist) {
         return res.json({
-          status: false,
-          msg: "Ya existe una cuenta con ese correo",
+          succes: false,
+          msg: "El usuario ya existe, ingrese otro email",
+          payload: null,
         });
       }
       const newUser = await createUser(password, email);
       if (newUser) {
-        return res.json({ status: true, msg: "User created succesfully" });
+        return res.json({
+          succes: true,
+          msg: "Usuario creado exitosamente",
+          payload: newUser,
+        });
       }
-      return res.status(404).send("User could not be created");
     } catch (err) {
-      console.error(err);
+      res.json({
+        succes: false,
+        msg: "No se pudo crear el usuario",
+        payload: null,
+      });
     }
   }
-  res.status(404).send("Incomplete required inputs");
+  res.json({
+    succes: false,
+    msg: "Campos requeridos incompletos",
+    payload: null,
+  });
 });
 
 router.delete("/:id", async (req, res) => {
@@ -61,10 +86,14 @@ router.delete("/:id", async (req, res) => {
   try {
     const userDelete = await deleteUserById(id);
     userDelete
-      ? res.status(200).send("User delete succesfully")
-      : res.status(404).send("Cannot delete user");
+      ? res.json({
+          succes: true,
+          msg: "Usuario eliminado exitosamente",
+          payload: null,
+        })
+      : res.json({ succes: false, msg: "Cannot delete user", payload: null });
   } catch (err) {
-    res.status(404).send(err);
+    res.status(404);
   }
 });
 
@@ -75,14 +104,25 @@ router.put("/:id", async (req, res) => {
     try {
       const userUpdated = await updateById(id, fieldsToUpdate);
       if (userUpdated) {
-        return res.status(200).send("User updated successfully!");
+        return res.json({
+          succes: true,
+          msg: "Usuario modificado exitosamente",
+          payload: userUpdated,
+        });
       }
-      return res.status(404).send("The user could not be modified");
     } catch (err) {
-      return res.status(404).send(err);
+      return res.json({
+        succes: false,
+        msg: "No se pudo modificar el usuario",
+        payload: null,
+      });
     }
   }
-  res.status(404).send("The fields to modify are not valid");
+  res.json({
+    succes: false,
+    msg: "Los campos a modificar no son validos",
+    payload: null,
+  });
 });
 
 module.exports = router;
