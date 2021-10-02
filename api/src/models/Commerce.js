@@ -4,11 +4,10 @@ var User = mongoose.model("User");
 var CommerceType = mongoose.model("CommerceType");
 
 var CommerceSchema = new Schema({
-  userId: { type: Schema.ObjectId, ref: "User", required: true },
+  userId: { type: Schema.ObjectId, ref: "User" },
   typeCommerceId: {
     type: Schema.ObjectId,
     ref: "CommerceType",
-    required: true,
   },
   name: { type: String, required: true },
   phone: { type: Number },
