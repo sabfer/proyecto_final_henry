@@ -11,39 +11,73 @@ const {
 
 router.get("/", async function (req, res) {
   const { name } = req.query;
-  try {
-    if (name) {
-      const product = await searchProduct(name);
-      product
-        ? res.send(product)
-        : res
-            .status(404)
-            .json({ status: false, msg: "Product whit that name not exists!" });
-    } else {
-      const listProducts = await searchProducts();
-      listProducts
-        ? res.status(200).json(listProducts)
-        : res.status(404).json({ status: false, msg: "Products not exists" });
+
+    try {
+      if (name) {
+        const product = await searchProduct(name);
+        product
+          ? res.json({
+              succes: true,
+              msg: "Producto encontrado",
+              payload: product,
+          })
+          : res.json({
+              succes: false,
+              msg: "No se encontro el producto",
+              payload: null,
+          })
+      } else {
+        const listProducts = await searchProducts();
+        listProducts
+          ? res.json({
+            succes: true,
+            msg: "Productos encontrados",
+            payload: listProducts,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron productos",
+            payload: null,
+          });
+      }
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
 });
 
-router.post("/", async function (req, res) {
-  const { price, name, productType } = req.body;
-  try {
-    const newProduct = await filterProduct(name);
+router.post("/add", async function (req, res) {
+  const payload  = req.body;
 
-    if (newProduct) {
-      res.status(404).json({ status: false, msg: "Product already exists" });
-    } else {
-      const product = await addProduct(price, name, productType);
-      res.status(200).json(product);
+  if(payload) {
+    try {
+      const product = await filterProduct(payload.name);
+      if (product) {
+        return res.json({
+          succes: false,
+          msg: "El producto ya existe",
+          payload: null,
+        });
+      } else {
+        const newProduct = await addProduct(payload);
+        return res.json({
+          succes: true,
+          msg: "Producto creado exitosamente",
+          payload: newProduct,
+        });
+      }
+    } catch (err) {
+      res.json({
+        succes: false,
+        msg: "No se pudo crear el producto",
+        payload: null,
+      });
     }
-  } catch (err) {
-    console.log(err);
   }
+  res.json({
+    succes: false,
+    msg: "Campos requeridos incompletos",
+    payload: null,
+  });
 });
 
 router.delete("/:id", async function (req, res) {
@@ -51,10 +85,16 @@ router.delete("/:id", async function (req, res) {
   try {
     const eliminated = await deleteProduct(id);
     eliminated
-      ? res
-          .status(200)
-          .json({ status: true, msg: "Product deleted successfully!" })
-      : null;
+    ? res.json({
+      success: true,
+      msg: "Producto eliminado exitosamente",
+      payload: null,
+    })
+  : res.json({
+      succes: false,
+      msg: "No se pudo eliminar el producto",
+      payload: null,
+    });
   } catch (err) {
     res.status(400).json({ status: false, msg: "Product not exists" });
   }
@@ -66,13 +106,19 @@ router.put("/:id", async function (req, res) {
 
   try {
     const update = await updateProduct(id, productsUpdate);
-    update
-      ? res
-          .status(200)
-          .json({ status: true, msg: "Product updated successfully!" })
-      : null;
+    if(update){
+      return res.json({
+        success: true,
+        msg: "Producto modificado exitosamente",
+        payload: userUpdated,
+      });
+    }
   } catch (err) {
-    res.status(404).json({ status: false, msg: "Product not exist" });
+    return res.json({
+      success: false,
+      msg: "No se pudo modificar el producto",
+      payload: null,
+    });
   }
 });
 
