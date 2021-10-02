@@ -5,9 +5,7 @@ const saltRounds = 10;
 
 const users = new Schema({
   password: String,
-  username: String,
   email: String,
-  post: String,
 });
 
 users.pre("save", function (next) {

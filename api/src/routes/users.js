@@ -1,26 +1,132 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
+const {
+  filterByEmail,
+  findUsers,
+  createUser,
+  deleteUserById,
+  updateById,
+} = require("../controllers/users");
 
-const Users = require("../models/Users");
+const { verifyInputsToUpdate } = require("../controllers/functions");
 
 router.get("/", async function (req, res) {
-  const listUsers = await Users.find();
-  res.send(listUsers);
+  const { userEmail } = req.query;
+  try {
+    if (userEmail) {
+      const usersfilterByEmail = await filterByEmail(userEmail);
+      usersfilterByEmail
+        ? res.json({
+            success: true,
+            msg: "Usuario encontrado",
+            payload: usersfilterByEmail,
+          })
+        : res.json({
+            success: false,
+            msg: "No se encontro un usuario con ese email",
+            payload: null,
+          });
+    } else {
+      const listUsers = await findUsers();
+      listUsers
+        ? res.json({
+            success: true,
+            msg: "Usuarios encontrados",
+            payload: listUsers,
+          })
+        : res.json({
+            success: false,
+            msg: "No se encontraron usuarios",
+            payload: null,
+          });
+    }
+  } catch (err) {
+    console.error(err);
+  }
 });
 
-router.post("/", async function (req, res) {
-  const { password, username, email, post } = req.body;
+router.post("/register", async function (req, res) {
+  const { password, email } = req.body;
 
-  const user = await new Users({
-    password,
-    username,
-    email,
-    post,
+  if (password && email) {
+    try {
+      const checkUserExist = await filterByEmail(email);
+      if (checkUserExist) {
+        return res.json({
+          success: false,
+          msg: "El usuario ya existe, ingrese otro email",
+          payload: null,
+        });
+      }
+      const newUser = await createUser(password, email);
+      if (newUser) {
+        return res.json({
+          success: true,
+          msg: "Usuario creado exitosamente",
+          payload: newUser,
+        });
+      }
+    } catch (err) {
+      res.json({
+        success: false,
+        msg: "No se pudo crear el usuario",
+        payload: null,
+      });
+    }
+  }
+  res.json({
+    success: false,
+    msg: "Campos requeridos incompletos",
+    payload: null,
   });
+});
 
-  await user.save();
-  res.send(user);
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userDelete = await deleteUserById(id);
+    userDelete
+      ? res.json({
+          success: true,
+          msg: "Usuario eliminado exitosamente",
+          payload: null,
+        })
+      : res.json({
+          succes: false,
+          msg: "No se pudo eliminar el usuario",
+          payload: null,
+        });
+  } catch (err) {
+    res.status(404);
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const fieldsToUpdate = req.body;
+  if (verifyInputsToUpdate(fieldsToUpdate, ["email", "password"])) {
+    try {
+      const userUpdated = await updateById(id, fieldsToUpdate);
+      if (userUpdated) {
+        return res.json({
+          success: true,
+          msg: "Usuario modificado exitosamente",
+          payload: userUpdated,
+        });
+      }
+    } catch (err) {
+      return res.json({
+        success: false,
+        msg: "No se pudo modificar el usuario",
+        payload: null,
+      });
+    }
+  }
+  res.json({
+    success: false,
+    msg: "Los campos a modificar no son validos",
+    payload: null,
+  });
 });
 
 module.exports = router;

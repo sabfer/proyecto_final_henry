@@ -1,26 +1,79 @@
-const express = require("express")
-const mongoose = require('mongoose');
-const router = express.Router()
-
-const Products = require("../models/Products");
+const express = require("express");
+const router = express.Router();
+const {
+  searchProduct,
+  searchProducts,
+  filterProduct,
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} = require("../controllers/products.js");
 
 router.get("/", async function (req, res) {
-    const listProducts = await Products.find();
-    res.send(listProducts); 
-}); 
-
+  const { name } = req.query;
+  try {
+    if (name) {
+      const product = await searchProduct(name);
+      product
+        ? res.send(product)
+        : res
+            .status(404)
+            .json({ status: false, msg: "Product whit that name not exists!" });
+    } else {
+      const listProducts = await searchProducts();
+      listProducts
+        ? res.status(200).json(listProducts)
+        : res.status(404).json({ status: false, msg: "Products not exists" });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 router.post("/", async function (req, res) {
+  const { price, name, productType } = req.body;
+  try {
+    const newProduct = await filterProduct(name);
 
-    const {price, type} = req.body;
+    if (newProduct) {
+      res.status(404).json({ status: false, msg: "Product already exists" });
+    } else {
+      const product = await addProduct(price, name, productType);
+      res.status(200).json(product);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-    const product = await new Products({
-        price,
-        type,
-    })
+router.delete("/:id", async function (req, res) {
+  const { id } = req.params;
+  try {
+    const eliminated = await deleteProduct(id);
+    eliminated
+      ? res
+          .status(200)
+          .json({ status: true, msg: "Product deleted successfully!" })
+      : null;
+  } catch (err) {
+    res.status(400).json({ status: false, msg: "Product not exists" });
+  }
+});
 
-    await product.save();
-    res.send(product);
-})
+router.put("/:id", async function (req, res) {
+  const { id } = req.params;
+  const productsUpdate = req.body;
+
+  try {
+    const update = await updateProduct(id, productsUpdate);
+    update
+      ? res
+          .status(200)
+          .json({ status: true, msg: "Product updated successfully!" })
+      : null;
+  } catch (err) {
+    res.status(404).json({ status: false, msg: "Product not exist" });
+  }
+});
 
 module.exports = router;
