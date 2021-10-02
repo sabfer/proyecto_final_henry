@@ -8,7 +8,7 @@ const searchProduct = async (name) => {
 
 const searchProducts = async () => {
   const products = await Products.find()
-  return products;
+  return products ? products : null;
 };
 
 // POSTS
