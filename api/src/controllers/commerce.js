@@ -3,7 +3,10 @@ const Commerce = require("../models/Commerce");
 
 const searchCommerces = async () => {
   const commerces = await Commerce.find()
-    .populate("userId", { email: 1, _id: 0 })
+    .populate("userId", {
+      email: 1,
+      _id: 0,
+    })
     .populate("typeCommerceId", { name: 1, _id: 0 });
   return commerces.length ? commerces : null;
 };
