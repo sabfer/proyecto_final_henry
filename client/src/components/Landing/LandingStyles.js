@@ -10,7 +10,7 @@ export const StyledLink = styled(Link)`
   width: ${(props) => props.width || "unset"};
   justify-self: ${(props) => props.justifySelf || "unset"};
   &:hover {
-    text-decoration: ${(props) => props.hoverUnderline || "none"};
+    text-decoration: ${(props) => props.hover || "none"};
   }
 `;
 

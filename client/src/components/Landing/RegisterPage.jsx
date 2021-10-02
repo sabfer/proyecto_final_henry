@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../actions/index";
+import { useHistory } from "react-router";
 import {
   Container,
   Header,
@@ -22,14 +22,21 @@ import {
   GSubmit,
   ErrorRegistro,
 } from "./LandingStyles";
+import { registerUser } from "../../actions/index";
+import passwordValidation from "../../services/passwordValidation";
 
 function Register() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const singUpError = useSelector((state) => state.singUpErrors);
   const [input, setInput] = useState({
     email: "",
     password: "",
-    /* confirmPassword: "", */
+    confirmPassword: "",
+  });
+  const [passwordError, setPasswordError] = useState({
+    status: true,
+    msg: "Las contraseñas deben ser iguales",
   });
 
   function handleChange(e) {
@@ -39,13 +46,32 @@ function Register() {
     });
   }
 
+  useEffect(() => {
+    if (singUpError.success) {
+      history.push("/home");
+    }
+  }, [history, singUpError]);
+
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(registerUser(input));
-    setInput({
-      email: "",
-      password: "",
-    });
+    let validate = passwordValidation(input);
+    if (validate) {
+      dispatch(registerUser(input));
+      setInput({
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } else {
+      setPasswordError({
+        ...passwordError,
+        status: validate,
+      });
+      setInput({
+        password: "",
+        confirmPassword: "",
+      });
+    }
   }
 
   return (
@@ -60,7 +86,7 @@ function Register() {
               <StyledLink
                 to="/"
                 margin="12px"
-                hoverUnderline="underline solid rgb(255,255,255)"
+                hover="underline solid rgb(255,255,255)"
               >
                 Inicio
               </StyledLink>
@@ -122,7 +148,10 @@ function Register() {
                 Contraseña
               </Placeholder>
             </InputContainers>
-            {/* <InputContainers>
+            {!passwordError.status && (
+              <ErrorRegistro>{passwordError.msg}</ErrorRegistro>
+            )}
+            <InputContainers>
               <Inputs
                 required
                 id="confirmPassword"
@@ -136,7 +165,7 @@ function Register() {
               <Placeholder htmlFor="confirmPassword" className="placeholder">
                 Confirmar contraseña
               </Placeholder>
-            </InputContainers> */}
+            </InputContainers>
             <SubmitContainer>
               <Submit type="submit">Registrarme</Submit>
               <Submit>

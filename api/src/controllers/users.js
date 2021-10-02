@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
 const Users = require("../models/Users");
-const { verifyInputsToUpdate } = require("./functions");
 
 const findUsers = async () => {
   const results = await Users.find();
   return results.length ? results : null;
 };
 
-const filterByEmail = async (list, email) => {
+const filterByEmail = async (email) => {
+  const list = await findUsers();
   const filterByEmail = list.filter((user) => {
     return user.email.toLocaleLowerCase().includes(email.toLocaleLowerCase());
   });
   return filterByEmail.length ? filterByEmail : null;
+};
+
+const findByEmail = async (userEmail) => {
+  const usuario = await Users.findOne({ email: userEmail });
+  return usuario;
 };
 
 const createUser = async function (password, email) {
@@ -34,12 +39,13 @@ const updateById = async function (id, fieldsToUpdate) {
     fieldsToUpdate,
     { new: true }
   );
-  return userUpdated ? true : false;
+  return userUpdated ? userUpdated : false;
 };
 
 module.exports = {
   findUsers,
   filterByEmail,
+  findByEmail,
   createUser,
   deleteUserById,
   updateById,
