@@ -8,8 +8,7 @@ const searchProduct = async (name) => {
 
 const searchProducts = async () => {
   const products = await Products.find()
-/*   .populate("commerceId", { name: 1, _id: 0}) */
-  return products ? products : null;
+  return products;
 };
 
 // POSTS
