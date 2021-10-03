@@ -60,9 +60,10 @@ export const OptionsBar = styled.div`
 
 export const Body = styled.section`
   width: 100%;
-  height: 100%;
-  padding: 0 4rem;
-  display: grid;
+  height: calc(100vh - 5.62rem);
+  padding: ${(props) => props.padding || "0 4rem"};
+  display: ${(props) => props.display || "grid"};
+  justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
   gap: 2rem 0;
   background-color: rgb(234, 234, 234);

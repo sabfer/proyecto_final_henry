@@ -2,14 +2,20 @@ import {} from "../actions/index";
 
 const initialState = {
   singUpErrors: {},
+  products: {},
 };
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
+const rootReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case "REGISTER_USER":
       return {
         ...state,
-        singUpErrors: action.payload,
+        singUpErrors: payload,
+      };
+    case "GET_PRODUCTS":
+      return {
+        ...state,
+        products: payload,
       };
     default:
       return state;
