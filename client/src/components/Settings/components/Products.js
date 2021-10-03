@@ -13,8 +13,6 @@ import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import MOCK_DATA from "./MOCK_DATA.json";
-
 export default function Productos() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
