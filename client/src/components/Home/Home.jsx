@@ -22,11 +22,7 @@ export default function Home() {
         <Button buttonColor="rgb(255, 0, 0)">Salir</Button>
       </Header>
       <OptionsBar>
-        <Button
-          width="11.25rem"
-          justify="space-between"
-          padding="0.625rem"
-        >
+        <Button width="11.25rem" justify="space-between" padding="0.625rem">
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear usuario
         </Button>
@@ -64,9 +60,10 @@ export default function Home() {
 
       <Body>
         <SelectContainer>
+          <p>Comercio</p>
           <DivSelect>
             <Select>
-              <option hidden>Type of diet</option>
+              <option hidden>Seleccionar comercio</option>
               <option value="All">Everything</option>
               <span className="Focus"></span>
             </Select>
@@ -77,7 +74,7 @@ export default function Home() {
           <TakeOutModule />
         </BodyTop>
         <SalonModule />
-      </Body> 
+      </Body>
     </div>
   );
 }
