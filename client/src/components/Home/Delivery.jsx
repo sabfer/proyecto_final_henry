@@ -6,17 +6,19 @@ import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 
 export default function DeliveryModule() {
-  const [stateModal7, setStateModal7] = useState(false);
+  const [stateModal5, setStateModal5] = useState(false);
   return (
     <Delivery>
-      <OrderButton onClick={()=>setStateModal7(!stateModal7)} width="10rem" justify="space-between" padding="0.625rem">
+      <OrderButton onClick={()=>setStateModal5(!stateModal5)} width="10rem" justify="space-between" padding="0.625rem">
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
-      {/*Modal 7*/}
+      
+      {/*Modal 5*/}
       <Modal
-        state={stateModal7}
-        setStateModal={setStateModal7}
+        id = {5}
+        state={stateModal5}
+        setStateModal={setStateModal5}
         title="Crear pedido para llevar"
         label1="Pedido n°"
         label2="Productos"

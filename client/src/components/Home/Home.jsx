@@ -15,7 +15,6 @@ export default function Home() {
   const [stateModal3, setStateModal3] = useState(false);
 
   //Estado para la ventana 4(MODIFICAR PEDIDO) cuando este habilitada
-  // const [stateModal4, setStateModal4] = useState(false);
 
   return (
     <div>
@@ -99,16 +98,6 @@ export default function Home() {
         modalContainerBox={true}
         modalDispatch={postProduct}
       />
-
-      {/* props Modal 4 para cuando esté habilitada */}
-      {/* Modal 4 */}
-      {/* <Modal
-        state={stateModal4}
-        setStateModal={setStateModal4}
-        title="Modificar Pedido"
-        label1="Productos"
-        modalContainerBox={false}
-      /> */}
     </div>
   );
 }

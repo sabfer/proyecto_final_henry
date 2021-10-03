@@ -6,11 +6,11 @@ import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 
 export default function SalonModule() {
-  const [stateModal5, setStateModal5] = useState(false);
+  const [stateModal4, setStateModal4] = useState(false);
   return (
     <Salon>
       <OrderButton
-        onClick={() => setStateModal5(!stateModal5)}
+        onClick={() => setStateModal4(!stateModal4)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -19,10 +19,11 @@ export default function SalonModule() {
         Crear pedido
       </OrderButton>
 
-      {/* Modal 5 */}
+      {/* Modal 4 */}
       <Modal
-        state={stateModal5}
-        setStateModal={setStateModal5}
+        id = {4}
+        state={stateModal4}
+        setStateModal={setStateModal4}
         title="Crear pedido de Salón"
         label1="Mesa"
         label2="Productos"

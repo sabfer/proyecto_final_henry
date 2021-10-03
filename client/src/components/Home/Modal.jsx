@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import {postProduct} from "../../actions"
+import { useDispatch } from "react-redux";
 
 export default function Modal({
   state,
@@ -10,10 +12,9 @@ export default function Modal({
   label3,
   label4,
   modalContainerBox,
-  modalDispatch,
   id,
 }) {
-  // const dispatch=useDispatch();
+  const dispatch=useDispatch();
   const closeIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -27,148 +28,123 @@ export default function Modal({
     </svg>
   );
 
-  const[inputMod1, setInputMod1] = useState({
+  const[input, setInput] = useState({
     name:"",
     user:"",
     pass:"",
-  })
-
-  const[inputMod2, setInputMod2] = useState({
-    name:"",
     location:"",
-  })
-
-  const[inputMod3, setInputMod3] = useState({
-    name:"",
     description:"",
     price:"",
-    type:""
+    productType:"",
+    table:"",
+    products:"",
+    orderD:"",
+    orderTA:"",
   })
-  
 
   const conditionalForm = () => {
+    //Formulario: "CREAR USUARIO"
     if (id === 1) {
       return (
         <form >
           <label>{label1}</label>
           <br />
-          <input type="text" name="name" value={inputMod1.name} onChange={handleChange}/>
+          <input type="text" name="name" value={input.name} onChange={handleChange}/>
           <label>{label2}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="user" value={input.user} onChange={handleChange} />
           <label>{label3}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="pass" value={input.pass} onChange={handleChange}/>
         </form>
       );
     }
+    //Formulario: "CREAR COMERCIO"
     if (id === 2) {
       return (
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="name" value={input.name} onChange={handleChange} />
           <label>{label2}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="location" value={input.location} onChange={handleChange} />
         </form>
       );
     }
+    //Formulario: "CREAR PRODUCTO"
     if (id === 3) {
       return (
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" />
-          <label>{label2}</label>
-          <br />
-          <input type="text" />
+          <input type="text" name="name" value={input.name} onChange={handleChange}/>
           <label>{label3}</label>
           <br />
-          <input type="text" />
+          <input type="number" name="price" value={input.price} onChange={handleChange}/>
           <label>{label4}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="productType" value={input.productType} onChange={handleChange} />
+        </form>
+      );
+    }    
+    // Formulario: "CREAR PEDIDO SALON"
+    if (id === 4) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="string" name="table" value={input.table} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
+          <label>{label3}</label>
+          <br />
+          <input type="text" name="user" value={input.user} onChange={handleChange} />          
         </form>
       );
     }
-    // if ("Modal4") {
-    //   return (
-    //     <form>
-    //       <label>{label1}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label2}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label3}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label4}</label>
-    //       <br />
-    //       <input type="text" />
-    //     </form>
-    //   );
-    // }
-    // if ("Modal5") {
-    //   return (
-    //     <form>
-    //       <label>{label1}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label2}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label3}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label4}</label>
-    //       <br />
-    //       <input type="text" />
-    //     </form>
-    //   );
-    // }
-    // if ("Modal6") {
-    //   return (
-    //     <form>
-    //       <label>{label1}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label2}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label3}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label4}</label>
-    //       <br />
-    //       <input type="text" />
-    //     </form>
-    //   );
-    // }
-    // if ("Modal7") {
-    //   return (
-    //     <form>
-    //       <label>{label1}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label2}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label3}</label>
-    //       <br />
-    //       <input type="text" />
-    //       <label>{label4}</label>
-    //       <br />
-    //       <input type="text" />
-    //     </form>
-    //   );
-    // }
+    // Formulario: "CREAR PEDIDO PARA LLEVAR"
+    if (id === 5) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="orderD" value={input.orderD} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
+        </form>
+      );
+    }
+    // Formulario: "CREAR PEDIDO TAKE AWAY" --> Refactorizar en un solo form el 6 y 7
+    if (id === 6) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="orderTA" value={input.orderTA} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
+        </form>
+      );
+    }
   };
 
   function handleSubmit(e) {
-    // e.preventDefault();
-    alert("acepté el formulario");
+  // e.preventDefault();
+    if(input.name && input.user && input.pass) dispatch((input))
+    if(input.name && input.location) dispatch((input))
+    if(input.name && input.price && input.productType ) dispatch(postProduct(input))
+    if(input.table && input.products && input.user ) dispatch((input))  
+  }
+
+  function handleChange(e){
+    setInput({
+      ...input,
+      [e.target.name] : e.target.value
+    })
   }
 
   return (
