@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Header, Title, Button, StyledLink, Body } from "../StyledComponents/";
+import { Header, Title, Button, StyledLink, Body } from "../../css";
 import {
-  LateralBar,
-  LateralBarOptions,
-  LateralBarTitle,
-  RightSideOptions,
-} from "./SettingStyles";
+  AjustesIzquierda,
+  OpcionesIzquierda,
+  TituloIzquierda,
+  AjustesDerecha,
+} from "../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
-import Products from "./Products";
-import Generals from "./Generals";
-import Comercios from "./Comercios";
-import Users from "./Users";
+import Products from "./components/Products";
+import Generals from "./components/Generals";
+import Comercios from "./components/Comercios";
+import Users from "./components/Users";
 
 export default function Settings() {
   const [settings, setSettings] = useState({
@@ -65,26 +65,26 @@ export default function Settings() {
         </StyledLink>
       </Header>
       <Body display="flex" padding="4rem" justifycontent="space-between">
-        <LateralBar>
-          <LateralBarTitle>Categorías</LateralBarTitle>
-          <LateralBarOptions onClick={(e) => handleGenerals(e)}>
+        <AjustesIzquierda>
+          <TituloIzquierda>Categorías</TituloIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleGenerals(e)}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Generales</p>
-          </LateralBarOptions>
-          <LateralBarOptions onClick={(e) => handleProducts(e)}>
+          </OpcionesIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleProducts(e)}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Productos</p>
-          </LateralBarOptions>
-          <LateralBarOptions onClick={(e) => handleUsers(e)}>
+          </OpcionesIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleUsers(e)}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Usuarios</p>
-          </LateralBarOptions>
-          <LateralBarOptions onClick={(e) => handleCommerce(e)}>
+          </OpcionesIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleCommerce(e)}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Comercios</p>
-          </LateralBarOptions>
-        </LateralBar>
-        <RightSideOptions>{renderSwitch(settings.show)}</RightSideOptions>
+          </OpcionesIzquierda>
+        </AjustesIzquierda>
+        <AjustesDerecha>{renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );

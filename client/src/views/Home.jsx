@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { BodyTop, SelectContainer, DivSelect, Select } from "./HomeStyles";
-import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
+import { BodyTop, SelectContainer, DivSelect, Select } from "../components/Home/HomeStyles";
+import {
+  OptionsBar,
+  Body,
+  Header,
+  Title,
+  Button,
+  StyledLink,
+} from "../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
-import DeliveryModule from "./Delivery";
-import TakeOutModule from "./TakeOutModule";
-import SalonModule from "./SalonModule";
+import DeliveryModule from "../components/Home/Delivery";
+import TakeOutModule from "../components/Home/TakeOutModule";
+import SalonModule from "../components/Home/SalonModule";
 
 export default function Home() {
   return (
@@ -15,7 +22,11 @@ export default function Home() {
         <Button buttonColor="rgb(255, 0, 0)">Salir</Button>
       </Header>
       <OptionsBar>
-        <Button width="11.25rem" justify="space-between" padding="0.625rem">
+        <Button
+          width="11.25rem"
+          justify="space-between"
+          padding="0.625rem"
+        >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear usuario
         </Button>
@@ -66,7 +77,7 @@ export default function Home() {
           <TakeOutModule />
         </BodyTop>
         <SalonModule />
-      </Body>
+      </Body> 
     </div>
   );
 }
