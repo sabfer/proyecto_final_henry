@@ -14,15 +14,29 @@ export default function Home() {
         <Button buttonColor="rgb(255, 0, 0)">Salir</Button>
       </Header>
       <OptionsBar>
-        <Button width="11.25rem" justify="space-between" padding="0.625rem">
+        <Button
+          width="11.25rem"
+          justify="space-between"
+          padding="0.625rem"
+        >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear usuario
         </Button>
-        <Button width="11.9rem" justify="space-between" padding="0.625rem" buttonColor="rgb(0, 141, 101)">
+        <Button
+          width="11.9rem"
+          justify="space-between"
+          padding="0.625rem"
+          buttonColor="rgb(0, 141, 101)"
+        >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear comercio
         </Button>
-        <Button width="11.9rem" justify="space-between" padding="0.625rem" buttonColor="rgb(204, 0, 0)">
+        <Button
+          width="11.9rem"
+          justify="space-between"
+          padding="0.625rem"
+          buttonColor="rgb(204, 0, 0)"
+        >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear producto
         </Button>
@@ -34,7 +48,7 @@ export default function Home() {
           <TakeOutModule />
         </BodyTop>
         <SalonModule />
-      </Body>
+      </Body> 
     </div>
   );
 }

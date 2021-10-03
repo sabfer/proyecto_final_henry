@@ -33,7 +33,7 @@ function Login() {
               <StyledLink
                 to="/"
                 margin="12px"
-                hoverUnderline="underline solid rgb(255,255,255)"
+                hover="underline solid rgb(255,255,255)"
               >
                 Inicio
               </StyledLink>
@@ -49,7 +49,7 @@ function Login() {
 
       <FormContainer>
         <FormBody>
-          <FormHeaderText textShadow="text-shadow: 0px 5px 2px rgba(0, 0, 0, 0.5)">
+          <FormHeaderText textshadow="text-shadow: 0px 5px 2px rgba(0, 0, 0, 0.5)">
             <h2>Bienvenido</h2>
             <Overlay />
           </FormHeaderText>
