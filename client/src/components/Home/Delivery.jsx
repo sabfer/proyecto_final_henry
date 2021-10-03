@@ -3,7 +3,7 @@ import { OrderButton, Delivery, Orders, Order } from "./HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal";
+import Modal from "./Modal"
 
 export default function DeliveryModule() {
   const [stateModal5, setStateModal5] = useState(false);

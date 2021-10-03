@@ -117,7 +117,7 @@ export default function Modal({
         </form>
       );
     }
-    // Formulario: "CREAR PEDIDO TAKE AWAY" --> Refactorizar en un solo form el 6 y 7
+    // Formulario: "CREAR PEDIDO TAKE AWAY" 
     if (id === 6) {
       return (
         <form>

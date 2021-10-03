@@ -1,7 +1,6 @@
 import axios from "axios";
 
 // ---------- REGISTRO DE USUARIO ---------- \\
-
 export function registerUser(payload) {
   return function (dispatch) {
     axios
@@ -15,6 +14,7 @@ export function registerUser(payload) {
   };
 }
 
+// ---------- CREACIÓN DE PRODUCTO ---------- \\
 export function postProduct(payload) {
   return async function (dispatch) {
     var json = await axios.post("http://localhost:3001/products/add", payload);
@@ -23,6 +23,7 @@ export function postProduct(payload) {
   };
 }
 
+// ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
 export function getNameProducts(payload) {
   return async function (dispatch) {
     try {
@@ -36,5 +37,19 @@ export function getNameProducts(payload) {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+// ---------- OBTENER PRODUCTO ---------- \\
+export function getProducts(payload) {
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/products", payload)
+      .then((data) => {
+        return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }

@@ -18,7 +18,7 @@ export default function TakeOutModule() {
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
-      
+
       {/* Modal 6 */}
       <Modal
         id={6}

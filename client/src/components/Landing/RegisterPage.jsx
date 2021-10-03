@@ -21,23 +21,34 @@ import {
   Submit,
   GSubmit,
   ErrorRegistro,
+  FormTitle,
 } from "./LandingStyles";
 import { registerUser } from "../../actions/index";
-import passwordValidation from "../../services/passwordValidation";
+import {
+  passwordValidation,
+  emailValidation,
+} from "../../services/passwordValidation";
 
 function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const singUpError = useSelector((state) => state.singUpErrors);
+  // const singUpError = useSelector((state) => state.singUpErrors);
   const [input, setInput] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [passwordError, setPasswordError] = useState({
-    status: true,
-    msg: "Las contraseñas deben ser iguales",
+
+  const [signUpErrors, setSignUpErrors] = useState({
+    emailSucess: false,
+    emailNotValid: "Ya existe una cuenta con este correo electrónico.",
+    passwordSucess: false,
+    passwordNotValid: "Las contraseñas deben ser iguales",
   });
+  /* const [passwordError, setPasswordError] = useState({
+    status: Boolean,
+    msg:,
+  }); */
 
   function handleChange(e) {
     setInput({
@@ -47,27 +58,55 @@ function Register() {
   }
 
   useEffect(() => {
-    if (singUpError.success) {
+    if (signUpErrors.emailSucess && signUpErrors.passwordSucess) {
       history.push("/home");
     }
-  }, [history, singUpError]);
+  }, [history, signUpErrors]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    let validate = passwordValidation(input);
-    if (validate) {
+    let validatePass = passwordValidation(input);
+    let validateEmail = await emailValidation(input);
+    console.log("Password: " + validatePass, "Email:" + validateEmail);
+    if (validatePass && validateEmail === false) {
       dispatch(registerUser(input));
       setInput({
         email: "",
         password: "",
         confirmPassword: "",
       });
-    } else {
-      setPasswordError({
-        ...passwordError,
-        status: validate,
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSucess: true,
+        passwordSucess: true,
       });
+    }
+    if (validateEmail) {
+      if (validatePass) {
+        setSignUpErrors({
+          ...signUpErrors,
+          emailSucess: true,
+          passwordSucess: false,
+        });
+      }
       setInput({
+        ...input,
+        password: "",
+        confirmPassword: "",
+      });
+    }
+    if (!validatePass) {
+      console.log("Aquí");
+      if (!validateEmail) {
+        console.log("Aquí");
+        setSignUpErrors({
+          ...signUpErrors,
+          emailSucess: false,
+          passwordSucess: true,
+        });
+      }
+      setInput({
+        ...input,
         password: "",
         confirmPassword: "",
       });
@@ -105,9 +144,9 @@ function Register() {
       <FormContainer>
         <FormBody>
           <FormHeaderText
-            textShadow="0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
+            textshadow="0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
               0px 5px 2px rgba(0, 0, 0, 0.5)"
-            fontSize="2rem"
+            fontsize="2rem"
           >
             <h2>
               Registrate y conoce las <br /> bondades de una buena <br />{" "}
@@ -116,8 +155,7 @@ function Register() {
             <Overlay />
           </FormHeaderText>
           <FormInputs onSubmit={(e) => handleSubmit(e)}>
-            <h2>Registro</h2>
-            {singUpError && <ErrorRegistro>{singUpError.msg}</ErrorRegistro>}
+            <FormTitle margin="1rem 3.5rem 2.2rem;">Registro</FormTitle>
             <InputContainers>
               <Inputs
                 required
@@ -132,6 +170,9 @@ function Register() {
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
+              {signUpErrors.emailSucess && (
+                <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
+              )}
             </InputContainers>
             <InputContainers>
               <Inputs
@@ -147,10 +188,10 @@ function Register() {
               <Placeholder htmlFor="password" className="placeholder">
                 Contraseña
               </Placeholder>
+              {signUpErrors.passwordSucess && (
+                <ErrorRegistro>{signUpErrors.passwordNotValid}</ErrorRegistro>
+              )}
             </InputContainers>
-            {!passwordError.status && (
-              <ErrorRegistro>{passwordError.msg}</ErrorRegistro>
-            )}
             <InputContainers>
               <Inputs
                 required

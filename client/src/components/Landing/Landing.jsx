@@ -1,13 +1,13 @@
 import React from "react";
 import {
   Container,
-  Header,
-  Title,
   NavBar,
   MainContainer,
-  StyledLink,
   Footer,
+  Header,
   Button,
+  Title,
+  StyledLink,
 } from "./LandingStyles";
 
 function Landing() {
@@ -43,15 +43,15 @@ function Landing() {
         <StyledLink
           to="/login"
           gridRow="4 / 5"
-          gridColumn="2 / span 3"
+          gridcolumn="2 / span 3"
           width="45%"
-          justifySelf="center"
+          justifyself="center"
           alignSelf="center"
         >
           <Button
             width="100%"
             height="50px"
-            fontSize="1.5rem"
+            fontsize="1.5rem"
             borderRadius="12px"
             upper="uppercase"
           >

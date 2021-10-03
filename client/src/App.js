@@ -3,7 +3,7 @@ import Home from "./components/Home/Home";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Landing/Login";
 import Register from "./components/Landing/RegisterPage";
-import Products from "./components/Products/products";
+import Settings from "./components/Settings/Settings";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Route exact path="/login" render={() => <Login />} />
       <Route exact path="/register" render={() => <Register />} />
       <Route exact path="/home" render={() => <Home />} />
-      <Route exact path="/products" render={() => <Products />} />
+      <Route exact path="/settings" render={() => <Settings />} />
     </div>
   );
 }

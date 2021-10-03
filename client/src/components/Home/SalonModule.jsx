@@ -3,7 +3,7 @@ import { Salon, OrderButton, Orders, Order } from "./HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal";
+import Modal from "./Modal"
 
 export default function SalonModule() {
   const [stateModal4, setStateModal4] = useState(false);
@@ -28,9 +28,8 @@ export default function SalonModule() {
         label1="Mesa"
         label2="Productos"
         label3="Usuario"
-        modalContainerBox={true}
-      />
-      
+      />    
+
       <Orders ordersColumns="repeat(10, 1fr)">
         <Order>
           <FontAwesomeIcon icon={faPaintRoller} size="4x" />

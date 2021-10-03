@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameProducts } from "../../actions";
 
-export default function SearchBar() {
+export default function Search() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
 
