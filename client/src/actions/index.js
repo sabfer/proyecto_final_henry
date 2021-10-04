@@ -17,8 +17,15 @@ export function registerUser(payload) {
 // ---------- CREACIÓN DE PRODUCTO ---------- \\
 export function postProduct(payload) {
   return async function (dispatch) {
-    var json = await axios.post("http://localhost:3001/products/add", payload);
-    return json;
+    try {
+      var json = await axios.post(
+        "http://localhost:3001/products/add",
+        payload
+      );
+      return dispatch({ type: "POST_PRODUCTS", payload: json });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 
@@ -56,7 +63,10 @@ export function getProducts(payload) {
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
   return async function (dispatch) {
-    var json = await axios.post("http://localhost:3001/commerce/register", payload);
+    var json = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload
+    );
     return json;
   };
 }
@@ -86,7 +96,6 @@ export function deleteProduct(payload) {
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
 export function updateProduct(payload, id) {
-  
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload);
     return dispatch({
