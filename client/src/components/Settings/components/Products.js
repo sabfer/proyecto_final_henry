@@ -13,7 +13,6 @@ import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import MOCK_DATA from "./MOCK_DATA.json";
 import Search from "./Search";
 
 export default function Productos() {
@@ -45,7 +44,7 @@ export default function Productos() {
           <tbody>
             {products.map((el) => {
               return (
-                <TableRow>
+                <TableRow key={el._id}>
                   <TableData>{el.name}</TableData>
                   <TableData>{el.productType}</TableData>
                   <TableData>{el.price}</TableData>
