@@ -66,9 +66,10 @@ export default function Home() {
 
       <Body>
         <SelectContainer>
+          <p>Comercio</p>
           <DivSelect>
             <Select>
-              <option hidden>Type of diet</option>
+              <option hidden>Seleccionar comercio</option>
               <option value="All">Everything</option>
               <span className="Focus"></span>
             </Select>

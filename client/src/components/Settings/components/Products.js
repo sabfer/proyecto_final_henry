@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProduct } from "../../../actions";
 
-import MOCK_DATA from "./MOCK_DATA.json";
 import Search from "./Search";
 
 export default function Productos() {
