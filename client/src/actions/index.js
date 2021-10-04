@@ -17,6 +17,7 @@ export function registerUser(payload) {
 // ---------- CREACIÓN DE PRODUCTO ---------- \\
 export function postProduct(payload) {
   return async function (dispatch) {
+    console.log('----------- payload en postProduct: ', payload)
     var json = await axios.post("http://localhost:3001/products/add", payload);
     //console.log(json);
     return json;
