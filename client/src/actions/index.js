@@ -43,7 +43,7 @@ export function getNameProducts(payload) {
 export function getProducts(payload) {
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/commerce", payload)
+      .get("http://localhost:3001/products", payload)
       .then((data) => {
         return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
       })
