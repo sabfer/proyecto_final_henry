@@ -6,8 +6,14 @@ import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
 import DeliveryModule from "./Delivery";
 import TakeOutModule from "./TakeOutModule";
 import SalonModule from "./SalonModule";
+import Modal from "./Modal";
 
 export default function Home() {
+  //Estado de las ventanas modales
+  const [stateModal1, setStateModal1] = useState(false);
+  const [stateModal2, setStateModal2] = useState(false);
+  const [stateModal3, setStateModal3] = useState(false);
+
   return (
     <div>
       <Header>
@@ -15,11 +21,17 @@ export default function Home() {
         <Button buttonColor="rgb(255, 0, 0)">Salir</Button>
       </Header>
       <OptionsBar>
-        <Button width="11.25rem" justify="space-between" padding="0.625rem">
+        <Button
+          onClick={() => setStateModal1(!stateModal1)}
+          width="11.25rem"
+          justify="space-between"
+          padding="0.625rem"
+        >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear usuario
         </Button>
         <Button
+          onClick={() => setStateModal2(!stateModal2)}
           width="11.9rem"
           justify="space-between"
           padding="0.625rem"
@@ -29,6 +41,7 @@ export default function Home() {
           Crear comercio
         </Button>
         <Button
+          onClick={() => setStateModal3(!stateModal3)}
           width="11.9rem"
           justify="space-between"
           padding="0.625rem"
@@ -67,6 +80,42 @@ export default function Home() {
         </BodyTop>
         <SalonModule />
       </Body>
+
+      {/* Modal 1 */}
+      <Modal
+        id={1}
+        state={stateModal1}
+        setStateModal={setStateModal1}
+        title="Crear Usuario Nuevo"
+        label1="Nombre"
+        label2="Usuario"
+        label3="Contraseña"
+        modalContainerBox={true}
+      />
+
+      {/* Modal 2 */}
+      <Modal
+        id={2}
+        state={stateModal2}
+        setStateModal={setStateModal2}
+        title="Crear Comercio"
+        label1="Nombre"
+        label2="Ubicación del Comercio"
+        modalContainerBox={false}
+      />
+
+      {/* Modal 3 */}
+      <Modal
+        id={3}
+        state={stateModal3}
+        setStateModal={setStateModal3}
+        title="Crear un Producto"
+        label1="Nombre"
+        label2="Descripción"
+        label3="Precio"
+        label4="Tipo de Producto"
+        modalContainerBox={true}
+      />
     </div>
   );
 }
