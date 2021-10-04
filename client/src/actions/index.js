@@ -48,9 +48,13 @@ export function getProducts(payload) {
 // ---------- CREACIÓN DE PRODUCTO ---------- \\
 export function postProduct(payload) {
   return async function (dispatch) {
-    console.log('----------- payload en postProduct: ', payload)
-    var json = await axios.post("http://localhost:3001/products/add", payload);
-    return json;
+    console.log("----------- payload en postProduct: ", payload);
+    var data = await axios
+      .post("http://localhost:3001/products/add", payload)
+      .then((data) => {
+        return data;
+      });
+    return data;
   };
 }
 
@@ -66,7 +70,6 @@ export function deleteProduct(payload) {
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
 export function updateProduct(payload, id) {
-  
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload);
     return dispatch({
@@ -111,7 +114,6 @@ export function deleteCommerce(payload) {
 
 // ---------- MODIFICAR COMERCIO ---------- \\
 export function updateCommerce(payload, id) {
-  
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/commerce/${id}`, payload);
     return dispatch({
@@ -134,7 +136,7 @@ export function getUsers(payload) {
   };
 }
 
-// ---------- ELIMINAR COMERCIO ---------- \\
+// ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload) {
   return async function (dispatch) {
     await axios.delete(`http://localhost:3001/users/${payload}`);
@@ -144,9 +146,8 @@ export function deleteUser(payload) {
   };
 }
 
-// ---------- MODIFICAR COMERCIO ---------- \\
+// ---------- MODIFICAR USUARIOS ---------- \\
 export function updateUsers(payload, id) {
-  
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/users/${id}`, payload);
     return dispatch({
