@@ -32,6 +32,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: payload,
       };
 
+    case "POST_COMMERCE":
+      return {
+        ...state,
+        commerces: payload,
+      };
+
     case "GET_COMMERCES":
       return {
         ...state,
