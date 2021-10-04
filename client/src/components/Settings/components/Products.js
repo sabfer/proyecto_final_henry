@@ -41,7 +41,7 @@ export default function Productos() {
           <tbody>
             {products.map((el) => {
               return (
-                <TableRow>
+                <TableRow key={el._id}>
                   <TableData>{el.name}</TableData>
                   <TableData>{el.productType}</TableData>
                   <TableData>{el.price}</TableData>
