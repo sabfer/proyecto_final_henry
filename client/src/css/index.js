@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Button = styled.button`
   width: ${(props) => props.width || "5rem"};
   padding: ${(props) => props.padding || 0};
-  height: 2.5rem;
+  height: ${(props) => props.height || "2.5rem;"};
   display: flex;
   align-items: center;
   justify-content: ${(props) => props.justify || "center"};
@@ -60,11 +60,10 @@ export const OptionsBar = styled.div`
 
 export const Body = styled.section`
   width: 100%;
-  height: calc(100vh - 5.62rem);
+  height: 100%;
   padding: ${(props) => props.padding || "0 4rem"};
   display: ${(props) => props.display || "grid"};
   justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
   gap: 2rem 0;
-  background-color: rgb(234, 234, 234);
 `;

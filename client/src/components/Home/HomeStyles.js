@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../StyledComponents";
+import { Button } from "../../css";
 
 export const OrderButton = styled(Button)`
   align-self: flex-end;

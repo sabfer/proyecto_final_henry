@@ -5,18 +5,35 @@ const initialState = {
   products: {},
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
+const rootReducer = (state = initialState, { type, payload } ) => {
   switch (type) {
     case "REGISTER_USER":
       return {
         ...state,
         singUpErrors: payload,
       };
-    case "GET_PRODUCTS":
+
+    case "POST_PRODUCTS":
       return {
         ...state,
         products: payload,
       };
+
+    case "GET_NAME_PRODUCT":
+      return {
+        ...state,
+        products: payload,
+      };
+      
+      case "GET_PRODUCTS":
+        return {
+          ...state,
+          products: payload,
+        };
+      
+
+
+
     default:
       return state;
   }
