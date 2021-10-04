@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import MOCK_DATA from "./MOCK_DATA.json";
+import Search from "./Search";
 
 export default function Productos() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export default function Productos() {
     <div>
       <h1>Productos</h1>
       {/* <Table data={products}></Table> */}
+      <Search/>
       {Array.isArray(products) ? (
         <Table>
           <TableHead>

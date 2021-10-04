@@ -3,11 +3,14 @@ import { TakeOut, OrderButton, Orders, Order } from "./HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
+import Modal from "./Modal";
 
 export default function TakeOutModule() {
+  const [stateModal6, setStateModal6] = useState(false);
   return (
     <TakeOut>
       <OrderButton
+        onClick={() => setStateModal6(!stateModal6)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -15,6 +18,17 @@ export default function TakeOutModule() {
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
+
+      {/* Modal 6 */}
+      <Modal
+        id={6}
+        state={stateModal6}
+        setStateModal={setStateModal6}
+        title="Crear pedido para llevar"
+        label1="Pedido n°"
+        label2="Productos"
+        modalContainerBox={false}
+      />
 
       <Orders>
         <Order>

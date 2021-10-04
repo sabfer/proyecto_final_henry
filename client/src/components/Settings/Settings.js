@@ -13,6 +13,7 @@ import Generals from "./components/Generals";
 import Comercios from "./components/Comercios";
 import Users from "./components/Users";
 
+
 export default function Settings() {
   const [settings, setSettings] = useState({
     show: "",
