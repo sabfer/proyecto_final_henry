@@ -18,8 +18,10 @@ export default function TakeOutModule() {
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
+
       {/* Modal 6 */}
       <Modal
+        id={6}
         state={stateModal6}
         setStateModal={setStateModal6}
         title="Crear pedido para llevar"

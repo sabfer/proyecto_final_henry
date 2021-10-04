@@ -1,17 +1,20 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import {postProduct} from "../../actions"
+import { useDispatch } from "react-redux";
 
-
-const Modal = ({
+export default function Modal({
   state,
   setStateModal,
   title,
   label1,
   label2,
   label3,
+  label4,
   modalContainerBox,
-  modalDispatch,
-}) => {
+  id,
+}) {
+  const dispatch=useDispatch();
   const closeIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -25,50 +28,124 @@ const Modal = ({
     </svg>
   );
 
-  const [close, setClose] = useState(false)
+  const[input, setInput] = useState({
+    name:"",
+    user:"",
+    pass:"",
+    location:"",
+    description:"",
+    price:"",
+    productType:"",
+    table:"",
+    products:"",
+    orderD:"",
+    orderTA:"",
+  })
 
-  const conditionalForm = (label3, label2) => {
-    if (label3) {
+  const conditionalForm = () => {
+    //Formulario: "CREAR USUARIO"
+    if (id === 1) {
       return (
         <form >
           <label>{label1}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="name" value={input.name} onChange={handleChange}/>
           <label>{label2}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="user" value={input.user} onChange={handleChange} />
           <label>{label3}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="pass" value={input.pass} onChange={handleChange}/>
         </form>
       );
-    } else if (label2) {
+    }
+    //Formulario: "CREAR COMERCIO"
+    if (id === 2) {
       return (
-        <form action="">
+        <form>
           <label>{label1}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="name" value={input.name} onChange={handleChange} />
           <label>{label2}</label>
           <br />
-          <input type="text" />
+          <input type="text" name="location" value={input.location} onChange={handleChange} />
         </form>
       );
-    } else {
+    }
+    //Formulario: "CREAR PRODUCTO"
+    if (id === 3) {
       return (
-        <form action="">
+        <form>
           <label>{label1}</label>
-          <input type="text" />
+          <br />
+          <input type="text" name="name" value={input.name} onChange={handleChange}/>
+          <label>{label3}</label>
+          <br />
+          <input type="number" name="price" value={input.price} onChange={handleChange}/>
+          <label>{label4}</label>
+          <br />
+          <input type="text" name="productType" value={input.productType} onChange={handleChange} />
+        </form>
+      );
+    }    
+    // Formulario: "CREAR PEDIDO SALON"
+    if (id === 4) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="string" name="table" value={input.table} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
+          <label>{label3}</label>
+          <br />
+          <input type="text" name="user" value={input.user} onChange={handleChange} />          
+        </form>
+      );
+    }
+    // Formulario: "CREAR PEDIDO PARA LLEVAR"
+    if (id === 5) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="orderD" value={input.orderD} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
+        </form>
+      );
+    }
+    // Formulario: "CREAR PEDIDO TAKE AWAY" 
+    if (id === 6) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="orderTA" value={input.orderTA} onChange={handleChange} />
+          <label>{label2}</label>
+          <br />
+          <input type="text" name="products" value={input.products} onChange={handleChange} />
         </form>
       );
     }
   };
 
-  // const dispatch=useDispatch();
+  function handleSubmit(e) {
+  // e.preventDefault();
+    if(input.name && input.user && input.pass) dispatch((input))
+    if(input.name && input.location) dispatch((input))
+    if(input.name && input.price && input.productType ) dispatch(postProduct(input))
+    if(input.table && input.products && input.user ) dispatch((input))  
+  }
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   dispatch(postProduct(inputProduct, setInputProduct))
-  // }
+  function handleChange(e){
+    setInput({
+      ...input,
+      [e.target.name] : e.target.value
+    })
+  }
 
   return (
     <>
@@ -82,15 +159,13 @@ const Modal = ({
               {closeIcon}
             </CloseButton>
             {conditionalForm(label3, label2)}
-            <button>Aceptar</button>
+            <button onClick={(e)=> handleSubmit(e)}>Aceptar</button>
           </ModalContainer>
         </Overlay>
       )}
     </>
   );
-};
-
-export default Modal;
+}
 
 const Overlay = styled.div`
   width: 100vw;

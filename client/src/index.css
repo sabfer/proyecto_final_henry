@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   font-family: "Raleway", sans-serif;
+  background-color: rgb(234, 234, 234);
 }

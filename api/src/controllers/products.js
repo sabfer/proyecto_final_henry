@@ -1,5 +1,4 @@
 const Products = require("../models/Products");
-const ProductType = require("../models/ProductsType");
 
 // GETS
 const searchProduct = async (name) => {
@@ -8,7 +7,7 @@ const searchProduct = async (name) => {
 };
 
 const searchProducts = async () => {
-  const products = await Products.find().populate("productType", { name: 1 });
+  const products = await Products.find()
   return products ? products : null;
 };
 
@@ -18,16 +17,10 @@ const filterProduct = async (name) => {
   return product ? true : false;
 };
 
-const addProduct = async (price, name, productType) => {
-  // const type = await ProductType.findOne({ name: productType});
-
-  const newProduct = await new Products({
-    price,
-    name,
-    productType,
-  });
+const addProduct = async (payload) => {
+  const newProduct = await new Products(payload);
   await newProduct.save();
-  return newProduct;
+  return newProduct ? newProduct : null;
 };
 
 // DELETE

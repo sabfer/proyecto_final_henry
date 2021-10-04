@@ -6,9 +6,9 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   margin-right: ${(props) => props.margin || 0};
   grid-row: ${(props) => props.gridRow || "unset"};
-  grid-column: ${(props) => props.gridColumn || "unset"};
+  grid-column: ${(props) => props.gridcolumn || "unset"};
   width: ${(props) => props.width || "unset"};
-  justify-self: ${(props) => props.justifySelf || "unset"};
+  justify-self: ${(props) => props.justifyself || "unset"};
   &:hover {
     text-decoration: ${(props) => props.hover || "none"};
   }
@@ -107,9 +107,9 @@ export const FormHeaderText = styled.div`
   & h2 {
     z-index: 2;
     color: rgb(255, 255, 255);
-    font-size: ${(props) => props.fontSize || "4rem"};
+    font-size: ${(props) => props.fontsize || "4rem"};
     font-weight: 700;
-    text-shadow: ${(props) => props.textShadow || "none"};
+    text-shadow: ${(props) => props.textshadow || "none"};
   }
 `;
 
@@ -119,13 +119,14 @@ export const FormInputs = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  & h2 {
-    margin: 2rem 3.5rem;
-    align-self: flex-start;
-    color: rgb(255, 255, 255);
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
+`;
+
+export const FormTitle = styled.h2`
+  margin: ${(props) => props.margin};
+  align-self: center;
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  font-weight: 700;
 `;
 
 export const InputContainers = styled.div`
@@ -133,7 +134,6 @@ export const InputContainers = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 50px;
   position: relative;
   width: 100%;
   margin-bottom: 30px;
@@ -149,10 +149,10 @@ export const Inputs = styled.input`
   font-size: 16px;
   height: 45px;
   &:focus ~ .placeholder {
-    transform: translateY(-40px) translateX(-10px) scale(0.9);
+    transform: translateY(-35px) translateX(-0px) scale(0.9);
   }
   &:not(:placeholder-shown) ~ .placeholder {
-    transform: translateY(-40px) translateX(-10px) scale(0.9);
+    transform: translateY(-35px) translateX(-0px) scale(0.9);
   }
 `;
 
@@ -271,6 +271,6 @@ export const Button = styled.button`
 `;
 
 export const ErrorRegistro = styled.label`
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
   color: rgb(255, 255, 255);
 `;

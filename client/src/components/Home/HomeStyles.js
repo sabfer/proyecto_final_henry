@@ -1,58 +1,9 @@
 import styled from "styled-components";
-
-export const Header = styled.header`
-  padding: 1.56rem 1.56rem 0;
-  display: flex;
-  justify-content: space-between;
-  height: 5.62rem;
-  background-color: rgb(61, 61, 61);
-`;
-
-export const Title = styled.h1`
-  color: rgb(255, 255, 255);
-  font-size: 2rem;
-  margin: 0;
-`;
-
-export const Button = styled.button`
-  width: ${(props) => props.width || "5rem"};
-  padding: ${(props) => props.padding || 0};
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: ${(props) => props.justify || "center"};
-  color: rgb(255, 255, 255);
-  text-transform: uppercase;
-  background-color: ${(props) => props.buttonColor || "rgb(0, 160, 210)"};
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
-`;
+import { Button } from "../../css";
 
 export const OrderButton = styled(Button)`
   align-self: flex-end;
   background-color: rgba(0, 41, 107, 1);
-`;
-
-export const OptionsBar = styled.div`
-  padding: 0 1.56rem;
-  display: flex;
-  gap: 0 1.56rem;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: rgb(208, 208, 208);
-  height: 5rem;
-`;
-
-export const Body = styled.section`
-  width: 100%;
-  height: 100%;
-  padding: 0 5rem;
-  display: grid;
-  grid-template-columns: 1 fr 1fr;
-  gap: 2rem 0;
-  background-color: rgb(234, 234, 234);
 `;
 
 export const BodyTop = styled.div`
@@ -98,4 +49,67 @@ export const Order = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
+`;
+
+export const SelectContainer = styled.div`
+  grid-column: span 2;
+  padding: 1rem;
+  display: flex;
+  gap: 0 1rem;
+`;
+
+export const DivSelect = styled.div`
+  width: 60%;
+  margin-bottom: 0.5rem;
+  min-width: 15ch;
+  max-width: 30ch;
+  position: relative;
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  border: 1px solid #777;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  &:after {
+    grid-area: select;
+  }
+  &::after {
+    justify-self: end;
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: #777;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  }
+`;
+
+export const Select = styled.select`
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+  &:after {
+    grid-area: select;
+  }
+  &:focus + .Focus {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 2px solid blue;
+    border-radius: inherit;
+  }
 `;
