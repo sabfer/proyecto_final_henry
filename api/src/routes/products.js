@@ -46,8 +46,8 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/add", async function (req, res) {
-  const payload  = req.body;
-
+    const payload  = req.body;
+    console.log('entro al add');
   if(payload) {
     try {
       const product = await filterProduct(payload.name);
