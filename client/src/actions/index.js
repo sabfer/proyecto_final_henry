@@ -65,7 +65,8 @@ export function deleteProduct(payload) {
 }
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
-export function putProduct(payload, id) {
+export function updateProduct(payload, id) {
+  
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload);
     return dispatch({

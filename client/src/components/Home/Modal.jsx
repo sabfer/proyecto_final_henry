@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {postProduct} from "../../actions"
+import {postProduct, updateProduct} from "../../actions"
 import { useDispatch } from "react-redux";
 
 export default function Modal({
@@ -13,6 +13,9 @@ export default function Modal({
   label4,
   modalContainerBox,
   id,
+  placeHolder1,
+  placeHolder2,
+  placeHolder3,
 }) {
   const dispatch=useDispatch();
   const closeIcon = (
@@ -40,6 +43,10 @@ export default function Modal({
     products:"",
     orderD:"",
     orderTA:"",
+    nameModified:"",
+    priceModified:"",
+    productTypeModified:"",
+
   })
 
   const conditionalForm = () => {
@@ -130,6 +137,23 @@ export default function Modal({
         </form>
       );
     }
+
+    // Formulario: "MODIFICAR PRODUCTO"
+    if (id === 7) {
+      return (
+        <form>
+          <label>{label1}</label>
+          <br />
+          <input type="text" name="nameModified" value={input.nameModified} placeholder={placeHolder1} onChange={handleChange}/>
+          <label>{label2}</label>
+          <br />
+          <input type="number" name="priceModified" value={input.priceModified} placeholder={placeHolder2} onChange={handleChange}/>
+          <label>{label3}</label>
+          <br />
+          <input type="text" name="productTypeModified" value={input.productTypeModified} placeholder={placeHolder3} onChange={handleChange} />
+        </form>
+      );
+    }
   };
 
   function handleSubmit(e) {
@@ -137,6 +161,7 @@ export default function Modal({
     if(input.name && input.user && input.pass) dispatch((input))
     if(input.name && input.location) dispatch((input))
     if(input.name && input.price && input.productType ) dispatch(postProduct(input))
+    if(input.nameModified || input.priceModified || input.productTypeModified ) alert("cambios realizados")
     if(input.table && input.products && input.user ) dispatch((input))  
   }
 
