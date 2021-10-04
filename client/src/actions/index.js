@@ -53,3 +53,15 @@ export function getProducts(payload) {
       });
   };
 }
+
+// ---------- ELIMINAR PRODUCTO ---------- \\
+
+
+export function deleteProduct(payload) {
+  return async function (dispatch) {
+    var json = await axios.delete(`http://localhost:3001/product/${payload}`);
+    return dispatch({
+      type: "DELETE_PRODUCT"
+    });
+  };
+}
