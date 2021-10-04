@@ -31,9 +31,10 @@ const deleteProduct = async (id) => {
 
 // UPDATE/PUT
 const updateProduct = async (id, update) => {
-  const updated = await Products.findOneAndUpdate({ _id: id }, update, {
+  const updated = await Products.findOneAndUpdate({_id: `${id}`}, update, {
     new: true,
   });
+  console.log(updated)
   return updated ? true : false;
 };
 

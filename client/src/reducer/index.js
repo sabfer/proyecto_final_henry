@@ -5,7 +5,7 @@ const initialState = {
   products: {},
 };
 
-const rootReducer = (state = initialState, { type, payload } ) => {
+const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "REGISTER_USER":
       return {
@@ -24,15 +24,22 @@ const rootReducer = (state = initialState, { type, payload } ) => {
         ...state,
         products: payload,
       };
-      
-      case "GET_PRODUCTS":
-        return {
-          ...state,
-          products: payload,
-        };
-      
 
+    case "GET_PRODUCTS":
+      return {
+        ...state,
+        products: payload,
+      };
 
+    case "DELETE_PRODUCT":
+      return {
+        ...state,
+      };
+
+    case "POST_PRODUCT":
+      return {
+        ...state,
+      };
 
     default:
       return state;

@@ -53,3 +53,23 @@ export function getProducts(payload) {
       });
   };
 }
+
+// ---------- ELIMINAR PRODUCTO ---------- \\
+export function deleteProduct(payload) {
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/products/${payload}`);
+    return dispatch({
+      type: "DELETE_PRODUCT",
+    });
+  };
+}
+
+// ---------- MODIFICAR PRODUCTO ---------- \\
+export function putProduct(payload, id) {
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/products/${id}`, payload);
+    return dispatch({
+      type: "PUT_PRODUCT",
+    });
+  };
+}
