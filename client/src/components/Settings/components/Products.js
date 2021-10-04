@@ -12,6 +12,7 @@ import {
 import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { deleteProduct } from "../../../actions";
 
 import Search from "./Search";
 
@@ -20,17 +21,28 @@ export default function Productos() {
   const products = useSelector((state) => state.products);
   console.log(products);
 
+  function handleDelete(e){
+    if(window.confirm("¿Estás seguro de querer eliminar el producto seleccionado?")) {
+      dispatch(deleteProduct(e));
+      setTimeout(() => {
+        dispatch(getProducts());
+      },100 )
+    }
+  }
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(getProducts());
     }, 1000);
-  }, [dispatch]);
+  },[dispatch]);
+
+  
 
   return (
     <div>
       <h1>Productos</h1>
       {/* <Table data={products}></Table> */}
-      <Search/>
+      <Search />
       {Array.isArray(products) ? (
         <Table>
           <TableHead>
@@ -47,10 +59,11 @@ export default function Productos() {
                 <TableRow key={el._id}>
                   <TableData>{el.name}</TableData>
                   <TableData>{el.productType}</TableData>
-                  <TableData>{el.price}</TableData>
+                  <TableData>{el.price}</TableData>                  
                   <TableData>
                     <div>
                       <Button
+                        onClick={(e) => alert("editar")}
                         width="2rem"
                         height="2rem"
                         buttonColor="rgba(0, 163, 255, 1)"
@@ -58,6 +71,7 @@ export default function Productos() {
                         <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
                       </Button>
                       <Button
+                        onClick= {(e) => handleDelete(el._id)}
                         width="2rem"
                         height="2rem"
                         buttonColor="rgba(255, 0, 0, 1)"
