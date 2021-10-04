@@ -2,10 +2,10 @@ import {} from "../actions/index";
 
 const initialState = {
   singUpErrors: {},
-  products: [],
+  products: {},
 };
 
-const rootReducer = (state = initialState, { type, payload }, action) => {
+const rootReducer = (state = initialState, { type, payload } ) => {
   switch (type) {
     case "REGISTER_USER":
       return {
@@ -22,10 +22,17 @@ const rootReducer = (state = initialState, { type, payload }, action) => {
     case "GET_NAME_PRODUCT":
       return {
         ...state,
-        products: action.payload,
+        products: payload,
       };
-
       
+      case "GET_PRODUCTS":
+        return {
+          ...state,
+          products: payload,
+        };
+      
+
+
 
     default:
       return state;
