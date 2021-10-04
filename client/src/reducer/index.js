@@ -3,6 +3,7 @@ import {} from "../actions/index";
 const initialState = {
   singUpErrors: {},
   products: {},
+  commerces: undefined,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -29,6 +30,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         products: payload,
+      };
+
+    case "POST_COMMERCE":
+      return {
+        ...state,
+        commerces: payload,
+      };
+
+    case "GET_COMMERCES":
+      return {
+        ...state,
+        commerces: payload,
       };
 
     case "DELETE_PRODUCT":
