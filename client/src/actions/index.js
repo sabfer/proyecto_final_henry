@@ -61,7 +61,6 @@ export function postCommerce(payload) {
   };
 }
 
-
 export function getCommerces() {
   return function (dispatch) {
     axios

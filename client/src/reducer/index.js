@@ -3,11 +3,7 @@ import {} from "../actions/index";
 const initialState = {
   singUpErrors: {},
   products: {},
-<<<<<<< HEAD
   commerces: {},
-=======
-  commerces: undefined,
->>>>>>> a47bb33fd62dafb89ffcc7fd4a1ea0aa3f9ef78d
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -41,7 +37,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         commerces: payload,
       };
-      
+
     case "GET_COMMERCES":
       return {
         ...state,
