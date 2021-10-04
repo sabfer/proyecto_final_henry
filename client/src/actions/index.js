@@ -109,14 +109,9 @@ export function deleteCommerce(payload) {
   };
 }
 
-<<<<<<< HEAD
-// ---------- MODIFICAR PRODUCTO ---------- \\
-export function updateProduct(payload, id) {
-=======
 // ---------- MODIFICAR COMERCIO ---------- \\
 export function updateCommerce(payload, id) {
   
->>>>>>> bf5b3320242751deebbba00ba79fa76113d0e934
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/commerce/${id}`, payload);
     return dispatch({
