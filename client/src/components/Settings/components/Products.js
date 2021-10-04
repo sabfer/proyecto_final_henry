@@ -24,6 +24,9 @@ export default function Productos() {
   function handleDelete(e){
     if(window.confirm("¿Estás seguro de querer eliminar el producto seleccionado?")) {
       dispatch(deleteProduct(e));
+      setTimeout(() => {
+        dispatch(getProducts());
+      },100 )
     }
   }
 
@@ -31,7 +34,7 @@ export default function Productos() {
     setTimeout(() => {
       dispatch(getProducts());
     }, 1000);
-  }, [dispatch]);
+  },[dispatch]);
 
   
 
@@ -60,7 +63,7 @@ export default function Productos() {
                   <TableData>
                     <div>
                       <Button
-                        onClick={() => alert("editar")}
+                        onClick={(e) => alert("editar")}
                         width="2rem"
                         height="2rem"
                         buttonColor="rgba(0, 163, 255, 1)"

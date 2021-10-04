@@ -32,9 +32,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "DELETE_PRODUCT":
-      return{
+      return {
         ...state,
-      }
+      };
+
+    case "POST_PRODUCT":
+      return {
+        ...state,
+      };
 
     default:
       return state;
