@@ -54,6 +54,19 @@ export function getProducts(payload) {
   };
 }
 
+export function getCommerces() {
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/commerce")
+      .then((data) => {
+        return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 // ---------- ELIMINAR PRODUCTO ---------- \\
 export function deleteProduct(payload) {
   return async function (dispatch) {

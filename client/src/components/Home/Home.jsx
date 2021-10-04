@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector} from "react-redux";
 import { BodyTop, SelectContainer, DivSelect, Select } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,12 +8,24 @@ import DeliveryModule from "./Delivery";
 import TakeOutModule from "./TakeOutModule";
 import SalonModule from "./SalonModule";
 import Modal from "./Modal";
+import { getCommerces } from "../../actions/index"
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const commerces = useSelector((state) => state.commerces);
+  
+  
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
   const [stateModal3, setStateModal3] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getCommerces());
+    }, 1000);
+  },[dispatch]);
+  
 
   return (
     <div>
@@ -70,7 +83,9 @@ export default function Home() {
           <DivSelect>
             <Select>
               <option hidden>Seleccionar comercio</option>
-              <option value="All">Everything</option>
+              {commerces && commerces.map((commerce) => {
+                return <option key={commerce._id}  value={commerce.name}>{commerce.name}</option>
+              })}
               <span className="Focus"></span>
             </Select>
           </DivSelect>
