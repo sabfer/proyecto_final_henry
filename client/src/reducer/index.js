@@ -3,7 +3,7 @@ import {} from "../actions/index";
 const initialState = {
   singUpErrors: {},
   products: {},
-  commerces: {},
+  commerces: undefined,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {

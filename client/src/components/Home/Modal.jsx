@@ -32,7 +32,7 @@ export default function Modal({
     name:"",
     user:"",
     pass:"",
-    location:"",
+    direction:"",
     description:"",
     price:"",
     productType:"",
@@ -68,7 +68,7 @@ export default function Modal({
           <input type="text" name="name" value={input.name} onChange={handleChange} />
           <label>{label2}</label>
           <br />
-          <input type="text" name="location" value={input.location} onChange={handleChange} />
+          <input type="text" name="direction" value={input.direction} onChange={handleChange} />
         </form>
       );
     }
@@ -135,7 +135,7 @@ export default function Modal({
   function handleSubmit(e) {
   // e.preventDefault();
     if(input.name && input.user && input.pass) dispatch((input))
-    if(input.name && input.location) dispatch(postCommerce(input))
+    if(input.name && input.direction) dispatch(postCommerce(input))
     if(input.name && input.price && input.productType ) dispatch(postProduct(input))
     if(input.table && input.products && input.user ) dispatch((input))  
   }
