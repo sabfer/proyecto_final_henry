@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {postProduct, updateProduct, postCommerce} from "../../actions"
+import { postProduct, updateProduct, postCommerce } from "../../actions";
 import { useDispatch } from "react-redux";
 
 export default function Modal({
@@ -17,7 +17,7 @@ export default function Modal({
   placeHolder2,
   placeHolder3,
 }) {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const closeIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -31,38 +31,52 @@ export default function Modal({
     </svg>
   );
 
-  const[input, setInput] = useState({
-    name:"",
-    user:"",
-    pass:"",
-    direction:"",
-    description:"",
-    price:"",
-    productType:"",
-    table:"",
-    products:"",
-    orderD:"",
-    orderTA:"",
-    nameModified:"",
-    priceModified:"",
-    productTypeModified:"",
-
-  })
+  const [input, setInput] = useState({
+    name: "",
+    user: "",
+    pass: "",
+    direction: "",
+    description: "",
+    price: "",
+    productType: "",
+    table: "",
+    products: "",
+    orderD: "",
+    orderTA: "",
+    nameModified: "",
+    priceModified: "",
+    productTypeModified: "",
+  });
 
   const conditionalForm = () => {
     //Formulario: "CREAR USUARIO"
     if (id === 1) {
       return (
-        <form >
+        <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="name" value={input.name} onChange={handleChange}/>
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="text" name="user" value={input.user} onChange={handleChange} />
+          <input
+            type="text"
+            name="user"
+            value={input.user}
+            onChange={handleChange}
+          />
           <label>{label3}</label>
           <br />
-          <input type="text" name="pass" value={input.pass} onChange={handleChange}/>
+          <input
+            type="text"
+            name="pass"
+            value={input.pass}
+            onChange={handleChange}
+          />
         </form>
       );
     }
@@ -72,10 +86,20 @@ export default function Modal({
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="name" value={input.name} onChange={handleChange} />
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="text" name="direction" value={input.direction} onChange={handleChange} />
+          <input
+            type="text"
+            name="direction"
+            value={input.direction}
+            onChange={handleChange}
+          />
         </form>
       );
     }
@@ -85,29 +109,59 @@ export default function Modal({
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="name" value={input.name} onChange={handleChange}/>
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            onChange={handleChange}
+          />
           <label>{label3}</label>
           <br />
-          <input type="number" name="price" value={input.price} onChange={handleChange}/>
+          <input
+            type="number"
+            name="price"
+            value={input.price}
+            onChange={handleChange}
+          />
           <label>{label4}</label>
           <br />
-          <input type="text" name="productType" value={input.productType} onChange={handleChange} />
+          <input
+            type="text"
+            name="productType"
+            value={input.productType}
+            onChange={handleChange}
+          />
         </form>
       );
-    }    
+    }
     // Formulario: "CREAR PEDIDO SALON"
     if (id === 4) {
       return (
         <form>
           <label>{label1}</label>
           <br />
-          <input type="string" name="table" value={input.table} onChange={handleChange} />
+          <input
+            type="string"
+            name="table"
+            value={input.table}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="text" name="products" value={input.products} onChange={handleChange} />
+          <input
+            type="text"
+            name="products"
+            value={input.products}
+            onChange={handleChange}
+          />
           <label>{label3}</label>
           <br />
-          <input type="text" name="user" value={input.user} onChange={handleChange} />          
+          <input
+            type="text"
+            name="user"
+            value={input.user}
+            onChange={handleChange}
+          />
         </form>
       );
     }
@@ -117,23 +171,43 @@ export default function Modal({
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="orderD" value={input.orderD} onChange={handleChange} />
+          <input
+            type="text"
+            name="orderD"
+            value={input.orderD}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="text" name="products" value={input.products} onChange={handleChange} />
+          <input
+            type="text"
+            name="products"
+            value={input.products}
+            onChange={handleChange}
+          />
         </form>
       );
     }
-    // Formulario: "CREAR PEDIDO TAKE AWAY" 
+    // Formulario: "CREAR PEDIDO TAKE AWAY"
     if (id === 6) {
       return (
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="orderTA" value={input.orderTA} onChange={handleChange} />
+          <input
+            type="text"
+            name="orderTA"
+            value={input.orderTA}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="text" name="products" value={input.products} onChange={handleChange} />
+          <input
+            type="text"
+            name="products"
+            value={input.products}
+            onChange={handleChange}
+          />
         </form>
       );
     }
@@ -144,32 +218,53 @@ export default function Modal({
         <form>
           <label>{label1}</label>
           <br />
-          <input type="text" name="nameModified" value={input.nameModified} placeholder={placeHolder1} onChange={handleChange}/>
+          <input
+            type="text"
+            name="nameModified"
+            value={input.nameModified}
+            placeholder={placeHolder1}
+            onChange={handleChange}
+          />
           <label>{label2}</label>
           <br />
-          <input type="number" name="priceModified" value={input.priceModified} placeholder={placeHolder2} onChange={handleChange}/>
+          <input
+            type="number"
+            name="priceModified"
+            value={input.priceModified}
+            placeholder={placeHolder2}
+            onChange={handleChange}
+          />
           <label>{label3}</label>
           <br />
-          <input type="text" name="productTypeModified" value={input.productTypeModified} placeholder={placeHolder3} onChange={handleChange} />
+          <input
+            type="text"
+            name="productTypeModified"
+            value={input.productTypeModified}
+            placeholder={placeHolder3}
+            onChange={handleChange}
+          />
         </form>
       );
     }
   };
 
   function handleSubmit(e) {
-  // e.preventDefault();
-    if(input.name && input.user && input.pass) dispatch((input))
-    if(input.name && input.direction) dispatch(postCommerce(input))
-    if(input.name && input.price && input.productType ) dispatch(postProduct(input))
-    if(input.nameModified || input.priceModified || input.productTypeModified ) alert("cambios realizados")
-    if(input.table && input.products && input.user ) dispatch((input))  
+    e.preventDefault();
+    if (input.name && input.user && input.pass) dispatch(input);
+    if (input.name && input.direction) dispatch(postCommerce(input));
+    if (input.name && input.price && input.productType)
+      dispatch(postProduct(input));
+    if (input.nameModified || input.priceModified || input.productTypeModified)
+      alert("cambios realizados");
+    if (input.table && input.products && input.user) dispatch(input);
+    setStateModal(false);
   }
 
-  function handleChange(e){
+  function handleChange(e) {
     setInput({
       ...input,
-      [e.target.name] : e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
@@ -184,7 +279,7 @@ export default function Modal({
               {closeIcon}
             </CloseButton>
             {conditionalForm(label3, label2)}
-            <button onClick={(e)=> handleSubmit(e)}>Aceptar</button>
+            <button onClick={(e) => handleSubmit(e)}>Aceptar</button>
           </ModalContainer>
         </Overlay>
       )}
