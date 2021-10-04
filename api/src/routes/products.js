@@ -110,7 +110,7 @@ router.put("/:id", async function (req, res) {
       return res.json({
         success: true,
         msg: "Producto modificado exitosamente",
-        payload: userUpdated,
+        payload: update,
       });
     }
   } catch (err) {

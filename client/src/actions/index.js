@@ -53,6 +53,7 @@ export function getProducts(payload) {
   };
 }
 
+
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
   return async function (dispatch) {
@@ -61,4 +62,35 @@ export function postCommerce(payload) {
   };
 }
 
+export function getCommerces() {
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/commerce")
+      .then((data) => {
+        return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
 
+// ---------- ELIMINAR PRODUCTO ---------- \\
+export function deleteProduct(payload) {
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/products/${payload}`);
+    return dispatch({
+      type: "DELETE_PRODUCT",
+    });
+  };
+}
+
+// ---------- MODIFICAR PRODUCTO ---------- \\
+export function putProduct(payload, id) {
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/products/${id}`, payload);
+    return dispatch({
+      type: "PUT_PRODUCT",
+    });
+  };
+}
