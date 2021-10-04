@@ -16,6 +16,7 @@ export default function Modal({
   placeHolder1,
   placeHolder2,
   placeHolder3,
+  idElement,
 }) {
   const dispatch = useDispatch();
   const closeIcon = (
@@ -32,20 +33,20 @@ export default function Modal({
   );
 
   const [input, setInput] = useState({
-    name: "",
-    user: "",
-    pass: "",
-    direction: "",
-    description: "",
-    price: "",
-    productType: "",
-    table: "",
-    products: "",
-    orderD: "",
-    orderTA: "",
-    nameModified: "",
-    priceModified: "",
-    productTypeModified: "",
+    name: undefined,
+    user: undefined,
+    pass: undefined,
+    location: undefined,
+    description: undefined,
+    price: undefined,
+    productType: undefined,
+    table: undefined,
+    products: undefined,
+    orderD: undefined,
+    orderTA: undefined,
+    nameModified: undefined,
+    priceModified: undefined,
+    productTypeModified: undefined,
   });
 
   const conditionalForm = () => {
@@ -220,8 +221,7 @@ export default function Modal({
           <br />
           <input
             type="text"
-            name="nameModified"
-            value={input.nameModified}
+            name="name"
             placeholder={placeHolder1}
             onChange={handleChange}
           />
@@ -229,8 +229,7 @@ export default function Modal({
           <br />
           <input
             type="number"
-            name="priceModified"
-            value={input.priceModified}
+            name="price"
             placeholder={placeHolder2}
             onChange={handleChange}
           />
@@ -238,8 +237,7 @@ export default function Modal({
           <br />
           <input
             type="text"
-            name="productTypeModified"
-            value={input.productTypeModified}
+            name="productType"
             placeholder={placeHolder3}
             onChange={handleChange}
           />
@@ -249,15 +247,20 @@ export default function Modal({
   };
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (input.name && input.user && input.pass) dispatch(input);
-    if (input.name && input.direction) dispatch(postCommerce(input));
-    if (input.name && input.price && input.productType)
-      dispatch(postProduct(input));
-    if (input.nameModified || input.priceModified || input.productTypeModified)
-      alert("cambios realizados");
-    if (input.table && input.products && input.user) dispatch(input);
-    setStateModal(false);
+    // e.preventDefault();
+    console.log(input);
+    if (id === 1) dispatch(input);
+    if (id === 2) dispatch(postCommerce(input));
+    if (id === 3) dispatch(postProduct(input));
+    if (id === 7) {
+      const payload = {};
+      for (let key in input) {
+        if (input[key] !== undefined) {
+          payload[key] = input[key];
+        }
+      }
+      dispatch(updateProduct(payload, idElement));
+    }
   }
 
   function handleChange(e) {

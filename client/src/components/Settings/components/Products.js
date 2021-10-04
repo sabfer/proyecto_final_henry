@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 /* import Table from "./Table"; */
-import { getProducts, updateProduct } from "../../../actions";
+import { getProducts } from "../../../actions";
 import {
   Table,
   TableHead,
@@ -35,9 +35,6 @@ export default function Productos() {
     }
   }
 
-  function handleUpdate(e) {
-    dispatch(updateProduct(e));
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -69,9 +66,8 @@ export default function Productos() {
                   <TableData>{el.price}</TableData>
                   <TableData>
                     <div>
-                      <Button
-                        // onClick={(e) => handleUpdate(el._id)}
-                        onClick={(e) => setStateModal7(!stateModal7)}
+                      <Button                        
+                        onClick={(e) => (setStateModal7(!stateModal7))}
                         width="2rem"
                         height="2rem"
                         buttonColor="rgba(0, 163, 255, 1)"
@@ -89,6 +85,7 @@ export default function Productos() {
                     </div>
                   </TableData>
                   <Modal
+                    idElement = {el._id}
                     id={7}
                     state={stateModal7}
                     setStateModal={setStateModal7}
