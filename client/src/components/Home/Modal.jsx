@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { postProduct, updateProduct } from "../../actions";
+import { postProduct, updateProduct, postCommerce } from "../../actions";
 import { useDispatch } from "react-redux";
 
 export default function Modal({
@@ -97,8 +97,8 @@ export default function Modal({
           <br />
           <input
             type="text"
-            name="location"
-            value={input.location}
+            name="direction"
+            value={input.direction}
             onChange={handleChange}
           />
         </form>
@@ -250,7 +250,7 @@ export default function Modal({
     // e.preventDefault();
     console.log(input);
     if (id === 1) dispatch(input);
-    if (id === 2) dispatch(input);
+    if (id === 2) dispatch(postCommerce(input));
     if (id === 3) dispatch(postProduct(input));
     if (id === 7) {
       const payload = {};
