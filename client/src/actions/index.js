@@ -14,15 +14,6 @@ export function registerUser(payload) {
   };
 }
 
-// ---------- CREACIÓN DE PRODUCTO ---------- \\
-export function postProduct(payload) {
-  return async function (dispatch) {
-    console.log('----------- payload en postProduct: ', payload)
-    var json = await axios.post("http://localhost:3001/products/add", payload);
-    return json;
-  };
-}
-
 // ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
 export function getNameProducts(payload) {
   return async function (dispatch) {
@@ -54,6 +45,36 @@ export function getProducts(payload) {
   };
 }
 
+// ---------- CREACIÓN DE PRODUCTO ---------- \\
+export function postProduct(payload) {
+  return async function (dispatch) {
+    console.log('----------- payload en postProduct: ', payload)
+    var json = await axios.post("http://localhost:3001/products/add", payload);
+    return json;
+  };
+}
+
+// ---------- ELIMINAR PRODUCTO ---------- \\
+export function deleteProduct(payload) {
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/products/${payload}`);
+    return dispatch({
+      type: "DELETE_PRODUCT",
+    });
+  };
+}
+
+// ---------- MODIFICAR PRODUCTO ---------- \\
+export function updateProduct(payload, id) {
+  
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/products/${id}`, payload);
+    return dispatch({
+      type: "PUT_PRODUCT",
+    });
+  };
+}
+
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
   return async function (dispatch) {
@@ -75,23 +96,58 @@ export function getCommerces() {
   };
 }
 
-// ---------- ELIMINAR PRODUCTO ---------- \\
-export function deleteProduct(payload) {
+// ---------- ELIMINAR COMERCIO ---------- \\
+export function deleteCommerce(payload) {
   return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/products/${payload}`);
+    await axios.delete(`http://localhost:3001/commerce/${payload}`);
     return dispatch({
-      type: "DELETE_PRODUCT",
+      type: "DELETE_COMMERCE",
     });
   };
 }
 
-// ---------- MODIFICAR PRODUCTO ---------- \\
-export function updateProduct(payload, id) {
+// ---------- MODIFICAR COMERCIO ---------- \\
+export function updateCommerce(payload, id) {
   
   return async function (dispatch) {
-    await axios.put(`http://localhost:3001/products/${id}`, payload);
+    await axios.put(`http://localhost:3001/commerce/${id}`, payload);
     return dispatch({
-      type: "PUT_PRODUCT",
+      type: "PUT_COMMERCE",
+    });
+  };
+}
+
+// ---------- OBTENER USUARIOS ---------- \\
+export function getUsers(payload) {
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/users", payload)
+      .then((data) => {
+        return dispatch({ type: "GET_USERS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+// ---------- ELIMINAR COMERCIO ---------- \\
+export function deleteUser(payload) {
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/users/${payload}`);
+    return dispatch({
+      type: "DELETE_USER",
+    });
+  };
+}
+
+// ---------- MODIFICAR COMERCIO ---------- \\
+export function updateUsers(payload, id) {
+  
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/users/${id}`, payload);
+    return dispatch({
+      type: "PUT_USER",
     });
   };
 }
