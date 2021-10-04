@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {postProduct} from "../../actions"
+import {postProduct, postCommerce} from "../../actions"
 import { useDispatch } from "react-redux";
 
 export default function Modal({
@@ -135,7 +135,7 @@ export default function Modal({
   function handleSubmit(e) {
   // e.preventDefault();
     if(input.name && input.user && input.pass) dispatch((input))
-    if(input.name && input.location) dispatch((input))
+    if(input.name && input.location) dispatch(postCommerce(input))
     if(input.name && input.price && input.productType ) dispatch(postProduct(input))
     if(input.table && input.products && input.user ) dispatch((input))  
   }
