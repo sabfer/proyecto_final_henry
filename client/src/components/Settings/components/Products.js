@@ -34,9 +34,9 @@ export default function Productos() {
     }, 1000);
   }, [dispatch]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch, products]);
+  }, [dispatch, products]); */
 
   function handleDelete(e) {
     if (
@@ -53,7 +53,6 @@ export default function Productos() {
 
   function handleClick(e, props) {
     e.preventDefault();
-    console.log(props);
     setmodalProduct({
       _id: props._id,
       name: props.name,
