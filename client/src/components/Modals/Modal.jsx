@@ -63,12 +63,15 @@ export default function Modal({
     // e.preventDefault();
     if (id === 1) {
       dispatch(input);
+      setStateModal(!state);
     }
     if (id === 2) {
       dispatch(postCommerce(input));
+      setStateModal(!state);
     }
     if (id === 3) {
       dispatch(postProduct(input));
+      setStateModal(!state);
     }
     if (id === 7) {
       const payload = {};
