@@ -5,7 +5,6 @@ export const conditionalForm = (
   { label1, label2, label3, label4 },
   { name, price, productType }
 ) => {
-
   //Formulario: "CREAR USUARIO"
   if (id === 1) {
     return (
@@ -46,14 +45,19 @@ export const conditionalForm = (
       <form>
         <label>{label1}</label>
         <br />
-        <input type="text" name="name" value={input.name} onChange={onChange} />
+        <input
+          type="text"
+          name="name"
+          value={input.name}
+          onChange={(e) => onChange(e)}
+        />
         <label>{label3}</label>
         <br />
         <input
           type="number"
           name="price"
           value={input.price}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
         <label>{label4}</label>
         <br />
@@ -61,7 +65,7 @@ export const conditionalForm = (
           type="text"
           name="productType"
           value={input.productType}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
       </form>
     );

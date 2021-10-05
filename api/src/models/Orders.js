@@ -1,19 +1,34 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Client = mongoose.model("Client");
-var User = mongoose.model("User");
-var Product = mongoose.model("Product");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var orders = new Schema({
-  date: { type: Date, required: true },
-  products: [{ type: Schema.ObjectId, ref: "Product", required: true }], // ver tema precios
-  clientId: { type: Schema.ObjectId, ref: "Client", required: true }, // no asociar
-  userId: { type: Schema.ObjectId, ref: "User", required: true }, // no asociar
-  typeOrder: {
-    type: String,
-    enum: ["Take Away", "Delivery", "In Place"],
-    required: true,
+
+const OrderSchema = new Schema(
+  {
+    date: { type: Date, required: true },
+    products: [
+      {
+        product: { type: Schema.ObjectId, ref: "Product" },
+        cantidad: { type: Number },
+      },
+    ],
+    clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true
+    userId: { type: Schema.ObjectId, ref: "User" }, //required: true
+    typeOrder: {
+      type: String,
+      enum: ["Take Away", "Delivery", "Salon"],
+      required: true,
+    },
   },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+OrderSchema.virtual("totalPrice").get(function () {
+  return this.products.reduce(function (prev, actual) {
+    return prev + actual.product.price * actual.cantidad;
+  }, 0);
 });
 
-module.exports = mongoose.model("Order", orders);
+module.exports = mongoose.model("Order", OrderSchema);

@@ -62,13 +62,30 @@ export default function Modal({
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
+      setStateModal(!state);
       dispatch(input);
+      setInput({
+        name: "",
+        user: "",
+        pass: "",
+      });
     }
     if (id === 2) {
+      setStateModal(!state);
       dispatch(postCommerce(input));
+      setInput({
+        name: "",
+        location: "",
+      });
     }
     if (id === 3) {
+      setStateModal(!state);
       dispatch(postProduct(input));
+      setInput({
+        name: "",
+        price: "",
+        productType: "",
+      });
     }
     if (id === 7) {
       const payload = {};
