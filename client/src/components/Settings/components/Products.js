@@ -34,6 +34,10 @@ export default function Productos() {
     }, 1000);
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch, products]);
+
   function handleDelete(e) {
     if (
       window.confirm(
