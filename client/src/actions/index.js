@@ -48,7 +48,6 @@ export function getProducts(payload) {
 // ---------- CREACIÓN DE PRODUCTO ---------- \\
 export function postProduct(payload) {
   return async function (dispatch) {
-    console.log("----------- payload en postProduct: ", payload);
     var data = await axios
       .post("http://localhost:3001/products/add", payload)
       .then((data) => {
@@ -72,8 +71,11 @@ export function deleteProduct(payload) {
 export function updateProduct(payload, id) {
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload);
-    return dispatch({
-      type: "PUT_PRODUCT",
+    await axios.get("http://localhost:3001/products").then((data) => {
+      return dispatch({
+        type: "PUT_PRODUCT",
+        payload: data.data.payload,
+      });
     });
   };
 }
@@ -153,5 +155,12 @@ export function updateUsers(payload, id) {
     return dispatch({
       type: "PUT_USER",
     });
+  };
+}
+
+// ---------- MODIFICAR SETTINGS ---------- \\
+export function changeSettings(payload) {
+  return function (dispatch) {
+    return dispatch({ type: "CHANGE_SETTINGS", payload: payload });
   };
 }

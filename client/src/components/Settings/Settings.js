@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Header, Title, Button, StyledLink, Body } from "../../css";
 import {
   AjustesIzquierda,
@@ -12,36 +13,32 @@ import Products from "./components/Products";
 import Generals from "./components/Generals";
 import Comercios from "./components/Comercios";
 import Users from "./components/Users";
-
+import { getProducts, changeSettings } from "../../actions";
 
 export default function Settings() {
-  const [settings, setSettings] = useState({
-    show: "",
+  const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
+
+  useEffect(() => {
+    dispatch(getProducts());
   });
 
   function handleProducts(e) {
     e.preventDefault();
-    setSettings({
-      show: "products",
-    });
+    dispatch(changeSettings({ show: "products" }));
   }
+
   function handleCommerce(e) {
     e.preventDefault();
-    setSettings({
-      show: "commerce",
-    });
+    dispatch(changeSettings({ show: "commerce" }));
   }
   function handleUsers(e) {
     e.preventDefault();
-    setSettings({
-      show: "users",
-    });
+    dispatch(changeSettings({ show: "users" }));
   }
   function handleGenerals(e) {
     e.preventDefault();
-    setSettings({
-      show: "",
-    });
+    dispatch(changeSettings({ show: "" }));
   }
 
   function renderSwitch(param) {

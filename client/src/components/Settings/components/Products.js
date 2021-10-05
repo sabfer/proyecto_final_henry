@@ -13,7 +13,7 @@ import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProduct } from "../../../actions";
-import Modal from "../../Home/Modal";
+import Modal from "../../Modals/Modal";
 
 import Search from "./Search";
 
@@ -35,7 +35,6 @@ export default function Productos() {
     }
   }
 
-
   useEffect(() => {
     setTimeout(() => {
       dispatch(getProducts());
@@ -48,61 +47,68 @@ export default function Productos() {
       {/* <Table data={products}></Table> */}
       <Search />
       {Array.isArray(products) ? (
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHd width="35%">Nombre</TableHd>
-              <TableHd width="40%">Tipo de producto</TableHd>
-              <TableHd width="10%">Precio</TableHd>
-              <TableHd>Opciones</TableHd>
-            </TableRow>
-          </TableHead>
-          <tbody>
-            {products.map((el) => {
-              return (
-                <TableRow key={el._id}>
-                  <TableData>{el.name}</TableData>
-                  <TableData>{el.productType}</TableData>
-                  <TableData>{el.price}</TableData>
-                  <TableData>
-                    <div>
-                      <Button                        
-                        onClick={(e) => (setStateModal7(!stateModal7))}
-                        width="2rem"
-                        height="2rem"
-                        buttonColor="rgba(0, 163, 255, 1)"
-                      >
-                        <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
-                      </Button>
-                      <Button
-                        onClick={(e) => handleDelete(el._id)}
-                        width="2rem"
-                        height="2rem"
-                        buttonColor="rgba(255, 0, 0, 1)"
-                      >
-                        <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                      </Button>
-                    </div>
-                  </TableData>
-                  <Modal
-                    idElement = {el._id}
-                    id={7}
-                    state={stateModal7}
-                    setStateModal={setStateModal7}
-                    title="Modificar Producto"
-                    label1="Nombre"
-                    placeHolder1={el.name}
-                    label2="Precio"
-                    placeHolder2={el.price}
-                    label3="Tipo de Producto"
-                    placeHolder3={el.productType}
-                    modalContainerBox={true}
-                  />
-                </TableRow>
-              );
-            })}
-          </tbody>
-        </Table>
+        <div>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHd width="35%">Nombre</TableHd>
+                <TableHd width="40%">Tipo de producto</TableHd>
+                <TableHd width="10%">Precio</TableHd>
+                <TableHd>Opciones</TableHd>
+              </TableRow>
+            </TableHead>
+            <tbody>
+              {products.map((el) => {
+                return (
+                  <TableRow key={el._id}>
+                    <TableData>{el.name}</TableData>
+                    <TableData>{el.productType}</TableData>
+                    <TableData>{el.price}</TableData>
+                    <TableData>
+                      <div>
+                        <Button
+                          onClick={(e) => setStateModal7(!stateModal7)}
+                          width="2rem"
+                          height="2rem"
+                          buttonColor="rgba(0, 163, 255, 1)"
+                        >
+                          <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
+                        </Button>
+                        <Button
+                          onClick={(e) => handleDelete(el._id)}
+                          width="2rem"
+                          height="2rem"
+                          buttonColor="rgba(255, 0, 0, 1)"
+                        >
+                          <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                        </Button>
+                      </div>
+                    </TableData>
+                  </TableRow>
+                );
+              })}
+            </tbody>
+          </Table>
+          {products.map((el) => {
+            return (
+              <Modal
+                key={el._id}
+                idElement={el._id}
+                id={7}
+                state={stateModal7}
+                setStateModal={setStateModal7}
+                title="Modificar Producto"
+                label1="Nombre"
+                productName={el.name}
+                label2="Precio"
+                productPrice={el.price}
+                label3="Tipo de Producto"
+                productType={el.productType}
+                modalContainerBox={true}
+              />
+            );
+          })}
+        </div>
       ) : (
         <p>Loading...</p>
       )}

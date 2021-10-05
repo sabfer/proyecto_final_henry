@@ -3,7 +3,7 @@ import { Salon, OrderButton, Orders, Order } from "./HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal"
+import Modal from "../Modals/Modal";
 
 export default function SalonModule() {
   const [stateModal4, setStateModal4] = useState(false);
