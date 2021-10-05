@@ -1,10 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var Client = mongoose.model("Client");
-var User = mongoose.model("User");
-var Product = mongoose.model("Product");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var orders = new Schema({
+const orders = new Schema({
   date: { type: Date, required: true },
   products: [{ type: Schema.ObjectId, ref: "Product", required: true }], // ver tema precios
   clientId: { type: Schema.ObjectId, ref: "Client", required: true }, // no asociar

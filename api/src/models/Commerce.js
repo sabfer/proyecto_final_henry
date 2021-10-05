@@ -1,9 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var User = mongoose.model("User");
-var CommerceType = mongoose.model("CommerceType");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var CommerceSchema = new Schema({
+const CommerceSchema = new Schema({
   userId: { type: Schema.ObjectId, ref: "User" },
   typeCommerceId: {
     type: Schema.ObjectId,
