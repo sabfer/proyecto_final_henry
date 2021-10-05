@@ -246,7 +246,7 @@ export default function Modal({
   };
 
   function handleSubmit(e) {
-    //e.preventDefault();
+    e.preventDefault();
     if (id === 1) dispatch(input);
     if (id === 2) dispatch(postCommerce(input));
     if (id === 3) dispatch(postProduct(input));
@@ -257,8 +257,8 @@ export default function Modal({
           payload[key] = input[key];
         }
       }
-      dispatch(updateProduct(payload, idElement));
-    }   
+      dispatch(updateProduct(payload, idElement));       
+    }  
   }
 
   function handleChange(e) {

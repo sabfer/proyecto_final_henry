@@ -11,7 +11,7 @@ import {
 import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Home/Modal";
+import Modal from "../../Modals/Modal";
 import Search from "./Search";
 
 export default function Commerces() {

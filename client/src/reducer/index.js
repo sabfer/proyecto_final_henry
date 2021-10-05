@@ -5,6 +5,9 @@ const initialState = {
   products: {},
   users: {},
   commerces: undefined,
+  settings: {
+    show: "",
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -37,7 +40,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
-    
+    case "PUT_PRODUCT":
+      return {
+        ...state,
+        products: payload,
+      };
+
     case "GET_COMMERCES":
       return {
         ...state,
@@ -49,7 +57,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         commerces: payload,
       };
-    
+
     case "DELETE_COMMERCE":
       return {
         ...state,
@@ -65,7 +73,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
-
+    case "CHANGE_SETTINGS":
+      return {
+        ...state,
+        settings: payload,
+      };
     default:
       return state;
   }
