@@ -212,7 +212,6 @@ export default function Modal({
         </form>
       );
     }
-
     // Formulario: "MODIFICAR PRODUCTO"
     if (id === 7) {
       return (
@@ -247,12 +246,11 @@ export default function Modal({
   };
 
   function handleSubmit(e) {
-    // e.preventDefault();
-    console.log(input);
+    //e.preventDefault();
     if (id === 1) dispatch(input);
     if (id === 2) dispatch(postCommerce(input));
     if (id === 3) dispatch(postProduct(input));
-    if (id === 7) {
+    if (id === 7) {      
       const payload = {};
       for (let key in input) {
         if (input[key] !== undefined) {
@@ -260,7 +258,7 @@ export default function Modal({
         }
       }
       dispatch(updateProduct(payload, idElement));
-    }
+    }   
   }
 
   function handleChange(e) {
@@ -281,7 +279,7 @@ export default function Modal({
             <CloseButton onClick={() => setStateModal(!state)}>
               {closeIcon}
             </CloseButton>
-            {conditionalForm(label3, label2)}
+            {conditionalForm()}
             <button onClick={(e) => handleSubmit(e)}>Aceptar</button>
           </ModalContainer>
         </Overlay>

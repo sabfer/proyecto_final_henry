@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProduct } from "../../../actions";
 import Modal from "../../Home/Modal";
-
 import Search from "./Search";
 
 export default function Productos() {
@@ -31,10 +30,9 @@ export default function Productos() {
       dispatch(deleteProduct(e));
       setTimeout(() => {
         dispatch(getProducts());
-      }, 100);
+      }, 1000);
     }
   }
-
 
   useEffect(() => {
     setTimeout(() => {
@@ -66,8 +64,8 @@ export default function Productos() {
                   <TableData>{el.price}</TableData>
                   <TableData>
                     <div>
-                      <Button                        
-                        onClick={(e) => (setStateModal7(!stateModal7))}
+                      <Button
+                        onClick={(e) => setStateModal7(!stateModal7)}
                         width="2rem"
                         height="2rem"
                         buttonColor="rgba(0, 163, 255, 1)"
@@ -85,7 +83,6 @@ export default function Productos() {
                     </div>
                   </TableData>
                   <Modal
-                    idElement = {el._id}
                     id={7}
                     state={stateModal7}
                     setStateModal={setStateModal7}
