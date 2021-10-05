@@ -1,7 +1,5 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var User = mongoose.model("User");
-var CommerceType = mongoose.model("CommerceType");
 
 var CommerceSchema = new Schema({
   userId: { type: Schema.ObjectId, ref: "User" },
