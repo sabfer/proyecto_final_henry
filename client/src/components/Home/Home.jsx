@@ -90,8 +90,8 @@ export default function Home() {
                     </option>
                   );
                 })}
-              <span className="Focus"></span>
             </Select>
+            <span className="Focus"></span>
           </DivSelect>
         </SelectContainer>
         <BodyTop>

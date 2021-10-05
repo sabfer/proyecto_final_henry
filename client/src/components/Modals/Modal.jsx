@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Overlay,
   ModalContainer,
@@ -21,28 +21,36 @@ export default function Modal({
   label4,
   modalContainerBox,
   id,
-  productName,
-  productPrice,
+  name,
+  price,
   productType,
   idElement,
 }) {
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    name: productName,
+    name: name,
+    price: price,
+    productType: productType,
     user: undefined,
     pass: undefined,
     location: undefined,
     description: undefined,
-    price: productPrice,
-    productType: productType,
     table: undefined,
     products: undefined,
     orderD: undefined,
     orderTA: undefined,
   });
 
+  useEffect(() => {
+    setInput({
+      name: name,
+      price: price,
+      productType: productType,
+    });
+  }, [name, price, productType]);
+
   let labels = { label1, label2, label3, label4 };
-  let productValues = { productName, productPrice, productType };
+  let productValues = { name: name, price: price, productType: productType };
 
   function handleChange(e) {
     setInput({
@@ -74,22 +82,34 @@ export default function Modal({
     }
   }
 
+  function handleClose(e) {
+    setStateModal(!state);
+    setInput({
+      ...input,
+      name: "",
+      price: "",
+      productType: "",
+    });
+  }
+
   return (
-    <>
+    <div>
       {state && (
         <Overlay>
           <ModalContainer modalContainerBox={modalContainerBox}>
             <HeaderModal>
               <h2>{title}</h2>
             </HeaderModal>
-            <CloseButton onClick={() => setStateModal(!state)}>
+            <CloseButton onClick={(e) => handleClose(e)}>
               <FontAwesomeIcon icon={faWindowClose} />
             </CloseButton>
             {conditionalForm(id, input, handleChange, labels, productValues)}
-            <button onClick={(e) => handleSubmit(e)}>Aceptar</button>
+            <button type="submit" onClick={(e) => handleSubmit(e)}>
+              Aceptar
+            </button>
           </ModalContainer>
         </Overlay>
       )}
-    </>
+    </div>
   );
 }

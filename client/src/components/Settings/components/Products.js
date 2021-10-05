@@ -20,7 +20,19 @@ import Search from "./Search";
 export default function Productos() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const [stateModal7, setStateModal7] = useState(false);
+  const [editProductModal, setEditProductModal] = useState(false);
+  const [modalProduct, setmodalProduct] = useState({
+    _id: "",
+    name: "",
+    price: "",
+    productType: "",
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 1000);
+  }, [dispatch]);
 
   function handleDelete(e) {
     if (
@@ -35,11 +47,17 @@ export default function Productos() {
     }
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(getProducts());
-    }, 1000);
-  }, [dispatch]);
+  function handleClick(e, props) {
+    e.preventDefault();
+    console.log(props);
+    setmodalProduct({
+      _id: props._id,
+      name: props.name,
+      price: props.price,
+      productType: props.productType,
+    });
+    setEditProductModal(!editProductModal);
+  }
 
   return (
     <div>
@@ -63,11 +81,18 @@ export default function Productos() {
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
                     <TableData>{el.productType}</TableData>
-                    <TableData>{el.price}</TableData>
+                    <TableData>$ {el.price}</TableData>
                     <TableData>
                       <div>
                         <Button
-                          onClick={(e) => setStateModal7(!stateModal7)}
+                          onClick={(e) =>
+                            handleClick(e, {
+                              name: el.name,
+                              price: el.price,
+                              productType: el.productType,
+                              _id: el._id,
+                            })
+                          }
                           width="2rem"
                           height="2rem"
                           buttonColor="rgba(0, 163, 255, 1)"
@@ -89,29 +114,25 @@ export default function Productos() {
               })}
             </tbody>
           </Table>
-          {products.map((el) => {
-            return (
-              <Modal
-                key={el._id}
-                idElement={el._id}
-                id={7}
-                state={stateModal7}
-                setStateModal={setStateModal7}
-                title="Modificar Producto"
-                label1="Nombre"
-                productName={el.name}
-                label2="Precio"
-                productPrice={el.price}
-                label3="Tipo de Producto"
-                productType={el.productType}
-                modalContainerBox={true}
-              />
-            );
-          })}
         </div>
       ) : (
         <p>Loading...</p>
       )}
+
+      <Modal
+        idElement={modalProduct._id}
+        id={7}
+        state={editProductModal}
+        setStateModal={setEditProductModal}
+        title="Modificar Producto"
+        label1="Nombre"
+        label2="Precio"
+        label3="Tipo de Producto"
+        name={modalProduct.name}
+        price={modalProduct.price}
+        productType={modalProduct.productType}
+        modalContainerBox={true}
+      />
     </div>
   );
 }

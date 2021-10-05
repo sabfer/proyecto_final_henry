@@ -13,7 +13,7 @@ export const Overlay = styled.div`
   justify-content: center;
 `;
 
-export const ModalContainer = styled.form`
+export const ModalContainer = styled.div`
   width: 500px;
   height: ${(props) => (props.modalContainerBox ? "520px" : "430px")};
   background: #fff;
@@ -42,7 +42,6 @@ export const ModalContainer = styled.form`
   }
 
   button {
-    position: absolute;
     margin: 50px 0px 0px 180px;
 
     padding: 10px 30px;
