@@ -3,7 +3,8 @@ const router = express.Router();
 const controller = require("../controllers/orders");
 
 router.get("/", controller.findOrders);
-router.post("/", controller.add);
+router.post("/", controller.addOrder);
 router.delete("/:id", controller.deleteOrder);
+router.put("/:id", controller.updateOrder);
 
 module.exports = router;

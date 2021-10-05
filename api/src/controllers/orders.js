@@ -1,7 +1,7 @@
 const Orders = require("../models/Orders");
 const orderController = {};
 
-orderController.add = async (req, res, next) => {
+orderController.addOrder = async (req, res, next) => {
   try {
     console.log(res);
     const newOrder = await new Orders({ ...req.body, date: new Date() });
@@ -51,31 +51,30 @@ orderController.deleteOrder = async (req, res, next) => {
     });
   }
 };
-// const searchTypeCommerce = async () => {
-//   const results = await CommerceType.find();
-//   return results.length ? results : null;
-// };
 
-// const searchTypeCommerceByName = async (name) => {
-//   const list = await searchTypeCommerce();
-//   const filterByName = list.filter((type) => {
-//     return type.name.toLocaleLowerCase().includes(name.toLocaleLowerCase());
-//   });
-//   return filterByName.length ? filterByName : null;
-// };
-
-// const updateCommerceType = async (id, name) => {
-//   const commerceType = await CommerceType.findOneAndUpdate(
-//     { _id: `${id}` },
-//     { name },
-//     { new: true }
-//   );
-//   return commerceType ? commerceType : false;
-// };
-
-// const deleteTypeCommerce = async (id) => {
-//   const typeDelete = await CommerceType.deleteOne({ _id: `${id}` });
-//   return typeDelete.deletedCount === 1 ? true : false;
-// };
+orderController.updateOrder = async (req, res, next) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+    const updatedOrder = await Orders.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      {
+        new: true,
+      }
+    );
+    return res.json({
+      succes: true,
+      msg: "Ordene modificada exitosamente",
+      payload: updatedOrder,
+    });
+  } catch (err) {
+    res.json({
+      succes: false,
+      msg: "No se pudo modificar la orden",
+      payload: err,
+    });
+  }
+};
 
 module.exports = orderController;
