@@ -1,14 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {
-  createCommerceType,
-  searchTypeCommerceByName,
-  searchTypeCommerce,
-  updateCommerceType,
-  deleteTypeCommerce,
-} = require("../controllers/commerceType");
+const controller = require("../controllers/commerceType.js");
 
-router.post("/", async (req, res) => {
+router.get("/filters", controller.filtersCommerceType);
+router.get("/", controller.findCommerceType);
+router.post("/add", controller.addCommerceType);
+/* router.post("/", async (req, res) => {
   const { name } = req.body;
   try {
     const newCommerceType = await createCommerceType(name);
@@ -101,6 +98,6 @@ router.delete("/:id", async (req, res) => {
   } catch (err) {
     res.json({ succes: false, msg: "error", payload: null });
   }
-});
+}); */
 
 module.exports = router;

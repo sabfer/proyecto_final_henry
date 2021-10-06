@@ -3,7 +3,6 @@ const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
   try {
-    console.log(res);
     const newOrder = await new Orders({ ...req.body, date: new Date() });
     await newOrder.save();
     res.json({

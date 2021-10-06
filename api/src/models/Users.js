@@ -4,8 +4,9 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const UserSchema = new Schema({
-  password: String,
-  email: String,
+  password: { type: String, required: true },
+  email: { type: String, required: true },
+  name: { type: String, required: true }
 });
 
 UserSchema.pre("save", function (next) {

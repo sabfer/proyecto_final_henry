@@ -1,49 +1,119 @@
 const Clients = require("../models/Clients");
+const clientsController = {};
 
-// GETS
-const clientByName = async(name) => {
-    const client = await Clients.findOne({ name: `${name}`});
-    return client ? client : null;
-}
+// FILTER
+clientsController.filtersClient = async (req, res, next) => {
+    const { key, value } = req.body;
+    try{
+        const list = await Clients.find();
+        const filters = list.filter((client) => {
+            if(typeof value === Number) return client[key] === value;
+            return client[key].toLocaleLowerCase().includes(value.toLocaleLowerCase())
+        });
+        if(filters.length){
+            res.json({
+                succes: true,
+                msg: "Coincidencias encontradas",
+                payload: filters
+            });
+        }
+    } catch(err) {
+        next(err);
+    }
+};
 
-const searchClients = async() => {
-    const clients = await Clients.find();
-    return clients ? clients : null;
-}
+// GET
+clientsController.findClients = async (_req, res, next) => {
+    try{
+        const clients = await Clients.find();
+        if (clients.length) {
+            res.json({
+                succes: true,
+                msg: "Clientes encontrados",
+                payload: clients
+            })
+        } else {
+            res.json({
+                succes: false,
+                msg: "Clientes no encontrados",
+                payload: null
+            })
+        }
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST
-const filterClient = async(name) => {
-    const clients = await Clients.findOne({ name: `${name}`});
-    return clients ? true : null;
-}
-
-const addClient = async(name, phone, direction) => {
-    const newClient = await new Clients({
-        name, 
-        phone,
-        direction
-    })
-    await newClient.save();
-    return newClient;
-}
+clientsController.addClient = async (req, res, _next) => {
+    const payload  = req.body;
+    try{
+        const client = await Clients.findOne({name : payload.name})
+        if(client) {
+            res.json({
+                succes: false,
+                msg: "Este cliente ya existe",
+                payload: null
+            })
+        } else {
+            const newClient = await new Clients(payload);
+            await newClient.save();
+            res.json({
+                succes:true,
+                msg: "Cliente Creado",
+                payload: newClient
+            })
+        }
+    } catch (err) {
+        res.json({
+            succes: false,
+            msg: "No se pudo crear el cliente",
+            payload: null
+        });
+    }
+};
 
 // DELETE
-const deleteClient = async(id) => {
-    const deleted = await Clients.deleteOne({_id: `${id}`});
-    return deleted ? true : false;
-}
+clientsController.deleteClient = async (req, res, _next) => {
+    const { id } = req.params;
+    try {
+        await Clients.deleteOne({ _id: `${id}` });
+            return res.json({
+                succes: true,
+                msg: "Cliente eliminado exitosamente",
+                payload: null,
+            });
+    } catch (err) {
+        res.json({
+            succes: false,
+            msg: "No se pudo eliminar el cliente",
+            payload: err,
+        });
+    }
+};
 
 // UPDATE/PUT
-const updateClient = async(id, update) => {
-    const updated = await Clients.findOneAndUpdate({_id: id} , update, {new:true})
-    return updated ? true : false;
-}
-
-module.exports = {
-    clientByName,
-    searchClients,
-    filterClient,
-    addClient,
-    deleteClient,
-    updateClient
+clientsController.updateClient = async (req, res, _next) => {
+    const { id } = req.params;
+    const payload = req.body;
+    try {
+        const updatedClient = await Clients.findOneAndUpdate(
+        { _id: `${id}` },
+        payload,
+        {new: true,}
+        );
+        return res.json({
+            succes: true,
+            msg: "Cliente modificado exitosamente",
+            payload: updatedClient,
+        });
+    } catch (err) {
+        res.json({
+            succes: false,
+            msg: "No se pudo modificar el cliente",
+            payload: err,
+        });
+    }
 };
+
+module.exports = clientsController;

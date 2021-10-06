@@ -1,24 +1,75 @@
 const CommerceType = require("../models/CommerceType");
+const commerceTypeController = {};
 
-const createCommerceType = async (name) => {
-  const newCommerceType = await new CommerceType({
-    name,
-  });
-  await newCommerceType.save();
-  return newCommerceType;
+// FILTER BY NAME
+commerceTypeController.filtersCommerceType = async (req, res, next) => {
+  const { name } = req.body;
+  try{
+      const list = await CommerceType.find();
+      const filters = list.filter((type) => {
+          return type.includes(name.toLocaleLowerCase())
+      });
+      if(filters.length){
+          res.json({
+              succes: true,
+              msg: "Coincidencias encontradas",
+              payload: filters
+          });
+      }
+  } catch(err) {
+      next(err);
+  }
 };
 
-const searchTypeCommerce = async () => {
-  const results = await CommerceType.find();
-  return results.length ? results : null;
+// GET
+commerceTypeController.findCommerceType = async (_req, res, next) => {
+  try{
+      const commerceType = await CommerceType.find();
+      if (commerceType.length) {
+          res.json({
+              succes: true,
+              msg: "Tipos de comercios encontrados",
+              payload: commerceType
+          })
+      } else {
+          res.json({
+              succes: false,
+              msg: "No hay tipos de comercios encontrados",
+              payload: null
+          })
+      }
+  } catch (err) {
+      next(err);
+  }
 };
 
-const searchTypeCommerceByName = async (name) => {
-  const list = await searchTypeCommerce();
-  const filterByName = list.filter((type) => {
-    return type.name.toLocaleLowerCase().includes(name.toLocaleLowerCase());
-  });
-  return filterByName.length ? filterByName : null;
+//POST
+commerceTypeController.addCommerceType = async (req, res, _next) => {
+  const payload  = req.body;
+  try{
+      const commerceType = await CommerceType.findOne({name : payload.name})
+      if(commerceType) {
+          res.json({
+              succes: false,
+              msg: "Este tipo de comercio ya existe",
+              payload: null
+          })
+      } else {
+          const newCommerceType = await new CommerceType(payload);
+          await newCommerceType.save();
+          res.json({
+              succes:true,
+              msg: "Tipo de comercio Creado",
+              payload: newCommerceType
+          })
+      }
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo crear el tipo de comercio",
+          payload: null
+      });
+  }
 };
 
 const updateCommerceType = async (id, name) => {
@@ -35,10 +86,4 @@ const deleteTypeCommerce = async (id) => {
   return typeDelete.deletedCount === 1 ? true : false;
 };
 
-module.exports = {
-  createCommerceType,
-  searchTypeCommerceByName,
-  searchTypeCommerce,
-  updateCommerceType,
-  deleteTypeCommerce,
-};
+module.exports = commerceTypeController;
