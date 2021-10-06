@@ -5,7 +5,12 @@ import {
   HeaderModal,
   CloseButton,
 } from "./ModalStyles";
-import { postProduct, updateProduct, postCommerce } from "../../actions";
+import {
+  postProduct,
+  updateProduct,
+  postCommerce,
+  getProducts,
+} from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -30,6 +35,7 @@ export default function Modal({
   pass,
   location,
   idElement,
+  showInSettings,
 }) {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
@@ -51,10 +57,8 @@ export default function Modal({
     name: "",
     price: "",
     productType: "",
-
     user: "",
     pass: "",
-
     location: "",
   });
 
@@ -62,15 +66,15 @@ export default function Modal({
   console.log(inpValido, "statevalido"); */
 
   const expresiones = {
-    name: /^[a-zA-Z0-9_\\-\s]{3,16}$/, // Letras, numeros, guion y guion_bajo y espacio
+    name: /^[a-zA-Z0-9_\\-\s]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
     //^[a-zA-ZÀ-ÿ\s]{4,40}$ /^([a-z]+[0-9]{0,2}){5,12}
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     //user: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
-    pass: /^[a-zA-Z0-9_\\-]{5,16}$/, // Letras, numeros, guion y guion_baj
+    pass: /^[a-zA-Z0-9_\\-]{5,32}$/, // Letras, numeros, guion y guion_baj
     //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
-    productType: /^[a-zA-Z0-9_\\-\s]{4,20}$/, // Letras, numeros, guion y guion_bajo y espacio
+    productType: /^[a-zA-Z0-9_\\-\s]{4,32}$/, // Letras, numeros, guion y guion_bajo y espacio
     price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^[a-zA-Z0-9_\\-\s]{6,16}$/ // Letras, numeros, guion y guion_bajo y espacio
+    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/, // Letras, numeros, guion y guion_bajo y espacio
   };
 
   useEffect(() => {
@@ -206,6 +210,9 @@ export default function Modal({
           confirmButtonText: "Aceptar",
         }).then((result) => {
           if (result.isConfirmed) {
+            if (showInSettings) {
+              dispatch(getProducts());
+            }
             setStateModal(!state);
             setInput({
               name: "",
