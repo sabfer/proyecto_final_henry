@@ -63,15 +63,15 @@ export default function Modal({
   console.log(inpValido, "statevalido");
 
   const expresiones = {
-    name: /^([a-z-ÿ\s]+[0-9]{0,2}){3,12}$/, // Letras, numeros, guion y guion_bajo
+    name: /^[a-zA-Z0-9\\-]{3,16}$/, // Letras, numeros, guion y guion_bajo
     //^[a-zA-ZÀ-ÿ\s]{4,40}$ /^([a-z]+[0-9]{0,2}){5,12}
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     //user: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
     pass: /^[a-zA-Z0-9\\-]{5,16}$/, // Letras, numeros, guion y guion_baj
     //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
-    productType: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
+    productType: /^[a-zA-Z0-9\\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^([a-z-ÿ\s]+[0-9]{0,2}){6,12}$/ // Letras, numeros, guion y guion_bajo
+    location: /^[a-zA-Z0-9\\-]{6,16}$/ // Letras, numeros, guion y guion_bajo
   };
 
   useEffect(() => {
