@@ -8,7 +8,7 @@ clientsController.filtersClient = async (req, res, next) => {
         const list = await Clients.find();
         const filters = list.filter((client) => {
             if(typeof value === Number) return client[key] === value;
-            return client[key].toLocaleLowerCase().includes(value.toLocaleLowerCase())
+            return client[key].includes(value.toLocaleLowerCase())
         });
         if(filters.length){
             res.json({

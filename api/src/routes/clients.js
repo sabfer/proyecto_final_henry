@@ -6,6 +6,6 @@ router.get("/", controller.findClients);
 router.get("/filter", controller.filtersClient);
 router.post("/register", controller.addClient);
 router.delete("/:id", controller.deleteClient);
-router.post("/:id", controller.updateClient);
+router.put("/:id", controller.updateClient);
 
 module.exports = router;

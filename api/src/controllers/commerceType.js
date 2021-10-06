@@ -1,24 +1,24 @@
 const CommerceType = require("../models/CommerceType");
 const commerceTypeController = {};
 
-// FILTER BY NAME
+// FILTER 
 commerceTypeController.filtersCommerceType = async (req, res, next) => {
-  const { name } = req.body;
-  try{
-      const list = await CommerceType.find();
-      const filters = list.filter((type) => {
-          return type.includes(name.toLocaleLowerCase())
-      });
-      if(filters.length){
-          res.json({
-              succes: true,
-              msg: "Coincidencias encontradas",
-              payload: filters
-          });
-      }
-  } catch(err) {
-      next(err);
-  }
+    const { key, value } = req.body;
+    try{
+        const list = await CommerceType.find();
+        const filters = list.filter((commerce) => {
+            return commerce[key].includes(value.toLocaleLowerCase())
+        });
+        if(filters.length){
+            res.json({
+                succes: true,
+                msg: "Coincidencias encontradas",
+                payload: filters
+            });
+        }
+    } catch(err) {
+        next(err);
+    }
 };
 
 // GET
@@ -72,18 +72,47 @@ commerceTypeController.addCommerceType = async (req, res, _next) => {
   }
 };
 
-const updateCommerceType = async (id, name) => {
-  const commerceType = await CommerceType.findOneAndUpdate(
-    { _id: `${id}` },
-    { name },
-    { new: true }
-  );
-  return commerceType ? commerceType : false;
+// DELETE
+commerceTypeController.deleteCommerceType = async (req, res, _next) => {
+  const { id } = req.params;
+  try {
+      await CommerceType.deleteOne({ _id: `${id}` });
+          return res.json({
+              succes: true,
+              msg: "Tipo de comercio eliminado exitosamente",
+              payload: null,
+          });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo eliminar el tipo de comercio",
+          payload: err,
+      });
+  }
 };
 
-const deleteTypeCommerce = async (id) => {
-  const typeDelete = await CommerceType.deleteOne({ _id: `${id}` });
-  return typeDelete.deletedCount === 1 ? true : false;
+// UPDATE
+commerceTypeController.updateCommerceType = async (req, res, _next) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+      const updatedCommerceType = await CommerceType.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      {new: true,}
+      );
+      return res.json({
+          succes: true,
+          msg: "Tipo de comercio modificado exitosamente",
+          payload: updatedCommerceType,
+      });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo modificar el tipo de comercio",
+          payload: err,
+      });
+  }
 };
 
 module.exports = commerceTypeController;

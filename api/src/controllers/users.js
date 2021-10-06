@@ -8,7 +8,7 @@ usersController.filterUser = async (req, res, next) => {
   try{
       const list = await Users.find();
       const filters = list.filter((user) => {
-          return user[key].toLocaleLowerCase().includes(value.toLocaleLowerCase())
+          return user[key].includes(value.toLocaleLowerCase())
       });
       if(filters.length){
           res.json({
