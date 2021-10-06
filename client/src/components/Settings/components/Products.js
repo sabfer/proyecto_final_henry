@@ -16,6 +16,7 @@ import { deleteProduct } from "../../../actions";
 import Modal from "../../Modals/Modal";
 
 import Search from "./Search";
+import FilterProductTypes from "./FilterProductTypes";
 
 export default function Productos() {
   const dispatch = useDispatch();
@@ -34,9 +35,6 @@ export default function Productos() {
     }, 1000);
   }, [dispatch]);
 
-  /* useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch, products]); */
 
   function handleDelete(e) {
     if (
@@ -47,7 +45,7 @@ export default function Productos() {
       dispatch(deleteProduct(e));
       setTimeout(() => {
         dispatch(getProducts());
-      }, 100);
+      }, 1000);
     }
   }
 
@@ -67,6 +65,7 @@ export default function Productos() {
       <h1>Productos</h1>
       {/* <Table data={products}></Table> */}
       <Search />
+      <FilterProductTypes/>
       {Array.isArray(products) ? (
         <div>
           <Table>

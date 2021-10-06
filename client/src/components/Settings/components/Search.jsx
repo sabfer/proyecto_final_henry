@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getNameProducts } from "../../../actions";
+import { getNameProducts, getProducts } from "../../../actions";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -16,6 +16,10 @@ export default function Search() {
     dispatch(getNameProducts(name));
   }
 
+  function handleButton(e){
+    dispatch(getProducts())
+  }
+
   return (
     <div>
       <input
@@ -27,6 +31,11 @@ export default function Search() {
       <button type="submit" onClick={(e) => handleSubmit(e)}>
         BUSCAR
       </button>
+      <div>
+        <button type="button" onClick={(e) => {handleButton(e)}}>
+          Traer todos los productos
+        </button>
+      </div>
     </div>
   );
 }

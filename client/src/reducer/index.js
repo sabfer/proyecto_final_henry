@@ -1,9 +1,10 @@
 import {} from "../actions/index";
 
 const initialState = {
-  singUpErrors: {},
-  products: {},
-  users: {},
+  singUpErrors: undefined,
+  products: undefined,
+  productsCopy: undefined,
+  users: undefined,
   commerces: undefined,
   settings: {
     show: "",
@@ -21,13 +22,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "GET_NAME_PRODUCT":
       return {
         ...state,
-        products: payload,
+        products: Array.isArray(payload) ? payload : [payload],
+      };
+
+    case "FILTER_PRODUCTS_TYPE":
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
+      return {
+        ...state,
+        products: array,
       };
 
     case "GET_PRODUCTS":
       return {
         ...state,
         products: payload,
+        productsCopy: payload,
       };
 
     case "POST_PRODUCTS":
