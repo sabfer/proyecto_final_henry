@@ -48,18 +48,18 @@ export default function Modal({
   });
 
   const [inpValido, setInputvalido] = useState({
-    name: "false",
-    price: "false",
-    productType: "false",
+    name: "",
+    price: "",
+    productType: "",
 
-    user: "false",
-    pass: "false",
+    user: "",
+    pass: "",
 
-    location: "false",
+    location: "",
   });
 
-  console.log(input, "statelocal");
-  console.log(inpValido, "statevalido");
+  /* console.log(input, "statelocal");
+  console.log(inpValido, "statevalido"); */
 
   const expresiones = {
     name: /^([a-z-ÿ\s]+[0-9]{0,2}){3,12}$/, // Letras, numeros, guion y guion_bajo
@@ -148,16 +148,20 @@ export default function Modal({
     // e.preventDefault();
     if (id === 1) {
       if (inpValido.name && inpValido.user && inpValido.pass) {
-        //dispatch(input); object que se envia a las actions
+        dispatch(input);
         MySwal.fire({
           title: "User created",
           icon: "success",
           confirmButtonText: "Aceptar",
-        });
-        setInput({
-          name: "",
-          user: "",
-          pass: "",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              user: "",
+              pass: "",
+            });
+          }
         });
       } else
         MySwal.fire({
@@ -170,15 +174,19 @@ export default function Modal({
 
     if (id === 2) {
       if (inpValido.name && inpValido.location) {
-        //dispatch(postCommerce(input)); object que se envia a las actions
+        dispatch(postCommerce(input));
         MySwal.fire({
           title: " Comercio created",
           icon: "success",
           confirmButtonText: "Aceptar",
-        });
-        setInput({
-          name: "",
-          location: "",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              location: "",
+            });
+          }
         });
       } else
         MySwal.fire({
@@ -196,12 +204,15 @@ export default function Modal({
           title: "Product created",
           icon: "success",
           confirmButtonText: "Aceptar",
-        });
-        console.log("se despacho la accion");
-        setInput({
-          name: "",
-          price: "",
-          productType: "",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              price: "",
+              productType: "",
+            });
+          }
         });
       } else
         MySwal.fire({

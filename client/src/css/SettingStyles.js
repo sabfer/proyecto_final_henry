@@ -32,6 +32,15 @@ export const OpcionesIzquierda = styled.div`
 
 export const AjustesDerecha = styled(AjustesIzquierda)`
   width: 70%;
+  padding: 2rem;
 `;
 
-
+export const Loading = styled.div`
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    font-weight: bolder;
+  }
+`;
