@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const OrderSchema = new Schema(
   {
     date: { type: Date, required: true },
+    orderNumber: { type: Number, required: true },
+    tableNumber: { type: Number },
     products: [
       {
         product: { type: Schema.ObjectId, ref: "Product" },
@@ -13,9 +14,14 @@ const OrderSchema = new Schema(
     ],
     clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true
     userId: { type: Schema.ObjectId, ref: "User" }, //required: true
-    typeOrder: {
+    type: {
       type: String,
       enum: ["Take Away", "Delivery", "Salon"],
+      required: true,
+    },
+    estado: {
+      type: String,
+      enum: ["Pendiente", "En progreso", "Finalizada"],
       required: true,
     },
   },
