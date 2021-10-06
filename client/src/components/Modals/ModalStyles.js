@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   height: ${(props) => (props.modalContainerBox ? "520px" : "430px")};
   background: #fff;
   position: relative;
-  border-radius: 5px;
+  border-radius: 60px 0 60px 0;
   box-shadow: box-shadow: 0 0 12px 5px #ddd;
 
   input {
@@ -26,7 +26,7 @@ export const ModalContainer = styled.div`
     height: 35px;
     left: 50px;
     right: 50px;
-    margin: 10px 50px;
+    margin: 1px 50px;
     border-radius: 12px;
   }
 
@@ -42,7 +42,11 @@ export const ModalContainer = styled.div`
   }
 
   button {
+<<<<<<< HEAD
+    margin: 23px 0px 0px 180px;
+=======
     margin: 50px 0px 0px 180px;    
+>>>>>>> main
     padding: 10px 30px;
     border-radius: 5px;
     color: #ffffff;

@@ -20,6 +20,7 @@ import {
   faPenSquare,
   faTrash,
   faSortAlphaDown,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Productos() {
@@ -27,6 +28,7 @@ export default function Productos() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   console.log(products);
+  const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [modalProduct, setmodalProduct] = useState({
     _id: "",
@@ -93,6 +95,28 @@ export default function Productos() {
       <h1>Productos</h1>
       <Search />
       <FilterProductTypes />
+      <Button
+        onClick={() => setNewProductModal(!newProductModal)}
+        width="11.9rem"
+        justify="space-between"
+        padding="0.625rem"
+        buttonColor="rgb(204, 0, 0)"
+      >
+        <FontAwesomeIcon icon={faPlus} size="lg" />
+        Crear producto
+      </Button>
+      <Modal
+        id={3}
+        state={newProductModal}
+        setStateModal={setNewProductModal}
+        title="Crear un Producto"
+        label1="Nombre"
+        label2="Descripción"
+        label3="Precio"
+        label4="Tipo de Producto"
+        modalContainerBox={true}
+        showInSettings={true}
+      />
       {Array.isArray(products) ? (
         <div>
           <Table>
