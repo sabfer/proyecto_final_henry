@@ -271,7 +271,6 @@ export default function Modal({
           </ModalContainer>
         </Overlay>
       )}
-      1
     </div>
   );
 }
