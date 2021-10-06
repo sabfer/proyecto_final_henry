@@ -14,23 +14,6 @@ export function registerUser(payload) {
   };
 }
 
-// ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
-export function getNameProducts(payload) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get(
-        "http://localhost:3001/products?name=" + payload
-      );
-      return dispatch({
-        type: "GET_NAME_PRODUCT",
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 // ---------- OBTENER PRODUCTOS ---------- \\
 export function getProducts(payload) {
   return function (dispatch) {
@@ -42,6 +25,35 @@ export function getProducts(payload) {
       .catch((err) => {
         console.log(err);
       });
+  };
+}
+
+// ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
+export function getNameProducts(payload) {
+  return async function (dispatch) {
+    try {
+      var data = await axios.get(
+        "http://localhost:3001/products?name=" + payload
+      );
+      if (data.data.succes) {
+        return dispatch({
+          type: "GET_NAME_PRODUCT",
+          payload: data.data.payload,
+        });
+      } else {
+        alert(data.data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+// // ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
+export function filterProductsType(payload) {
+  return {
+    type: "FILTER_PRODUCTS_TYPE",
+    payload,
   };
 }
 
@@ -83,11 +95,11 @@ export function updateProduct(payload, id) {
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
   return async function (dispatch) {
-    var json = await axios.post(
+    var data = await axios.post(
       "http://localhost:3001/commerce/register",
       payload
     );
-    return json;
+    return data;
   };
 }
 
