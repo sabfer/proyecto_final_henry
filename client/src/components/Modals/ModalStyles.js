@@ -26,7 +26,7 @@ export const ModalContainer = styled.div`
     height: 35px;
     left: 50px;
     right: 50px;
-    margin: 10px 50px;
+    margin: 1px 50px;
     border-radius: 12px;
   }
 
@@ -42,8 +42,7 @@ export const ModalContainer = styled.div`
   }
 
   button {
-    margin: 50px 0px 0px 180px;
-
+    margin: 23px 0px 0px 180px;
     padding: 10px 30px;
     border-radius: 5px;
     color: #ffffff;

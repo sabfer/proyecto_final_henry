@@ -82,6 +82,7 @@ export function updateProduct(payload, id) {
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
+  console.log(payload,"actions")
   return async function (dispatch) {
     var json = await axios.post(
       "http://localhost:3001/commerce/register",
