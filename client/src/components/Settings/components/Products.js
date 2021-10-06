@@ -15,17 +15,18 @@ import {
   TableHd,
   TableRow,
 } from "../../../css/Table";
+import { Loading } from "../../../css/SettingStyles";
 import {
   faPenSquare,
   faTrash,
   faSortAlphaDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function Productos() {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  console.log(products);
   const [editProductModal, setEditProductModal] = useState(false);
   const [modalProduct, setmodalProduct] = useState({
     _id: "",
@@ -39,7 +40,6 @@ export default function Productos() {
       dispatch(getProducts());
     }, 1000);
   }, [dispatch]);
-
 
   function handleDelete(e) {
     MySwal.fire({
@@ -91,9 +91,8 @@ export default function Productos() {
   return (
     <div>
       <h1>Productos</h1>
-      {/* <Table data={products}></Table> */}
       <Search />
-      <FilterProductTypes/>
+      <FilterProductTypes />
       {Array.isArray(products) ? (
         <div>
           <Table>
@@ -155,7 +154,14 @@ export default function Productos() {
           </Table>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Loading>
+          <p>Loading...</p>
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
+        </Loading>
       )}
 
       <Modal

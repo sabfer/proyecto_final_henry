@@ -19,9 +19,9 @@ export default function Settings() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getProducts());
-  });
+  }); */
 
   function handleProducts(e) {
     e.preventDefault();
@@ -62,7 +62,7 @@ export default function Settings() {
           <Button width="11rem">Regresar a Home</Button>
         </StyledLink>
       </Header>
-      <Body display="flex" padding="4rem" justifycontent="space-between">
+      <Body display="flex" padding="4rem 6rem" justifycontent="space-between">
         <AjustesIzquierda>
           <TituloIzquierda>Categorías</TituloIzquierda>
           <OpcionesIzquierda onClick={(e) => handleGenerals(e)}>
