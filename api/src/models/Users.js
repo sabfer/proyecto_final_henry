@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const users = new Schema({
+const UserSchema = new Schema({
   password: String,
   email: String,
 });
 
-users.pre("save", function (next) {
+UserSchema.pre("save", function (next) {
   const user = this;
 
   if (this.isModified("password") || this.isNew) {
@@ -31,4 +31,4 @@ users.pre("save", function (next) {
   }
 });
 
-module.exports = mongoose.model("User", users);
+module.exports = mongoose.model("User", UserSchema);

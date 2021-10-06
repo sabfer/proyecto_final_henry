@@ -6,6 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import { getProducts, deleteProduct } from "../../../actions";
 import Modal from "../../Modals/Modal";
 import Search from "./Search";
+import FilterProductTypes from "./FilterProductTypes";
 import { Button } from "../../../css";
 import {
   Table,
@@ -19,6 +20,7 @@ import {
   faTrash,
   faSortAlphaDown,
 } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
@@ -38,9 +40,6 @@ export default function Productos() {
     }, 1000);
   }, [dispatch]);
 
-  /* useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch, products]); */
 
   function handleDelete(e) {
     MySwal.fire({
@@ -94,6 +93,7 @@ export default function Productos() {
       <h1>Productos</h1>
       {/* <Table data={products}></Table> */}
       <Search />
+      <FilterProductTypes/>
       {Array.isArray(products) ? (
         <div>
           <Table>

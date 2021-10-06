@@ -44,7 +44,7 @@ export default function Settings() {
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products></Products>;
+        return <Products handle={handleProducts}></Products>;
       case "users":
         return <Users></Users>;
       case "commerce":
