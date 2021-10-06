@@ -19,11 +19,44 @@ orderController.findOrders = async (req, res, next) => {
   try {
     const ordersRes = await Orders.find({}, { __v: 0 });
     if (ordersRes.length) {
-      res.json({
+      return res.json({
         succes: true,
         msg: "Ordenes encontradas",
         payload: ordersRes,
       });
+    }
+    res.json({
+      succes: false,
+      msg: "No se encontraron ordenes",
+      payload: null,
+    });
+  } catch (err) {
+    next(error);
+  }
+};
+
+orderController.filterOrders = async (req, res, next) => {
+  const { key, value } = req.body;
+  try {
+    const orders = await Orders.find({}, { __v: 0 });
+    if (orders.length) {
+      const filterOrders = orders.filter((order) => {
+        if (typeof value === Number) return order[key] === value;
+        return order[key]
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
+      });
+      filterOrders.length
+        ? res.json({
+            succes: true,
+            msg: "Ordenes encontradas",
+            payload: filterOrders,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron ordenes",
+            payload: null,
+          });
     }
   } catch (err) {
     next(err);
