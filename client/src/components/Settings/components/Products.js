@@ -30,7 +30,7 @@ export default function Productos() {
   console.log(products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
-  const [modalProduct, setmodalProduct] = useState({
+  const [inputModalProduct, setInputModalProduct] = useState({
     _id: "",
     name: "",
     price: "",
@@ -56,32 +56,22 @@ export default function Productos() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteProduct(e));
+        setTimeout(() => {
+          dispatch(getProducts());
+        }, 300);
         MySwal.fire({
           title: "Producto borrado",
           text: "El producto se borró correctamente.",
           icon: "success",
           confirmButtonColor: "#00A0D2",
         });
-        setTimeout(() => {
-          dispatch(getProducts());
-        }, 300);
       }
     });
-    /* if (
-      window.confirm(
-        "¿Estás seguro de querer eliminar el producto seleccionado?"
-      )
-    ) {
-      dispatch(deleteProduct(e));
-      setTimeout(() => {
-        dispatch(getProducts());
-      }, 100);
-    } */
   }
 
   function handleClick(e, props) {
     e.preventDefault();
-    setmodalProduct({
+    setInputModalProduct({
       _id: props._id,
       name: props.name,
       price: props.price,
@@ -189,7 +179,7 @@ export default function Productos() {
       )}
 
       <Modal
-        idElement={modalProduct._id}
+        idElement={inputModalProduct._id}
         id={7}
         state={editProductModal}
         setStateModal={setEditProductModal}
@@ -197,9 +187,9 @@ export default function Productos() {
         label1="Nombre"
         label2="Precio"
         label3="Tipo de Producto"
-        name={modalProduct.name}
-        price={modalProduct.price}
-        productType={modalProduct.productType}
+        name={inputModalProduct.name}
+        price={inputModalProduct.price}
+        productType={inputModalProduct.productType}
         modalContainerBox={true}
       />
     </div>
