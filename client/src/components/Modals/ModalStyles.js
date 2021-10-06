@@ -6,7 +6,7 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   padding: 40px;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   height: ${(props) => (props.modalContainerBox ? "520px" : "430px")};
   background: #fff;
   position: relative;
-  border-radius: 5px;
+  border-radius: 60px 0 60px 0;
   box-shadow: box-shadow: 0 0 12px 5px #ddd;
 
   input {
@@ -42,7 +42,11 @@ export const ModalContainer = styled.div`
   }
 
   button {
+<<<<<<< HEAD
     margin: 23px 0px 0px 180px;
+=======
+    margin: 50px 0px 0px 180px;    
+>>>>>>> main
     padding: 10px 30px;
     border-radius: 5px;
     color: #ffffff;
@@ -99,12 +103,12 @@ export const CloseButton = styled.div`
   border-radius: 5px;
   color: #00c2ff;
 
-  &:hover {
-    color: #ff0000;
+  .fa-window-close {
+    width: 25px;
+    height: 25px;
   }
 
-  svg {
-    width: 100%;
-    height: 100%;
+  &:hover {
+    color: #ff0000;
   }
 `;

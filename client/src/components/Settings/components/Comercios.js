@@ -45,7 +45,6 @@ export default function Commerces() {
   return (
     <div>
       <h1>Comercios</h1>
-      <Search />
       {Array.isArray(commerces) ? (
         <Table>
           <TableHead>
