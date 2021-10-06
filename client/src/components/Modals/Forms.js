@@ -22,7 +22,7 @@ export const conditionalForm = (
           name="name"
           required
           value={input.name}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley1}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -38,7 +38,7 @@ export const conditionalForm = (
           name="user"
           required
           value={input.user}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley1}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -55,7 +55,7 @@ export const conditionalForm = (
           name="pass"
           required
           value={input.pass}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley1}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -78,7 +78,7 @@ export const conditionalForm = (
           name="name"
           required
           value={input.name}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley1}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -95,7 +95,7 @@ export const conditionalForm = (
           name="location"
           required
           value={input.location}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley6}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -118,7 +118,7 @@ export const conditionalForm = (
           name="name"
           required
           value={input.name}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley1}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -136,7 +136,7 @@ export const conditionalForm = (
           min="1"
           required
           value={input.price}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley2}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -153,7 +153,7 @@ export const conditionalForm = (
           name="productType"
           required
           value={input.productType}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
           leyenda={ley3}
           //cuando precionas una tecla se la presiona hacia adentro y cuando se
           //levanta el dedo es donde se ejecuta esta funcion
@@ -175,7 +175,7 @@ export const conditionalForm = (
           type="string"
           name="table"
           value={input.table}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
         <label>{label2}</label>
         <br />
@@ -183,7 +183,7 @@ export const conditionalForm = (
           type="text"
           name="products"
           value={input.products}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
         <label>{label3}</label>
         <br />
@@ -201,7 +201,7 @@ export const conditionalForm = (
           type="text"
           name="orderD"
           value={input.orderD}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
         <label>{label2}</label>
         <br />
@@ -209,7 +209,7 @@ export const conditionalForm = (
           type="text"
           name="products"
           value={input.products}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
       </form>
     );
@@ -224,7 +224,7 @@ export const conditionalForm = (
           type="text"
           name="orderTA"
           value={input.orderTA}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
         <label>{label2}</label>
         <br />
@@ -232,7 +232,7 @@ export const conditionalForm = (
           type="text"
           name="products"
           value={input.products}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
       </form>
     );

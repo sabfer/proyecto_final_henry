@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { LeyendaError } from "./StyleForm";
 import {
   Overlay,
   ModalContainer,
@@ -49,18 +48,18 @@ export default function Modal({
   });
 
   const [inpValido, setInputvalido] = useState({
-    name: "false",
-    price: "false",
-    productType: "false",
+    name: "",
+    price: "",
+    productType: "",
 
-    user: "false",
-    pass: "false",
+    user: "",
+    pass: "",
 
-    location:"false"
+    location: "",
   });
 
-  console.log(input, "statelocal");
-  console.log(inpValido, "statevalido");
+  /* console.log(input, "statelocal");
+  console.log(inpValido, "statevalido"); */
 
   const expresiones = {
     name: /^[a-zA-Z0-9\\-]{3,16}$/, // Letras, numeros, guion y guion_bajo
@@ -83,9 +82,9 @@ export default function Modal({
       user: user,
       pass: pass,
 
-      location:location
+      location: location,
     });
-  }, [name, price, productType, user, pass,location]);
+  }, [name, price, productType, user, pass, location]);
 
   let labels = { label1, label2, label3, label4 };
   let productValues = {
@@ -94,7 +93,7 @@ export default function Modal({
     productType: productType,
     user: user,
     pass: pass,
-    location
+    location,
   };
   let leyendaError = {
     ley1: "ingrese nombre con mas de 2 digitos",
@@ -102,7 +101,7 @@ export default function Modal({
     ley3: "ingrese tipo de producto con mas de 3 digitos",
     ley4: "ingrese usuario con formato de correo",
     ley5: "ingrese un password con mas de 5 digitos",
-    ley6: "ingrese una ubicacion con mas de 5 digitos"
+    ley6: "ingrese una ubicacion con mas de 5 digitos",
   };
 
   function handleChange(e) {
@@ -148,72 +147,72 @@ export default function Modal({
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
-      if (
-        inpValido.name == "true" &&
-        inpValido.user=="true" &&
-        inpValido.pass == "true"
-      ) {
-        //dispatch(input); object que se envia a las actions
+      if (inpValido.name && inpValido.user && inpValido.pass) {
+        dispatch(input);
         MySwal.fire({
           title: "User created",
           icon: "success",
           confirmButtonText: "Aceptar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              user: "",
+              pass: "",
+            });
+          }
         });
-        setInput({
-          name: "",
-          user: "",
-          pass: "",
+      } else
+        MySwal.fire({
+          title: "Error!",
+          text: "Complete all dates",
+          icon: "error",
+          confirmButtonText: "Cool",
         });
-      }else
-      MySwal.fire({
-        title: "Error!",
-        text: "Complete all dates",
-        icon: "error",
-        confirmButtonText: "Cool",
-      });
     }
 
     if (id === 2) {
-      if (
-        inpValido.name == "true" &&
-        inpValido.location=="true"
-      ) {
-        //dispatch(postCommerce(input)); object que se envia a las actions
+      if (inpValido.name && inpValido.location) {
+        dispatch(postCommerce(input));
         MySwal.fire({
           title: " Comercio created",
           icon: "success",
           confirmButtonText: "Aceptar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              location: "",
+            });
+          }
         });
-        setInput({
-          name: "",
-          location:""
+      } else
+        MySwal.fire({
+          title: "Error!",
+          text: "Complete all dates",
+          icon: "error",
+          confirmButtonText: "Cool",
         });
-      }else
-      MySwal.fire({
-        title: "Error!",
-        text: "Complete all dates",
-        icon: "error",
-        confirmButtonText: "Cool",
-      });
     }
 
     if (id === 3) {
-      if (
-        inpValido.name == "true" &&
-        input.price > 0 &&
-        inpValido.productType == "true"
-      ) {
+      if (inpValido.name && input.price > 0 && inpValido.productType) {
         dispatch(postProduct(input));
         MySwal.fire({
           title: "Product created",
           icon: "success",
           confirmButtonText: "Aceptar",
-        });
-        console.log("se despacho la accion");
-        setInput({
-          name: "",
-          price: "",
-          productType: "",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setStateModal(!state);
+            setInput({
+              name: "",
+              price: "",
+              productType: "",
+            });
+          }
         });
       } else
         MySwal.fire({
@@ -272,7 +271,6 @@ export default function Modal({
           </ModalContainer>
         </Overlay>
       )}
-      1
     </div>
   );
 }
