@@ -3,8 +3,7 @@ const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
   try {
-    console.log(res);
-    const newOrder = await new Orders({ ...req.body, date: new Date() });
+    const newOrder = await new Orders(req.body);
     await newOrder.save();
     res.json({
       succes: true,
@@ -18,10 +17,7 @@ orderController.addOrder = async (req, res, next) => {
 
 orderController.findOrders = async (req, res, next) => {
   try {
-    const ordersRes = await Orders.find({}).populate({
-      path: "products",
-      populate: { path: "product", select: { name: 1, price: 1, _id: 0 } },
-    });
+    const ordersRes = await Orders.find({}, { __v: 0 });
     if (ordersRes.length) {
       res.json({
         succes: true,
@@ -30,7 +26,7 @@ orderController.findOrders = async (req, res, next) => {
       });
     }
   } catch (err) {
-    res.send(err);
+    next(err);
   }
 };
 
