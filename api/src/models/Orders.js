@@ -3,13 +3,14 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    date: { type: Date, required: true },
+    date: { type: Date, default: new Date() },
     orderNumber: { type: Number, required: true },
     tableNumber: { type: Number },
     products: [
       {
-        product: { type: Schema.ObjectId, ref: "Product" },
-        cantidad: { type: Number },
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        cantidad: { type: Number, required: true },
       },
     ],
     clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true
@@ -33,7 +34,7 @@ const OrderSchema = new Schema(
 
 OrderSchema.virtual("totalPrice").get(function () {
   return this.products.reduce(function (prev, actual) {
-    return prev + actual.product.price * actual.cantidad;
+    return prev + actual.price * actual.cantidad;
   }, 0);
 });
 
