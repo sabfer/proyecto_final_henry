@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { LeyendaError } from "./StyleForm";
 import {
   Overlay,
   ModalContainer,
@@ -56,7 +55,7 @@ export default function Modal({
     user: "false",
     pass: "false",
 
-    location:"false"
+    location: "false",
   });
 
   console.log(input, "statelocal");
@@ -71,7 +70,7 @@ export default function Modal({
     //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
     productType: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
     price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^([a-z-ÿ\s]+[0-9]{0,2}){6,12}$/ // Letras, numeros, guion y guion_bajo
+    location: /^([a-z-ÿ\s]+[0-9]{0,2}){6,12}$/, // Letras, numeros, guion y guion_bajo
   };
 
   useEffect(() => {
@@ -83,9 +82,9 @@ export default function Modal({
       user: user,
       pass: pass,
 
-      location:location
+      location: location,
     });
-  }, [name, price, productType, user, pass,location]);
+  }, [name, price, productType, user, pass, location]);
 
   let labels = { label1, label2, label3, label4 };
   let productValues = {
@@ -94,7 +93,7 @@ export default function Modal({
     productType: productType,
     user: user,
     pass: pass,
-    location
+    location,
   };
   let leyendaError = {
     ley1: "ingrese nombre con mas de 2 digitos",
@@ -102,7 +101,7 @@ export default function Modal({
     ley3: "ingrese tipo de producto con mas de 3 digitos",
     ley4: "ingrese usuario con formato de correo",
     ley5: "ingrese un password con mas de 5 digitos",
-    ley6: "ingrese una ubicacion con mas de 5 digitos"
+    ley6: "ingrese una ubicacion con mas de 5 digitos",
   };
 
   function handleChange(e) {
@@ -148,11 +147,7 @@ export default function Modal({
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
-      if (
-        inpValido.name == "true" &&
-        inpValido.user=="true" &&
-        inpValido.pass == "true"
-      ) {
+      if (inpValido.name && inpValido.user && inpValido.pass) {
         //dispatch(input); object que se envia a las actions
         MySwal.fire({
           title: "User created",
@@ -164,20 +159,17 @@ export default function Modal({
           user: "",
           pass: "",
         });
-      }else
-      MySwal.fire({
-        title: "Error!",
-        text: "Complete all dates",
-        icon: "error",
-        confirmButtonText: "Cool",
-      });
+      } else
+        MySwal.fire({
+          title: "Error!",
+          text: "Complete all dates",
+          icon: "error",
+          confirmButtonText: "Cool",
+        });
     }
 
     if (id === 2) {
-      if (
-        inpValido.name == "true" &&
-        inpValido.location=="true"
-      ) {
+      if (inpValido.name && inpValido.location) {
         //dispatch(postCommerce(input)); object que se envia a las actions
         MySwal.fire({
           title: " Comercio created",
@@ -186,23 +178,19 @@ export default function Modal({
         });
         setInput({
           name: "",
-          location:""
+          location: "",
         });
-      }else
-      MySwal.fire({
-        title: "Error!",
-        text: "Complete all dates",
-        icon: "error",
-        confirmButtonText: "Cool",
-      });
+      } else
+        MySwal.fire({
+          title: "Error!",
+          text: "Complete all dates",
+          icon: "error",
+          confirmButtonText: "Cool",
+        });
     }
 
     if (id === 3) {
-      if (
-        inpValido.name == "true" &&
-        input.price > 0 &&
-        inpValido.productType == "true"
-      ) {
+      if (inpValido.name && input.price > 0 && inpValido.productType) {
         dispatch(postProduct(input));
         MySwal.fire({
           title: "Product created",
