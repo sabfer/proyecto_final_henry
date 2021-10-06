@@ -101,7 +101,7 @@ export default function Productos() {
                 <TableHd width="35%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
-                    <FontAwesomeIcon
+                    <FontAwesomeIcon 
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}

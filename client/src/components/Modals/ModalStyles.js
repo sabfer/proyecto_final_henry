@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   height: ${(props) => (props.modalContainerBox ? "520px" : "430px")};
   background: #fff;
   position: relative;
-  border-radius: 5px;
+  border-radius: 60px 0 60px 0;
   box-shadow: box-shadow: 0 0 12px 5px #ddd;
 
   input {
