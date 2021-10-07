@@ -6,6 +6,11 @@ const findUsers = async () => {
   return results.length ? results : null;
 };
 
+const findUniqueUser = async (email) => {
+  const results = await Users.find({email: email});
+  return results.length ? results : null;
+};
+
 const filterByEmail = async (email) => {
   const list = await findUsers();
   const filterByEmail = list.filter((user) => {
@@ -49,4 +54,5 @@ module.exports = {
   createUser,
   deleteUserById,
   updateById,
+  findUniqueUser,
 };

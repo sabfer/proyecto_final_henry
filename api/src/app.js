@@ -1,17 +1,17 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const cors = require("cors");
 
 const users = require("./routes/users");
-// const login = require("./routes/login");  //lo use para probar compare
 const commerceType = require("./routes/commerceType");
 const commerce = require("./routes/commerce");
 const clients = require("./routes/clients");
 const productTypes = require("./routes/productsType");
 const products = require("./routes/products");
 const orders = require("./routes/orders");
+const auth = require("./auth/auth.js");
 
 require("./db.js");
 
@@ -34,8 +34,10 @@ server.use((_req, res, next) => {
   next();
 });
 
+
+server.use("/auth", auth);
+
 server.use("/users", users);
-// server.use("/login", login); //lo use para probar compare
 server.use("/commerceType", commerceType);
 server.use("/commerce", commerce);
 server.use("/clients", clients);
