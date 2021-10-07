@@ -24,24 +24,24 @@ commerceController.filtersCommerce = async (req, res, next) => {
 
 // GET
 commerceController.findCommerce = async (_req, res, next) => {
-  try{
-      const commerce = await Commerce.find();
-      if (commerce.length) {
-          res.json({
-              succes: true,
-              msg: "Comercios encontrados",
-              payload: commerce
-          })
-      } else {
-          res.json({
-              succes: false,
-              msg: "No hay comercios encontrados",
-              payload: null
-          })
-      }
-  } catch (err) {
-      next(err);
-  }
+    try{
+        const commerce = await Commerce.find();
+        if (commerce.length) {
+            res.json({
+                succes: true,
+                msg: "Comercios encontrados",
+                payload: commerce
+            })
+        } else {
+            res.json({
+                succes: false,
+                msg: "No hay comercios encontrados",
+                payload: null
+            })
+        }
+    } catch (err) {
+        next(err);
+    }
 };
 
 // POST
