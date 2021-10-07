@@ -10,9 +10,9 @@ export default function Search() {
   const [name, setName] = useState("");
 
   function handleInputChange(e) {
-    // e.preventDefault();
+    e.preventDefault();
     setName(e.target.value);
-    dispatch(getNameProducts(name));
+    dispatch((getNameProducts(name)))
   }
 
   function handleSubmit(e) {

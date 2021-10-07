@@ -8,17 +8,8 @@ import Modal from "../../Modals/Modal";
 import Search from "./Search";
 import FilterProductTypes from "./FilterProductTypes";
 import { Button } from "../../../css";
-import {
-  SearchBarContainer,
-  AjustesDerechaTop,
-} from "../../../css/SettingStyles";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../../css/Table";
+import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import { Loading } from "../../../css/SettingStyles";
 import {
   faPenSquare,
@@ -26,8 +17,9 @@ import {
   faSortAlphaDown,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import NumberOfProducts from "./NumberOfProducts";
+import NumberOfProducts from "./NumberOfProduct";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
@@ -144,8 +136,10 @@ export default function Productos() {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
+
                       onClick={(e) => handleOrder(e)}
                       color={order ? "#FF846A" : "#A2DFFF"}
+
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
@@ -200,11 +194,7 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
 

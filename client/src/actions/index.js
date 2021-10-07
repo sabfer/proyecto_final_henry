@@ -1,7 +1,7 @@
 import axios from "axios";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-const MySwal = withReactContent(Swal);
+// import Swal from "sweetalert2";
+// import withReactContent from "sweetalert2-react-content";
+// const MySwal = withReactContent(Swal);
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
@@ -31,6 +31,14 @@ export function getProducts(payload) {
   };
 }
 
+// ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \
+export function orderTheProducts(payload) {
+  return {
+    type: "ORDER_BY_NAME",
+    payload,
+  };
+}
+
 // ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
 export function getNameProducts(payload) {
   return {
@@ -38,6 +46,7 @@ export function getNameProducts(payload) {
     payload,
   };
 }
+
 // export function getNameProducts(payload) {
 //   return async function (dispatch) {
 //     try {
@@ -65,14 +74,6 @@ export function getNameProducts(payload) {
 export function filterProductsType(payload) {
   return {
     type: "FILTER_PRODUCTS_TYPE",
-    payload,
-  };
-}
-
-// ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \\
-export function orderTheProducts(payload) {
-  return {
-    type: "ORDER_BY_NAME",
     payload,
   };
 }
@@ -116,7 +117,10 @@ export function updateProduct(payload, id) {
 export function postCommerce(payload) {
   console.log(payload, "actions");
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload
+    );
     return data;
   };
 }
