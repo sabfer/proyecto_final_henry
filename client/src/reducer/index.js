@@ -25,14 +25,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       );
       return {
         ...state,
-        products: allProductsInclude,
-        // products: Array.isArray(payload) ? payload : [payload],
+        products: Array.isArray(payload) ? payload : [payload],
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
         ...state,
         products: array,
@@ -43,25 +40,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         products: payload,
         productsCopy: payload,
-      };
-
-    case "ORDER_BY_NAME":
-      const products = state.products;
-      let arrayOrderName =
-        payload === true
-          ? products.sort(function (a, b) {
-              if (a.name > b.name) return 1;
-              if (b.name > a.name) return -1;
-              return 0;
-            })
-          : products.sort(function (a, b) {
-              if (a.name > b.name) return -1;
-              if (b.name < a.name) return 1;
-              return 0;
-            });
-      return {
-        ...state,
-        products: arrayOrderName,
       };
 
     case "POST_PRODUCTS":
