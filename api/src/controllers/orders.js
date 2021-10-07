@@ -43,7 +43,6 @@ orderController.filterOrders = async (req, res, next) => {
       const filterOrders = orders.filter((order) => {
         if (typeof value === Number) return order[key] === value;
         return order[key]
-          .toLocaleLowerCase()
           .includes(value.toLocaleLowerCase());
       });
       filterOrders.length

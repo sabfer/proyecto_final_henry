@@ -10,7 +10,7 @@ const CommerceSchema = new Schema({
   name: { type: String, required: true },
   phone: { type: Number },
   direction: { type: String },
-  cuit: { type: String },
+  cuit: { type: Number },
   razonSocial: { type: String },
 });
 
