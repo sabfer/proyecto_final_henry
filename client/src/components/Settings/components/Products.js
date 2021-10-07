@@ -17,6 +17,9 @@ import {
   faSortAlphaDown,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import NumberOfProducts from "./NumberOfProducts";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
@@ -77,6 +80,18 @@ export default function Productos() {
 
   return (
     <div>
+      <NumberOfProducts />
+      <div align="center">
+        <ReactHTMLTableToExcel
+          id="botonExportarProd"
+          className="btnExport"
+          table="productsTable"
+          filename="Productos_cargados_en_el_sistema"
+          sheet="Productos"
+          buttonText="Export to Excel"
+        />
+      </div>
+      <table id="table-to-xls"></table>
       <AjustesDerechaTop>
         <h1>Productos</h1>
         <Button
@@ -108,13 +123,17 @@ export default function Productos() {
       </SearchBarContainer>
       {Array.isArray(products) ? (
         <div>
-          <Table>
+          <Table id="productsTable">
             <TableHead>
               <TableRow>
                 <TableHd width="40%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
+
+                      onClick={(e) => handleOrder(e)}
+                      color={order ? "#FF846A" : "#A2DFFF"}
+
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
