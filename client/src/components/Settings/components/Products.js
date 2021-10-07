@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { getProducts, deleteProduct } from "../../../actions";
+import { getProducts, deleteProduct, orderTheProducts } from "../../../actions";
 import Modal from "../../Modals/Modal";
 import Search from "./Search";
 import FilterProductTypes from "./FilterProductTypes";
@@ -17,7 +17,7 @@ import {
   faSortAlphaDown,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import NumberOfProducts from "./NumberOfProducts";
+import NumberOfProducts from "./NumberOfProduct";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 
@@ -28,6 +28,7 @@ export default function Productos() {
   console.log(products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
+  const [order, setOrder] = useState(false);
   const [inputModalProduct, setInputModalProduct] = useState({
     _id: "",
     name: "",
@@ -76,6 +77,11 @@ export default function Productos() {
       productType: props.productType,
     });
     setEditProductModal(!editProductModal);
+  }
+
+  function handleOrder(e) {
+    setOrder(!order);
+    dispatch(orderTheProducts(order));
   }
 
   return (
