@@ -29,7 +29,14 @@ export default function FilterProductTypes() {
     <div className="category_filter">
       <div className="actual_filter">
         <p>Filtrar por categoría</p>
-        <Select onChange={(e) => handleFilterType(e)} width="50%" height="2.4rem">
+        <Select
+          onChange={(e) => handleFilterType(e)}
+          width="50%"
+          height="2.4rem"
+        >
+          <option value="none" selected disabled hidden>
+            Select an Option
+          </option>
           {array &&
             array.map((e, i) => (
               <option key={i++} value={e}>
