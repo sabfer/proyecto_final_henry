@@ -33,32 +33,46 @@ export function getProducts(payload) {
 
 // ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
 export function getNameProducts(payload) {
-  return async function (dispatch) {
-    try {
-      var data = await axios.get("http://localhost:3001/products?name=" + payload);
-      if (data.data.succes) {
-        return dispatch({
-          type: "GET_NAME_PRODUCT",
-          payload: data.data.payload,
-        });
-      } else {
-        MySwal.fire({
-          icon: "error",
-          title: "El producto no existe",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  return {
+    type: "GET_NAME_PRODUCT",
+    payload,
   };
 }
+// export function getNameProducts(payload) {
+//   return async function (dispatch) {
+//     try {
+//       var data = await axios.get("http://localhost:3001/products?name=" + payload);
+//       if (data.data.succes) {
+//         return dispatch({
+//           type: "GET_NAME_PRODUCT",
+//           payload: data.data.payload,
+//         });
+//       } else {
+//         MySwal.fire({
+//           icon: "error",
+//           title: "El producto no existe",
+//           showConfirmButton: false,
+//           timer: 1500,
+//         });
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// }
 
-// // ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
+// ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
 export function filterProductsType(payload) {
   return {
     type: "FILTER_PRODUCTS_TYPE",
+    payload,
+  };
+}
+
+// ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \\
+export function orderTheProducts(payload) {
+  return {
+    type: "ORDER_BY_NAME",
     payload,
   };
 }
