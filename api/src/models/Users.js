@@ -6,7 +6,13 @@ const saltRounds = 10;
 const UserSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true },
-  name: { type: String, required: true }
+  name: { type: String, required: true },
+  isAdmin: { type: Boolean, required: true },
+  puesto: {
+    type: String,
+    required: true,
+    enum: ["Mozo", "Cajero", "Cocinero"],
+  },
 });
 
 UserSchema.pre("save", function (next) {
