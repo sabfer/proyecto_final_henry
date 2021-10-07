@@ -21,7 +21,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
-        e.name.includes(payload)
+        e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
       );
       return {
         ...state,
