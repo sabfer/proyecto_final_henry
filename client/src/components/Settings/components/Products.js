@@ -8,13 +8,8 @@ import Modal from "../../Modals/Modal";
 import Search from "./Search";
 import FilterProductTypes from "./FilterProductTypes";
 import { Button } from "../../../css";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../../css/Table";
+import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import { Loading } from "../../../css/SettingStyles";
 import {
   faPenSquare,
@@ -82,37 +77,41 @@ export default function Productos() {
 
   return (
     <div>
-      <h1>Productos</h1>
-      <Search />
-      <FilterProductTypes />
-      <Button
-        onClick={() => setNewProductModal(!newProductModal)}
-        width="11.9rem"
-        justify="space-between"
-        padding="0.625rem"
-        buttonColor="rgb(204, 0, 0)"
-      >
-        <FontAwesomeIcon icon={faPlus} size="lg" />
-        Crear producto
-      </Button>
-      <Modal
-        id={3}
-        state={newProductModal}
-        setStateModal={setNewProductModal}
-        title="Crear un Producto"
-        label1="Nombre"
-        label2="Descripción"
-        label3="Precio"
-        label4="Tipo de Producto"
-        modalContainerBox={true}
-        showInSettings={true}
-      />
+      <AjustesDerechaTop>
+        <h1>Productos</h1>
+        <Button
+          onClick={() => setNewProductModal(!newProductModal)}
+          width="12.5rem"
+          justify="space-between"
+          padding="0.625rem"
+          buttonColor="rgb(2, 101, 210)"
+        >
+          Añadir producto
+          <FontAwesomeIcon icon={faPlus} size="lg" />
+        </Button>
+      </AjustesDerechaTop>
+      <SearchBarContainer>
+        <Search />
+        <FilterProductTypes />
+        <Modal
+          id={3}
+          state={newProductModal}
+          setStateModal={setNewProductModal}
+          title="Crear un Producto"
+          label1="Nombre"
+          label2="Descripción"
+          label3="Precio"
+          label4="Tipo de Producto"
+          modalContainerBox={true}
+          showInSettings={true}
+        />
+      </SearchBarContainer>
       {Array.isArray(products) ? (
         <div>
           <Table>
             <TableHead>
               <TableRow>
-                <TableHd width="35%">
+                <TableHd width="40%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
@@ -124,7 +123,7 @@ export default function Productos() {
                 </TableHd>
                 <TableHd width="40%">Tipo de producto</TableHd>
                 <TableHd width="10%">Precio</TableHd>
-                <TableHd>Opciones</TableHd>
+                <TableHd width="10%">Opciones</TableHd>
               </TableRow>
             </TableHead>
             <tbody>
@@ -135,7 +134,7 @@ export default function Productos() {
                     <TableData>{el.productType}</TableData>
                     <TableData>$ {el.price}</TableData>
                     <TableData>
-                      <div>
+                      <div className="options">
                         <Button
                           onClick={(e) =>
                             handleClick(e, {
@@ -147,7 +146,7 @@ export default function Productos() {
                           }
                           width="2rem"
                           height="2rem"
-                          buttonColor="rgba(0, 163, 255, 1)"
+                          buttonColor="rgb(2, 101, 210)"
                         >
                           <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
                         </Button>
@@ -170,11 +169,7 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
 

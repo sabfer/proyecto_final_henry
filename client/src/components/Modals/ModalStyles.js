@@ -14,60 +14,47 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  width: 500px;
-  height: ${(props) => (props.modalContainerBox ? "520px" : "430px")};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 420px;
+  padding: 3rem;
   background: #fff;
   position: relative;
-  border-radius: 60px 0 60px 0;
-  box-shadow: box-shadow: 0 0 12px 5px #ddd;
-
-  input {
-    width: 400px;
-    height: 35px;
-    left: 50px;
-    right: 50px;
-    margin: 1px 50px;
-    border-radius: 12px;
+  border-radius: 0.6rem;
+  form {
+    width: 100%;
+    div {
+      margin-bottom: 1.5rem;
+      input {
+        width: 100%;
+        height: 2.4rem;
+        border: 1px solid #000;
+        border-radius: 0.6rem;
+        &:focus {
+          border-color: #86b7fe;
+          outline: 0;
+          box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+      }
+      label {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+    }
   }
-
-  label {
-    font-family: "Raleway", sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 19px;
-    left: 50px;
-    right: 50px;
-    margin: 10px 50px;
-  }
-
   button {
-<<<<<<< HEAD
-    margin: 23px 0px 0px 180px;
-=======
-    margin: 50px 0px 0px 180px;    
->>>>>>> main
-    padding: 10px 30px;
-    border-radius: 5px;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.6rem;
     color: #ffffff;
     border: none;
-    background: #00c2ff;
+    background: rgb(2, 101, 210);
     cursor: pointer;
-    font-family: "Raleway", sans-serif;
     font-weight: 500;
-    font-weight: bold;
-
-    font-family: "Raleway", sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 22px;
-    line-height: 26px;
-
+    font-size: 1.4rem;
     &:hover {
-      background-color: #1766dc;
-      color: #ffffff;
-      font-weight: bolder;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+      background-color: rgb(26, 103, 255);
     }
   }
 `;
@@ -75,39 +62,30 @@ export const ModalContainer = styled.div`
 export const HeaderModal = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e8e8e8;
-
+  justify-content: center;
+  margin: 0 0 2rem 0;
   h2 {
-    font-family: "Raleway", sans-serif;
-    font-style: normal;
+    margin: 0;
     font-weight: bold;
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 2rem;
+    line-height: 48rem
     color: #000000;
-    margin: 30px 0px 0px 50px;
   }
 `;
 
 export const CloseButton = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 25px;
-  height: 25px;
-  background: none;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  transition: 0.3s ease all;
-  border-radius: 5px;
-  color: #00c2ff;
-
+  transition: 0.2s ease all;
+  color: rgb(2, 101, 210);
   .fa-window-close {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
   }
-
   &:hover {
     color: #ff0000;
   }

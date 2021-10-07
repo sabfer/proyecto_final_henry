@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Overlay,
-  ModalContainer,
-  HeaderModal,
-  CloseButton,
-} from "./ModalStyles";
-import {
-  postProduct,
-  updateProduct,
-  postCommerce,
-  getProducts,
-} from "../../actions";
+import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
+import { postProduct, updateProduct, postCommerce, getProducts } from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -61,9 +51,6 @@ export default function Modal({
     pass: "",
     location: "",
   });
-
-  /* console.log(input, "statelocal");
-  console.log(inpValido, "statevalido"); */
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\s]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
@@ -154,9 +141,10 @@ export default function Modal({
       if (inpValido.name && inpValido.user && inpValido.pass) {
         dispatch(input);
         MySwal.fire({
-          title: "User created",
+          title: "¡Usuario creado correctamente!",
           icon: "success",
           confirmButtonText: "Aceptar",
+          confirmButtonColor: "rgb(21, 151, 67)",
         }).then((result) => {
           if (result.isConfirmed) {
             setStateModal(!state);
@@ -169,10 +157,11 @@ export default function Modal({
         });
       } else
         MySwal.fire({
-          title: "Error!",
-          text: "Complete all dates",
+          title: "¡Espera!",
+          text: "Faltan campos por llenar",
           icon: "error",
           confirmButtonText: "Cool",
+          confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
 
@@ -180,9 +169,10 @@ export default function Modal({
       if (inpValido.name && inpValido.location) {
         dispatch(postCommerce(input));
         MySwal.fire({
-          title: " Comercio created",
+          title: "¡Comercio creado corectamente!",
           icon: "success",
           confirmButtonText: "Aceptar",
+          confirmButtonColor: "rgb(21, 151, 67)",
         }).then((result) => {
           if (result.isConfirmed) {
             setStateModal(!state);
@@ -194,10 +184,11 @@ export default function Modal({
         });
       } else
         MySwal.fire({
-          title: "Error!",
-          text: "Complete all dates",
+          title: "¡Espera!",
+          text: "Faltan campos por llenar",
           icon: "error",
           confirmButtonText: "Cool",
+          confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
 
@@ -205,9 +196,10 @@ export default function Modal({
       if (inpValido.name && input.price > 0 && inpValido.productType) {
         dispatch(postProduct(input));
         MySwal.fire({
-          title: "Product created",
+          title: "¡Producto creado correctamente!",
           icon: "success",
           confirmButtonText: "Aceptar",
+          confirmButtonColor: "rgb(21, 151, 67)",
         }).then((result) => {
           if (result.isConfirmed) {
             if (showInSettings) {
@@ -223,10 +215,11 @@ export default function Modal({
         });
       } else
         MySwal.fire({
-          title: "Error!",
-          text: "Complete all dates",
+          title: "¡Espera!",
+          text: "Faltan campos por llenar",
           icon: "error",
           confirmButtonText: "Cool",
+          confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
     if (id === 7) {
@@ -237,7 +230,20 @@ export default function Modal({
         }
       }
       dispatch(updateProduct(payload, idElement));
-      setStateModal(!state);
+      MySwal.fire({
+        title: "¡Produco actualizado!",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "rgb(21, 151, 67)",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setStateModal(!state);
+          setInput({
+            name: "",
+            location: "",
+          });
+        }
+      });
     }
   }
 

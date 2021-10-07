@@ -1,4 +1,7 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
@@ -32,16 +35,19 @@ export function getProducts(payload) {
 export function getNameProducts(payload) {
   return async function (dispatch) {
     try {
-      var data = await axios.get(
-        "http://localhost:3001/products?name=" + payload
-      );
+      var data = await axios.get("http://localhost:3001/products?name=" + payload);
       if (data.data.succes) {
         return dispatch({
           type: "GET_NAME_PRODUCT",
           payload: data.data.payload,
         });
       } else {
-        alert(data.data.msg);
+        MySwal.fire({
+          icon: "error",
+          title: "El producto no existe",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -94,12 +100,9 @@ export function updateProduct(payload, id) {
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
-  console.log(payload,"actions")
+  console.log(payload, "actions");
   return async function (dispatch) {
-    var data = await axios.post(
-      "http://localhost:3001/commerce/register",
-      payload
-    );
+    var data = await axios.post("http://localhost:3001/commerce/register", payload);
     return data;
   };
 }

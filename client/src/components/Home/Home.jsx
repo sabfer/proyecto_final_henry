@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BodyTop, SelectContainer, DivSelect, Select } from "./HomeStyles";
+import { BodyTop } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
+import { SelectContainer, Select } from "../../css/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
 import DeliveryModule from "./Delivery";
@@ -57,7 +58,7 @@ export default function Home() {
           width="11.9rem"
           justify="space-between"
           padding="0.625rem"
-          buttonColor="rgb(204, 0, 0)"
+          buttonColor="rgb(2, 101, 210)"
         >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear producto
@@ -77,22 +78,19 @@ export default function Home() {
       </OptionsBar>
 
       <Body>
-        <SelectContainer>
+        <SelectContainer width="50%">
           <p>Comercio</p>
-          <DivSelect>
-            <Select>
-              <option hidden>Seleccionar comercio</option>
-              {commerces &&
-                commerces.map((commerce) => {
-                  return (
-                    <option key={commerce._id} value={commerce.name}>
-                      {commerce.name}
-                    </option>
-                  );
-                })}
-            </Select>
-            <span className="Focus"></span>
-          </DivSelect>
+          <Select>
+            <option hidden>Seleccionar comercio</option>
+            {commerces &&
+              commerces.map((commerce) => {
+                return (
+                  <option key={commerce._id} value={commerce.name}>
+                    {commerce.name}
+                  </option>
+                );
+              })}
+          </Select>
         </SelectContainer>
         <BodyTop>
           <DeliveryModule />

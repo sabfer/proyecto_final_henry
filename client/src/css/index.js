@@ -1,20 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const Button = styled.button`
-  width: ${(props) => props.width || "5rem"};
-  padding: ${(props) => props.padding || 0};
-  height: ${(props) => props.height || "2.5rem;"};
-  display: flex;
-  align-items: center;
-  justify-content: ${(props) => props.justify || "center"};
-  color: rgb(255, 255, 255);
-  text-transform: uppercase;
-  background-color: ${(props) => props.buttonColor || "rgb(0, 160, 210)"};
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
+export const Body = styled.section`
+  width: 100%;
+  height: 100%;
+  padding: ${(props) => props.padding || "0 4rem"};
+  display: ${(props) => props.display || "grid"};
+  justify-content: ${(props) => props.justifycontent || "unset"};
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 0;
 `;
 
 export const Header = styled.header`
@@ -27,12 +21,6 @@ export const Header = styled.header`
   @media screen and (max-width: 524px) {
     padding: 1.2rem 2rem;
   }
-`;
-
-export const Title = styled.h1`
-  color: rgb(255, 255, 255);
-  font-size: 2rem;
-  margin: 0;
 `;
 
 export const StyledLink = styled(Link)`
@@ -48,6 +36,28 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const Button = styled.button`
+  width: ${(props) => props.width || "5rem"};
+  padding: ${(props) => props.padding || 0};
+  height: ${(props) => props.height || "2.5rem;"};
+  display: flex;
+  align-items: center;
+  justify-content: ${(props) => props.justify || "center"};
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  background-color: ${(props) => props.buttonColor || "rgb(0, 160, 210)"};
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-weight: 600;
+`;
+
+export const Title = styled.h1`
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+  margin: 0;
+`;
+
 export const OptionsBar = styled.div`
   padding: 0 4rem;
   display: flex;
@@ -58,12 +68,4 @@ export const OptionsBar = styled.div`
   height: 5rem;
 `;
 
-export const Body = styled.section`
-  width: 100%;
-  height: 100%;
-  padding: ${(props) => props.padding || "0 4rem"};
-  display: ${(props) => props.display || "grid"};
-  justify-content: ${(props) => props.justifycontent || "unset"};
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem 0;
-`;
+

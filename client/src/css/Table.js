@@ -17,7 +17,6 @@ export const TableRow = styled.tr`
   &:nth-child(even) {
     background-color: #cdcdcd;
   }
-
   .productName {
     padding: 0 1rem;
     width: 100%;
@@ -45,8 +44,8 @@ export const TableData = styled.td`
   padding: 8px;
   text-align: left;
   border: 1px solid black;
-  & div {
+  .options {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 `;
