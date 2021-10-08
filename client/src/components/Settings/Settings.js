@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Header, Title, Button, StyledLink, Body } from "../../css";
 import {
@@ -9,25 +9,20 @@ import {
 } from "../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
-import Products from "./components/Products";
-import Generals from "./components/Generals";
-import Comercios from "./components/Comercios";
-import Users from "./components/Users";
-import { getProducts, changeSettings } from "../../actions";
+import Products from "./views/Products";
+import Generals from "./views/Generals";
+import Comercios from "./views/Comercios";
+import Users from "./views/Users";
+import { changeSettings } from "../../actions";
 
 export default function Settings() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
 
-  /* useEffect(() => {
-    dispatch(getProducts());
-  }); */
-
   function handleProducts(e) {
     e.preventDefault();
     dispatch(changeSettings({ show: "products" }));
   }
-
   function handleCommerce(e) {
     e.preventDefault();
     dispatch(changeSettings({ show: "commerce" }));

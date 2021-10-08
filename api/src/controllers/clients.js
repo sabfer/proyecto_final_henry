@@ -3,7 +3,7 @@ const clientsController = {};
 
 // FILTER
 clientsController.filtersClient = async (req, res, next) => {
-    const { key, value } = req.body;
+    const { key, value } = req.query;
     try{
         const list = await Clients.find();
         const filters = list.filter((client) => {

@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BodyTop } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
-import { SelectContainer, Select } from "../../css/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
-import DeliveryModule from "./Delivery";
-import TakeOutModule from "./TakeOutModule";
-import SalonModule from "./SalonModule";
+import DeliveryModule from "./components/Delivery";
+import TakeOutModule from "./components/TakeOutModule";
+import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
 import { getCommerces, changeSettings } from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const commerces = useSelector((state) => state.commerces);
 
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
@@ -78,20 +76,6 @@ export default function Home() {
       </OptionsBar>
 
       <Body>
-        <SelectContainer width="50%">
-          <p>Comercio</p>
-          <Select>
-            <option hidden>Seleccionar comercio</option>
-            {commerces &&
-              commerces.map((commerce) => {
-                return (
-                  <option key={commerce._id} value={commerce.name}>
-                    {commerce.name}
-                  </option>
-                );
-              })}
-          </Select>
-        </SelectContainer>
         <BodyTop>
           <DeliveryModule />
           <TakeOutModule />

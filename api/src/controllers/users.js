@@ -4,7 +4,7 @@ const usersController = {};
 // FILTER
 
 usersController.filterUser = async (req, res, next) => {
-  const { key, value } = req.body;
+  const { key, value } = req.query;
   try{
       const list = await Users.find();
       const filters = list.filter((user) => {
