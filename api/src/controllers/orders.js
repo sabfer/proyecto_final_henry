@@ -35,6 +35,7 @@ orderController.findOrders = async (req, res, next) => {
   }
 };
 
+//Filter Dinamico (por cualquier prop)
 orderController.filterOrders = async (req, res, next) => {
   const { key, value } = req.body;
   console.log(key, value);
