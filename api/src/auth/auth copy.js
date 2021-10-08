@@ -1,7 +1,5 @@
-const _ = require("lodash");
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
 
 const passport = require("passport");
@@ -11,22 +9,8 @@ const bcrypt = require("bcrypt");
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 
-const {
-    filterByEmail,
-    findUsers,
-    createUser,
-    deleteUserById,
-    updateById,
-    findUniqueUser,
-} = require("../controllers/users");
+const controller = require("../controllers/users");
 
-var users = [
-    {
-        id: 1,
-        email: 'mrptato@gmail.com',
-        password: 'tato123456'
-    }
-];
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -35,7 +19,12 @@ jwtOptions.secretOrKey = 'secretoProyectoX';
 var strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) {
     // usually this would be a database call:
 
-    let user = await findUniqueUser(email)
+    console.log('jwt_payload', jwt_payload);
+    let users = await controller.findUsers()
+
+    let user = users.find(user => user.id === jwt_payload.id);
+
+    console.log('--------------users:', user);
 
     // var user = users[_.findIndex(users, { id: jwt_payload.id })];
     if (user) {
@@ -63,53 +52,50 @@ router.post("/login", async function (req, res) {
         var email = req.body.email;
         var password = req.body.password;
     }
-    // usually this would be a database call:
-    // let user = users.find(usuario => usuario.email === email)
-    let [user] = await findUniqueUser(email)
+
+    let [user] = await controller.findUniqueUser(email)
     console.log('--------------user:', user);
-    // var user = users[_.findIndex(users, { email: email })];
 
     if (!user) {
-        res.status(401).json({ message: "no such user found" });
+        res.status(401).json({ message: "Usuario no encontrado" });
     }
 
     validPassword = await bcrypt.compare(password, user.password);
-
     console.log('pass valido: ', validPassword);
 
     if (validPassword) {
         var payload = { id: user.id };
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
         console.log('id:', user.id);
-        res.json({ message: "ok", token: token });
+        res.json({ message: "Logueo correcto, te va el token...", token: token });
     } else {
         res.status(401).json({ message: "invalid credentials" });
     }
-
-
-    // if (user.password === password) {
-    //     var payload = { id: user.id };
-    //     var token = jwt.sign(payload, jwtOptions.secretOrKey);
-    //     console.log('id:', user.id);
-    //     res.json({ message: "ok", token: token });
-    // } else {
-    //     res.status(401).json({ message: "invalid credentials" });
-    // }
 });
 
 router.get("/secret", (req, res, next) => {
     passport.authenticate('jwt', { session: false, }, (err, user, info) => {
-        console.log('---------- err: ', err);
-        console.log('---------- user: ', user);
-        console.log('---------- info: ', info);
+        // console.log('---------- err: ', err);
+        // console.log('---------- user: ', user);
+        // console.log('---------- info: ', info);
         if (err) {
             console.log('--------------err: ', err);
             return next(err);
         }
         if (user) {
+            // res.redirect('/auth');
+            // next()
             res.json({ message: 'exito total!!!!' }).status(200);;
         } else {
-            res.redirect('/auth');
+            console.log('------- info: ', typeof info)
+            if (Object.entries(info).length > 0) {
+                console.log('estoy dentro del IF de info');
+                res.json(info).status(403);
+            } else {
+                console.log('estoy dentro del ELSE de info');
+                // res.status(403);
+                res.redirect('/auth');
+            }
         }
     })(req, res, next);
 })

@@ -1,12 +1,14 @@
 const express = require("express");
-const router = express.Router();
-const controller = require("../controllers/users.js");
-
+const jwt = require('jsonwebtoken');
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const bcrypt = require("bcrypt");
+const controller = require("../controllers/users.js");
+const Users = require("../models/Users");
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
+
+const auth = {};
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -14,7 +16,7 @@ jwtOptions.secretOrKey = 'secretoProyectoX';
 
 var strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) {
     console.log('jwt_payload', jwt_payload);
-    let users = await controller.findUsers()
+    let users = await Users.find();
     let user = users.find(user => user.id === jwt_payload.id);
     console.log('--------------users:', user);
     if (user) {
@@ -32,18 +34,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "50mb" }));
 
 
-router.get("/", function (req, res) {
+auth.test = function (req, res) {
     res.json({ message: "Estoy HOME!" });
-});
+};
 
-
-router.post("/login", async function (req, res) {
+auth.login = async function (req, res) {
     if (req.body.email && req.body.password) {
         var email = req.body.email;
         var password = req.body.password;
     }
 
-    let [user] = await controller.findUniqueUser(email)
+    console.log('---------------req email: ', req.body.email);
+    console.log('---------------req password: ', req.body.password);
+    let [user] = await Users.find({ email: email });
     console.log('--------------user:', user);
 
     if (!user) {
@@ -61,49 +64,39 @@ router.post("/login", async function (req, res) {
     } else {
         res.status(401).json({ message: "invalid credentials" });
     }
-});
+}
 
-router.get("/secret", (req, res, next) => {
+auth.secret = (req, res, next) => {
     passport.authenticate('jwt', { session: false, }, (err, user, info) => {
-        // console.log('---------- err: ', err);
-        // console.log('---------- user: ', user);
-        // console.log('---------- info: ', info);
         if (err) {
             console.log('--------------err: ', err);
             return next(err);
         }
         if (user) {
+            res.json({ message: 'exito total!!!!' }).status(200);;
             // res.redirect('/auth');
             // next()
-            res.json({ message: 'exito total!!!!' }).status(200);;
         } else {
             console.log('------- info: ', typeof info)
             if (Object.entries(info).length > 0) {
                 console.log('estoy dentro del IF de info');
-                res.json(info).status(403);
+                // res.json(info).status(403);
+                res.sendStatus(403)
             } else {
-                console.log('estoy dentro del ELSE de info');
-                // res.status(403);
-                res.redirect('/auth');
+                console.log('No hay usuario y el token es incorrecto.');
+                res.sendStatus(403);
+                // res.redirect('/auth');
             }
         }
     })(req, res, next);
-})
+}
 
-router.get("/secretDebug",
-    function (req, res, next) {
-        console.log(req.get('Authorization'));
-        next();
-    }, function (req, res) {
-        res.json("debugging");
-    });
-
+auth.secretDebug = function (req, res, next) {
+    console.log('Authorization: ', req.get('Authorization'));
+    next();
+}, function (req, res) {
+    res.json({ debug: 'debugging' });
+};
 
 
-router.get("/", controller.findUsers);
-router.get("/filter", controller.filterUser);
-router.post("/register", controller.addUser);
-router.delete("/:id", controller.deleteUser);
-router.put("/:id", controller.updateUser);
-
-module.exports = router;
+module.exports = auth;

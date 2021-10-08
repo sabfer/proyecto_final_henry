@@ -12,7 +12,7 @@ const productTypes = require("./routes/productsType");
 const products = require("./routes/products");
 const mesas = require("./routes/mesas");
 const orders = require("./routes/orders");
-const auth = require("./auth/auth.js");
+const auth = require("./routes/auth.js");
 
 
 require("./db.js");
@@ -37,7 +37,7 @@ server.use((_req, res, next) => {
 });
 
 
-server.use("/auth", auth);
+server.use("/", auth);
 
 server.use("/users", users);
 server.use("/commerceType", commerceType);
