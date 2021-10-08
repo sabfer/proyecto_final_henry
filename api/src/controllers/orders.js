@@ -35,14 +35,17 @@ orderController.findOrders = async (req, res, next) => {
   }
 };
 
+//Filter Dinamico (por cualquier prop)
 orderController.filterOrders = async (req, res, next) => {
   const { key, value } = req.body;
+  console.log(key, value);
   try {
     const orders = await Orders.find({}, { __v: 0 });
     if (orders.length) {
       const filterOrders = orders.filter((order) => {
         if (typeof value === Number) return order[key] === value;
         return order[key]
+          .toLocaleLowerCase()
           .includes(value.toLocaleLowerCase());
       });
       filterOrders.length
