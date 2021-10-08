@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -7,9 +8,14 @@ import {
   HeaderModal,
   CloseButton,
 } from "./ModalStyles";
+import { Select } from "../../css/Select";
+import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState, title }) {
+  const products = useSelector((state) => state.products);
   const [input, setInput] = useState("");
+
+  
 
   function handleClose(e) {
     setState(!state);
@@ -30,11 +36,25 @@ export default function ModalSalon({ state, setState, title }) {
         <Overlay>
           <ModalContainer>
             <HeaderModal>
-              <h2>{title}{35}</h2>
+              <h2>
+                {title}
+                {35}
+              </h2>
             </HeaderModal>
             <CloseButton onClick={(e) => handleClose(e)}>
               <FontAwesomeIcon icon={faWindowClose} />
             </CloseButton>
+
+            <FilterProductTypes />
+
+            <Select>
+              {products.map &&
+                products.map((e) => {
+                  return <option value="{e.name}">{e.name} </option>;
+                })}
+            </Select>
+
+
 
             <form>
               <div>
@@ -62,6 +82,11 @@ export default function ModalSalon({ state, setState, title }) {
                 />
               </div>
             </form>
+           
+
+
+
+
             <button type="submit">Aceptar</button>
           </ModalContainer>
         </Overlay>

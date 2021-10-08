@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filterProductsType, getProducts } from "../../../actions";
 import { Select } from "../../../css/Select";
-import { Button } from "../../../css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+// import { Button } from "../../../css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
@@ -21,9 +21,9 @@ export default function FilterProductTypes() {
     dispatch(filterProductsType(e.target.value));
   }
 
-  function handleButton(e) {
-    dispatch(getProducts());
-  }
+  // function handleButton(e) {
+  //   dispatch(getProducts());
+  // }
 
   return (
     <div className="category_filter">
@@ -45,7 +45,7 @@ export default function FilterProductTypes() {
             ))}
         </Select>
       </div>
-      <Button
+      {/* <Button
         width="10rem"
         padding="0.8rem"
         justify="space-between"
@@ -57,7 +57,7 @@ export default function FilterProductTypes() {
       >
         Restablecer
         <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
-      </Button>
+      </Button> */}
     </div>
   );
 }

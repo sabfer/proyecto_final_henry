@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Salon, OrderButton, Orders, Order } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Modals/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import ModalSalon from "../../Modals/ModalSalon";
 import { getSalonOrders } from "../../../actions";
 
 export default function SalonModule() {
-  const dispatch = useDispatch();
-  const salonOrders = useSelector((state) => state.orders.salonOrders);
+  const [stateModal, setStateModal] = useState(false);
+  // const dispatch = useDispatch();
+  // const salonOrders = useSelector((state) => state.orders.salonOrders);
 
-  useEffect(() => {
-    dispatch(getSalonOrders({ key: "type", value: "salon" }));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getSalonOrders({ key: "type", value: "salon" }));
+  // }, [dispatch]);
 
-  const [stateModal4, setStateModal4] = useState(false);
+  function handleClick(e) {
+    alert(`soy la mesa n° ? `);
+  }
+
   return (
     <Salon>
       <OrderButton
-        onClick={() => setStateModal4(!stateModal4)}
+        onClick={() => setStateModal(!stateModal)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -28,27 +32,53 @@ export default function SalonModule() {
         Crear pedido
       </OrderButton>
 
-      {/* Modal 4 */}
-      <Modal
-        id={4}
-        state={stateModal4}
-        setStateModal={setStateModal4}
-        title="Crear pedido de Salón"
-        label1="Mesa"
-        label2="Productos"
-        label3="Usuario"
+      <ModalSalon
+        state={stateModal}
+        setState={setStateModal}
+        title="Consumo Mesa: "
+        
       />
-
       <Orders ordersColumns="repeat(10, 1fr)">
-        {salonOrders &&
-          salonOrders.map((order) => {
-            return (
-              <Order>
-                <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-                <p>Mesa {order.tableNumber}</p>
-              </Order>
-            );
-          })}
+        <Order>
+          <FontAwesomeIcon
+            icon={faPaintRoller}
+            size="4x"
+            onClick={(e) => handleClick(e)}
+          />
+          <p>Mesa 1</p>
+        </Order>
+        <Order>
+          <FontAwesomeIcon
+            icon={faPaintRoller}
+            size="4x"
+            onClick={(e) => handleClick(e)}
+          />
+          <p>Mesa 2</p>
+        </Order>
+        <Order>
+          <FontAwesomeIcon
+            icon={faPaintRoller}
+            size="4x"
+            onClick={(e) => handleClick(e)}
+          />
+          <p>Mesa 3</p>
+        </Order>
+        <Order>
+          <FontAwesomeIcon
+            icon={faPaintRoller}
+            size="4x"
+            onClick={(e) => handleClick(e)}
+          />
+          <p>Mesa 4</p>
+        </Order>
+        <Order>
+          <FontAwesomeIcon
+            icon={faPaintRoller}
+            size="4x"
+            onClick={(e) => handleClick(e)}
+          />
+          <p>Mesa 5</p>
+        </Order>
       </Orders>
     </Salon>
   );
