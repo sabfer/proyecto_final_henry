@@ -10,7 +10,6 @@ const UserSchema = new Schema({
   isAdmin: { type: Boolean, required: true },
   puesto: {
     type: String,
-    required: true,
     enum: ["Mozo", "Cajero", "Cocinero"],
   },
 });
