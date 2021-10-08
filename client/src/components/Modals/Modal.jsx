@@ -53,15 +53,15 @@ export default function Modal({
   });
 
   const expresiones = {
-    name: /^[a-zA-Z0-9_\\-\s]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
+    name: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
     //^[a-zA-ZÀ-ÿ\s]{4,40}$ /^([a-z]+[0-9]{0,2}){5,12}
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     //user: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
-    pass: /^[a-zA-Z0-9_\\-]{5,32}$/, // Letras, numeros, guion y guion_baj
+    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/, // Letras, numeros, guion y guion_baj
     //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
-    productType: /^[a-zA-Z0-9_\\-\s]{4,32}$/, // Letras, numeros, guion y guion_bajo y espacio
+    productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/, // Letras, numeros, guion y guion_bajo y espacio
     price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/, // Letras, numeros, guion y guion_bajo y espacio
+    location: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{6,48}$/, // Letras, numeros, guion y guion_bajo y espacio
   };
 
   useEffect(() => {
@@ -90,8 +90,8 @@ export default function Modal({
     ley1: "ingrese nombre con mas de 2 digitos",
     ley2: "ingrese numeros positivos",
     ley3: "ingrese tipo de producto con mas de 3 digitos",
-    ley4: "ingrese usuario con formato de correo sin espacio",
-    ley5: "ingrese un password con mas de 5 digitos sin espacios",
+    ley4: "ingrese usuario con formato de correo sin espacio sin acentos",
+    ley5: "ingrese un password con mas de 4 digitos sin espacios",
     ley6: "ingrese una ubicacion con mas de 5 digitos",
   };
 
@@ -193,7 +193,7 @@ export default function Modal({
     }
 
     if (id === 3) {
-      if (inpValido.name && input.price > 0 && inpValido.productType) {
+      if (inpValido.name && inpValido.productType=="true" && input.price > 0 ) {
         dispatch(postProduct(input));
         MySwal.fire({
           title: "¡Producto creado correctamente!",
