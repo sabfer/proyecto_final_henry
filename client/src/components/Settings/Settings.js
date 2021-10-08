@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Header, Title, Button, StyledLink, Body } from "../../css";
 import {
   AjustesIzquierda,
@@ -8,46 +9,37 @@ import {
 } from "../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
-import Products from "./components/Products";
-import Generals from "./components/Generals";
-import Comercios from "./components/Comercios";
-import Users from "./components/Users";
-
+import Products from "./views/Products";
+import Generals from "./views/Generals";
+import Comercios from "./views/Comercios";
+import Users from "./views/Users";
+import { changeSettings } from "../../actions";
 
 export default function Settings() {
-  const [settings, setSettings] = useState({
-    show: "",
-  });
+  const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
 
   function handleProducts(e) {
     e.preventDefault();
-    setSettings({
-      show: "products",
-    });
+    dispatch(changeSettings({ show: "products" }));
   }
   function handleCommerce(e) {
     e.preventDefault();
-    setSettings({
-      show: "commerce",
-    });
+    dispatch(changeSettings({ show: "commerce" }));
   }
   function handleUsers(e) {
     e.preventDefault();
-    setSettings({
-      show: "users",
-    });
+    dispatch(changeSettings({ show: "users" }));
   }
   function handleGenerals(e) {
     e.preventDefault();
-    setSettings({
-      show: "",
-    });
+    dispatch(changeSettings({ show: "" }));
   }
 
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products></Products>;
+        return <Products handle={handleProducts}></Products>;
       case "users":
         return <Users></Users>;
       case "commerce":
@@ -65,7 +57,7 @@ export default function Settings() {
           <Button width="11rem">Regresar a Home</Button>
         </StyledLink>
       </Header>
-      <Body display="flex" padding="4rem" justifycontent="space-between">
+      <Body display="flex" padding="4rem 6rem" justifycontent="space-between">
         <AjustesIzquierda>
           <TituloIzquierda>Categorías</TituloIzquierda>
           <OpcionesIzquierda onClick={(e) => handleGenerals(e)}>

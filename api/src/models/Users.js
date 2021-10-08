@@ -3,12 +3,18 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const users = new Schema({
-  password: String,
-  email: String,
+const UserSchema = new Schema({
+  password: { type: String, required: true },
+  email: { type: String, required: true },
+  name: { type: String, required: true },
+  isAdmin: { type: Boolean, required: true },
+  puesto: {
+    type: String,
+    enum: ["Mozo", "Cajero", "Cocinero"],
+  },
 });
 
-users.pre("save", function (next) {
+UserSchema.pre("save", function (next) {
   const user = this;
 
   if (this.isModified("password") || this.isNew) {
@@ -31,4 +37,4 @@ users.pre("save", function (next) {
   }
 });
 
-module.exports = mongoose.model("User", users);
+module.exports = mongoose.model("User", UserSchema);

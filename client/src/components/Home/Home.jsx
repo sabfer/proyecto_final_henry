@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector} from "react-redux";
-import { BodyTop, SelectContainer, DivSelect, Select } from "./HomeStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { BodyTop } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
+import { SelectContainer, Select } from "../../css/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCog } from "@fortawesome/free-solid-svg-icons";
 import DeliveryModule from "./Delivery";
 import TakeOutModule from "./TakeOutModule";
 import SalonModule from "./SalonModule";
-import Modal from "./Modal";
-import { getCommerces } from "../../actions/index"
+import Modal from "../Modals/Modal";
+import { getCommerces, changeSettings } from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
   const commerces = useSelector((state) => state.commerces);
-  
-  
+
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
   const [stateModal3, setStateModal3] = useState(false);
 
   useEffect(() => {
+    dispatch(changeSettings({ show: "" }));
     setTimeout(() => {
       dispatch(getCommerces());
     }, 1000);
-  },[dispatch]);
-  
+  }, [dispatch]);
 
   return (
     <div>
@@ -58,7 +58,7 @@ export default function Home() {
           width="11.9rem"
           justify="space-between"
           padding="0.625rem"
-          buttonColor="rgb(204, 0, 0)"
+          buttonColor="rgb(2, 101, 210)"
         >
           <FontAwesomeIcon icon={faPlus} size="lg" />
           Crear producto
@@ -78,18 +78,20 @@ export default function Home() {
       </OptionsBar>
 
       <Body>
-        <SelectContainer>
+{/*         <SelectContainer width="50%">
           <p>Comercio</p>
-          <DivSelect>
-            <Select>
-              <option hidden>Seleccionar comercio</option>
-              {commerces && commerces.map((commerce) => {
-                return <option key={commerce._id}  value={commerce.name}>{commerce.name}</option>
+          <Select>
+            <option hidden>Seleccionar comercio</option>
+            {commerces &&
+              commerces.map((commerce) => {
+                return (
+                  <option key={commerce._id} value={commerce.name}>
+                    {commerce.name}
+                  </option>
+                );
               })}
-              <span className="Focus"></span>
-            </Select>
-          </DivSelect>
-        </SelectContainer>
+          </Select>
+        </SelectContainer> */}
         <BodyTop>
           <DeliveryModule />
           <TakeOutModule />

@@ -10,8 +10,10 @@ const commerce = require("./routes/commerce");
 const clients = require("./routes/clients");
 const productTypes = require("./routes/productsType");
 const products = require("./routes/products");
+const mesas = require("./routes/mesas");
 const orders = require("./routes/orders");
 const auth = require("./auth/auth.js");
+
 
 require("./db.js");
 
@@ -43,6 +45,7 @@ server.use("/commerce", commerce);
 server.use("/clients", clients);
 server.use("/products", products);
 server.use("/productTypes", productTypes);
+server.use("/mesas", mesas);
 server.use("/orders", orders);
 
 // Error catching endware.

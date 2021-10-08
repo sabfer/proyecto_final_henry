@@ -1,33 +1,51 @@
 import styled from "styled-components";
 export const Table = styled.table`
-  border-collpase: collapse;
+  border-collapse: collapse;
   width: 100%;
-  border: 2px solid rgb(0, 0, 0);
 `;
 
 export const TableHead = styled.thead`
   height: 2.4rem;
   width: 25%;
   padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 1);
 `;
 
 export const TableRow = styled.tr`
+  &:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
   &:nth-child(even) {
-    background-color: #ddd;
+    background-color: #cdcdcd;
+  }
+  .productName {
+    padding: 0 1rem;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 8fr 1fr;
+    align-items: center;
+    p {
+      justify-self: center;
+    }
+    svg {
+      justify-self: center;
+    }
   }
 `;
 
 export const TableHd = styled.th`
   width: ${(props) => props.width};
   color: #fff;
+  background-color: #595959;
+  border: 1px solid #000;
 `;
 
 export const TableData = styled.td`
   padding: 8px;
   text-align: left;
-  & div {
+  border: 1px solid black;
+  .options {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 `;

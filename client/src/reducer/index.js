@@ -1,9 +1,14 @@
 import {} from "../actions/index";
 
 const initialState = {
-  singUpErrors: {},
-  products: {},
+  singUpErrors: undefined,
+  products: undefined,
+  productsCopy: undefined,
+  users: undefined,
   commerces: undefined,
+  settings: {
+    show: "",
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -14,28 +19,68 @@ const rootReducer = (state = initialState, { type, payload }) => {
         singUpErrors: payload,
       };
 
-    case "POST_PRODUCTS":
+    case "GET_NAME_PRODUCT":
+      const allProductsInclude = state.productsCopy.filter((e) =>
+        e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
+      );
       return {
         ...state,
-        products: payload,
+        products: Array.isArray(allProductsInclude)
+          ? allProductsInclude
+          : [allProductsInclude],
       };
 
-    case "GET_NAME_PRODUCT":
+      
+
+    case "ORDER_BY_NAME":
+      const products = state.products;
+      let arrayOrderName =
+        payload === true
+          ? products.sort(function (a, b) {
+              if (a.name > b.name) return 1;
+              if (b.name > a.name) return -1;
+              return 0;
+            })
+          : products.sort(function (a, b) {
+              if (a.name > b.name) return -1;
+              if (b.name < a.name) return 1;
+              return 0;
+            });
       return {
         ...state,
-        products: payload,
+        products: arrayOrderName,
+      };
+
+    case "FILTER_PRODUCTS_TYPE":
+      const array = [...state.productsCopy].filter(
+        (e) => e.productType === payload
+      );
+      return {
+        ...state,
+        products: array,
       };
 
     case "GET_PRODUCTS":
       return {
         ...state,
         products: payload,
+        productsCopy: payload,
       };
 
-    case "POST_COMMERCE":
+    case "POST_PRODUCTS":
       return {
         ...state,
-        commerces: payload,
+        products: payload,
+      };
+
+    case "DELETE_PRODUCT":
+      return {
+        ...state,
+      };
+    case "PUT_PRODUCT":
+      return {
+        ...state,
+        products: payload,
       };
 
     case "GET_COMMERCES":
@@ -44,16 +89,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
         commerces: payload,
       };
 
-    case "DELETE_PRODUCT":
+    case "POST_COMMERCE":
+      return {
+        ...state,
+        commerces: payload,
+      };
+
+    case "DELETE_COMMERCE":
       return {
         ...state,
       };
 
-    case "POST_PRODUCT":
+    case "GET_USERS":
+      return {
+        ...state,
+        users: payload,
+      };
+
+    case "DELETE_USER":
       return {
         ...state,
       };
-
+    case "CHANGE_SETTINGS":
+      return {
+        ...state,
+        settings: payload,
+      };
     default:
       return state;
   }

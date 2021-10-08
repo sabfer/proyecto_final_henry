@@ -1,58 +1,132 @@
-const mongoose = require("mongoose");
 const Users = require("../models/Users");
+const usersController = {};
 
-const findUsers = async () => {
-  const results = await Users.find();
-  return results.length ? results : null;
-};
+// FILTER
 
-const findUniqueUser = async (email) => {
+usersController.findUniqueUser = async (email) => {
   const results = await Users.find({email: email});
   return results.length ? results : null;
 };
 
-const filterByEmail = async (email) => {
+usersController.filterByEmail = async (email) => {
   const list = await findUsers();
   const filterByEmail = list.filter((user) => {
     return user.email.toLocaleLowerCase().includes(email.toLocaleLowerCase());
   });
   return filterByEmail.length ? filterByEmail : null;
+}
+
+usersController.filterUser = async (req, res, next) => {
+  const { key, value } = req.body;
+  try{
+      const list = await Users.find();
+      const filters = list.filter((user) => {
+          return user[key].includes(value.toLocaleLowerCase())
+      });
+      if(filters.length){
+          res.json({
+              succes: true,
+              msg: "Coincidencias encontradas",
+              payload: filters
+          });
+      }
+  } catch(err) {
+      next(err);
+  }
 };
 
-const findByEmail = async (userEmail) => {
-  const usuario = await Users.findOne({ email: userEmail });
-  return usuario;
+// GET
+usersController.findUsers = async (_req, res, next) => {
+  try{
+      const users = await Users.find();
+      if (users.length) {
+          res.json({
+              succes: true,
+              msg: "Usuarios encontrados",
+              payload: users
+          })
+      } else {
+          res.json({
+              succes: false,
+              msg: "Usuarios no encontrados",
+              payload: null
+          })
+      }
+  } catch (err) {
+      next(err);
+  }
 };
 
-const createUser = async function (password, email) {
-  const newUser = await new Users({
-    password,
-    email,
-  });
-  await newUser.save();
-  return newUser ? newUser : null;
+// POST
+usersController.addUser = async (req, res, _next) => {
+  const payload  = req.body;
+  try{
+      const users = await Users.findOne({name : payload.name})
+      if(users) {
+          res.json({
+              succes: false,
+              msg: "Este usuario ya existe",
+              payload: null
+          })
+      } else {
+          const newUser = await new Users(payload);
+          await newUser.save();
+          res.json({
+              succes:true,
+              msg: "Usuario Creado",
+              payload: newUser
+          })
+      }
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo crear el usuario",
+          payload: err
+      });
+  }
 };
 
-const deleteUserById = async function (id) {
-  const userDelete = await Users.deleteOne({ _id: `${id}` });
-  return userDelete.deletedCount === 1 ? true : false;
+// DELETE
+usersController.deleteUser = async (req, res, _next) => {
+  const { id } = req.params;
+  try {
+      await Users.deleteOne({ _id: `${id}` });
+          return res.json({
+              succes: true,
+              msg: "Usuario eliminado exitosamente",
+              payload: null,
+          });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo eliminar el usuario",
+          payload: err,
+      });
+  }
 };
 
-const updateById = async function (id, fieldsToUpdate) {
-  const userUpdated = await Users.findOneAndUpdate(
-    { _id: `${id}` },
-    fieldsToUpdate,
-    { new: true }
-  );
-  return userUpdated ? userUpdated : false;
+// UPDATE
+usersController.updateUser = async (req, res, _next) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+      const updatedUser = await Users.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      {new: true,}
+      );
+      return res.json({
+          succes: true,
+          msg: "Usuario modificado exitosamente",
+          payload: updatedUser,
+      });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo modificar el usuario",
+          payload: err,
+      });
+  }
 };
 
-module.exports = {
-  findUsers,
-  filterByEmail,
-  findByEmail,
-  createUser,
-  deleteUserById,
-  updateById,
-  findUniqueUser,
-};
+module.exports = usersController;

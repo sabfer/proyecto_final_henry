@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-/* import Table from "./Table"; */
-import { getProducts, updateProduct } from "../../../actions";
+import { getUsers, updateUsers, deleteUser } from "../../../actions";
 import {
   Table,
   TableHead,
@@ -12,61 +11,55 @@ import {
 import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { deleteProduct } from "../../../actions";
-import Modal from "../../Home/Modal";
+import Modal from "../../Modals/Modal";
+import Search from "../components/Search";
 
-import Search from "./Search";
-
-export default function Productos() {
+export default function Users() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
+  const users = useSelector((state) => state.users);
   const [stateModal7, setStateModal7] = useState(false);
 
   function handleDelete(e) {
     if (
       window.confirm(
-        "¿Estás seguro de querer eliminar el producto seleccionado?"
+        "¿Estás seguro de querer eliminar el usuario seleccionado?"
       )
     ) {
-      dispatch(deleteProduct(e));
+      dispatch(deleteUser(e));
       setTimeout(() => {
-        dispatch(getProducts());
+        dispatch(getUsers());
       }, 100);
     }
   }
 
   function handleUpdate(e) {
-    dispatch(updateProduct(e));
+    dispatch(updateUsers(e));
   }
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getUsers());
     }, 1000);
   }, [dispatch]);
 
   return (
     <div>
-      <h1>Productos</h1>
-      {/* <Table data={products}></Table> */}
-      <Search />
-      {Array.isArray(products) ? (
+      <h1>Users</h1>
+      {Array.isArray(users) ? (
         <Table>
           <TableHead>
             <TableRow>
-              <TableHd width="35%">Nombre</TableHd>
-              <TableHd width="40%">Tipo de producto</TableHd>
-              <TableHd width="10%">Precio</TableHd>
+              <TableHd width="35%">Email</TableHd>
+              <TableHd width="45%">Password</TableHd>
               <TableHd>Opciones</TableHd>
             </TableRow>
           </TableHead>
           <tbody>
-            {products.map((el) => {
+            {users.map((el) => {
               return (
                 <TableRow key={el._id}>
-                  <TableData>{el.name}</TableData>
-                  <TableData>{el.productType}</TableData>
-                  <TableData>{el.price}</TableData>
+                  <TableData>{el.email}</TableData>
+                  <TableData>{el.password}</TableData>
                   <TableData>
                     <div>
                       <Button
@@ -92,13 +85,11 @@ export default function Productos() {
                     id={7}
                     state={stateModal7}
                     setStateModal={setStateModal7}
-                    title="Modificar Producto"
-                    label1="Nombre"
-                    placeHolder1={el.name}
-                    label2="Precio"
-                    placeHolder2={el.price}
-                    label3="Tipo de Producto"
-                    placeHolder3={el.productType}
+                    title="Modificar Usuario"
+                    label1="Email"
+                    placeHolder1={el.email}
+                    label2="Password"
+                    placeHolder2={el.password}
                     modalContainerBox={true}
                   />
                 </TableRow>
