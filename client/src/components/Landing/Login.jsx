@@ -18,6 +18,7 @@ import {
   SubmitContainer,
   Submit,
   GSubmit,
+  FormTitle,
 } from "./LandingStyles";
 
 function Login() {
@@ -54,7 +55,7 @@ function Login() {
             <Overlay />
           </FormHeaderText>
           <FormInputs>
-            <h2>Iniciar sesión</h2>
+            <FormTitle>Iniciar sesión</FormTitle>
             <InputContainers>
               <Inputs
                 required

@@ -1,55 +1,119 @@
-const mongoose = require("mongoose");
 const Commerce = require("../models/Commerce");
+const commerceController = {};
 
-const searchCommerces = async () => {
-  const commerces = await Commerce.find()
-    .populate("userId", {
-      email: 1,
-      _id: 0,
-    })
-    .populate("typeCommerceId", { name: 1, _id: 0 });
-  return commerces.length ? commerces : null;
+// FILTER
+
+commerceController.filtersCommerce = async (req, res, next) => {
+  const { key, value } = req.body;
+  try{
+      const list = await Commerce.find();
+      const filters = list.filter((commerces) => {
+        return commerces[key].includes(value.toLocaleLowerCase())
+      });
+      if(filters.length){
+          res.json({
+              succes: true,
+              msg: "Coincidencias encontradas",
+              payload: filters
+          });
+      }
+  } catch(err) {
+      next(err);
+  }
 };
 
-const filterByName = async (name) => {
-  const list = await searchCommerces();
-  if (!list) return null;
-  const filterByName = list.filter((commerce) => {
-    return commerce.name.toLocaleLowerCase().includes(name.toLocaleLowerCase());
-  });
-  return filterByName.length ? filterByName : null;
+// GET
+commerceController.findCommerce = async (_req, res, next) => {
+    try{
+        const commerce = await Commerce.find();
+        if (commerce.length) {
+            res.json({
+                succes: true,
+                msg: "Comercios encontrados",
+                payload: commerce
+            })
+        } else {
+            res.json({
+                succes: false,
+                msg: "No hay comercios encontrados",
+                payload: null
+            })
+        }
+    } catch (err) {
+        next(err);
+    }
 };
 
-const findByName = async (name) => {
-  const commerce = await Commerce.findOne({ name });
-  return commerce;
+// POST
+commerceController.addCommerce = async (req, res, _next) => {
+  const payload  = req.body;
+  try{
+      const commerce = await Commerce.findOne({name : payload.name})
+      if(commerce) {
+          res.json({
+              succes: false,
+              msg: "Este comercio ya existe",
+              payload: null
+          })
+      } else {
+          const newCommerce = await new Commerce(payload);
+          await newCommerce.save();
+          res.json({
+              succes:true,
+              msg: "Comercio creado  exitosamente!",
+              payload: newCommerce
+          })
+      }
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo crear el comercio",
+          payload: null
+      });
+  }
 };
 
-const createCommerce = async function (payload) {
-  const newCommerce = await new Commerce(payload);
-  await newCommerce.save();
-  return newCommerce ? newCommerce : null;
+// DELETE
+commerceController.deleteCommerce = async (req, res, _next) => {
+  const { id } = req.params;
+  try {
+      await Commerce.deleteOne({ _id: `${id}` });
+          return res.json({
+              succes: true,
+              msg: "Comercio eliminado exitosamente",
+              payload: null,
+          });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo eliminar el comercio",
+          payload: err,
+      });
+  }
 };
 
-const deleteCommerceById = async function (id) {
-  const commerceDelete = await Commerce.deleteOne({ _id: `${id}` });
-  return commerceDelete.deletedCount === 1 ? true : false;
+// UPDATE/PUT
+commerceController.updateCommerce = async (req, res, _next) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+      const updatedCommerce = await Commerce.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      {new: true,}
+      );
+      return res.json({
+          succes: true,
+          msg: "Comercio modificado exitosamente",
+          payload: updatedCommerce,
+      });
+  } catch (err) {
+      res.json({
+          succes: false,
+          msg: "No se pudo modificar el comercio",
+          payload: err,
+      });
+  }
 };
 
-const updateById = async function (id, fieldsToUpdate) {
-  const commerceUpdated = await Commerce.findOneAndUpdate(
-    { _id: `${id}` },
-    fieldsToUpdate,
-    { new: true }
-  );
-  return commerceUpdated ? commerceUpdated : false;
-};
-
-module.exports = {
-  searchCommerces,
-  filterByName,
-  createCommerce,
-  findByName,
-  deleteCommerceById,
-  updateById,
-};
+module.exports = commerceController;

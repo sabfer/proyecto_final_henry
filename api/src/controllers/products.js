@@ -7,7 +7,7 @@ const searchProduct = async (name) => {
 };
 
 const searchProducts = async () => {
-  const products = await Products.find()
+  const products = await Products.find();
   return products ? products : null;
 };
 
@@ -31,9 +31,10 @@ const deleteProduct = async (id) => {
 
 // UPDATE/PUT
 const updateProduct = async (id, update) => {
-  const updated = await Products.findOneAndUpdate({ _id: id }, update, {
+  const updated = await Products.findOneAndUpdate({ _id: `${id}` }, update, {
     new: true,
   });
+  console.log(updated);
   return updated ? true : false;
 };
 

@@ -12,24 +12,24 @@ const {
 router.get("/", async function (req, res) {
   const { name } = req.query;
 
-    try {
-      if (name) {
-        const product = await searchProduct(name);
-        product
-          ? res.json({
-              succes: true,
-              msg: "Producto encontrado",
-              payload: product,
+  try {
+    if (name) {
+      const product = await searchProduct(name);
+      product
+        ? res.json({
+            succes: true,
+            msg: "Producto encontrado",
+            payload: product,
           })
-          : res.json({
-              succes: false,
-              msg: "No se encontro el producto",
-              payload: null,
-          })
-      } else {
-        const listProducts = await searchProducts();
-        listProducts
-          ? res.json({
+        : res.json({
+            succes: false,
+            msg: "No se encontro el producto",
+            payload: null,
+          });
+    } else {
+      const listProducts = await searchProducts();
+      listProducts
+        ? res.json({
             succes: true,
             msg: "Productos encontrados",
             payload: listProducts,
@@ -39,16 +39,16 @@ router.get("/", async function (req, res) {
             msg: "No se encontraron productos",
             payload: null,
           });
-      }
-    } catch (err) {
-      console.log(err);
     }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.post("/add", async function (req, res) {
-  const payload  = req.body;
-
-  if(payload) {
+  const payload = req.body;
+  console.log("entro al add");
+  if (payload) {
     try {
       const product = await filterProduct(payload.name);
       if (product) {
@@ -85,17 +85,18 @@ router.delete("/:id", async function (req, res) {
   try {
     const eliminated = await deleteProduct(id);
     eliminated
-    ? res.json({
-      success: true,
-      msg: "Producto eliminado exitosamente",
-      payload: null,
-    })
-  : res.json({
-      succes: false,
-      msg: "No se pudo eliminar el producto",
-      payload: null,
-    });
+      ? res.json({
+          success: true,
+          msg: "Producto eliminado exitosamente",
+          payload: null,
+        })
+      : res.json({
+          succes: false,
+          msg: "No se pudo eliminar el producto",
+          payload: null,
+        });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ status: false, msg: "Product not exists" });
   }
 });
@@ -106,11 +107,11 @@ router.put("/:id", async function (req, res) {
 
   try {
     const update = await updateProduct(id, productsUpdate);
-    if(update){
+    if (update) {
       return res.json({
         success: true,
         msg: "Producto modificado exitosamente",
-        payload: userUpdated,
+        payload: update,
       });
     }
   } catch (err) {

@@ -29,7 +29,7 @@ export const TakeOut = styled(Delivery)`
 `;
 
 export const Salon = styled(Delivery)`
-  grid-row: 2 / 3;
+  grid-row: 3 / 4;
   grid-column: span 2;
   width: 100%;
   background-color: aquamarine;
@@ -55,61 +55,6 @@ export const SelectContainer = styled.div`
   grid-column: span 2;
   padding: 1rem;
   display: flex;
-  gap: 0 1rem;
-`;
-
-export const DivSelect = styled.div`
-  width: 60%;
-  margin-bottom: 0.5rem;
-  min-width: 15ch;
-  max-width: 30ch;
-  position: relative;
-  display: grid;
-  grid-template-areas: "select";
   align-items: center;
-  border: 1px solid #777;
-  border-radius: 0.25em;
-  padding: 0.25em 0.5em;
-  font-size: 1rem;
-  cursor: pointer;
-  line-height: 1.1;
-  background-color: #fff;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-  &:after {
-    grid-area: select;
-  }
-  &::after {
-    justify-self: end;
-    content: "";
-    width: 0.8em;
-    height: 0.5em;
-    background-color: #777;
-    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-  }
-`;
-
-export const Select = styled.select`
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  padding: 0 1em 0 0;
-  margin: 0;
-  width: 100%;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: inherit;
-  line-height: inherit;
-  outline: none;
-  &:after {
-    grid-area: select;
-  }
-  &:focus + .Focus {
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
-    border: 2px solid blue;
-    border-radius: inherit;
-  }
+  gap: 0 1rem;
 `;
