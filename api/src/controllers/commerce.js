@@ -4,7 +4,7 @@ const commerceController = {};
 // FILTER
 
 commerceController.filtersCommerce = async (req, res, next) => {
-  const { key, value } = req.body;
+  const { key, value } = req.query;
   try{
       const list = await Commerce.find();
       const filters = list.filter((commerces) => {
