@@ -198,3 +198,6 @@ export function changeSettings(payload) {
     return dispatch({ type: "CHANGE_SETTINGS", payload: payload });
   };
 }
+
+
+// ---------- OBTENER ORDENES ---------- \\

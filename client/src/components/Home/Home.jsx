@@ -78,7 +78,7 @@ export default function Home() {
       </OptionsBar>
 
       <Body>
-        <SelectContainer width="50%">
+{/*         <SelectContainer width="50%">
           <p>Comercio</p>
           <Select>
             <option hidden>Seleccionar comercio</option>
@@ -91,7 +91,7 @@ export default function Home() {
                 );
               })}
           </Select>
-        </SelectContainer>
+        </SelectContainer> */}
         <BodyTop>
           <DeliveryModule />
           <TakeOutModule />
