@@ -9,6 +9,7 @@ const initialState = {
   settings: {
     show: "",
   },
+  mesas: undefined,
   orders: {
     salonOrders: undefined,
     takeAwayOrders: undefined,
@@ -119,7 +120,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
-    case "GET_SALON_ORDERS": {
+    case "GET_SALON_ORDERS":
       return {
         ...state,
         orders: {
@@ -127,7 +128,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
           salonOrders: payload,
         },
       };
-    }
+
+    case "GET_MESAS":
+      return {
+        ...state,
+        mesas: payload,
+      };
+
+    case "CHANGE_STATUS":
+      const mesa = state.mesas.find((m) => {
+        return m.numero === payload.numero;
+      });
+      mesa.isOccupated = payload.isOccupated;
+      console.log(mesa);
+      return {
+        ...state,
+        mesas: [...state.mesas],
+      };
+
     default:
       return state;
   }

@@ -209,3 +209,18 @@ export function getSalonOrders({ key, value }) {
       });
   };
 }
+
+export function getMesas() {
+  return function (dispatch) {
+    axios.get("http://localhost:3001/mesas").then((data) => {
+      return dispatch({ type: "GET_MESAS", payload: data.data.payload });
+    });
+  };
+}
+
+export function changeStatus(payload) {
+  return {
+    type: "CHANGE_STATUS",
+    payload: payload,
+  };
+}
