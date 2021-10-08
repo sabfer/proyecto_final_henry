@@ -2,6 +2,28 @@ const Mesas = require("../models/Mesas");
 const mesasController = {};
 
 // GET
+mesasController.findMesaByNum = async  (req, res, next) => {
+    const {numero} = req.query;
+    try {
+        const mesa = await Mesas.findByIdAndRemove({numero : numero})
+    if(mesa) {
+        res.json({
+            succes: true,
+            msg: "Mesa encontrada",
+            payload: mesa
+        })
+    } else {
+        res.json({
+            succes: false,
+            msg: "Mesa no encontrada",
+            payload: null
+        })
+    }
+    } catch (err) {
+        next(err);
+    }
+}
+
 mesasController.findMesas = async (_req, res, next) => {
     try{
         const mesas = await Mesas.find();
