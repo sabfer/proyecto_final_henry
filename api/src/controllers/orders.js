@@ -37,8 +37,7 @@ orderController.findOrders = async (req, res, next) => {
 
 //Filter Dinamico (por cualquier prop)
 orderController.filterOrders = async (req, res, next) => {
-  const { key, value } = req.body;
-  console.log(key, value);
+  const { key, value } = req.query;
   try {
     const orders = await Orders.find({}, { __v: 0 });
     if (orders.length) {

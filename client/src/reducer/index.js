@@ -9,6 +9,11 @@ const initialState = {
   settings: {
     show: "",
   },
+  orders: {
+    salonOrders: undefined,
+    takeAwayOrders: undefined,
+    deliveryOrders: undefined,
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -30,8 +35,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [allProductsInclude],
       };
 
-      
-
     case "ORDER_BY_NAME":
       const products = state.products;
       let arrayOrderName =
@@ -52,9 +55,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
         ...state,
         products: array,
@@ -77,6 +78,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
+
     case "PUT_PRODUCT":
       return {
         ...state,
@@ -110,11 +112,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
+
     case "CHANGE_SETTINGS":
       return {
         ...state,
         settings: payload,
       };
+
+    case "GET_SALON_ORDERS": {
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          salonOrders: payload,
+        },
+      };
+    }
     default:
       return state;
   }
