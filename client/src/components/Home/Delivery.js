@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Salon, OrderButton, Orders, Order } from "./HomeStyles";
+import { OrderButton, Delivery, Orders, Order } from "./HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modals/Modal";
 
-export default function SalonModule() {
-  const [stateModal4, setStateModal4] = useState(false);
+export default function DeliveryModule() {
+  const [stateModal5, setStateModal5] = useState(false);
   return (
-    <Salon>
+    <Delivery>
       <OrderButton
-        onClick={() => setStateModal4(!stateModal4)}
+        onClick={() => setStateModal5(!stateModal5)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -19,50 +19,17 @@ export default function SalonModule() {
         Crear pedido
       </OrderButton>
 
-      {/* Modal 4 */}
+      {/*Modal 5*/}
       <Modal
-        id = {4}
-        state={stateModal4}
-        setStateModal={setStateModal4}
-        title="Crear pedido de Salón"
-        label1="Mesa"
+        id={5}
+        state={stateModal5}
+        setStateModal={setStateModal5}
+        title="Crear pedido para llevar"
+        label1="Pedido n°"
         label2="Productos"
-        label3="Usuario"
-      />    
-
-      <Orders ordersColumns="repeat(10, 1fr)">
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
+        modalContainerBox={false}
+      />
+      <Orders>
         <Order>
           <FontAwesomeIcon icon={faPaintRoller} size="4x" />
           <p>Pedido X</p>
@@ -112,6 +79,6 @@ export default function SalonModule() {
           <p>Pedido X</p>
         </Order>
       </Orders>
-    </Salon>
+    </Delivery>
   );
 }
