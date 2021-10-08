@@ -68,4 +68,12 @@ export const OptionsBar = styled.div`
   height: 5rem;
 `;
 
-
+export const Loading = styled.div`
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    font-weight: bolder;
+  }
+`;

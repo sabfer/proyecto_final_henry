@@ -35,16 +35,6 @@ export const AjustesDerecha = styled(AjustesIzquierda)`
   padding: 3rem;
 `;
 
-export const Loading = styled.div`
-  margin: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  p {
-    font-weight: bolder;
-  }
-`;
-
 export const AjustesDerechaTop = styled.div`
   display: flex;
   justify-content: space-between;
