@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 
+const userCategory = require("./routes/userCategory");
 const users = require("./routes/users");
 // const login = require("./routes/login");  //lo use para probar compare
 const commerceType = require("./routes/commerceType");
@@ -13,7 +14,6 @@ const productTypes = require("./routes/productsType");
 const products = require("./routes/products");
 const mesas = require("./routes/mesas");
 const orders = require("./routes/orders");
-
 
 require("./db.js");
 
@@ -36,6 +36,7 @@ server.use((_req, res, next) => {
   next();
 });
 
+server.use("/userCategory", userCategory);
 server.use("/users", users);
 // server.use("/login", login); //lo use para probar compare
 server.use("/commerceType", commerceType);
