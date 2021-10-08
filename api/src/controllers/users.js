@@ -4,17 +4,17 @@ const usersController = {};
 // FILTER
 
 usersController.filterUser = async (req, res, next) => {
-  const { key, value } = req.body;
-  try {
-    const list = await Users.find();
-    const filters = list.filter((user) => {
-      return user[key].includes(value.toLocaleLowerCase());
-    });
-    if (filters.length) {
+  const { key, value } = req.query;
+  try{
+      const list = await Users.find();
+      const filters = list.filter((user) => {
+          return user[key].includes(value.toLocaleLowerCase())
+      });
+      if (filters.length) {
       res.json({
         succes: true,
         msg: "Coincidencias encontradas",
-        payload: filters,
+        payload: filters
       });
     }
   } catch (err) {

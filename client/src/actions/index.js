@@ -117,10 +117,7 @@ export function updateProduct(payload, id) {
 export function postCommerce(payload) {
   console.log(payload, "actions");
   return async function (dispatch) {
-    var data = await axios.post(
-      "http://localhost:3001/commerce/register",
-      payload
-    );
+    var data = await axios.post("http://localhost:3001/commerce/register", payload);
     return data;
   };
 }
@@ -199,5 +196,16 @@ export function changeSettings(payload) {
   };
 }
 
-
 // ---------- OBTENER ORDENES ---------- \\
+export function getSalonOrders({ key, value }) {
+  return function (dispatch) {
+    axios
+      .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`)
+      .then((data) => {
+        return dispatch({ type: "GET_SALON_ORDERS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
