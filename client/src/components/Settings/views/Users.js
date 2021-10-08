@@ -12,7 +12,6 @@ import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
-import Search from "../components/Search";
 
 export default function Users() {
   const dispatch = useDispatch();

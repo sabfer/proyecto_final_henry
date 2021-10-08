@@ -8,8 +8,17 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //------------------------------------------\\
 import { Button, Loading } from "../../../css";
-import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
+import {
+  SearchBarContainer,
+  AjustesDerechaTop,
+} from "../../../css/SettingStyles";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../../css/Table";
 import {
   faPenSquare,
   faTrash,
@@ -21,6 +30,7 @@ import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
 
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
@@ -84,6 +94,10 @@ export default function Productos() {
     dispatch(orderTheProducts(order));
   }
 
+  function handleButton(e) {
+    dispatch(getProducts());
+  }
+
   return (
     <div>
       <NumberOfProducts />
@@ -110,6 +124,20 @@ export default function Productos() {
           Añadir producto
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
+
+        <Button
+          width="10rem"
+          padding="0.8rem"
+          justify="space-between"
+          buttonColor="rgb(21, 151, 67)"
+          type="button"
+          onClick={(e) => {
+            handleButton(e);
+          }}
+        >
+          Restablecer
+          <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
+        </Button>
       </AjustesDerechaTop>
       <SearchBarContainer>
         <Search />
@@ -127,6 +155,7 @@ export default function Productos() {
           showInSettings={true}
         />
       </SearchBarContainer>
+
       {Array.isArray(products) ? (
         <div>
           <Table id="productsTable">
@@ -136,10 +165,8 @@ export default function Productos() {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
-
                       onClick={(e) => handleOrder(e)}
                       color={order ? "#FF846A" : "#A2DFFF"}
-
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
@@ -194,7 +221,11 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
         </Loading>
       )}
 

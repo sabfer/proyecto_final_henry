@@ -8,7 +8,7 @@ import DeliveryModule from "./components/Delivery";
 import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
-import { getCommerces, changeSettings } from "../../actions/index";
+import { getCommerces, changeSettings, getProducts } from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ export default function Home() {
     dispatch(changeSettings({ show: "" }));
     setTimeout(() => {
       dispatch(getCommerces());
+      dispatch(getProducts());
     }, 1000);
   }, [dispatch]);
 
