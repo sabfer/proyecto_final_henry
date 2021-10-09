@@ -5,6 +5,7 @@ import axios from "axios";
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
+  console.log('estoy en registerUser, con payload: ', payload);
   return function (dispatch) {
     axios
       .post("http://localhost:3001/users/register", payload)

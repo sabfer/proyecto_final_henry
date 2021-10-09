@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Header,
@@ -22,6 +23,71 @@ import {
 } from "./LandingStyles";
 
 function Login() {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(e) {
+    // console.log({[e.target.name]: e.target.value});
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // let validatePass = passwordValidation(input);
+    // let validateEmail = await emailValidation(input);
+    console.log("email: " + input.email, " // password:" + input.password);
+    // if (validatePass && validateEmail === false) {
+    // console.log("voy a despachar registerUser(input), con input: ", input);
+    // dispatch(registerUser(input));
+    // console.log("pasado el dispatch de registerUser(input)");
+    //   setInput({
+    //     email: "",
+    //     password: "",
+    //     confirmPassword: "",
+    //   });
+    //   setSignUpErrors({
+    //     ...signUpErrors,
+    //     emailSucess: true,
+    //     passwordSucess: true,
+    //   });
+    // }
+    // if (validateEmail) {
+    //   if (validatePass) {
+    //     setSignUpErrors({
+    //       ...signUpErrors,
+    //       emailSucess: true,
+    //       passwordSucess: false,
+    //     });
+    //   }
+    //   setInput({
+    //     ...input,
+    //     password: "",
+    //     confirmPassword: "",
+    //   });
+    // }
+    // if (!validatePass) {
+    //   console.log("valPwd false");
+    //   if (!validateEmail) {
+    //     console.log("valEmail false");
+    //     setSignUpErrors({
+    //       ...signUpErrors,
+    //       emailSucess: false,
+    //       passwordSucess: true,
+    //     });
+    //   }
+    //   setInput({
+    //     ...input,
+    //     password: "",
+    //     confirmPassword: "",
+    //   });
+    // }
+  }
+
   return (
     <Container>
       <Header>
@@ -54,15 +120,18 @@ function Login() {
             <h2>Bienvenido</h2>
             <Overlay />
           </FormHeaderText>
-          <FormInputs>
+          <FormInputs onSubmit={(e) => handleSubmit(e)}>
             <FormTitle>Iniciar sesión</FormTitle>
             <InputContainers>
               <Inputs
                 required
                 id="email"
                 type="email"
+                value={input.email}
+                name="email"
                 placeholder=" "
                 autoComplete="off"
+                onChange={(e) => handleChange(e)}
               />
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
@@ -73,8 +142,11 @@ function Login() {
                 required
                 id="password"
                 type="password"
+                value={input.password}
                 placeholder=" "
+                name="password"
                 autoComplete="off"
+                onChange={(e) => handleChange(e)}
               />
               <Placeholder htmlFor="password" className="placeholder">
                 Contraseña

@@ -51,6 +51,7 @@ function Register() {
   }); */
 
   function handleChange(e) {
+    // console.log({[e.target.name]: e.target.value});
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -59,7 +60,7 @@ function Register() {
 
   useEffect(() => {
     if (signUpErrors.emailSucess && signUpErrors.passwordSucess) {
-      history.push("/home");
+      history.push("/");
     }
   }, [history, signUpErrors]);
 
@@ -67,9 +68,11 @@ function Register() {
     e.preventDefault();
     let validatePass = passwordValidation(input);
     let validateEmail = await emailValidation(input);
-    console.log("Password: " + validatePass, "Email:" + validateEmail);
+    console.log("valPwd: " + validatePass, "valEmail:" + validateEmail);
     if (validatePass && validateEmail === false) {
+      // console.log("voy a despachar registerUser(input), con input: ", input);
       dispatch(registerUser(input));
+      // console.log("pasado el dispatch de registerUser(input)");
       setInput({
         email: "",
         password: "",
@@ -96,9 +99,9 @@ function Register() {
       });
     }
     if (!validatePass) {
-      console.log("Aquí");
+      console.log("valPwd false");
       if (!validateEmail) {
-        console.log("Aquí");
+        console.log("valEmail false");
         setSignUpErrors({
           ...signUpErrors,
           emailSucess: false,
