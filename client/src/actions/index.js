@@ -117,7 +117,10 @@ export function updateProduct(payload, id) {
 export function postCommerce(payload) {
   console.log(payload, "actions");
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload
+    );
     return data;
   };
 }
@@ -202,10 +205,39 @@ export function getSalonOrders({ key, value }) {
     axios
       .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`)
       .then((data) => {
-        return dispatch({ type: "GET_SALON_ORDERS", payload: data.data.payload });
+        return dispatch({
+          type: "GET_SALON_ORDERS",
+          payload: data.data.payload,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+}
+
+export function getMesas() {
+  return function (dispatch) {
+    axios.get("http://localhost:3001/mesas").then((data) => {
+      return dispatch({ type: "GET_MESAS", payload: data.data.payload });
+    });
+  };
+}
+
+export function changeStatus(payload) {
+  return {
+    type: "CHANGE_STATUS",
+    payload: payload,
+  };
+}
+
+// ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
+export function updateOrder(id, payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/orders/${id}`, payload);
+    return dispatch({
+      type: "UPDATE_ORDER",
+    });
   };
 }

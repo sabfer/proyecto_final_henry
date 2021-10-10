@@ -21,10 +21,7 @@ export default function FilterProductTypes() {
     dispatch(filterProductsType(e.target.value));
   }
 
-  function handleButton(e) {
-    dispatch(getProducts());
-  }
-
+  
   return (
     <div className="category_filter">
       <div className="actual_filter">
@@ -45,7 +42,7 @@ export default function FilterProductTypes() {
             ))}
         </Select>
       </div>
-      <Button
+      {/* <Button
         width="10rem"
         padding="0.8rem"
         justify="space-between"
@@ -57,7 +54,7 @@ export default function FilterProductTypes() {
       >
         Restablecer
         <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
-      </Button>
+      </Button> */}
     </div>
   );
 }

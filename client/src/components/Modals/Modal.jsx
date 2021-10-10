@@ -53,15 +53,12 @@ export default function Modal({
   });
 
   const expresiones = {
-    name: /^[a-zA-Z0-9_\\-\s]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
-    //^[a-zA-ZÀ-ÿ\s]{4,40}$ /^([a-z]+[0-9]{0,2}){5,12}
+    name: /^[a-zA-Z0-9_\\-\s]{3,32}$/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    //user: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
-    pass: /^[a-zA-Z0-9_\\-]{5,32}$/, // Letras, numeros, guion y guion_baj
-    //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
-    productType: /^[a-zA-Z0-9_\\-\s]{4,32}$/, // Letras, numeros, guion y guion_bajo y espacio
-    price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/, // Letras, numeros, guion y guion_bajo y espacio
+    pass: /^[a-zA-Z0-9_\\-]{5,32}$/,
+    productType: /^[a-zA-Z0-9_\\-\s]{4,32}$/,
+    price: /^.{0,100}$/,
+    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/,
   };
 
   useEffect(() => {
@@ -116,24 +113,6 @@ export default function Modal({
         });
     }
   };
-
-  // if (
-  //   input[e.target.name] &&
-  //   expresiones[e.target.name].test(input[e.target.name])
-  // ) {
-  //   setInputvalido({
-  //     ...inpValido,
-  //     [e.target.name]: "true",
-  //   });
-  // } else
-  //   setInputvalido({
-  //     ...inpValido,
-  //     [e.target.name]: "false",
-  //   });
-  // //console.log([e.target.name]) //se imprime Array [ "productType" ]
-  // if (input[e.target.name]) {
-  //   console.log(input[e.target.name].length);
-  // }
 
   function handleSubmit(e) {
     // e.preventDefault();

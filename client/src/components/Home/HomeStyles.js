@@ -21,18 +21,16 @@ export const Delivery = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0.125rem solid black;
+  border-radius: 0.6rem;
+  box-shadow: 0px 1px 12px 1px rgba(0, 0, 0, 0.49);
 `;
 
-export const TakeOut = styled(Delivery)`
-  background-color: grey;
-`;
+export const TakeOut = styled(Delivery)``;
 
 export const Salon = styled(Delivery)`
   grid-row: 3 / 4;
   grid-column: span 2;
   width: 100%;
-  background-color: aquamarine;
 `;
 
 export const Orders = styled.div`
@@ -57,4 +55,14 @@ export const SelectContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0 1rem;
+`;
+
+export const Mesa = styled.div`
+  cursor: pointer;
+  .available {
+    color: rgb(30, 215, 96);
+  }
+  .occuped {
+    color: rgb(229, 20, 0);
+  }
 `;
