@@ -15,12 +15,12 @@ import {
   faTrash,
   faSortAlphaDown,
   faPlus,
+  faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
-
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
@@ -84,6 +84,10 @@ export default function Productos() {
     dispatch(orderTheProducts(order));
   }
 
+  function handleButton(e) {
+    dispatch(getProducts());
+  }
+
   return (
     <div>
       <NumberOfProducts />
@@ -114,6 +118,19 @@ export default function Productos() {
       <SearchBarContainer>
         <Search />
         <FilterProductTypes />
+        <Button
+          width="12rem"
+          padding="0.8rem"
+          justify="space-between"
+          buttonColor="rgb(21, 151, 67)"
+          type="button"
+          onClick={(e) => {
+            handleButton(e);
+          }}
+        >
+          Restablecer
+          <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
+        </Button>
         <Modal
           id={3}
           state={newProductModal}
@@ -136,10 +153,8 @@ export default function Productos() {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
-
                       onClick={(e) => handleOrder(e)}
                       color={order ? "#FF846A" : "#A2DFFF"}
-
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}

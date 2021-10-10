@@ -52,7 +52,7 @@ export const SearchBarContainer = styled.div`
     justify-content: space-between;
     width: 70%;
     .actual_filter {
-      width: 70%;
+      width: 100%;
       display: flex;
       align-items: center;
       p {
