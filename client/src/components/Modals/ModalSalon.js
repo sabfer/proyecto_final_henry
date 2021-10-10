@@ -32,7 +32,7 @@ export default function ModalSalon({ state, setState, title }) {
 
   return (
     <div>
-      {state && (
+      {products && (
         <Overlay>
           <ModalContainer>
             <HeaderModal>
@@ -82,7 +82,7 @@ export default function ModalSalon({ state, setState, title }) {
                 />
               </div>
             </form>
-           
+          
 
 
 
