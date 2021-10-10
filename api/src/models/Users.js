@@ -8,10 +8,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true },
   name: { type: String, required: true },
   isAdmin: { type: Boolean, required: true },
-  puesto: {
-    type: String,
-    enum: ["Mozo", "Cajero", "Cocinero"],
-  },
+  category: { type: Schema.ObjectId, ref: "UserCategory" },
 });
 
 UserSchema.pre("save", function (next) {

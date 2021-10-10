@@ -24,24 +24,27 @@ usersController.filterUser = async (req, res, next) => {
 
 // GET
 usersController.findUsers = async (_req, res, next) => {
-    try{
-        const users = await Users.find();
-        if (users.length) {
-            res.json({
-                succes: true,
-                msg: "Usuarios encontrados",
-                payload: users
-            })
-        } else {
-            res.json({
-                succes: false,
-                msg: "Usuarios no encontrados",
-                payload: null
-            })
-        }
-    } catch (err) {
-        next(err);
+  try {
+    const users = await Users.find({}, { __v: 0 }).populate("category", {
+      _id: 0,
+      __v: 0,
+    });
+    if (users.length) {
+      res.json({
+        succes: true,
+        msg: "Usuarios encontrados",
+        payload: users,
+      });
+    } else {
+      res.json({
+        succes: false,
+        msg: "Usuarios no encontrados",
+        payload: null,
+      });
     }
+  } catch (err) {
+    next(err);
+  }
 };
 
 // POST
