@@ -58,6 +58,7 @@ export const SelectContainer = styled.div`
 `;
 
 export const Mesa = styled.div`
+  cursor: pointer;
   .available {
     color: rgb(30, 215, 96);
   }

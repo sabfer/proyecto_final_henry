@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import { Mesa } from "../HomeStyles";
 
-export default function Mesas({ tableNumer, status }) {
+export default function Mesas({ tableNumber, status, handleUpdate }) {
+  /* const [tableDetails, setTableDetails] = useState({
+    tableNumber: undefined,
+  }); */
+
   return (
-    <Mesa>
-      <div className={status ? "occuped" : "available"}>
-        <FontAwesomeIcon icon={faHamburger} size="4x" />
-      </div>
-      <p>Mesa {tableNumer}</p>
-    </Mesa>
+    <div>
+      <Mesa onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })}>
+        <div className={status ? "occuped" : "available"}>
+          <FontAwesomeIcon icon={faHamburger} size="4x" />
+        </div>
+        <p>Mesa {tableNumber}</p>
+      </Mesa>
+  
+    </div>
   );
 }
