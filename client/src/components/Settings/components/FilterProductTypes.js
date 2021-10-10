@@ -44,20 +44,7 @@ export default function FilterProductTypes() {
               </option>
             ))}
         </Select>
-      </div>
-      {/* <Button
-        width="10rem"
-        padding="0.8rem"
-        justify="space-between"
-        buttonColor="rgb(21, 151, 67)"
-        type="button"
-        onClick={(e) => {
-          handleButton(e);
-        }}
-      >
-        Restablecer
-        <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
-      </Button> */}
+      </div>     
     </div>
   );
 }
