@@ -16,8 +16,8 @@ export const Overlay = styled.div`
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 420px;
+  align-items: ${(props) => props.align || 'center'} ;
+  width: fit-content;
   padding: 3rem;
   background: #fff;
   position: relative;
@@ -59,19 +59,63 @@ export const ModalContainer = styled.div`
   }
 `;
 
+export const CategoriasPedidos = styled.div`
+  width: 100%;
+  .category_filter {
+    width: 100%;
+    .actual_filter {
+      width: 100%;
+      select {
+        width: 75%;
+        border: solid 1px black;  
+        font-weight: bold;
+        margin: 15px 0px;
+      }
+    } 
+  } 
+`;
+
 export const HeaderModal = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 2rem 0;
-  h2 {
-    margin: 0;
-    font-weight: bold;
-    font-size: 2rem;
-    line-height: 48rem
-    color: #000000;
+  img{
+    height: 75px;
   }
 `;
+
+export const HeaderModalTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 600px;
+  margin-left: 20px;
+  h3 {
+    margin: 4px 0px;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: #000000;
+  }
+  h4 {
+    margin: 2px 0px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+`;
+
+export const HeaderModalDetails = styled.div`
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  p {
+    margin: 1px 0px;
+    font-weight: bold;
+  }
+`;
+
+
 
 export const CloseButton = styled.div`
   position: absolute;
@@ -88,5 +132,55 @@ export const CloseButton = styled.div`
   }
   &:hover {
     color: #ff0000;
+  }
+`;
+
+export const FormModal = styled.form`
+  display: flex;
+`;
+
+export const SelectModal = styled.div`
+  display: flex;
+  width: 75%;
+`;
+
+export const InputModal = styled.div`
+  width: 12%;
+  margin: 0px 0px 0px 10px;
+`;
+
+export const ButtonConfirm = styled.button`
+  width: 8% !important;
+  background-color: #00C72C !important;
+`;
+
+export const ButtonCerrar = styled.button`
+  width: 8rem !important;
+  height: 25px !important;
+  background-color: #00C2FF !important;
+  font-size: 19px !important;
+`;
+
+export const TablesModal = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const TableProductsModal = styled.div`
+  width: 75%;
+`;
+
+export const TablePricesModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 25%;
+  height: 200px;
+  margin-left: 10px;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 5px;
+  p {
+    margin: 5px 0px;
   }
 `;

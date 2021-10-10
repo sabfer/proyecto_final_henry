@@ -28,11 +28,12 @@ export default function FilterProductTypes() {
   return (
     <div className="category_filter">
       <div className="actual_filter">
-        <p>Filtrar por categoría</p>
         <Select
           onChange={(e) => handleFilterType(e)}
           width="50%"
           height="2.4rem"
+          border="1px solid #ced4da"
+          fontWeight="400"
         >
           <option value="none" selected disabled hidden>
             Select an Option
