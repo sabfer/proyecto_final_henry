@@ -32,7 +32,6 @@ import {
 function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const singUpError = useSelector((state) => state.singUpErrors);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -40,7 +39,7 @@ function Register() {
   });
 
   const [signUpErrors, setSignUpErrors] = useState({
-    emailSucess: false,
+    emailSuccess: false,
     emailNotValid: "Ya existe una cuenta con este correo electrónico.",
     passwordSucess: false,
     passwordNotValid: "Las contraseñas deben ser iguales",
@@ -59,7 +58,7 @@ function Register() {
   }
 
   useEffect(() => {
-    if (signUpErrors.emailSucess && signUpErrors.passwordSucess) {
+    if (signUpErrors.emailSuccess && signUpErrors.passwordSucess) {
       history.push("/");
     }
   }, [history, signUpErrors]);
@@ -80,7 +79,7 @@ function Register() {
       });
       setSignUpErrors({
         ...signUpErrors,
-        emailSucess: true,
+        emailSuccess: true,
         passwordSucess: true,
       });
     }
@@ -88,7 +87,7 @@ function Register() {
       if (validatePass) {
         setSignUpErrors({
           ...signUpErrors,
-          emailSucess: true,
+          emailSuccess: true,
           passwordSucess: false,
         });
       }
@@ -104,7 +103,7 @@ function Register() {
         console.log("valEmail false");
         setSignUpErrors({
           ...signUpErrors,
-          emailSucess: false,
+          emailSuccess: false,
           passwordSucess: true,
         });
       }
@@ -173,7 +172,7 @@ function Register() {
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
-              {signUpErrors.emailSucess && (
+              {signUpErrors.emailSuccess && (
                 <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
               )}
             </InputContainers>

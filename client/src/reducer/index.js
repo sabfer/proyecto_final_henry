@@ -1,7 +1,8 @@
-import {} from "../actions/index";
+import { } from "../actions/index";
 
 const initialState = {
-  singUpErrors: undefined,
+  signUpData: undefined,
+  userToken: undefined,
   products: undefined,
   productsCopy: undefined,
   users: undefined,
@@ -14,11 +15,17 @@ const initialState = {
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "REGISTER_USER":
+      console.log('-------------signUpData: payload = ', payload);
       return {
         ...state,
-        singUpErrors: payload,
+        signUpData: payload,
       };
-
+    case "LOGIN_USER":
+      console.log('reducer LOGIN_USER, payload', payload);
+      return {
+        ...state,
+        userToken: payload.token,
+      };
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
@@ -30,22 +37,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [allProductsInclude],
       };
 
-      
+
 
     case "ORDER_BY_NAME":
       const products = state.products;
       let arrayOrderName =
         payload === true
           ? products.sort(function (a, b) {
-              if (a.name > b.name) return 1;
-              if (b.name > a.name) return -1;
-              return 0;
-            })
+            if (a.name > b.name) return 1;
+            if (b.name > a.name) return -1;
+            return 0;
+          })
           : products.sort(function (a, b) {
-              if (a.name > b.name) return -1;
-              if (b.name < a.name) return 1;
-              return 0;
-            });
+            if (a.name > b.name) return -1;
+            if (b.name < a.name) return 1;
+            return 0;
+          });
       return {
         ...state,
         products: arrayOrderName,

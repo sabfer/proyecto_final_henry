@@ -17,3 +17,5 @@ export const emailValidation = async ({ email }) => {
   // console.log('luego de axios emailValidation, val = ', val.data)
   return val.data;
 };
+
+// export const userValidation 

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 // import Swal from "sweetalert2";
 // import withReactContent from "sweetalert2-react-content";
 // const MySwal = withReactContent(Swal);
@@ -14,6 +16,20 @@ export function registerUser(payload) {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+}
+export function loginUser(payload) {
+  console.log('estoy en loginUser, con payload: ', payload);
+  return function (dispatch) {
+    axios
+      .post("http://localhost:3001/users/login", payload)
+      .then((data) => {
+        console.log('estoy en then para hacer un return dispatch de LOGIN_USER, con payload: ', payload);
+        return dispatch({ type: "LOGIN_USER", payload: data.data });
+      })
+      .catch((err) => {
+        console.log('estoy en catch de loginUser con err: ', err);
       });
   };
 }
@@ -126,15 +142,23 @@ export function postCommerce(payload) {
   };
 }
 
-export function getCommerces() {
+export function getCommerces(token) {
+  console.log('el token en getCommerces es: ', token);
+  let auth = {
+    headers: {
+      'Authorization': 'Bearer ' + token,
+    }
+  };
   return function (dispatch) {
+    // axios.get("http://localhost:3001/auth/secret/" + token)
     axios
-      .get("http://localhost:3001/commerce")
+      // .get("http://localhost:3001/commerce?token=" + token)
+      .get("http://localhost:3001/commerce", auth)
       .then((data) => {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log(err);
+        console.log('estoy en el error del catch de getCommerces, con err: ', err);
       });
   };
 }

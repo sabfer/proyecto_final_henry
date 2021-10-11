@@ -14,7 +14,7 @@ import { getCommerces, changeSettings } from "../../actions/index";
 export default function Home() {
   const dispatch = useDispatch();
   const commerces = useSelector((state) => state.commerces);
-
+  const token = useSelector((state) => state.userToken);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
     setTimeout(() => {
-      dispatch(getCommerces());
+      dispatch(getCommerces(token));
     }, 1000);
   }, [dispatch]);
 
@@ -78,7 +78,7 @@ export default function Home() {
       </OptionsBar>
 
       <Body>
-{/*         <SelectContainer width="50%">
+        {/*         <SelectContainer width="50%">
           <p>Comercio</p>
           <Select>
             <option hidden>Seleccionar comercio</option>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import {
   Container,
   Header,
@@ -19,14 +20,30 @@ import {
   SubmitContainer,
   Submit,
   GSubmit,
+  ErrorRegistro,
   FormTitle,
 } from "./LandingStyles";
+import { loginUser } from "../../actions/index";
+import { emailValidation } from "../../services/passwordValidation";
 
 function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector((state) => state.userToken);
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+
+  const [signUpErrors, setSignUpErrors] = useState({
+    emailSuccess: false,
+    emailNotValid: "El email ingresado no existe.",
+    passwordSuccess: false,
+    passwordNotValid: "Las contraseña es errónea.",
+    newTry: false,
+  });
+
+  const [login, setLogin] = useState(false);
 
   function handleChange(e) {
     // console.log({[e.target.name]: e.target.value});
@@ -34,58 +51,49 @@ function Login() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    console.log("token: ", token);
+
   }
+
+  useEffect(() => {
+    if (token !== null) {
+      // history.push("/home");
+      console.log('ya estoy logueado')
+    }
+  }, [token]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // let validatePass = passwordValidation(input);
-    // let validateEmail = await emailValidation(input);
-    console.log("email: " + input.email, " // password:" + input.password);
-    // if (validatePass && validateEmail === false) {
-    // console.log("voy a despachar registerUser(input), con input: ", input);
-    // dispatch(registerUser(input));
-    // console.log("pasado el dispatch de registerUser(input)");
-    //   setInput({
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //   });
-    //   setSignUpErrors({
-    //     ...signUpErrors,
-    //     emailSucess: true,
-    //     passwordSucess: true,
-    //   });
-    // }
-    // if (validateEmail) {
-    //   if (validatePass) {
-    //     setSignUpErrors({
-    //       ...signUpErrors,
-    //       emailSucess: true,
-    //       passwordSucess: false,
-    //     });
-    //   }
-    //   setInput({
-    //     ...input,
-    //     password: "",
-    //     confirmPassword: "",
-    //   });
-    // }
-    // if (!validatePass) {
-    //   console.log("valPwd false");
-    //   if (!validateEmail) {
-    //     console.log("valEmail false");
-    //     setSignUpErrors({
-    //       ...signUpErrors,
-    //       emailSucess: false,
-    //       passwordSucess: true,
-    //     });
-    //   }
-    //   setInput({
-    //     ...input,
-    //     password: "",
-    //     confirmPassword: "",
-    //   });
-    // }
+    let validateEmail = await emailValidation(input); // if true means that user exists
+    console.log("email: " + input.email, " // email existe:" + validateEmail);
+    // let validatePwd = await
+    if (validateEmail && input.password) {
+      console.log("debo despachar inicio sesion, con input: ", input);
+      dispatch(loginUser(input));
+      console.log("token: ", token);
+
+      setInput({
+        email: "",
+        password: "",
+      });
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSuccess: true,
+        passwordSuccess: true,
+      });
+    }
+    if (!validateEmail) {
+      console.log("estoy en validateEmail: FALSE");
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSuccess: false,
+        newTry: true,
+      });
+      setInput({
+        ...input,
+        password: "",
+      });
+    }
   }
 
   return (
@@ -136,6 +144,9 @@ function Login() {
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
+              {!signUpErrors.emailSuccess && signUpErrors.newTry && (
+                <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
+              )}
             </InputContainers>
             <InputContainers>
               <Inputs
