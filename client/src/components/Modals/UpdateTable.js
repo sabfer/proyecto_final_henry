@@ -1,8 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, getSalonOrders } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
-import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../css/Table";
+import {
+  Overlay,
+  ModalContainer,
+  HeaderModal,
+  CloseButton,
+} from "./ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -12,12 +23,13 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const ordenes = useSelector((state) => state.orders.salonOrders);
+  console.log(tableNumber, "HOLAaaaaaaaaaaa");
+  console.log(ordenes, "ORDENESS");
   const ordenTableNumber = ordenes
     ? ordenes.find(
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
     : null;
-
   function handleInput(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
     product.cantidad = e.target.value;

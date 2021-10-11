@@ -93,7 +93,10 @@ export function updateProduct(payload, id) {
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload
+    );
     return data;
   };
 }
@@ -206,7 +209,6 @@ export function changeStatus(payload) {
 
 // ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
 export function updateOrder(id, payload) {
-  console.log(payload);
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload);
     return dispatch({
@@ -221,7 +223,10 @@ export function getCategories() {
     axios
       .get("http://localhost:3001/productTypes")
       .then((data) => {
-        return dispatch({ type: "GET_PRODUCT_TYPES", payload: data.data.payload });
+        return dispatch({
+          type: "GET_PRODUCT_TYPES",
+          payload: data.data.payload,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -242,8 +247,12 @@ export function postCategories(payload) {
 }
 // ---------- CREACIÓN DE ORDEN ---------- \\
 export function postOrder(payload) {
+  console.log(payload);
   return async function (dispatch) {
     var data = await axios.post("http://localhost:3001/orders", payload);
-    return data;
+    return dispatch({
+      type: "POST_ORDER",
+      payload: data.data.payload,
+    });
   };
 }
