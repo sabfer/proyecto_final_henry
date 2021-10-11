@@ -4,6 +4,7 @@ import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
 import { Button } from "../../css";
 import {
@@ -37,6 +38,8 @@ export default function ModalSalon({ state, setState }) {
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
+  const hora = moment().format('h:mm:ss a');
+  const fecha = moment().locale('es').format('DD/MM/YYYY');
   const [producto, setProducto] = useState({
     name: "",
     amount: "",
@@ -167,9 +170,8 @@ export default function ModalSalon({ state, setState }) {
                 <h4>Mozo: Enzo Derviche</h4>
               </HeaderModalTitle>
               <HeaderModalDetails>
-                <p>Fecha: 10/10/2021</p>
-                <p>Hora: 13:51</p>
-                <h4>ORDEN nº: 00001</h4>
+                <p>Fecha: {fecha}</p>
+                <p>Hora: {hora}</p>
               </HeaderModalDetails>
             </HeaderModal>
             <CloseButton onClick={(e) => handleClose(e)}>

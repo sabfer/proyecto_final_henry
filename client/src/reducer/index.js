@@ -137,10 +137,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
-        console.log(m)
         return m.numero === parseInt(payload.tableNumber);
       });
-      console.log(mesa, payload)
       mesa.isOccupated = payload.isOccupated;
       return {
         ...state,
