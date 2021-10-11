@@ -10,7 +10,8 @@ const OrderSchema = new Schema(
       {
         name: { type: String, required: true },
         price: { type: Number, required: true },
-        cantidad: { type: Number, required: true },
+        amount: { type: Number, required: true },
+        observations: { type: String }
       },
     ],
     clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true

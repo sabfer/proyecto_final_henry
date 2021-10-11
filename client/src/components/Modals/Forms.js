@@ -174,34 +174,34 @@ export const conditionalForm = (
     );
   }
   // Formulario: "CREAR PEDIDO SALON"
-  if (id === 4) {
-    return (
-      <form>
-        <div>
-          <label>{label1}</label>
-          <input
-            type="string"
-            name="table"
-            value={input.table}
-            onChange={(e) => onChange(e)}
-          />
-        </div>
-        <div>
-          <label>{label2}</label>
-          <input
-            type="text"
-            name="products"
-            value={input.products}
-            onChange={(e) => onChange(e)}
-          />
-        </div>
-        <div>
-          <label>{label3}</label>
-          <input type="text" name="user" value={input.user} onChange={onChange} />
-        </div>
-      </form>
-    );
-  }
+  // if (id === 4) {
+  //   return (
+  //     <form>
+  //       <div>
+  //         <label>{label1}</label>
+  //         <input
+  //           type="string"
+  //           name="table"
+  //           value={input.table}
+  //           onChange={(e) => onChange(e)}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{label2}</label>
+  //         <input
+  //           type="text"
+  //           name="products"
+  //           value={input.products}
+  //           onChange={(e) => onChange(e)}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{label3}</label>
+  //         <input type="text" name="user" value={input.user} onChange={onChange} />
+  //       </div>
+  //     </form>
+  //   );
+  // }
   // Formulario: "CREAR PEDIDO PARA LLEVAR"
   if (id === 5) {
     return (

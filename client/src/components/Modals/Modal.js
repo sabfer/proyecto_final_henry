@@ -207,6 +207,9 @@ export default function Modal({
           confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
+
+    // if (id === 4) {}
+
     if (id === 7) {
       const payload = {};
       for (let key in input) {
@@ -216,7 +219,7 @@ export default function Modal({
       }
       dispatch(updateProduct(payload, idElement));
       MySwal.fire({
-        title: "¡Produco actualizado!",
+        title: "¡Producto actualizado!",
         icon: "success",
         confirmButtonText: "Aceptar",
         confirmButtonColor: "rgb(21, 151, 67)",

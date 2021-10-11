@@ -42,10 +42,10 @@ export const TableHd = styled.th`
 
 export const TableData = styled.td`
   padding: 8px;
-  text-align: left;
+  text-align: ${(props) => props.align || "left"};
   border: 1px solid black;
   .options {
     display: flex;
-    justify-content: space-between;
+    justify-content: ${(props) => props.justify || "space-between"};
   }
 `;

@@ -108,6 +108,20 @@ export default function Productos() {
           Añadir producto
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
+
+        <Button
+          width="10rem"
+          padding="0.8rem"
+          justify="space-between"
+          buttonColor="rgb(21, 151, 67)"
+          type="button"
+          onClick={(e) => {
+            handleButton(e);
+          }}
+        >
+          Restablecer
+          <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
+        </Button>
       </AjustesDerechaTop>
       <SearchBarContainer>
         <Search />
@@ -139,6 +153,7 @@ export default function Productos() {
           categories={categories}
         />
       </SearchBarContainer>
+
       {Array.isArray(products) ? (
         <div>
           <Table id="productsTable">
@@ -204,7 +219,11 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
         </Loading>
       )}
 
