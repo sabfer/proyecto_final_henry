@@ -3,11 +3,6 @@ const usersController = {};
 
 // FILTER
 
-usersController.findUniqueUser = async (email) => {
-  const results = await Users.find({ email: email });
-  return results.length ? results : null;
-};
-
 usersController.filterByEmail = async (email) => {
   const list = await Users.find();
   const filterByEmail = list.filter((user) => {
@@ -36,10 +31,20 @@ usersController.filterUser = async (req, res, next) => {
 };
 
 // GET
-usersController.findUsers = async (_req, res, next) => {
+
+usersController.findUniqueEmail = async (req, res, next) => {
+  // console.log('---- controller findUniqueEmail');
+  console.log('---- req.params.email: ', req.params.email);
+  const results = await Users.find({ email: req.params.email });
+  // console.log('---------- results: ', results);
+  res.send(results.length ? true : false);
+  // res.json({ results }).status(200);
+};
+
+usersController.findUsers = async (req, res, next) => {
   try {
     const users = await Users.find();
-    console.log('----------------------------- req,res,next', _req, res, next);
+    // console.log('----------------------------- req,res,next', req, res, next);
     if (users.length) {
       res.json({
         succes: true,
@@ -60,18 +65,25 @@ usersController.findUsers = async (_req, res, next) => {
 
 // POST
 usersController.addUser = async (req, res, _next) => {
+  // console.log('----controller addUser');
   const payload = req.body;
+  // console.log('en addUser con payload: ', payload);
+  // console.log('en addUser con payload.email: ', payload.email);
   try {
-    const users = await Users.findOne({ name: payload.name })
-    if (users) {
+    // console.log('entre al try de addUser');
+    const users = await Users.find({ email: payload.email })
+    // console.log('------- users: ', users);
+    if (users.length) {
       res.json({
         succes: false,
         msg: "Este usuario ya existe",
         payload: null
       })
     } else {
+      // console.log('ingreso al ELSE para tirar el newUser, con payload: ', payload);
       const newUser = await new Users(payload);
       await newUser.save();
+      console.log('grabé correctamente el newUser.');
       res.json({
         succes: true,
         msg: "Usuario Creado",
@@ -79,6 +91,7 @@ usersController.addUser = async (req, res, _next) => {
       })
     }
   } catch (err) {
+    // console.log('estoy en el catch de addUser con err: ', err);
     res.json({
       succes: false,
       msg: "No se pudo crear el usuario",

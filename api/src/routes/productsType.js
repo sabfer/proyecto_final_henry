@@ -7,6 +7,9 @@ const {
     addProduct
 } = require("../controllers/productsType.js");
 
+const auth = require("../controllers/auth.js");
+router.use(auth.secret);    // todas las rutas autenticadas
+
 router.get("/", async function (req, res) {
     const {name} = req.query;
     try{

@@ -15,10 +15,10 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = 'secretoProyectoX';
 
 var strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) {
-    console.log('jwt_payload', jwt_payload);
+    // console.log('------------------jwt_payload', jwt_payload);
     let users = await Users.find();
     let user = users.find(user => user.id === jwt_payload.id);
-    console.log('--------------users:', user);
+    // console.log('--------------users:', user);
     if (user) {
         return next(null, user);
     } else {
@@ -35,10 +35,11 @@ app.use(express.json({ limit: "50mb" }));
 
 
 auth.test = function (req, res) {
-    res.json({ message: "Estoy HOME!" });
+    res.json({ message: "Server funcionando!" });
 };
 
 auth.login = async function (req, res) {
+    console.log('estoy en auth.login');
     if (req.body.email && req.body.password) {
         var email = req.body.email;
         var password = req.body.password;
@@ -62,27 +63,34 @@ auth.login = async function (req, res) {
         console.log('id:', user.id);
         res.json({ message: "Logueo correcto, te va el token...", token: token });
     } else {
-        res.status(401).json({ message: "invalid credentials" });
+        res.json({ message: "Password inválido.", token: null })
+            .status(401);
     }
 }
 
 auth.secret = (req, res, next) => {
     passport.authenticate('jwt', { session: false, }, (err, user, info) => {
         if (err) {
-            console.log('--------------err: ', err);
             return next(err);
         }
+        // console.log('------- err: ',  err)
+        // console.log('------- user: ', user)
+        // console.log('------- info: ',  info)
         if (user) {
-            res.json({ message: 'exito total!!!!' }).status(200);;
+            console.log(`--------------AUTH CORRECTA. id= ${user._id} & email= ${user.email}`);
+            // res.json({ message: 'Token correcto', userId: user._id }).status(200);;
             // res.redirect('/auth');
-            // next()
+            // res.json({ message: 'ok' })
+            // .status(200);
+            next();
         } else {
-            console.log('------- info: ', typeof info)
+            console.log('----- typeof info: ', typeof info, Object.entries(info).length);
             if (Object.entries(info).length > 0) {
-                console.log('estoy dentro del IF de info');
+                console.log('No hay token de autenticacion. Deberia loguearse.');
                 // res.json(info).status(403);
                 res.sendStatus(403)
             } else {
+                // console.log('----------info', info);
                 console.log('No hay usuario y el token es incorrecto.');
                 res.sendStatus(403);
                 // res.redirect('/auth');
@@ -93,7 +101,8 @@ auth.secret = (req, res, next) => {
 
 auth.secretDebug = function (req, res, next) {
     console.log('Authorization: ', req.get('Authorization'));
-    next();
+    res.json({ Authorization: req.get('Authorization') })
+    // res.redirect('/');
 }, function (req, res) {
     res.json({ debug: 'debugging' });
 };
