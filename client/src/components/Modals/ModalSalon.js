@@ -13,13 +13,11 @@ import {
   CloseButton,
   SelectModal,
   InputModal,
-  ButtonConfirm,
   FormModal,
   TablesModal,
   TableProductsModal,
   TablePricesModal,
-  ButtonCerrar,
-  InputAmount
+  InputAmount,
 } from "./ModalStyles";
 import { Select } from "../../css/Select";
 import {
@@ -128,16 +126,6 @@ export default function ModalSalon({ state, setState }) {
     });
   } */
 
-  function handleClick(e, props) {
-    e.preventDefault();
-    setProducto({
-      _id: props._id,
-      amount: props.amount,
-      name: props.name,
-    });
-    setEditProductModal(!editProductModal);
-  }
-
   return (
     <div>
       {state && (
@@ -189,9 +177,13 @@ export default function ModalSalon({ state, setState }) {
                           name="amount"
                       />
                   </InputModal>
-                  <ButtonConfirm type="submit">
+                  <Button 
+                  type="submit"
+                  width= "8%"
+                  buttonColor= "#00C72C"
+                  >
                   ✓
-                </ButtonConfirm>
+                </Button>
                 </FormModal>
                 
             </SelectModal>
@@ -203,20 +195,20 @@ export default function ModalSalon({ state, setState }) {
                 <TableHead>
                   <TableRow>
                     <TableHd width="10%">Cant.</TableHd>
-                    <TableHd width="50%">Productos</TableHd>
-                    <TableHd width="20%">Precio</TableHd>
-                    <TableHd width="20%">Opciones</TableHd>
+                    <TableHd width="60%">Productos</TableHd>
+                    <TableHd width="15%">Precio</TableHd>
+                    <TableHd width="15%">Opciones</TableHd>
                   </TableRow>
                 </TableHead>
                 <tbody>
                   {order.products.length ? order.products.map((el) => {
                     return ( 
                       <TableRow key={el.name}>
-                        <TableData><InputAmount onChange= {(e) => handleInputAmount(e, el.name)} placeholder={el.amount}/></TableData>
-                        <TableData>{el.name}</TableData>
-                        <TableData>{el.price}</TableData>
+                        <TableData align= "center"><InputAmount onChange= {(e) => handleInputAmount(e, el.name)} placeholder={el.amount}/></TableData>
+                        <TableData >{el.name}</TableData>
+                        <TableData align= "center">{el.price}</TableData>
                         <TableData>
-                          <div className="options">
+                          <div className="options" justify="center">
                             <Button
                               /* onClick={(e) => handleDelete(el._id)} */
                               width="2rem"
@@ -239,9 +231,13 @@ export default function ModalSalon({ state, setState }) {
                 <p>Subtotal: $10000</p>
                 <p>Propina: $100</p>
                 <p>Monto Total: $10100</p>
-                <ButtonCerrar>
+                <Button
+                width= "8rem"
+                height= "25px"
+                buttonColor= "#00C2FF"
+                >
                   Cerrar
-                </ButtonCerrar>
+                </Button> 
 
                 </TablePricesModal>
 
