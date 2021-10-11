@@ -206,7 +206,6 @@ export function changeStatus(payload) {
 
 // ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
 export function updateOrder(id, payload) {
-  console.log(payload);
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload);
     return dispatch({
@@ -242,8 +241,17 @@ export function postCategories(payload) {
 }
 // ---------- CREACIÓN DE ORDEN ---------- \\
 export function postOrder(payload) {
+  console.log(payload);
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/orders", payload);
-    return data;
+    var data = await axios.post(
+      "http://localhost:3001/orders",
+      payload
+    );
+    return dispatch({
+      type: "POST_ORDER",
+      payload: data.data.payload
+    })
   };
 }
+
+

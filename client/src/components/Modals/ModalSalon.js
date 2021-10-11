@@ -4,6 +4,7 @@ import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
 import { Button } from "../../css";
 import {
@@ -43,10 +44,12 @@ export default function ModalSalon({ state, setState }) {
     tableNumber: 0,
     products: [],
     estado: "Pendiente",
+    totalPrice: 0,
+    date: moment().locale("es").format("DD/MM/YYYY"),
+    hour: moment().format("h:mm:ss a"),
     /*clientId: 112412,
     userId: 1224125, */
   });
-
 
   function handleClose(e) {
     setState(!state);
@@ -88,6 +91,14 @@ export default function ModalSalon({ state, setState }) {
         products: [...prev.products, producto],
       };
     });
+    setOrder((prev) => {
+      return {
+        ...prev,
+        totalPrice: prev.products.reduce(function (prev, actual) {
+          return prev + actual.price * actual.amount;
+        }, 0),
+      };
+    });
     setProducto({
       name: "",
       amount: "",
@@ -106,6 +117,14 @@ export default function ModalSalon({ state, setState }) {
         ...order,
       };
     });
+    setOrder((prev) => {
+      return {
+        ...prev,
+        totalPrice: prev.products.reduce(function (prev, actual) {
+          return prev + actual.price * actual.amount;
+        }, 0),
+      };
+    });
   }
 
   function handlePostOrder(e) {
@@ -118,6 +137,9 @@ export default function ModalSalon({ state, setState }) {
       products: [],
       estado: "En progreso",
     });
+    /* setTimeout(function () {
+      dispatch(getSalonOrders({key:'type' , value: "Salon"}));
+    }, 1000) */
   }
 
   function handleDelete(name) {
@@ -136,6 +158,14 @@ export default function ModalSalon({ state, setState }) {
           return {
             ...order,
             products: prev.products.filter((p) => p.name !== name),
+          };
+        });
+        setOrder((prev) => {
+          return {
+            ...prev,
+            totalPrice: prev.products.reduce(function (prev, actual) {
+              return prev + actual.price * actual.amount;
+            }, 0),
           };
         });
         MySwal.fire({
@@ -159,9 +189,8 @@ export default function ModalSalon({ state, setState }) {
               <h4>Mozo: Enzo Derviche</h4>
             </HeaderModalTitle>
             <HeaderModalDetails>
-              <p>Fecha: 10/10/2021</p>
-              <p>Hora: 13:51</p>
-              <h4>ORDEN nº: 00001</h4>
+              <p>Fecha: {order.date}</p>
+              <p>Hora: {order.hour}</p>
             </HeaderModalDetails>
           </HeaderModal>
           <CloseButton onClick={(e) => handleClose(e)}>
@@ -259,7 +288,7 @@ export default function ModalSalon({ state, setState }) {
               <p>Detalles</p>
               <p>Subtotal: $10000</p>
               <p>Propina: $100</p>
-              <p>Monto Total: $10100</p>
+              <p>Monto Total: ${order.totalPrice}</p>
               <Button width="8rem" height="25px" buttonColor="#00C2FF">
                 Cerrar
               </Button>

@@ -138,10 +138,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
-        console.log(m)
         return m.numero === parseInt(payload.tableNumber);
       });
-      console.log(mesa, payload)
       mesa.isOccupated = payload.isOccupated;
       return {
         ...state,
@@ -163,6 +161,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
+    case "POST_ORDER":
+      if(state.orders.salonOrders) {
+        return {...state, 
+          orders: {...state.orders, salonOrders: [...state.orders.salonOrders, payload]}
+        }
+      } else {
+          return {...state, 
+            orders: {...state.orders, salonOrders: [payload]}
+          }
+      }
 
     default:
       return state;

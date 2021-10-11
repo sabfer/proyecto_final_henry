@@ -6,7 +6,7 @@ import Modal from "../../Modals/Modal";
 import UpdateTable from "../../Modals/UpdateTable";
 import ModalSalon from "../../Modals/ModalSalon";
 import { useDispatch, useSelector } from "react-redux";
-import { getSalonOrders, getMesas, changeStatus } from "../../../actions";
+import { getSalonOrders, getMesas } from "../../../actions";
 import Mesas from "./Mesa";
 
 export default function SalonModule() {
@@ -24,15 +24,10 @@ export default function SalonModule() {
     if (mesas === undefined) {
       dispatch(getMesas());
     }
-  }, [dispatch, mesas]);
-
-  /* function handleOnClick(e) {
-    dispatch(changeStatus({ isOccupated: true, numero: 14 }));
-  } */
+  }, [dispatch]); //mesas
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
-    console.log("HOLAAAAAAAAA:", updateModal, tableDetails);
     setUpdateModal(true);
     setTableDetails({
       tableNumber: props.tableNumber,

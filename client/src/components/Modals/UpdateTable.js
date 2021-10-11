@@ -12,12 +12,19 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const ordenes = useSelector((state) => state.orders.salonOrders);
+  console.log(tableNumber, "HOLAaaaaaaaaaaa")
+  console.log(ordenes, "ORDENESS")
   const ordenTableNumber = ordenes
     ? ordenes.find(
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
     : null;
+  console.log(ordenTableNumber, "orden table")
+  /* const MySwal = withReactContent(Swal);
+  
 
+  /* function handleChange(e) {
+  } */
   function handleInput(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
     product.cantidad = e.target.value;
