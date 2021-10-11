@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -29,11 +30,11 @@ import {
   TableHd,
   TableRow,
 } from "../../css/Table";
-import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
-  /*   const dispatch = useDispatch(); */
+  const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
   const [producto, setProducto] = useState({
@@ -45,21 +46,17 @@ export default function ModalSalon({ state, setState }) {
 
   const [order, setOrder] = useState({
     type: "Salon",
-    orderNumber: undefined,
-    tableNumber: undefined,
+    tableNumber: 0,
     products: [],
     estado: "Pendiente",
     /*clientId: 112412,
     userId: 1224125, */
   });
 
-  console.log(order.products.length);
-
   function handleClose(e) {
     setState(!state);
     setOrder({
       type: "Salon",
-      orderNumber: undefined,
       tableNumber: undefined,
       products: [],
       estado: "Pendiente",
@@ -117,10 +114,23 @@ export default function ModalSalon({ state, setState }) {
     });
   }
 
+  function handlePostOrder(e) {
+    dispatch(postOrder(order));
+    console.log(order);
+    setState(!state);
+    dispatch(changeStatus({isOccupated: true, tableNumber: order.tableNumber}))
+    setOrder({
+      type: "Salon",
+      tableNumber: 0,
+      products: [],
+      estado: "En progreso",
+    });
+  }
+
   function handleDelete(name) {
     MySwal.fire({
       title: "¿Estas seguro?",
-      text: "¡El producto será borrado de la base de datos!",
+      text: "¡El producto será borrado de la orden!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#1ABD53",
@@ -137,7 +147,7 @@ export default function ModalSalon({ state, setState }) {
         });
         MySwal.fire({
           title: "Producto borrado",
-          text: "El producto se borró correctamente.",
+          text: "El producto se borró correctamente!",
           icon: "success",
           confirmButtonColor: "#00A0D2",
         });
@@ -277,6 +287,14 @@ export default function ModalSalon({ state, setState }) {
                 </Button>
               </TablePricesModal>
             </TablesModal>
+            <Button
+              onClick={(e) => handlePostOrder(e)}
+              width="9rem"
+              height="2rem"
+              buttonColor="#00C72C"
+            >
+              Crear Pedido
+            </Button>
           </ModalContainer>
         </Overlay>
       )}
