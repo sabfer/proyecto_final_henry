@@ -150,7 +150,6 @@ export function getCommerces(token) {
     }
   };
   return function (dispatch) {
-    // axios.get("http://localhost:3001/auth/secret/" + token)
     axios
       // .get("http://localhost:3001/commerce?token=" + token)
       .get("http://localhost:3001/commerce", auth)
