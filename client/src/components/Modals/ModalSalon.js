@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { Button } from "../../css";
 import {
   Overlay,
@@ -27,19 +29,16 @@ import {
   TableHd,
   TableRow,
 } from "../../css/Table";
-import {
-  faPenSquare,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
-/*   const dispatch = useDispatch(); */
+  /*   const dispatch = useDispatch(); */
+  const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
-  const [editProductModal, setEditProductModal] = useState(false);
   const [producto, setProducto] = useState({
     name: "",
-    amount: undefined,
+    amount: "",
     observations: "",
     price: undefined,
   });
@@ -54,10 +53,17 @@ export default function ModalSalon({ state, setState }) {
     userId: 1224125, */
   });
 
-  console.log(order.products.length)
+  console.log(order.products.length);
 
   function handleClose(e) {
     setState(!state);
+    setOrder({
+      type: "Salon",
+      orderNumber: undefined,
+      tableNumber: undefined,
+      products: [],
+      estado: "Pendiente",
+    });
   }
 
   function handleChange(e) {
@@ -65,42 +71,53 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       [e.target.name]: e.target.value,
     });
-  };
+  }
 
   function handleChangeProduct(e) {
     console.log(e.target.value.name);
-    if(e.target.name === "amount"){
+    if (e.target.name === "amount") {
       setProducto({
         ...producto,
         [e.target.name]: e.target.value,
-      })
-    } else{
+      });
+    } else {
       setProducto({
         ...producto,
         price: products.find((p) => p.name === e.target.value).price,
         [e.target.name]: e.target.value,
       });
     }
-  };
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setOrder((prev) => {return {
-      ...order,
-      products : [...prev.products, producto]
-    }});
-  };
+    setOrder((prev) => {
+      return {
+        ...order,
+        products: [...prev.products, producto],
+      };
+    });
+    setProducto({
+      name: "",
+      amount: "",
+      observations: "",
+      price: "",
+    });
+    document.getElementById("selectProduct").value =
+      document.getElementById("inputDefault").value;
+  }
 
   function handleInputAmount(e, name) {
     setOrder((prev) => {
       const product = prev.products.find((p) => p.name === name);
       product.amount = e.target.value;
       return {
-      ...order
-    }});
-  };
+        ...order,
+      };
+    });
+  }
 
-  /* function handleDelete(e) {
+  function handleDelete(name) {
     MySwal.fire({
       title: "¿Estas seguro?",
       text: "¡El producto será borrado de la base de datos!",
@@ -112,10 +129,12 @@ export default function ModalSalon({ state, setState }) {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
-        setTimeout(() => {
-          dispatch(getProducts());
-        }, 300);
+        setOrder((prev) => {
+          return {
+            ...order,
+            products: prev.products.filter((p) => p.name !== name),
+          };
+        });
         MySwal.fire({
           title: "Producto borrado",
           text: "El producto se borró correctamente.",
@@ -124,130 +143,143 @@ export default function ModalSalon({ state, setState }) {
         });
       }
     });
-  } */
+  }
 
   return (
     <div>
       {state && (
         <Overlay>
-          <ModalContainer
-            align="unset"
-          >
+          <ModalContainer align="unset">
             <HeaderModal>
-                <img src="https://i.imgur.com/0OF9UWi.png" />
-              <HeaderModalTitle>   
+              <img src="https://i.imgur.com/0OF9UWi.png" />
+              <HeaderModalTitle>
                 <h3>Mesa: {order.tableNumber}</h3>
-                <h4>Mozo:  Enzo Derviche</h4>
+                <h4>Mozo: Enzo Derviche</h4>
               </HeaderModalTitle>
               <HeaderModalDetails>
                 <p>Fecha: 10/10/2021</p>
                 <p>Hora: 13:51</p>
                 <h4>ORDEN nº: 00001</h4>
               </HeaderModalDetails>
-            </HeaderModal>  
+            </HeaderModal>
             <CloseButton onClick={(e) => handleClose(e)}>
               <FontAwesomeIcon icon={faWindowClose} />
             </CloseButton>
 
             <CategoriasPedidos>
-              <FilterProductTypes /> 
+              <FilterProductTypes />
             </CategoriasPedidos>
-            
+
             <SelectModal>
-                <FormModal onSubmit={(e) => handleSubmit(e)}>
-                  <input type="number" name="tableNumber" onChange={(e) => handleChange(e)}/> 
-                  <Select
-                    width="83%"
-                    height="2.4rem"
-                    border="solid 1px black"
-                    fontWeight="bold"
+              <FormModal onSubmit={(e) => handleSubmit(e)}>
+                <input
+                  type="number"
+                  name="tableNumber"
+                  onChange={(e) => handleChange(e)}
+                />
+                <Select
+                  id="selectProduct"
+                  width="83%"
+                  height="2.4rem"
+                  border="solid 1px black"
+                  fontWeight="bold"
+                  onChange={(e) => handleChangeProduct(e)}
+                  name="name"
+                >
+                  <option
+                    id="inputDefault"
+                    value="none"
+                    selected
+                    disabled
+                    hidden
+                  >
+                    Seleccione un producto
+                  </option>
+                  {products &&
+                    products.map((e) => {
+                      return (
+                        <option key={e._id} value={e.name}>
+                          {" "}
+                          {e.name}{" "}
+                        </option>
+                      );
+                    })}
+                </Select>
+                <InputModal>
+                  <input
+                    type="number"
+                    placeholder="Cant."
                     onChange={(e) => handleChangeProduct(e)}
-                    name= "name"
-                  >
-                    {products &&
-                      products.map((e) => {
-                        return <option key= {e._id} value={e.name}> {e.name} </option>;
-                      })}
-                  </Select>
-                  <InputModal>
-                      <input
-                          type="number"
-                          placeholder="Cant."
-                          onChange={(e) => handleChangeProduct(e)}
-                          name="amount"
-                      />
-                  </InputModal>
-                  <Button 
-                  type="submit"
-                  width= "8%"
-                  buttonColor= "#00C72C"
-                  >
+                    name="amount"
+                    value={producto.amount}
+                  />
+                </InputModal>
+                <Button type="submit" width="8%" buttonColor="#00C72C">
                   ✓
                 </Button>
-                </FormModal>
-                
+              </FormModal>
             </SelectModal>
 
             <TablesModal>
-
               <TableProductsModal>
                 <Table id="productsTable">
-                <TableHead>
-                  <TableRow>
-                    <TableHd width="10%">Cant.</TableHd>
-                    <TableHd width="60%">Productos</TableHd>
-                    <TableHd width="15%">Precio</TableHd>
-                    <TableHd width="15%">Opciones</TableHd>
-                  </TableRow>
-                </TableHead>
-                <tbody>
-                  {order.products.length ? order.products.map((el) => {
-                    return ( 
-                      <TableRow key={el.name}>
-                        <TableData align= "center"><InputAmount onChange= {(e) => handleInputAmount(e, el.name)} placeholder={el.amount}/></TableData>
-                        <TableData >{el.name}</TableData>
-                        <TableData align= "center">{el.price}</TableData>
-                        <TableData>
-                          <div className="options" justify="center">
-                            <Button
-                              /* onClick={(e) => handleDelete(el._id)} */
-                              width="2rem"
-                              height="2rem"
-                              buttonColor="rgba(255, 0, 0, 1)"
-                            >
-                              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                            </Button>
-                          </div>
-                        </TableData>
-                      </TableRow>
-                    )
-                })
-              : null } 
-                </tbody>
-              </Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableHd width="10%">Cant.</TableHd>
+                      <TableHd width="60%">Productos</TableHd>
+                      <TableHd width="15%">Precio</TableHd>
+                      <TableHd width="15%">Opciones</TableHd>
+                    </TableRow>
+                  </TableHead>
+                  <tbody>
+                    {order.products.length
+                      ? order.products.map((el) => {
+                          return (
+                            <TableRow key={el.name}>
+                              <TableData align="center">
+                                <InputAmount
+                                  onChange={(e) =>
+                                    handleInputAmount(e, el.name)
+                                  }
+                                  placeholder={el.amount}
+                                />
+                              </TableData>
+                              <TableData>{el.name}</TableData>
+                              <TableData align="center">{el.price}</TableData>
+                              <TableData>
+                                <div className="options" justify="center">
+                                  <Button
+                                    onClick={(e) => handleDelete(el.name)}
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faTrash}
+                                    ></FontAwesomeIcon>
+                                  </Button>
+                                </div>
+                              </TableData>
+                            </TableRow>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </Table>
               </TableProductsModal>
               <TablePricesModal>
                 <p>Detalles</p>
                 <p>Subtotal: $10000</p>
                 <p>Propina: $100</p>
                 <p>Monto Total: $10100</p>
-                <Button
-                width= "8rem"
-                height= "25px"
-                buttonColor= "#00C2FF"
-                >
+                <Button width="8rem" height="25px" buttonColor="#00C2FF">
                   Cerrar
-                </Button> 
-
-                </TablePricesModal>
-
-              
-
+                </Button>
+              </TablePricesModal>
             </TablesModal>
-
           </ModalContainer>
         </Overlay>
       )}
     </div>
   );
-};
+}
