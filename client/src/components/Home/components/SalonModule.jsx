@@ -24,13 +24,13 @@ export default function SalonModule() {
     }
   }, [dispatch, mesas]);
 
-  function handleOnClick(e) {
+  /* function handleOnClick(e) {
     dispatch(changeStatus({ isOccupated: true, numero: 14 }));
-  }
+  } */
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
-    console.log("HOLAAAAAAAAA:",updateModal, tableDetails);
+    console.log("HOLAAAAAAAAA:", updateModal, tableDetails);
     setUpdateModal(true);
     setTableDetails({
       tableNumber: props.tableNumber,
@@ -58,7 +58,6 @@ export default function SalonModule() {
         label2="Productos"
         label3="Usuario"
       />
-      <button onClick={(e) => handleOnClick(e)}>CAMBIAR PORONGA</button>
       <Orders ordersColumns="repeat(10, 1fr)">
         {mesas &&
           mesas.map((mesa) => {

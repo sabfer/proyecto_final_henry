@@ -8,7 +8,11 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //------------------------------------------\\
 import { Button, Loading } from "../../../css";
-import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
+import {
+  SearchBarContainer,
+  AjustesDerechaTop,
+  ExportExcel,
+} from "../../../css/SettingStyles";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import {
   faPenSquare,
@@ -16,6 +20,7 @@ import {
   faSortAlphaDown,
   faPlus,
   faSyncAlt,
+  faFileExcel,
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 import Search from "../components/Search";
@@ -26,6 +31,7 @@ export default function Productos() {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const categories = useSelector((state) => state.productTypes);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -90,18 +96,6 @@ export default function Productos() {
 
   return (
     <div>
-      <NumberOfProducts />
-      <div align="center">
-        <ReactHTMLTableToExcel
-          id="botonExportarProd"
-          className="btnExport"
-          table="productsTable"
-          filename="Productos_cargados_en_el_sistema"
-          sheet="Productos"
-          buttonText="Export to Excel"
-        />
-      </div>
-      <table id="table-to-xls"></table>
       <AjustesDerechaTop>
         <h1>Productos</h1>
         <Button
@@ -142,6 +136,7 @@ export default function Productos() {
           label4="Tipo de Producto"
           modalContainerBox={true}
           showInSettings={true}
+          categories={categories}
         />
       </SearchBarContainer>
       {Array.isArray(products) ? (
@@ -212,6 +207,22 @@ export default function Productos() {
           <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
+
+      <ExportExcel>
+        <NumberOfProducts />
+        <Button width="2.5rem" buttonColor="rgb(14, 116, 59)">
+          <FontAwesomeIcon icon={faFileExcel} size="lg">
+            <ReactHTMLTableToExcel
+              id="botonExportarProd"
+              table="productsTable"
+              className="Excel"
+              filename="Productos_cargados_en_el_sistema"
+              sheet="Productos"
+              buttonText=""
+            />
+          </FontAwesomeIcon>
+        </Button>
+      </ExportExcel>
 
       <Modal
         idElement={inputModalProduct._id}

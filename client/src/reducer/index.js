@@ -3,6 +3,7 @@ import {} from "../actions/index";
 const initialState = {
   singUpErrors: undefined,
   products: undefined,
+  productTypes: undefined,
   productsCopy: undefined,
   users: undefined,
   commerces: undefined,
@@ -144,6 +145,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         mesas: [...state.mesas],
+      };
+
+    case "GET_PRODUCT_TYPES":
+      let sortedArray = payload.sort(function (a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (b.name > a.name) {
+          return -1;
+        }
+        return 0;
+      });
+      console.log(sortedArray);
+      return {
+        ...state,
+        productTypes: sortedArray,
       };
 
     default:

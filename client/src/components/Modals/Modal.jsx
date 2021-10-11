@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
-import { postProduct, updateProduct, postCommerce, getProducts } from "../../actions";
+import {
+  postProduct,
+  updateProduct,
+  postCommerce,
+  getProducts,
+  postCategories,
+  getCategories,
+} from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -27,36 +35,34 @@ export default function Modal({
   idElement,
   showInSettings,
 }) {
+  const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    name: name,
-    price: price,
-    productType: productType,
+    name: "" || name,
+    price: "" || price,
+    productType: "" || productType,
     user: user,
     pass: pass,
-    location: undefined,
-    description: undefined,
-    table: undefined,
-    products: undefined,
-    orderD: undefined,
-    orderTA: undefined,
+    location: "",
+    description: "",
+    orderD: "",
+    orderTA: "",
   });
 
   const [inpValido, setInputvalido] = useState({
     name: "",
     price: "",
-    productType: "",
     user: "",
     pass: "",
     location: "",
   });
 
   const expresiones = {
-    name: /^[a-zA-Z0-9_\\-\s]{3,32}$/,
+    name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     pass: /^[a-zA-Z0-9_\\-]{5,32}$/,
-    productType: /^[a-zA-Z0-9_\\-\s]{4,32}$/,
+    productType: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
     price: /^.{0,100}$/,
     location: /^[a-zA-Z0-9_\\-\s]{6,48}$/,
   };
@@ -172,7 +178,7 @@ export default function Modal({
     }
 
     if (id === 3) {
-      if (inpValido.name && input.price > 0 && inpValido.productType) {
+      if (inpValido.name && input.price > 0) {
         dispatch(postProduct(input));
         MySwal.fire({
           title: "¡Producto creado correctamente!",
@@ -224,6 +230,24 @@ export default function Modal({
         }
       });
     }
+
+    if (id === 8) {
+      dispatch(postCategories(input));
+      MySwal.fire({
+        title: "Categoría creada correctamente!",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "rgb(21, 151, 67)",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(getCategories());
+          setStateModal(!state);
+          setInput({
+            name: "",
+          });
+        }
+      });
+    }
   }
 
   function handleClose(e) {
@@ -238,31 +262,30 @@ export default function Modal({
 
   return (
     <div>
-      {state && (
-        <Overlay>
-          <ModalContainer modalContainerBox={modalContainerBox}>
-            <HeaderModal>
-              <h2>{title}</h2>
-            </HeaderModal>
-            <CloseButton onClick={(e) => handleClose(e)}>
-              <FontAwesomeIcon icon={faWindowClose} />
-            </CloseButton>
-            {conditionalForm(
-              id,
-              input,
-              handleChange,
-              labels,
-              productValues,
-              leyendaError,
-              inpValido,
-              validacion
-            )}
-            <button type="submit" onClick={(e) => handleSubmit(e)}>
-              Aceptar
-            </button>
-          </ModalContainer>
-        </Overlay>
-      )}
+      <Overlay display={state ? "flex" : "none"}>
+        <ModalContainer modalContainerBox={modalContainerBox}>
+          <HeaderModal>
+            <h2>{title}</h2>
+          </HeaderModal>
+          <CloseButton onClick={(e) => handleClose(e)}>
+            <FontAwesomeIcon icon={faWindowClose} />
+          </CloseButton>
+          {conditionalForm(
+            id,
+            input,
+            handleChange,
+            labels,
+            productValues,
+            leyendaError,
+            inpValido,
+            validacion,
+            categories
+          )}
+          <button type="submit" onClick={(e) => handleSubmit(e)}>
+            Aceptar
+          </button>
+        </ModalContainer>
+      </Overlay>
     </div>
   );
 }

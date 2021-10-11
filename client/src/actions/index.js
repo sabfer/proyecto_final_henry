@@ -47,29 +47,6 @@ export function getNameProducts(payload) {
   };
 }
 
-// export function getNameProducts(payload) {
-//   return async function (dispatch) {
-//     try {
-//       var data = await axios.get("http://localhost:3001/products?name=" + payload);
-//       if (data.data.succes) {
-//         return dispatch({
-//           type: "GET_NAME_PRODUCT",
-//           payload: data.data.payload,
-//         });
-//       } else {
-//         MySwal.fire({
-//           icon: "error",
-//           title: "El producto no existe",
-//           showConfirmButton: false,
-//           timer: 1500,
-//         });
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
-
 // ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
 export function filterProductsType(payload) {
   return {
@@ -117,10 +94,7 @@ export function updateProduct(payload, id) {
 export function postCommerce(payload) {
   console.log(payload, "actions");
   return async function (dispatch) {
-    var data = await axios.post(
-      "http://localhost:3001/commerce/register",
-      payload
-    );
+    var data = await axios.post("http://localhost:3001/commerce/register", payload);
     return data;
   };
 }
@@ -239,5 +213,31 @@ export function updateOrder(id, payload) {
     return dispatch({
       type: "UPDATE_ORDER",
     });
+  };
+}
+
+// OBTENER CATEGORÍAS DE PRODUCTOS \\
+export function getCategories() {
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/productTypes")
+      .then((data) => {
+        return dispatch({ type: "GET_PRODUCT_TYPES", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+// CREAR CATEGORÍAS DE PRODUCTOS \\
+export function postCategories(payload) {
+  return async function (dispatch) {
+    var data = await axios
+      .post("http://localhost:3001/productTypes/new", payload)
+      .then((data) => {
+        return data;
+      });
+    return data;
   };
 }
