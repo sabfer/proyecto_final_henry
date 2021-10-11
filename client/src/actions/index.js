@@ -92,7 +92,6 @@ export function updateProduct(payload, id) {
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload) {
-  console.log(payload, "actions");
   return async function (dispatch) {
     var data = await axios.post("http://localhost:3001/commerce/register", payload);
     return data;
@@ -238,6 +237,13 @@ export function postCategories(payload) {
       .then((data) => {
         return data;
       });
+    return data;
+  };
+}
+// ---------- CREACIÓN DE ORDEN ---------- \\
+export function postOrder(payload) {
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload);
     return data;
   };
 }

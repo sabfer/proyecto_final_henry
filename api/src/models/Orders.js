@@ -11,7 +11,7 @@ const OrderSchema = new Schema(
         name: { type: String, required: true },
         price: { type: Number, required: true },
         amount: { type: Number, required: true },
-        observations: { type: String }
+        observations: { type: String },
       },
     ],
     clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true
@@ -35,7 +35,7 @@ const OrderSchema = new Schema(
 
 OrderSchema.virtual("totalPrice").get(function () {
   return this.products.reduce(function (prev, actual) {
-    return prev + actual.price * actual.cantidad;
+    return prev + actual.price * actual.amount;
   }, 0);
 });
 

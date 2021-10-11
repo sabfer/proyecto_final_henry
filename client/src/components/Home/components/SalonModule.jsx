@@ -39,6 +39,7 @@ export default function SalonModule() {
     });
   }
 
+  const [stateModal4, setStateModal4] = useState(false);
   return (
     <Salon>
       <OrderButton
@@ -50,10 +51,12 @@ export default function SalonModule() {
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
+
       <ModalSalon
         state={stateModal}
         setState={setStateModal}
-        title="Consumo Mesa: "        
+        title="Consumo Mesa: "
+        
       />
       <Orders ordersColumns="repeat(10, 1fr)">
         {mesas &&

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { Button } from "../../css";
 import {
   Overlay,
@@ -21,23 +24,23 @@ import {
 } from "./ModalStyles";
 import { Select } from "../../css/Select";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
-import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
-  /*   const dispatch = useDispatch(); */
+  const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
   const [producto, setProducto] = useState({
     name: "",
-    amount: undefined,
+    amount: "",
     observations: "",
     price: undefined,
   });
 
   const [order, setOrder] = useState({
     type: "Salon",
-    orderNumber: undefined,
-    tableNumber: undefined,
+    tableNumber: 0,
     products: [],
     estado: "Pendiente",
     /*clientId: 112412,
@@ -48,6 +51,12 @@ export default function ModalSalon({ state, setState }) {
 
   function handleClose(e) {
     setState(!state);
+    setOrder({
+      type: "Salon",
+      tableNumber: undefined,
+      products: [],
+      estado: "Pendiente",
+    });
   }
 
   function handleChange(e) {
@@ -81,6 +90,14 @@ export default function ModalSalon({ state, setState }) {
         products: [...prev.products, producto],
       };
     });
+    setProducto({
+      name: "",
+      amount: "",
+      observations: "",
+      price: "",
+    });
+    document.getElementById("selectProduct").value =
+      document.getElementById("inputDefault").value;
   }
 
   function handleInputAmount(e, name) {
@@ -93,10 +110,23 @@ export default function ModalSalon({ state, setState }) {
     });
   }
 
-  /* function handleDelete(e) {
+  function handlePostOrder(e) {
+    dispatch(postOrder(order));
+    console.log(order);
+    setState(!state);
+    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }));
+    setOrder({
+      type: "Salon",
+      tableNumber: 0,
+      products: [],
+      estado: "En progreso",
+    });
+  }
+
+  function handleDelete(name) {
     MySwal.fire({
       title: "¿Estas seguro?",
-      text: "¡El producto será borrado de la base de datos!",
+      text: "¡El producto será borrado de la orden!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#1ABD53",
@@ -105,134 +135,155 @@ export default function ModalSalon({ state, setState }) {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
-        setTimeout(() => {
-          dispatch(getProducts());
-        }, 300);
+        setOrder((prev) => {
+          return {
+            ...order,
+            products: prev.products.filter((p) => p.name !== name),
+          };
+        });
         MySwal.fire({
           title: "Producto borrado",
-          text: "El producto se borró correctamente.",
+          text: "El producto se borró correctamente!",
           icon: "success",
           confirmButtonColor: "#00A0D2",
         });
       }
     });
-  } */
+  }
 
   return (
     <div>
-      <Overlay display={state ? "flex" : "none"}>
-        <ModalContainer align="unset">
-          <HeaderModal>
-            <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
-            <HeaderModalTitle>
-              <h3>Mesa: {order.tableNumber}</h3>
-              <h4>Mozo: Enzo Derviche</h4>
-            </HeaderModalTitle>
-            <HeaderModalDetails>
-              <p>Fecha: 10/10/2021</p>
-              <p>Hora: 13:51</p>
-              <h4>ORDEN nº: 00001</h4>
-            </HeaderModalDetails>
-          </HeaderModal>
-          <CloseButton onClick={(e) => handleClose(e)}>
-            <FontAwesomeIcon icon={faWindowClose} />
-          </CloseButton>
+      {state && (
+        <Overlay>
+          <ModalContainer align="unset">
+            <HeaderModal>
+              <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+              <HeaderModalTitle>
+                <h3>Mesa: {order.tableNumber}</h3>
+                <h4>Mozo: Enzo Derviche</h4>
+              </HeaderModalTitle>
+              <HeaderModalDetails>
+                <p>Fecha: 10/10/2021</p>
+                <p>Hora: 13:51</p>
+                <h4>ORDEN nº: 00001</h4>
+              </HeaderModalDetails>
+            </HeaderModal>
+            <CloseButton onClick={(e) => handleClose(e)}>
+              <FontAwesomeIcon icon={faWindowClose} />
+            </CloseButton>
 
-          <CategoriasPedidos>
-            <FilterProductTypes />
-          </CategoriasPedidos>
+            <CategoriasPedidos>
+              <FilterProductTypes />
+            </CategoriasPedidos>
 
-          <SelectModal>
-            <FormModal onSubmit={(e) => handleSubmit(e)}>
-              <input type="number" name="tableNumber" onChange={(e) => handleChange(e)} />
-              <Select
-                width="83%"
-                height="2.4rem"
-                border="solid 1px black"
-                fontWeight="bold"
-                onChange={(e) => handleChangeProduct(e)}
-                name="name"
-              >
-                {products &&
-                  products.map((e) => {
-                    return (
-                      <option key={e._id} value={e.name}>
-                        {" "}
-                        {e.name}{" "}
-                      </option>
-                    );
-                  })}
-              </Select>
-              <InputModal>
+            <SelectModal>
+              <FormModal onSubmit={(e) => handleSubmit(e)}>
                 <input
                   type="number"
-                  placeholder="Cant."
-                  onChange={(e) => handleChangeProduct(e)}
-                  name="amount"
+                  name="tableNumber"
+                  onChange={(e) => handleChange(e)}
                 />
-              </InputModal>
-              <Button type="submit" width="8%" buttonColor="#00C72C">
-                ✓
-              </Button>
-            </FormModal>
-          </SelectModal>
+                <Select
+                  id="selectProduct"
+                  width="83%"
+                  height="2.4rem"
+                  border="solid 1px black"
+                  fontWeight="bold"
+                  onChange={(e) => handleChangeProduct(e)}
+                  name="name"
+                >
+                  <option id="inputDefault" value="none" selected disabled hidden>
+                    Seleccione un producto
+                  </option>
+                  {products &&
+                    products.map((e) => {
+                      return (
+                        <option key={e._id} value={e.name}>
+                          {" "}
+                          {e.name}{" "}
+                        </option>
+                      );
+                    })}
+                </Select>
+                <InputModal>
+                  <input
+                    type="number"
+                    placeholder="Cant."
+                    onChange={(e) => handleChangeProduct(e)}
+                    name="amount"
+                    value={producto.amount}
+                  />
+                </InputModal>
+                <Button type="submit" width="8%" buttonColor="#00C72C">
+                  ✓
+                </Button>
+              </FormModal>
+            </SelectModal>
 
-          <TablesModal>
-            <TableProductsModal>
-              <Table id="productsTable">
-                <TableHead>
-                  <TableRow>
-                    <TableHd width="10%">Cant.</TableHd>
-                    <TableHd width="60%">Productos</TableHd>
-                    <TableHd width="15%">Precio</TableHd>
-                    <TableHd width="15%">Opciones</TableHd>
-                  </TableRow>
-                </TableHead>
-                <tbody>
-                  {order.products.length
-                    ? order.products.map((el) => {
-                        return (
-                          <TableRow key={el.name}>
-                            <TableData align="center">
-                              <InputAmount
-                                onChange={(e) => handleInputAmount(e, el.name)}
-                                placeholder={el.amount}
-                              />
-                            </TableData>
-                            <TableData>{el.name}</TableData>
-                            <TableData align="center">{el.price}</TableData>
-                            <TableData>
-                              <div className="options" justify="center">
-                                <Button
-                                  /* onClick={(e) => handleDelete(el._id)} */
-                                  width="2rem"
-                                  height="2rem"
-                                  buttonColor="rgba(255, 0, 0, 1)"
-                                >
-                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                                </Button>
-                              </div>
-                            </TableData>
-                          </TableRow>
-                        );
-                      })
-                    : null}
-                </tbody>
-              </Table>
-            </TableProductsModal>
-            <TablePricesModal>
-              <p>Detalles</p>
-              <p>Subtotal: $10000</p>
-              <p>Propina: $100</p>
-              <p>Monto Total: $10100</p>
-              <Button width="8rem" height="25px" buttonColor="#00C2FF">
-                Cerrar
-              </Button>
-            </TablePricesModal>
-          </TablesModal>
-        </ModalContainer>
-      </Overlay>
+            <TablesModal>
+              <TableProductsModal>
+                <Table id="productsTable">
+                  <TableHead>
+                    <TableRow>
+                      <TableHd width="10%">Cant.</TableHd>
+                      <TableHd width="60%">Productos</TableHd>
+                      <TableHd width="15%">Precio</TableHd>
+                      <TableHd width="15%">Opciones</TableHd>
+                    </TableRow>
+                  </TableHead>
+                  <tbody>
+                    {order.products.length
+                      ? order.products.map((el) => {
+                          return (
+                            <TableRow key={el.name}>
+                              <TableData align="center">
+                                <InputAmount
+                                  onChange={(e) => handleInputAmount(e, el.name)}
+                                  placeholder={el.amount}
+                                />
+                              </TableData>
+                              <TableData>{el.name}</TableData>
+                              <TableData align="center">{el.price}</TableData>
+                              <TableData>
+                                <div className="options" justify="center">
+                                  <Button
+                                    onClick={(e) => handleDelete(el.name)}
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                  >
+                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                  </Button>
+                                </div>
+                              </TableData>
+                            </TableRow>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </Table>
+              </TableProductsModal>
+              <TablePricesModal>
+                <p>Detalles</p>
+                <p>Subtotal: $10000</p>
+                <p>Propina: $100</p>
+                <p>Monto Total: $10100</p>
+                <Button width="8rem" height="25px" buttonColor="#00C2FF">
+                  Cerrar
+                </Button>
+              </TablePricesModal>
+            </TablesModal>
+            <Button
+              onClick={(e) => handlePostOrder(e)}
+              width="9rem"
+              height="2rem"
+              buttonColor="#00C72C"
+            >
+              Crear Pedido
+            </Button>
+          </ModalContainer>
+        </Overlay>
+      )}
     </div>
   );
 }
