@@ -31,8 +31,6 @@ import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
 
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
-
 export default function Productos() {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
