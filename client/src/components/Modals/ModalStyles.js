@@ -170,6 +170,13 @@ export const TableProductsModal = styled.div`
   width: 75%;
 `;
 
+export const InputAmount = styled.input`
+  width: 30px;
+  border: transparent;
+  background-color: transparent;
+  color: black;
+`;
+
 export const TablePricesModal = styled.div`
   display: flex;
   flex-direction: column;
