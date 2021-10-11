@@ -145,6 +145,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         mesas: [...state.mesas],
       };
 
+    case "POST_ORDER":
+      if(state.orders.salonOrders) {
+        return {...state, 
+          orders: {...state.orders, salonOrders: [...state.orders.salonOrders, payload]}
+        }
+      } else {
+          return {...state, 
+            orders: {...state.orders, salonOrders: [payload]}
+          }
+      }
+
     default:
       return state;
   }
