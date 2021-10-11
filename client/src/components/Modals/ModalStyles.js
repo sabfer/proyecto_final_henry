@@ -43,20 +43,6 @@ export const ModalContainer = styled.div`
       }
     }
   }
-  button {
-    width: 100%;
-    height: 2.5rem;
-    border-radius: 0.6rem;
-    color: #ffffff;
-    border: none;
-    background: rgb(2, 101, 210);
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 1.4rem;
-    &:hover {
-      background-color: rgb(26, 103, 255);
-    }
-  }
 `;
 
 export const CategoriasPedidos = styled.div`
@@ -115,8 +101,6 @@ export const HeaderModalDetails = styled.div`
   }
 `;
 
-
-
 export const CloseButton = styled.div`
   position: absolute;
   top: 15px;
@@ -147,18 +131,6 @@ export const SelectModal = styled.div`
 export const InputModal = styled.div`
   width: 12%;
   margin: 0px 0px 0px 10px;
-`;
-
-export const ButtonConfirm = styled.button`
-  width: 8% !important;
-  background-color: #00C72C !important;
-`;
-
-export const ButtonCerrar = styled.button`
-  width: 8rem !important;
-  height: 25px !important;
-  background-color: #00C2FF !important;
-  font-size: 19px !important;
 `;
 
 export const TablesModal = styled.div`
