@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 import UpdateTable from "../../Modals/UpdateTable";
+import ModalSalon from "../../Modals/ModalSalon";
 import { useDispatch, useSelector } from "react-redux";
 import { getSalonOrders, getMesas, changeStatus } from "../../../actions";
 import Mesas from "./Mesa";
 
 export default function SalonModule() {
+  const [stateModal, setStateModal] = useState(false);
   const dispatch = useDispatch();
   // const salonOrders = useSelector((state) => state.orders.salonOrders);
   const mesas = useSelector((state) => state.mesas);
@@ -41,7 +43,7 @@ export default function SalonModule() {
   return (
     <Salon>
       <OrderButton
-        onClick={() => setStateModal4(!stateModal4)}
+        onClick={() => setStateModal(!stateModal)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -49,14 +51,12 @@ export default function SalonModule() {
         <FontAwesomeIcon icon={faPlus} size="lg" />
         Crear pedido
       </OrderButton>
-      <Modal
-        id={4}
-        state={stateModal4}
-        setStateModal={setStateModal4}
-        title="Crear pedido de Salón"
-        label1="Mesa"
-        label2="Productos"
-        label3="Usuario"
+
+      <ModalSalon
+        state={stateModal}
+        setState={setStateModal}
+        title="Consumo Mesa: "
+        
       />
       <button onClick={(e) => handleOnClick(e)}>CAMBIAR PORONGA</button>
       <Orders ordersColumns="repeat(10, 1fr)">

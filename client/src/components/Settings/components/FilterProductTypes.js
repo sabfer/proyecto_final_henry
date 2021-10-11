@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { filterProductsType, getProducts } from "../../../actions";
 import { Select } from "../../../css/Select";
-import { Button } from "../../../css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+// import { Button } from "../../../css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
@@ -21,15 +21,15 @@ export default function FilterProductTypes() {
     dispatch(filterProductsType(e.target.value));
   }
 
-  
   return (
     <div className="category_filter">
       <div className="actual_filter">
-        <p>Filtrar por categoría</p>
         <Select
           onChange={(e) => handleFilterType(e)}
           width="50%"
           height="2.4rem"
+          border="1px solid #ced4da"
+          fontWeight="400"
         >
           <option value="none" selected disabled hidden>
             Select an Option
@@ -42,19 +42,6 @@ export default function FilterProductTypes() {
             ))}
         </Select>
       </div>
-      {/* <Button
-        width="10rem"
-        padding="0.8rem"
-        justify="space-between"
-        buttonColor="rgb(21, 151, 67)"
-        type="button"
-        onClick={(e) => {
-          handleButton(e);
-        }}
-      >
-        Restablecer
-        <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
-      </Button> */}
     </div>
   );
 }

@@ -16,10 +16,11 @@ export const Select = styled.select`
   display: block;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
+  border: ${(props) => props.border};
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
   -moz-padding-start: calc(0.75rem - 3px);
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: ${(props) => props.fontWeight};
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
@@ -27,7 +28,6 @@ export const Select = styled.select`
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
-  border: 1px solid #ced4da;
   border-radius: 0.6rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -webkit-appearance: none;
