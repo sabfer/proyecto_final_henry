@@ -8,7 +8,7 @@ import DeliveryModule from "./components/Delivery";
 import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
-import { changeSettings, getProducts } from "../../actions/index";
+import { changeSettings, getProducts, getCategories } from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
+    dispatch(getCategories());
     setTimeout(() => {
       dispatch(getProducts());
     }, 1000);
