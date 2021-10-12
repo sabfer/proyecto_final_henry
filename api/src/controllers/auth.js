@@ -15,7 +15,7 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = 'secretoProyectoX';
 
 var strategy = new JwtStrategy(jwtOptions, async function (jwt_payload, next) {
-    // console.log('------------------jwt_payload', jwt_payload);
+    console.log('------------------jwt_payload', jwt_payload);
     let users = await Users.find();
     let user = users.find(user => user.id === jwt_payload.id);
     // console.log('--------------users:', user);
@@ -80,7 +80,7 @@ auth.secret = (req, res, next) => {
             console.log(`--------------AUTH CORRECTA. id= ${user._id} & email= ${user.email}`);
             // res.json({ message: 'Token correcto', userId: user._id }).status(200);;
             // res.redirect('/auth');
-            // res.json({ message: 'ok' })
+            // res.json({ message: 'ok autenticado' })
             // .status(200);
             next();
         } else {

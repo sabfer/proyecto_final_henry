@@ -3,13 +3,14 @@ const router = express.Router();
 const controller = require("../controllers/users.js");
 const auth = require("../controllers/auth.js");
 
-router.use(auth.secret);    // todas las rutas autenticadas
+// router.use(auth.secret);    // todas las rutas autenticadas
 
-router.get("/:email", controller.findUniqueEmail);
-router.get("/filter", controller.filterUser);
-router.post("/register", controller.addUser);
 router.post('/login', auth.login);
-router.delete("/:id", controller.deleteUser);
-router.put("/:id", controller.updateUser);
+router.get("/:email", controller.findUniqueEmail);
+router.post("/register", controller.addUser);
+
+router.get("/filter", auth.secret, controller.filterUser);
+router.delete("/:id", auth.secret, controller.deleteUser);
+router.put("/:id", auth.secret, controller.updateUser);
 
 module.exports = router;
