@@ -163,7 +163,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         }
         return 0;
       });
-      console.log(sortedArray);
       return {
         ...state,
         productTypes: sortedArray,
