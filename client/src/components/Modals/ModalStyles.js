@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Overlay = styled.div`
+  transition: all 0.8s ease;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -8,7 +9,7 @@ export const Overlay = styled.div`
   left: 0;
   background: rgba(0, 0, 0, 0.8);
   padding: 40px;
-  display: flex;
+  display: ${(props) => props.display};
   align-items: center;
   justify-content: center;
 `;

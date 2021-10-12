@@ -16,6 +16,7 @@ export const Select = styled.select`
   display: block;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
+  margin: ${(props) => props.margin};
   border: ${(props) => props.border};
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
   -moz-padding-start: calc(0.75rem - 3px);

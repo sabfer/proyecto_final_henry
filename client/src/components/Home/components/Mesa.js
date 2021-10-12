@@ -7,7 +7,6 @@ export default function Mesas({ tableNumber, status, handleUpdate }) {
   /* const [tableDetails, setTableDetails] = useState({
     tableNumber: undefined,
   }); */
-
   return (
     <div>
       <Mesa onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })}>
@@ -16,7 +15,6 @@ export default function Mesas({ tableNumber, status, handleUpdate }) {
         </div>
         <p>Mesa {tableNumber}</p>
       </Mesa>
-  
     </div>
   );
 }

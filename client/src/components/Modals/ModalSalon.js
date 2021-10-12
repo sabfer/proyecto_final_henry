@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,8 +51,8 @@ export default function ModalSalon({ state, setState }) {
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
-    date:moment().locale('es').format('DD/MM/YYYY'),
-    hour: moment().format('h:mm:ss a'),
+    date: moment().locale("es").format("DD/MM/YYYY"),
+    hour: moment().format("h:mm:ss a"),
     /*clientId: 112412,
     userId: 1224125, */
   });
@@ -75,7 +75,6 @@ export default function ModalSalon({ state, setState }) {
   }
 
   function handleChangeProduct(e) {
-    console.log(e.target.value.name);
     if (e.target.name === "amount") {
       setProducto({
         ...producto,
@@ -99,11 +98,13 @@ export default function ModalSalon({ state, setState }) {
       };
     });
     setOrder((prev) => {
-      return{
+      return {
         ...prev,
-        totalPrice: prev.products.reduce(function (prev, actual) { return prev + actual.price * actual.amount }, 0)
-      }
-    }) 
+        totalPrice: prev.products.reduce(function (prev, actual) {
+          return prev + actual.price * actual.amount;
+        }, 0),
+      };
+    });
     setProducto({
       name: "",
       amount: "",
@@ -123,18 +124,21 @@ export default function ModalSalon({ state, setState }) {
       };
     });
     setOrder((prev) => {
-      return{
+      return {
         ...prev,
-        totalPrice: prev.products.reduce(function (prev, actual) { return prev + actual.price * actual.amount }, 0)
-      }
-    }) 
+        totalPrice: prev.products.reduce(function (prev, actual) {
+          return prev + actual.price * actual.amount;
+        }, 0),
+      };
+    });
   }
 
   function handlePostOrder(e) {
     dispatch(postOrder(order));
-    console.log(order);
     setState(!state);
-    dispatch(changeStatus({isOccupated: true, tableNumber: order.tableNumber}))
+    dispatch(
+      changeStatus({ isOccupated: true, tableNumber: order.tableNumber })
+    );
     setOrder({
       type: "Salon",
       tableNumber: 0,
@@ -165,11 +169,13 @@ export default function ModalSalon({ state, setState }) {
           };
         });
         setOrder((prev) => {
-          return{
+          return {
             ...prev,
-            totalPrice: prev.products.reduce(function (prev, actual) { return prev + actual.price * actual.amount }, 0)
-          }
-        }) 
+            totalPrice: prev.products.reduce(function (prev, actual) {
+              return prev + actual.price * actual.amount;
+            }, 0),
+          };
+        });
         MySwal.fire({
           title: "Producto borrado",
           text: "El producto se borró correctamente!",

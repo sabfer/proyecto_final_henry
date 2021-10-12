@@ -100,3 +100,10 @@ export const SearchContainer = styled.div`
     }
   }
 `;
+
+export const ExportExcel = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

@@ -34,7 +34,6 @@ export default function SalonModule() {
     });
   }
 
-  const [stateModal4, setStateModal4] = useState(false);
   return (
     <Salon>
       <OrderButton

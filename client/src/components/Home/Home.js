@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BodyTop } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +8,15 @@ import DeliveryModule from "./components/Delivery";
 import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
-import { getCommerces, changeSettings, getProducts } from "../../actions/index";
+import {
+  changeSettings,
+  getProducts,
+  getCategories,
+} from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.productTypes);
 
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
@@ -20,10 +25,8 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
-    setTimeout(() => {
-      dispatch(getCommerces());
-      dispatch(getProducts());
-    }, 1000);
+    dispatch(getCategories());
+    dispatch(getProducts());
   }, [dispatch]);
 
   return (
@@ -118,6 +121,7 @@ export default function Home() {
         label3="Precio"
         label4="Tipo de Producto"
         modalContainerBox={true}
+        categories={categories}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import {} from "../actions/index";
 const initialState = {
   singUpErrors: undefined,
   products: undefined,
+  productTypes: undefined,
   productsCopy: undefined,
   users: undefined,
   commerces: undefined,
@@ -56,7 +57,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter((e) => e.productType === payload);
+      const array = [...state.productsCopy].filter(
+        (e) => e.productType === payload
+      );
       return {
         ...state,
         products: array,
@@ -135,25 +138,35 @@ const rootReducer = (state = initialState, { type, payload }) => {
         mesas: payload,
       };
 
-    case "CHANGE_STATUS":
-      const mesa = state.mesas.find((m) => {
-        return m.numero === parseInt(payload.tableNumber);
+    case "GET_PRODUCT_TYPES":
+      let sortedArray = payload.sort(function (a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (b.name > a.name) {
+          return -1;
+        }
+        return 0;
       });
-      mesa.isOccupated = payload.isOccupated;
+      console.log(sortedArray);
       return {
         ...state,
-        mesas: [...state.mesas],
+        productTypes: sortedArray,
       };
-
     case "POST_ORDER":
-      if(state.orders.salonOrders) {
-        return {...state, 
-          orders: {...state.orders, salonOrders: [...state.orders.salonOrders, payload]}
-        }
+      if (state.orders.salonOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            salonOrders: [...state.orders.salonOrders, payload],
+          },
+        };
       } else {
-          return {...state, 
-            orders: {...state.orders, salonOrders: [payload]}
-          }
+        return {
+          ...state,
+          orders: { ...state.orders, salonOrders: [payload] },
+        };
       }
 
     default:
