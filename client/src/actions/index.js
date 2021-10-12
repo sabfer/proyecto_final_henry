@@ -358,7 +358,6 @@ export function postOrder(payload, token) {
       Authorization: "Bearer " + token,
     },
   };
-  console.log(payload);
   return async function (dispatch) {
     var data = await axios.post("http://localhost:3001/orders", payload, auth);
     return dispatch({
