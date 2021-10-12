@@ -147,7 +147,7 @@ export function getCommerces(token) {
   let auth = {
     headers: {
       'Authorization': 'Bearer ' + token,
-    }
+    },
   };
   return function (dispatch) {
     axios
