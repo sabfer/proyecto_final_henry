@@ -201,9 +201,14 @@ export function getMesas() {
 }
 
 export function changeStatus(payload) {
-  return {
-    type: "CHANGE_STATUS",
-    payload: payload,
+  return function (dispatch) {
+    axios
+      .put(`http://localhost:3001/mesas/${payload.tableNumber}`, {
+        isOccupated: payload.isOccupated,
+      })
+      .then((data) => {
+        return dispatch(getMesas());
+      });
   };
 }
 

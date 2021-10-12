@@ -34,6 +34,13 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   function handleInput(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
     product.amount = e.target.value;
+    ordenTableNumber.totalPrice = ordenTableNumber.products.reduce(function (
+      prev,
+      actual
+    ) {
+      return prev + actual.price * actual.amount;
+    },
+    0);
   }
 
   function modifcarOrden(id, payload) {
@@ -103,7 +110,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       <TableData>
                         <input
                           onChange={(e) => handleInput(e, product._id)}
-                          placeholder={product.cantidad}
+                          placeholder={product.amount}
                         />
                       </TableData>
                       {/* <TableData>
@@ -144,6 +151,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
             onClick={() =>
               modifcarOrden(ordenTableNumber._id, {
                 products: ordenTableNumber.products,
+                totalPrice: ordenTableNumber.totalPrice,
               })
             }
           >
