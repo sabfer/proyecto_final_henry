@@ -13,7 +13,8 @@ import { changeSettings, getProducts, getCategories } from "../../actions/index"
 export default function Home() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
-
+  const commerces = useSelector((state) => state.commerces);
+  const token = useSelector((state) => state.userToken);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
@@ -23,9 +24,18 @@ export default function Home() {
     dispatch(changeSettings({ show: "" }));
     dispatch(getCategories());
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getProducts(token));
+      //dispatch(getCommerces(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
+
+  if(!token){
+    return (
+      <>
+        NO TENES ACCESO, FALTA TOKEN 
+      </>
+    )
+  }
 
   return (
     <div>

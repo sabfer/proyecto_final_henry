@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/users.js");
+const auth = require("../controllers/auth.js");
 
-router.get("/", controller.findUsers);
+router.use(auth.secret);    // todas las rutas autenticadas
+
+router.get("/:email", controller.findUniqueEmail);
 router.get("/filter", controller.filterUser);
 router.post("/register", controller.addUser);
+router.post('/login', auth.login);
 router.delete("/:id", controller.deleteUser);
 router.put("/:id", controller.updateUser);
 
