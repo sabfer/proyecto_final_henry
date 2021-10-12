@@ -11,15 +11,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
 export default function Productos() {
+  const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const productTypes = useSelector((state) => state.productTypes);
   const [newCategory, setNewCategory] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getCategories());
+      dispatch(getCategories(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <div>

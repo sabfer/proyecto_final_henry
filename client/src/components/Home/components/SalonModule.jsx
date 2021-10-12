@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Salon, OrderButton, Orders } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Modals/Modal";
+// import Modal from "../../Modals/Modal";
 import UpdateTable from "../../Modals/UpdateTable";
 import ModalSalon from "../../Modals/ModalSalon";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,8 @@ import { getSalonOrders, getMesas } from "../../../actions";
 import Mesas from "./Mesa";
 
 export default function SalonModule() {
+  const token = useSelector((state) => state.userToken);
+
   const [stateModal, setStateModal] = useState(false);
   const dispatch = useDispatch();
   // const salonOrders = useSelector((state) => state.orders.salonOrders);
@@ -20,11 +22,11 @@ export default function SalonModule() {
   });
 
   useEffect(() => {
-    dispatch(getSalonOrders({ key: "type", value: "salon" }));
+    dispatch(getSalonOrders({ key: "type", value: "salon" }, token));
     if (mesas === undefined) {
-      dispatch(getMesas());
+      dispatch(getMesas(token));
     }
-  }, [dispatch]); //mesas
+  }, [dispatch, mesas, token]); //mesas
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
@@ -46,29 +48,24 @@ export default function SalonModule() {
         Crear pedido
       </OrderButton>
 
-      <ModalSalon
-        state={stateModal}
-        setState={setStateModal}
-        title="Consumo Mesa: "
-        
-      />
+      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
       <Orders ordersColumns="repeat(10, 1fr)">
         {mesas &&
           mesas.map((mesa) => {
             return (
               <Mesas
-                tableNumber={mesa.numero}
+                tableNumber={mesa.tableNumber}
                 status={mesa.isOccupated}
                 key={mesa.numero}
                 handleUpdate={handleUpdateModal}
               />
             );
           })}
-        <UpdateTable
+        {/* <UpdateTable
           state={updateModal}
           setStateModal={setUpdateModal}
           tableNumber={tableDetails.tableNumber}
-        />
+        /> */}
         {/* buscar la orden que coincida con el numero de mesa
             1 modal mesa obtiene por props el numero de la mesa
             2 el modal busca en el estado de redux la orden que este pendiente o en proceso 

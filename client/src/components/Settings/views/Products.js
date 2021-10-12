@@ -28,6 +28,7 @@ import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
 
 export default function Productos() {
+  const token = useSelector((state) => state.userToken);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
@@ -44,9 +45,9 @@ export default function Productos() {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getProducts(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   function handleDelete(e) {
     MySwal.fire({
@@ -62,7 +63,7 @@ export default function Productos() {
       if (result.isConfirmed) {
         dispatch(deleteProduct(e));
         setTimeout(() => {
-          dispatch(getProducts());
+          dispatch(getProducts(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -91,7 +92,7 @@ export default function Productos() {
   }
 
   function handleButton(e) {
-    dispatch(getProducts());
+    dispatch(getProducts(token));
   }
 
   return (

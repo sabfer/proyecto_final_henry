@@ -35,6 +35,8 @@ export default function Modal({
   idElement,
   showInSettings,
 }) {
+  const token = useSelector((state) => state.userToken);
+  console.log(token);
   const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
@@ -179,7 +181,7 @@ export default function Modal({
 
     if (id === 3) {
       if (inpValido.name && input.price > 0) {
-        dispatch(postProduct(input));
+        dispatch(postProduct(input, token));
         MySwal.fire({
           title: "¡Producto creado correctamente!",
           icon: "success",
@@ -188,7 +190,7 @@ export default function Modal({
         }).then((result) => {
           if (result.isConfirmed) {
             if (showInSettings) {
-              dispatch(getProducts());
+              dispatch(getProducts(token));
             }
             setStateModal(!state);
             setInput({

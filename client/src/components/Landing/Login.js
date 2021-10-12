@@ -43,7 +43,7 @@ function Login() {
     newTry: false,
   });
 
-  const [login, setLogin] = useState(false);
+  //const [login, setLogin] = useState(false);
 
   function handleChange(e) {
     // console.log({[e.target.name]: e.target.value});
@@ -51,16 +51,16 @@ function Login() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    console.log("token: ", token);
+    //console.log("token: ", token);
 
   }
 
   useEffect(() => {
     if (token) {
       history.push("/home");
-      console.log('ya estoy logueado')
+      //console.log('ya estoy logueado')
     }
-  }, [token]);
+  }, [history, token]);
 
   async function handleSubmit(e) {
     e.preventDefault();
