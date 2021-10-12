@@ -279,10 +279,22 @@ export function getMesas(token) {
   };
 }
 
-export function changeStatus(payload) {
-  return {
-    type: "CHANGE_STATUS",
-    payload: payload,
+export function changeStatus(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .put(
+        `http://localhost:3001/mesas/${payload.tableNumber}`,
+        { isOccupated: payload.isOccupated },
+        auth
+      )
+      .then((data) => {
+        return dispatch(getMesas(token));
+      });
   };
 }
 
@@ -312,7 +324,10 @@ export function getCategories(token) {
     axios
       .get("http://localhost:3001/productTypes", auth)
       .then((data) => {
-        return dispatch({ type: "GET_PRODUCT_TYPES", payload: data.data.payload });
+        return dispatch({
+          type: "GET_PRODUCT_TYPES",
+          payload: data.data.payload,
+        });
       })
       .catch((err) => {
         console.log(err);

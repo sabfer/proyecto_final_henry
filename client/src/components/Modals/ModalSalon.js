@@ -29,6 +29,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
+  const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
@@ -128,9 +129,9 @@ export default function ModalSalon({ state, setState }) {
   }
 
   function handlePostOrder(e) {
-    dispatch(postOrder(order));
+    dispatch(postOrder(order, token));
     setState(!state);
-    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }));
+    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
     setOrder({
       type: "Salon",
       tableNumber: 0,

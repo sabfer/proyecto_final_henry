@@ -3,7 +3,7 @@ import { Salon, OrderButton, Orders } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
-import UpdateTable from "../../Modals/UpdateTable";
+// import UpdateTable from "../../Modals/UpdateTable";
 import ModalSalon from "../../Modals/ModalSalon";
 import { useDispatch, useSelector } from "react-redux";
 import { getSalonOrders, getMesas } from "../../../actions";
@@ -16,10 +16,10 @@ export default function SalonModule() {
   const dispatch = useDispatch();
   // const salonOrders = useSelector((state) => state.orders.salonOrders);
   const mesas = useSelector((state) => state.mesas);
-  const [updateModal, setUpdateModal] = useState(false);
+  /* const [updateModal, setUpdateModal] = useState(false);
   const [tableDetails, setTableDetails] = useState({
     tableNumber: undefined,
-  });
+  }); */
 
   useEffect(() => {
     dispatch(getSalonOrders({ key: "type", value: "salon" }, token));
@@ -28,13 +28,13 @@ export default function SalonModule() {
     }
   }, [dispatch, mesas, token]); //mesas
 
-  function handleUpdateModal(e, props) {
+  /* function handleUpdateModal(e, props) {
     e.preventDefault();
     setUpdateModal(true);
     setTableDetails({
       tableNumber: props.tableNumber,
     });
-  }
+  } */
 
   return (
     <Salon>
@@ -57,7 +57,7 @@ export default function SalonModule() {
                 tableNumber={mesa.tableNumber}
                 status={mesa.isOccupated}
                 key={mesa.numero}
-                handleUpdate={handleUpdateModal}
+                /* handleUpdate={handleUpdateModal} */
               />
             );
           })}

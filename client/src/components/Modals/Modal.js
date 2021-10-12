@@ -92,12 +92,12 @@ export default function Modal({
     location,
   };
   let leyendaError = {
-    ley1: "ingrese nombre con mas de 2 digitos",
+    ley1: "primer nombre tiene que tener mas de 2 digitos",
     ley2: "ingrese numeros positivos",
     ley3: "ingrese tipo de producto con mas de 3 digitos",
-    ley4: "ingrese usuario con formato de correo sin espacio",
-    ley5: "ingrese un password con mas de 5 digitos sin espacios",
-    ley6: "ingrese una ubicacion con mas de 5 digitos",
+    ley4: "ingrese usuario con formato de correo sin espacio sin acentos",
+    ley5: "ingrese un password con mas de 4 digitos sin espacios",
+    ley6: "primera palabra tiene que tener mas de 3 digitos",
   };
 
   function handleChange(e) {
@@ -154,7 +154,7 @@ export default function Modal({
 
     if (id === 2) {
       if (inpValido.name && inpValido.location) {
-        dispatch(postCommerce(input));
+        dispatch(postCommerce(input, token));
         MySwal.fire({
           title: "¡Comercio creado corectamente!",
           icon: "success",
@@ -219,7 +219,7 @@ export default function Modal({
           payload[key] = input[key];
         }
       }
-      dispatch(updateProduct(payload, idElement));
+      dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
         title: "¡Producto actualizado!",
         icon: "success",
@@ -237,7 +237,7 @@ export default function Modal({
     }
 
     if (id === 8) {
-      dispatch(postCategories(input));
+      dispatch(postCategories(input, token));
       MySwal.fire({
         title: "Categoría creada correctamente!",
         icon: "success",
