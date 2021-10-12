@@ -56,8 +56,8 @@ function Login() {
   }
 
   useEffect(() => {
-    if (token !== null) {
-      // history.push("/home");
+    if (token) {
+      history.push("/home");
       console.log('ya estoy logueado')
     }
   }, [token]);

@@ -27,6 +27,14 @@ export default function Home() {
     }, 1000);
   }, [dispatch]);
 
+  if(!token){
+    return (
+      <>
+        NO TENES ACCESO, FALTA TOKEN 
+      </>
+    )
+  }
+
   return (
     <div>
       <Header>
