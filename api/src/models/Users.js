@@ -6,7 +6,9 @@ const saltRounds = 10;
 const UserSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true },
-  name: { type: String, required: true }
+  name: { type: String, required: true },
+  isAdmin: { type: Boolean, required: true },
+  category: { type: Schema.ObjectId, ref: "UserCategory" },
 });
 
 UserSchema.pre("save", function (next) {

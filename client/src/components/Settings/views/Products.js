@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getProducts, deleteProduct, orderTheProducts } from "../../../actions";
+//------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { getProducts, deleteProduct, orderTheProducts } from "../../../actions";
-import Modal from "../../Modals/Modal";
-import Search from "./Search";
-import FilterProductTypes from "./FilterProductTypes";
-import { Button } from "../../../css";
+
+
 import { Paginado } from "../../../css";
+
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//------------------------------------------\\
+import { Button, Loading } from "../../../css";
 import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
-import { Loading } from "../../../css/SettingStyles";
 import {
   faPenSquare,
   faTrash,
@@ -20,16 +22,20 @@ import {
   faAngleDoubleRight,
   faAngleDoubleLeft
 } from "@fortawesome/free-solid-svg-icons";
-import NumberOfProducts from "./NumberOfProduct";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Modal from "../../Modals/Modal";
+import Search from "../components/Search";
+import FilterProductTypes from "../components/FilterProductTypes";
+import NumberOfProducts from "../components/NumberOfProduct";
 
 
 export default function Productos() {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+
   const products2 = useSelector((state) => state.products)
   console.log(products);
+
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
