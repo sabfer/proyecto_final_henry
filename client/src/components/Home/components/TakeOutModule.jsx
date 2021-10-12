@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 import { TakeOut, OrderButton, Orders, Order } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +8,8 @@ import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
 export default function TakeOutModule() {
+  const token = useSelector((state) => state.userToken);
+
   const [stateModal6, setStateModal6] = useState(false);
   return (
     <TakeOut>

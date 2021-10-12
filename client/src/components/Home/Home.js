@@ -8,16 +8,12 @@ import DeliveryModule from "./components/Delivery";
 import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
-import {
-  changeSettings,
-  getProducts,
-  getCategories,
-} from "../../actions/index";
+import { changeSettings, getProducts, getCategories } from "../../actions/index";
 
 export default function Home() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
-
+  const token = useSelector((state) => state.userToken);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
@@ -25,9 +21,16 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
-    dispatch(getCategories());
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getCategories(token));
+    setTimeout(() => {
+      dispatch(getProducts(token));
+      //dispatch(getCommerces(token));
+    }, 1000);
+  }, [dispatch, token]);
+
+  if (!token) {
+    return <>NO TENES ACCESO, FALTA TOKEN</>;
+  }
 
   return (
     <div>

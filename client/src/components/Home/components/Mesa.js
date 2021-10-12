@@ -7,9 +7,11 @@ export default function Mesas({ tableNumber, status, handleUpdate }) {
   /* const [tableDetails, setTableDetails] = useState({
     tableNumber: undefined,
   }); */
+
+  /* onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })} */
   return (
     <div>
-      <Mesa onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })}>
+      <Mesa>
         <div className={status ? "occuped" : "available"}>
           <FontAwesomeIcon icon={faHamburger} size="4x" />
         </div>

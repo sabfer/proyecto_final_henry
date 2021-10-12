@@ -17,7 +17,7 @@ export const Overlay = styled.div`
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => props.align || 'center'} ;
+  align-items: ${(props) => props.align || "center"};
   width: fit-content;
   padding: 3rem;
   background: #fff;
@@ -54,17 +54,17 @@ export const CategoriasPedidos = styled.div`
       width: 100%;
       select {
         width: 75%;
-        border: solid 1px black;  
+        border: solid 1px black;
         font-weight: bold;
         margin: 15px 0px;
       }
-    } 
-  } 
+    }
+  }
 `;
 
 export const HeaderModal = styled.div`
   display: flex;
-  img{
+  img {
     height: 75px;
   }
 `;
@@ -122,6 +122,7 @@ export const CloseButton = styled.div`
 
 export const FormModal = styled.form`
   display: flex;
+  gap: 0 10px;
 `;
 
 export const SelectModal = styled.div`
@@ -131,7 +132,10 @@ export const SelectModal = styled.div`
 
 export const InputModal = styled.div`
   width: 12%;
-  margin: 0px 0px 0px 10px;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
 `;
 
 export const TablesModal = styled.div`

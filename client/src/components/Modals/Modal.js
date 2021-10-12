@@ -35,6 +35,8 @@ export default function Modal({
   idElement,
   showInSettings,
 }) {
+  const token = useSelector((state) => state.userToken);
+  console.log(token);
   const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
@@ -56,15 +58,16 @@ export default function Modal({
     user: "",
     pass: "",
     location: "",
+    productType: "",
   });
 
   const expresiones = {
-    name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
+    name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    pass: /^[a-zA-Z0-9_\\-]{5,32}$/,
-    productType: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
+    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/,
+    productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
-    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/,
+    location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/,
   };
 
   useEffect(() => {
@@ -90,12 +93,12 @@ export default function Modal({
     location,
   };
   let leyendaError = {
-    ley1: "ingrese nombre con mas de 2 digitos",
+    ley1: "primer nombre tiene que tener mas de 2 digitos",
     ley2: "ingrese numeros positivos",
     ley3: "ingrese tipo de producto con mas de 3 digitos",
-    ley4: "ingrese usuario con formato de correo sin espacio",
-    ley5: "ingrese un password con mas de 5 digitos sin espacios",
-    ley6: "ingrese una ubicacion con mas de 5 digitos",
+    ley4: "ingrese usuario con formato de correo sin espacio sin acentos",
+    ley5: "ingrese un password con mas de 4 digitos sin espacios",
+    ley6: "primera palabra tiene que tener mas de 3 digitos",
   };
 
   function handleChange(e) {
@@ -120,10 +123,17 @@ export default function Modal({
     }
   };
 
+  console.log(inpValido);
+  console.log(input);
+
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
-      if (inpValido.name && inpValido.user && inpValido.pass) {
+      if (
+        inpValido.name === "true" &&
+        inpValido.user === "true" &&
+        inpValido.pass === "true"
+      ) {
         dispatch(input);
         MySwal.fire({
           title: "¡Usuario creado correctamente!",
@@ -151,8 +161,8 @@ export default function Modal({
     }
 
     if (id === 2) {
-      if (inpValido.name && inpValido.location) {
-        dispatch(postCommerce(input));
+      if (inpValido.name === "true" && inpValido.location === "true") {
+        dispatch(postCommerce(input, token));
         MySwal.fire({
           title: "¡Comercio creado corectamente!",
           icon: "success",
@@ -178,8 +188,12 @@ export default function Modal({
     }
 
     if (id === 3) {
-      if (inpValido.name && input.price > 0) {
-        dispatch(postProduct(input));
+      if (
+        inpValido.name === "true" &&
+        inpValido.price === "true" &&
+        inpValido.productType === "true"
+      ) {
+        dispatch(postProduct(input, token));
         MySwal.fire({
           title: "¡Producto creado correctamente!",
           icon: "success",
@@ -188,7 +202,7 @@ export default function Modal({
         }).then((result) => {
           if (result.isConfirmed) {
             if (showInSettings) {
-              dispatch(getProducts());
+              dispatch(getProducts(token));
             }
             setStateModal(!state);
             setInput({
@@ -217,7 +231,7 @@ export default function Modal({
           payload[key] = input[key];
         }
       }
-      dispatch(updateProduct(payload, idElement));
+      dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
         title: "¡Producto actualizado!",
         icon: "success",
@@ -235,7 +249,7 @@ export default function Modal({
     }
 
     if (id === 8) {
-      dispatch(postCategories(input));
+      dispatch(postCategories(input, token));
       MySwal.fire({
         title: "Categoría creada correctamente!",
         icon: "success",
