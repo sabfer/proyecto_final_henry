@@ -143,7 +143,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         mesas: payload,
       };
 
-    case "CHANGE_STATUS":
+    /* case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
         return m.tableNumber === parseInt(payload.tableNumber);
       });
@@ -151,7 +151,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         mesas: [...state.mesas],
-      };
+      }; */
 
     case "GET_PRODUCT_TYPES":
       let sortedArray = payload.sort(function (a, b) {

@@ -1,8 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, getSalonOrders } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
-import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../css/Table";
+import {
+  Overlay,
+  ModalContainer,
+  HeaderModal,
+  CloseButton,
+} from "./ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -20,15 +31,25 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
     : null;
+  
   console.log(ordenTableNumber, "orden table");
   /* const MySwal = withReactContent(Swal);
   
 
   /* function handleChange(e) {
   } */
+
+  
   function handleInput(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
-    product.cantidad = e.target.value;
+    product.amount = e.target.value;
+    ordenTableNumber.totalPrice = ordenTableNumber.products.reduce(function (
+      prev,
+      actual
+    ) {
+      return prev + actual.price * actual.amount;
+    },
+    0);
   }
 
   function modifcarOrden(id, payload) {
@@ -98,7 +119,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       <TableData>
                         <input
                           onChange={(e) => handleInput(e, product._id)}
-                          placeholder={product.cantidad}
+                          placeholder={product.amount}
                         />
                       </TableData>
                       {/* <TableData>
@@ -139,6 +160,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
             onClick={() =>
               modifcarOrden(ordenTableNumber._id, {
                 products: ordenTableNumber.products,
+                totalPrice: ordenTableNumber.totalPrice,
               })
             }
           >
