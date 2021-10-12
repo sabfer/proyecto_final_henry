@@ -157,7 +157,7 @@ export default function ModalSalon({ state, setState }) {
       confirmButtonText: "Sí",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.isConfirmed) { 
         setOrder((prev) => {
           return {
             ...order,

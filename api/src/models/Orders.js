@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    date: { type: Date, default: new Date() },
+    date: { type: String, required: true},
+    hour: { type: String, required: true},
     orderNumber: { type: Number, required: true },
     tableNumber: { type: Number },
+    totalPrice: { type: Number, required: true},
     products: [
       {
         name: { type: String, required: true },
@@ -32,11 +34,5 @@ const OrderSchema = new Schema(
     toObject: { virtuals: true },
   }
 );
-
-OrderSchema.virtual("totalPrice").get(function () {
-  return this.products.reduce(function (prev, actual) {
-    return prev + actual.price * actual.amount;
-  }, 0);
-});
 
 module.exports = mongoose.model("Order", OrderSchema);
