@@ -15,8 +15,6 @@ export default function ModalSalon({ state, setState, title }) {
   const products = useSelector((state) => state.products);
   const [input, setInput] = useState("");
 
-  
-
   function handleClose(e) {
     setState(!state);
   }
@@ -27,6 +25,8 @@ export default function ModalSalon({ state, setState, title }) {
       [e.target.name]: e.target.value,
     });
   }
+
+  
 
   // function handleSubmit(e) {}
 
@@ -44,19 +44,19 @@ export default function ModalSalon({ state, setState, title }) {
             <CloseButton onClick={(e) => handleClose(e)}>
               <FontAwesomeIcon icon={faWindowClose} />
             </CloseButton>
-
             <FilterProductTypes />
-
-            <Select>
+            <Select id="select1">
               {products.map &&
                 products.map((e) => {
                   return <option value="{e.name}">{e.name} </option>;
                 })}
             </Select>
+            <h3>{}</h3>
+            
+            
 
 
-
-            <form>
+            {/* <form>
               <div>
                 <label>entrada1</label>
                 <input
@@ -64,29 +64,8 @@ export default function ModalSalon({ state, setState, title }) {
                   name="entrada1"
                   onChange={(e) => handleChange(e)}
                 />
-              </div>
-              <div>
-                <label>entrada2</label>
-                <input
-                  type="text"
-                  name="entrada2"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div>
-                <label>entrada3</label>
-                <input
-                  type="text"
-                  name="entrada3"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-            </form>
-           
-
-
-
-
+              </div>            
+            </form> */}
             <button type="submit">Aceptar</button>
           </ModalContainer>
         </Overlay>

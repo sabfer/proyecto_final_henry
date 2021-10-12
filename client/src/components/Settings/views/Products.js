@@ -29,6 +29,7 @@ import Modal from "../../Modals/Modal";
 import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
+import ExcelToJson from "../components/ImportExcel";
 
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -102,6 +103,7 @@ export default function Productos() {
     <div>
       <NumberOfProducts />
       <div align="center">
+        <ExcelToJson/>
         <ReactHTMLTableToExcel
           id="botonExportarProd"
           className="btnExport"
