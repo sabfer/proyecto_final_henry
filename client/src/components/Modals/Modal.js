@@ -60,6 +60,7 @@ export default function Modal({
     location: "",
   });
 
+  console.log(inpValido);
   const expresiones = {
     name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -82,6 +83,7 @@ export default function Modal({
     });
   }, [name, price, productType, user, pass, location]);
 
+  console.log(input);
   let labels = { label1, label2, label3, label4 };
   let productValues = {
     name: name,
@@ -92,12 +94,12 @@ export default function Modal({
     location,
   };
   let leyendaError = {
-    ley1: "ingrese nombre con mas de 2 digitos",
+    ley1: "primer nombre tiene que tener mas de 2 digitos",
     ley2: "ingrese numeros positivos",
     ley3: "ingrese tipo de producto con mas de 3 digitos",
-    ley4: "ingrese usuario con formato de correo sin espacio",
-    ley5: "ingrese un password con mas de 5 digitos sin espacios",
-    ley6: "ingrese una ubicacion con mas de 5 digitos",
+    ley4: "ingrese usuario con formato de correo sin espacio sin acentos",
+    ley5: "ingrese un password con mas de 4 digitos sin espacios",
+    ley6: "primera palabra tiene que tener mas de 3 digitos",
   };
 
   function handleChange(e) {

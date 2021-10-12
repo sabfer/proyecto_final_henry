@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { filterProductsType, getProducts } from "../../../actions";
+import { filterProductsType } from "../../../actions";
 import { Select } from "../../../css/Select";
 
 export default function FilterProductTypes() {
