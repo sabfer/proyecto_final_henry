@@ -209,6 +209,7 @@ export function changeStatus(payload) {
 
 // ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
 export function updateOrder(id, payload) {
+  console.log(payload);
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload);
     return dispatch({

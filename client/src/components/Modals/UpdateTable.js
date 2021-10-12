@@ -30,9 +30,10 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
     : null;
+
   function handleInput(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
-    product.cantidad = e.target.value;
+    product.amount = e.target.value;
   }
 
   function modifcarOrden(id, payload) {
