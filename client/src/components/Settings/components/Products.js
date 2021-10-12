@@ -8,6 +8,7 @@ import Modal from "../../Modals/Modal";
 import Search from "./Search";
 import FilterProductTypes from "./FilterProductTypes";
 import { Button } from "../../../css";
+import { Paginado } from "../../../css";
 import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import { Loading } from "../../../css/SettingStyles";
@@ -16,6 +17,8 @@ import {
   faTrash,
   faSortAlphaDown,
   faPlus,
+  faAngleDoubleRight,
+  faAngleDoubleLeft
 } from "@fortawesome/free-solid-svg-icons";
 import NumberOfProducts from "./NumberOfProduct";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
@@ -25,6 +28,7 @@ export default function Productos() {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const products2 = useSelector((state) => state.products)
   console.log(products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
@@ -82,6 +86,33 @@ export default function Productos() {
   function handleOrder(e) {
     setOrder(!order);
     dispatch(orderTheProducts(order));
+  }
+
+  /////////////////////////////////////PAGINACION//////////////////////////////////////
+
+  const productPerPag = 10
+  console.log(products2)
+  var cantPaginas = 0
+  if (products2) {
+    cantPaginas = Math.ceil(products2.length / productPerPag)
+  }
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pagAct, setPagAct] = useState(1)
+  const getFilter = () => {
+    return products2.slice(currentPage, currentPage + productPerPag)
+  }
+  const handlePrev = () => {
+    if (pagAct > 1) {
+      setCurrentPage(currentPage - productPerPag)
+      setPagAct(pagAct - 1)
+    }
+  }
+
+  const handleNext = () => {
+    if (pagAct >= 1 && pagAct < cantPaginas) {
+      setCurrentPage(currentPage + productPerPag)
+      setPagAct(pagAct + 1)
+    }
   }
 
   return (
@@ -152,7 +183,8 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {products.map((el) => {
+              {/* {products.map((el) => { */}
+              {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
@@ -197,7 +229,25 @@ export default function Productos() {
           <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
-
+<Paginado>
+      <FontAwesomeIcon
+        onClick={() => handlePrev()}
+        icon={faAngleDoubleLeft}
+        size="lg"
+        style={{ cursor: "pointer" }}
+      ></FontAwesomeIcon>
+      {/* <button class="btnPag"  id="1"  onClick={handlePrev}><i class="fal fa-chevron-double-right"></i></button>  */}
+      <span>  </span>
+      <span>{pagAct} de {cantPaginas}</span>
+      {/* <button class="btnPag" onClick={handleNext}>next</button> */}
+      <span>  </span>
+      <FontAwesomeIcon
+        onClick={() => handleNext()}
+        icon={faAngleDoubleRight}
+        size="lg"
+        style={{ cursor: "pointer" }}
+      ></FontAwesomeIcon>
+</Paginado>
       <Modal
         idElement={inputModalProduct._id}
         id={7}

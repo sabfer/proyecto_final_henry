@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Paginado = styled.div`
+  text-align:center;
+  margin-top:10px;
+`;
+
 export const Body = styled.section`
   width: 100%;
   height: 100%;
