@@ -8,24 +8,36 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //------------------------------------------\\
 import { Button, Loading } from "../../../css";
-import { SearchBarContainer, AjustesDerechaTop } from "../../../css/SettingStyles";
+import {
+  SearchBarContainer,
+  AjustesDerechaTop,
+  ExportExcel,
+} from "../../../css/SettingStyles";
+import Modal from "../../Modals/Modal";
+import Search from "../components/Search";
+import FilterProductTypes from "../components/FilterProductTypes";
+import NumberOfProducts from "../components/NumberOfProduct";
+import { Paginado } from "../../../css";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import {
   faPenSquare,
   faTrash,
   faSortAlphaDown,
   faPlus,
+  faSyncAlt,
+  faFileExcel,
+  faAngleDoubleRight,
+  faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Modals/Modal";
-import Search from "../components/Search";
-import FilterProductTypes from "../components/FilterProductTypes";
-import NumberOfProducts from "../components/NumberOfProduct";
-
 
 export default function Productos() {
-  const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+
+  const token = useSelector((state) => state.userToken);
   const products = useSelector((state) => state.products);
+  const categories = useSelector((state) => state.productTypes);
+  const products2 = useSelector((state) => state.products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -38,9 +50,9 @@ export default function Productos() {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getProducts(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   function handleDelete(e) {
     MySwal.fire({
@@ -56,7 +68,7 @@ export default function Productos() {
       if (result.isConfirmed) {
         dispatch(deleteProduct(e));
         setTimeout(() => {
-          dispatch(getProducts());
+          dispatch(getProducts(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -84,20 +96,37 @@ export default function Productos() {
     dispatch(orderTheProducts(order));
   }
 
+  function handleButton(e) {
+    dispatch(getProducts(token));
+  }
+
+  const productPerPag = 10;
+  console.log(products2);
+  var cantPaginas = 0;
+  if (products2) {
+    cantPaginas = Math.ceil(products2.length / productPerPag);
+  }
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pagAct, setPagAct] = useState(1);
+  const getFilter = () => {
+    return products2.slice(currentPage, currentPage + productPerPag);
+  };
+  const handlePrev = () => {
+    if (pagAct > 1) {
+      setCurrentPage(currentPage - productPerPag);
+      setPagAct(pagAct - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (pagAct >= 1 && pagAct < cantPaginas) {
+      setCurrentPage(currentPage + productPerPag);
+      setPagAct(pagAct + 1);
+    }
+  };
+
   return (
     <div>
-      <NumberOfProducts />
-      <div align="center">
-        <ReactHTMLTableToExcel
-          id="botonExportarProd"
-          className="btnExport"
-          table="productsTable"
-          filename="Productos_cargados_en_el_sistema"
-          sheet="Productos"
-          buttonText="Export to Excel"
-        />
-      </div>
-      <table id="table-to-xls"></table>
       <AjustesDerechaTop>
         <h1>Productos</h1>
         <Button
@@ -114,6 +143,19 @@ export default function Productos() {
       <SearchBarContainer>
         <Search />
         <FilterProductTypes />
+        <Button
+          width="12rem"
+          padding="0.8rem"
+          justify="space-between"
+          buttonColor="rgb(21, 151, 67)"
+          type="button"
+          onClick={(e) => {
+            handleButton(e);
+          }}
+        >
+          Restablecer
+          <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
+        </Button>
         <Modal
           id={3}
           state={newProductModal}
@@ -125,8 +167,10 @@ export default function Productos() {
           label4="Tipo de Producto"
           modalContainerBox={true}
           showInSettings={true}
+          categories={categories}
         />
       </SearchBarContainer>
+
       {Array.isArray(products) ? (
         <div>
           <Table id="productsTable">
@@ -136,10 +180,8 @@ export default function Productos() {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
-
                       onClick={(e) => handleOrder(e)}
                       color={order ? "#FF846A" : "#A2DFFF"}
-
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
@@ -152,7 +194,8 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {products.map((el) => {
+              {/* {products.map((el) => { */}
+              {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
@@ -198,6 +241,43 @@ export default function Productos() {
         </Loading>
       )}
 
+      <ExportExcel>
+        <NumberOfProducts />
+        <Button width="2.5rem" buttonColor="rgb(14, 116, 59)">
+          <FontAwesomeIcon icon={faFileExcel} size="lg">
+            <ReactHTMLTableToExcel
+              id="botonExportarProd"
+              table="productsTable"
+              className="Excel"
+              filename="Productos_cargados_en_el_sistema"
+              sheet="Productos"
+              buttonText=""
+            />
+          </FontAwesomeIcon>
+        </Button>
+      </ExportExcel>
+
+      <Paginado>
+        <FontAwesomeIcon
+          onClick={() => handlePrev()}
+          icon={faAngleDoubleLeft}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+        {/* <button class="btnPag"  id="1"  onClick={handlePrev}><i class="fal fa-chevron-double-right"></i></button>  */}
+        <span> </span>
+        <span>
+          {pagAct} de {cantPaginas}
+        </span>
+        {/* <button class="btnPag" onClick={handleNext}>next</button> */}
+        <span> </span>
+        <FontAwesomeIcon
+          onClick={() => handleNext()}
+          icon={faAngleDoubleRight}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+      </Paginado>
       <Modal
         idElement={inputModalProduct._id}
         id={7}

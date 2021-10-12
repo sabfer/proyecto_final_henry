@@ -1,14 +1,17 @@
 import {} from "../actions/index";
 
 const initialState = {
-  singUpErrors: undefined,
+  signUpData: undefined,
+  userToken: undefined,
   products: undefined,
+  productTypes: undefined,
   productsCopy: undefined,
   users: undefined,
   commerces: undefined,
   settings: {
-    show: "",
+    show: "generales",
   },
+  mesas: undefined,
   orders: {
     salonOrders: undefined,
     takeAwayOrders: undefined,
@@ -19,11 +22,17 @@ const initialState = {
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "REGISTER_USER":
+      console.log("-------------signUpData: payload = ", payload);
       return {
         ...state,
-        singUpErrors: payload,
+        signUpData: payload,
       };
-
+    case "LOGIN_USER":
+      console.log("reducer LOGIN_USER, payload", payload);
+      return {
+        ...state,
+        userToken: payload.token,
+      };
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
@@ -119,7 +128,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
-    case "GET_SALON_ORDERS": {
+    case "GET_SALON_ORDERS":
       return {
         ...state,
         orders: {
@@ -127,7 +136,51 @@ const rootReducer = (state = initialState, { type, payload }) => {
           salonOrders: payload,
         },
       };
-    }
+
+    case "GET_MESAS":
+      return {
+        ...state,
+        mesas: payload,
+      };
+
+    /* case "CHANGE_STATUS":
+      const mesa = state.mesas.find((m) => {
+        return m.tableNumber === parseInt(payload.tableNumber);
+      });
+      mesa.isOccupated = payload.isOccupated;
+      return {
+        ...state,
+        mesas: [...state.mesas],
+      }; */
+
+    case "GET_PRODUCT_TYPES":
+      let sortedArray = payload.sort(function (a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (b.name > a.name) {
+          return -1;
+        }
+        return 0;
+      });
+      console.log(sortedArray);
+      return {
+        ...state,
+        productTypes: sortedArray,
+      };
+    case "POST_ORDER":
+      if (state.orders.salonOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            salonOrders: [...state.orders.salonOrders, payload],
+          },
+        };
+      } else {
+        return { ...state, orders: { ...state.orders, salonOrders: [payload] } };
+      }
+
     default:
       return state;
   }

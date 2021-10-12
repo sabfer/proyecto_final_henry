@@ -1,10 +1,8 @@
 import axios from "axios";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
-// const MySwal = withReactContent(Swal);
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
+  console.log("estoy en registerUser, con payload: ", payload);
   return function (dispatch) {
     axios
       .post("http://localhost:3001/users/register", payload)
@@ -16,12 +14,34 @@ export function registerUser(payload) {
       });
   };
 }
-
-// ---------- OBTENER PRODUCTOS ---------- \\
-export function getProducts(payload) {
+export function loginUser(payload) {
+  console.log("estoy en loginUser, con payload: ", payload);
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/products", payload)
+      .post("http://localhost:3001/users/login", payload)
+      .then((data) => {
+        console.log(
+          "estoy en then para hacer un return dispatch de LOGIN_USER, con payload: ",
+          payload
+        );
+        return dispatch({ type: "LOGIN_USER", payload: data.data });
+      })
+      .catch((err) => {
+        console.log("estoy en catch de loginUser con err: ", err);
+      });
+  };
+}
+
+// ---------- OBTENER PRODUCTOS ---------- \\
+export function getProducts(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/products", auth)
       .then((data) => {
         return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
       })
@@ -47,29 +67,6 @@ export function getNameProducts(payload) {
   };
 }
 
-// export function getNameProducts(payload) {
-//   return async function (dispatch) {
-//     try {
-//       var data = await axios.get("http://localhost:3001/products?name=" + payload);
-//       if (data.data.succes) {
-//         return dispatch({
-//           type: "GET_NAME_PRODUCT",
-//           payload: data.data.payload,
-//         });
-//       } else {
-//         MySwal.fire({
-//           icon: "error",
-//           title: "El producto no existe",
-//           showConfirmButton: false,
-//           timer: 1500,
-//         });
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
-
 // ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
 export function filterProductsType(payload) {
   return {
@@ -79,10 +76,15 @@ export function filterProductsType(payload) {
 }
 
 // ---------- CREACIÓN DE PRODUCTO ---------- \\
-export function postProduct(payload) {
+export function postProduct(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
     var data = await axios
-      .post("http://localhost:3001/products/add", payload)
+      .post("http://localhost:3001/products/add", payload, auth)
       .then((data) => {
         return data;
       });
@@ -91,9 +93,14 @@ export function postProduct(payload) {
 }
 
 // ---------- ELIMINAR PRODUCTO ---------- \\
-export function deleteProduct(payload) {
+export function deleteProduct(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/products/${payload}`);
+    await axios.delete(`http://localhost:3001/products/${payload}`, auth);
     return dispatch({
       type: "DELETE_PRODUCT",
     });
@@ -101,10 +108,15 @@ export function deleteProduct(payload) {
 }
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
-export function updateProduct(payload, id) {
+export function updateProduct(payload, id, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.put(`http://localhost:3001/products/${id}`, payload);
-    await axios.get("http://localhost:3001/products").then((data) => {
+    await axios.put(`http://localhost:3001/products/${id}`, payload, auth);
+    await axios.get("http://localhost:3001/products", auth).then((data) => {
       return dispatch({
         type: "PUT_PRODUCT",
         payload: data.data.payload,
@@ -114,31 +126,47 @@ export function updateProduct(payload, id) {
 }
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
-export function postCommerce(payload) {
-  console.log(payload, "actions");
+export function postCommerce(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload);
+    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
     return data;
   };
 }
 
-export function getCommerces() {
+export function getCommerces(token) {
+  console.log("el token en getCommerces es: ", token);
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/commerce")
+      // .get("http://localhost:3001/commerce?token=" + token)
+      .get("http://localhost:3001/commerce", auth)
       .then((data) => {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log(err);
+        console.log("estoy en el error del catch de getCommerces, con err: ", err);
       });
   };
 }
 
 // ---------- ELIMINAR COMERCIO ---------- \\
-export function deleteCommerce(payload) {
+export function deleteCommerce(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/commerce/${payload}`);
+    await axios.delete(`http://localhost:3001/commerce/${payload}`, auth);
     return dispatch({
       type: "DELETE_COMMERCE",
     });
@@ -146,9 +174,14 @@ export function deleteCommerce(payload) {
 }
 
 // ---------- MODIFICAR COMERCIO ---------- \\
-export function updateCommerce(payload, id) {
+export function updateCommerce(payload, id, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.put(`http://localhost:3001/commerce/${id}`, payload);
+    await axios.put(`http://localhost:3001/commerce/${id}`, payload, auth);
     return dispatch({
       type: "PUT_COMMERCE",
     });
@@ -156,10 +189,15 @@ export function updateCommerce(payload, id) {
 }
 
 // ---------- OBTENER USUARIOS ---------- \\
-export function getUsers(payload) {
+export function getUsers(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/users", payload)
+      .get("http://localhost:3001/users", payload, auth)
       .then((data) => {
         return dispatch({ type: "GET_USERS", payload: data.data.payload });
       })
@@ -170,9 +208,14 @@ export function getUsers(payload) {
 }
 
 // ---------- ELIMINAR USUARIOS ---------- \\
-export function deleteUser(payload) {
+export function deleteUser(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/users/${payload}`);
+    await axios.delete(`http://localhost:3001/users/${payload}`, auth);
     return dispatch({
       type: "DELETE_USER",
     });
@@ -180,9 +223,14 @@ export function deleteUser(payload) {
 }
 
 // ---------- MODIFICAR USUARIOS ---------- \\
-export function updateUsers(payload, id) {
+export function updateUsers(payload, id, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return async function (dispatch) {
-    await axios.put(`http://localhost:3001/users/${id}`, payload);
+    await axios.put(`http://localhost:3001/users/${id}`, payload, auth);
     return dispatch({
       type: "PUT_USER",
     });
@@ -197,15 +245,125 @@ export function changeSettings(payload) {
 }
 
 // ---------- OBTENER ORDENES ---------- \\
-export function getSalonOrders({ key, value }) {
+export function getSalonOrders({ key, value }, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`)
+      .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`, auth)
       .then((data) => {
-        return dispatch({ type: "GET_SALON_ORDERS", payload: data.data.payload });
+        return dispatch({
+          type: "GET_SALON_ORDERS",
+          payload: data.data.payload,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+}
+
+export function getMesas(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios.get("http://localhost:3001/mesas", auth).then((data) => {
+      return dispatch({ type: "GET_MESAS", payload: data.data.payload });
+    });
+  };
+}
+
+export function changeStatus(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .put(
+        `http://localhost:3001/mesas/${payload.tableNumber}`,
+        { isOccupated: payload.isOccupated },
+        auth
+      )
+      .then((data) => {
+        return dispatch(getMesas(token));
+      });
+  };
+}
+
+// ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
+export function updateOrder(id, payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
+    return dispatch({
+      type: "UPDATE_ORDER",
+    });
+  };
+}
+
+// OBTENER CATEGORÍAS DE PRODUCTOS \\
+export function getCategories(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/productTypes", auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_PRODUCT_TYPES",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+// CREAR CATEGORÍAS DE PRODUCTOS \\
+export function postCategories(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios
+      .post("http://localhost:3001/productTypes/new", payload, auth)
+      .then((data) => {
+        return data;
+      });
+    return data;
+  };
+}
+// ---------- CREACIÓN DE ORDEN ---------- \\
+export function postOrder(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  console.log(payload);
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload, auth);
+    return dispatch({
+      type: "POST_ORDER",
+      payload: data.data.payload,
+    });
   };
 }

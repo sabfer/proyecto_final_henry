@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Paginado = styled.div`
+  text-align:center;
+  margin-top:10px;
+`;
+
 export const Body = styled.section`
   width: 100%;
   height: 100%;
@@ -50,6 +55,12 @@ export const Button = styled.button`
   border-radius: 0.6rem;
   cursor: pointer;
   font-weight: 600;
+  .Excel {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+  }
 `;
 
 export const Title = styled.h1`
