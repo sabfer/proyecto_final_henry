@@ -60,7 +60,6 @@ export default function Modal({
     location: "",
   });
 
-  console.log(inpValido);
   const expresiones = {
     name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -83,7 +82,6 @@ export default function Modal({
     });
   }, [name, price, productType, user, pass, location]);
 
-  console.log(input);
   let labels = { label1, label2, label3, label4 };
   let productValues = {
     name: name,
@@ -156,7 +154,7 @@ export default function Modal({
 
     if (id === 2) {
       if (inpValido.name && inpValido.location) {
-        dispatch(postCommerce(input));
+        dispatch(postCommerce(input, token));
         MySwal.fire({
           title: "¡Comercio creado corectamente!",
           icon: "success",
@@ -221,7 +219,7 @@ export default function Modal({
           payload[key] = input[key];
         }
       }
-      dispatch(updateProduct(payload, idElement));
+      dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
         title: "¡Producto actualizado!",
         icon: "success",
@@ -239,7 +237,7 @@ export default function Modal({
     }
 
     if (id === 8) {
-      dispatch(postCategories(input));
+      dispatch(postCategories(input, token));
       MySwal.fire({
         title: "Categoría creada correctamente!",
         icon: "success",
