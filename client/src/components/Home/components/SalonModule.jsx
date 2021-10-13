@@ -57,7 +57,7 @@ export default function SalonModule() {
           mesas.map((mesa) => {
             return (
               <Mesas
-                tableNumber={mesa.numero}
+                tableNumber={mesa.tableNumber}
                 status={mesa.isOccupated}
                 key={mesa.numero}
                 handleUpdate={handleUpdateModal}
