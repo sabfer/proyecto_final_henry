@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Button } from "../../css";
 import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
 import {
   postProduct,
@@ -276,7 +277,7 @@ export default function Modal({
   return (
     <div>
       <Overlay display={state ? "flex" : "none"}>
-        <ModalContainer modalContainerBox={modalContainerBox}>
+        <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
           <HeaderModal>
             <h2>{title}</h2>
           </HeaderModal>
@@ -294,9 +295,15 @@ export default function Modal({
             validacion,
             categories
           )}
-          <button type="submit" onClick={(e) => handleSubmit(e)}>
+          <Button
+            width="100%"
+            height="2.5rem"
+            margin="1rem 0 0 0"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+          >
             Aceptar
-          </button>
+          </Button>
         </ModalContainer>
       </Overlay>
     </div>

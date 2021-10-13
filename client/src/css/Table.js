@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -44,8 +44,25 @@ export const TableData = styled.td`
   padding: 8px;
   text-align: ${(props) => props.align || "left"};
   border: 1px solid black;
-  .options {
-    display: flex;
-    justify-content: ${(props) => props.justify || "space-between"};
-  }
+  ${(props) =>
+    props.justify === "center" &&
+    css`
+      .options {
+        display: flex;
+        justify-content: center;
+      }
+    `};
+  ${(props) =>
+    props.justify === "space-between" &&
+    css`
+      .options {
+        display: flex;
+        justify-content: space-between;
+      }
+    `};
+`;
+
+export const Options = styled.div`
+  display: flex;
+  justify-content: ${(props) => props.justify};
 `;

@@ -24,6 +24,7 @@ import {
   TableData,
   TableHd,
   TableRow,
+  Options,
 } from "../../../css/Table";
 import {
   faPenSquare,
@@ -207,7 +208,7 @@ export default function Productos() {
                     <TableData>{el.productType}</TableData>
                     <TableData>$ {el.price}</TableData>
                     <TableData>
-                      <div className="options">
+                      <Options justify="space-between">
                         <Button
                           onClick={(e) =>
                             handleClick(e, {
@@ -231,7 +232,7 @@ export default function Productos() {
                         >
                           <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                         </Button>
-                      </div>
+                      </Options>
                     </TableData>
                   </TableRow>
                 );
@@ -242,17 +243,13 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
 
       <ExportExcel>
         <NumberOfProducts />
-        <Button width="2.5rem" buttonColor="rgb(14, 116, 59)">
+        <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel
               id="botonExportarProd"
