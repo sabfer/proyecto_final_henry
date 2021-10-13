@@ -5,7 +5,10 @@ orderController.addOrder = async (req, res, next) => {
   try {
     let orders = await Orders.find();
     let ordersN = orders.length;
-    const newOrder = await new Orders({...req.body, orderNumber: ordersN + 1});
+    const newOrder = await new Orders({
+      ...req.body,
+      orderNumber: ordersN + 1,
+    });
     await newOrder.save();
     res.json({
       succes: true,
@@ -51,7 +54,7 @@ orderController.findActiveOrders = async (req, res, next) => {
     const orders = await Orders.find({}, { __v: 0 });
     ordersActives = orders.filter((order) => order.estado !== "Finalizada");
     if (type) {
-      ordersByType = orders.filter((order) => {
+      ordersByType = ordersActives.filter((order) => {
         return order.type
           .toLocaleLowerCase()
           .includes(type.toLocaleLowerCase());
