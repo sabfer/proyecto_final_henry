@@ -49,13 +49,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       let arrayOrderName =
         payload === true
           ? products.sort(function (a, b) {
-              if (a.name > b.name) return 1;
-              if (b.name > a.name) return -1;
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return 1;
+              if (bName > aName) return -1;
               return 0;
             })
           : products.sort(function (a, b) {
-              if (a.name > b.name) return -1;
-              if (b.name < a.name) return 1;
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return -1;
+              if (bName < aName) return 1;
               return 0;
             });
       return {
@@ -64,7 +68,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter((e) => e.productType === payload);
+      const array = [...state.productsCopy].filter(
+        (e) => e.productType === payload
+      );
       return {
         ...state,
         products: array,
@@ -177,7 +183,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
           },
         };
       } else {
-        return { ...state, orders: { ...state.orders, salonOrders: [payload] } };
+        return {
+          ...state,
+          orders: { ...state.orders, salonOrders: [payload] },
+        };
       }
 
     default:
