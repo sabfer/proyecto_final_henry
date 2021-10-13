@@ -18,7 +18,13 @@ import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
 import { Paginado } from "../../../css";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../../css/Table";
 import {
   faPenSquare,
   faTrash,
@@ -237,12 +243,17 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
         </Loading>
       )}
 
+
       <ExportExcel>
-        <NumberOfProducts />
+      <NumberOfProducts />
         <Button width="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel
@@ -251,7 +262,6 @@ export default function Productos() {
               className="Excel"
               filename="Productos_cargados_en_el_sistema"
               sheet="Productos"
-              buttonText=""
             />
           </FontAwesomeIcon>
         </Button>

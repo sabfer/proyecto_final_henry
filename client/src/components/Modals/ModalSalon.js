@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +24,13 @@ import {
   InputAmount,
 } from "./ModalStyles";
 import { Select } from "../../css/Select";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
@@ -46,11 +52,22 @@ export default function ModalSalon({ state, setState }) {
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
-    date: moment().locale("es").format("DD/MM/YYYY"),
-    hour: moment().format("h:mm:ss a"),
+    date: "",
+    hour: "",
+    // date: moment().locale("es").format("DD/MM/YYYY"),
+    // hour: moment().format("h:mm:ss a"),
     /*clientId: 112412,
     userId: 1224125, */
   });
+
+  useEffect(() => {
+    setOrder({
+      ...order,
+      date: moment().locale("es").format("DD/MM/YYYY"),
+      hour: moment().format("h:mm:ss a"),
+    });
+    
+  },[])
 
   function handleClose(e) {
     setState(!state);
@@ -131,12 +148,16 @@ export default function ModalSalon({ state, setState }) {
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
     setState(!state);
-    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
+    dispatch(
+      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
+    );
     setOrder({
       type: "Salon",
-      tableNumber: 0,
+      tableNumber: "",
       products: [],
       estado: "En progreso",
+      date: "",
+      hour: "",
     });
     /* setTimeout(function () {
       dispatch(getSalonOrders({key:'type' , value: "Salon"}));
@@ -206,6 +227,7 @@ export default function ModalSalon({ state, setState }) {
             <FormModal onSubmit={(e) => handleSubmit(e)}>
               <InputModal>
                 <input
+                  value={order.tableNumber}
                   type="number"
                   name="tableNumber"
                   onChange={(e) => handleChange(e)}
@@ -281,7 +303,9 @@ export default function ModalSalon({ state, setState }) {
                                   height="2rem"
                                   buttonColor="rgba(255, 0, 0, 1)"
                                 >
-                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
                                 </Button>
                               </div>
                             </TableData>
