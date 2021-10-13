@@ -180,6 +180,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return { ...state, orders: { ...state.orders, salonOrders: [payload] } };
       }
 
+    case "DELETE_TOKEN":
+      return {
+        state: { userToken: null },
+      };
+
     default:
       return state;
   }

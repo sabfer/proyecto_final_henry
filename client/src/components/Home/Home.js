@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { BodyTop } from "./HomeStyles";
 import { OptionsBar, Body, Header, Title, Button, StyledLink } from "../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +9,15 @@ import DeliveryModule from "./components/Delivery";
 import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
-import { changeSettings, getProducts, getCategories } from "../../actions/index";
+import {
+  changeSettings,
+  getProducts,
+  getCategories,
+  deleteToken,
+} from "../../actions/index";
 
 export default function Home() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
   const token = useSelector((state) => state.userToken);
@@ -28,6 +35,11 @@ export default function Home() {
     }, 1000);
   }, [dispatch, token]);
 
+  function handleLogOut() {
+    dispatch(deleteToken());
+    history.push("/");
+  }
+
   if (!token) {
     return <>NO TENES ACCESO, FALTA TOKEN</>;
   }
@@ -36,7 +48,9 @@ export default function Home() {
     <div>
       <Header>
         <Title>Bienvenido "nombre"</Title>
-        <Button buttonColor="rgb(255, 0, 0)">Salir</Button>
+        <Button buttonColor="rgb(255, 0, 0)" onClick={handleLogOut}>
+          Salir
+        </Button>
       </Header>
       <OptionsBar>
         <Button

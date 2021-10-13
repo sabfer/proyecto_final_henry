@@ -20,7 +20,6 @@ export default function Settings() {
   const settings = useSelector((state) => state.settings);
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
-  console.log({settings});
 
   useEffect(() => {
     setTimeout(() => {

@@ -66,7 +66,7 @@ export default function Productos() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
+        dispatch(deleteProduct(e, token));
         setTimeout(() => {
           dispatch(getProducts(token));
         }, 300);
@@ -101,7 +101,6 @@ export default function Productos() {
   }
 
   const productPerPag = 10;
-  console.log(products2);
   var cantPaginas = 0;
   if (products2) {
     cantPaginas = Math.ceil(products2.length / productPerPag);
@@ -264,12 +263,10 @@ export default function Productos() {
           size="lg"
           style={{ cursor: "pointer" }}
         ></FontAwesomeIcon>
-        {/* <button class="btnPag"  id="1"  onClick={handlePrev}><i class="fal fa-chevron-double-right"></i></button>  */}
         <span> </span>
         <span>
           {pagAct} de {cantPaginas}
         </span>
-        {/* <button class="btnPag" onClick={handleNext}>next</button> */}
         <span> </span>
         <FontAwesomeIcon
           onClick={() => handleNext()}
@@ -278,6 +275,7 @@ export default function Productos() {
           style={{ cursor: "pointer" }}
         ></FontAwesomeIcon>
       </Paginado>
+
       <Modal
         idElement={inputModalProduct._id}
         id={7}

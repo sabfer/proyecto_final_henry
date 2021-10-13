@@ -36,7 +36,6 @@ export default function Modal({
   showInSettings,
 }) {
   const token = useSelector((state) => state.userToken);
-  console.log(token);
   const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
@@ -122,9 +121,6 @@ export default function Modal({
         });
     }
   };
-
-  console.log(inpValido);
-  console.log(input);
 
   function handleSubmit(e) {
     // e.preventDefault();
