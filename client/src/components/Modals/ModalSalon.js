@@ -48,16 +48,13 @@ export default function ModalSalon({ state, setState }) {
 
   const [order, setOrder] = useState({
     type: "Salon",
-    tableNumber: 0,
+    tableNumber: "",
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
     date: "",
     hour: "",
-    // date: moment().locale("es").format("DD/MM/YYYY"),
-    // hour: moment().format("h:mm:ss a"),
-    /*clientId: 112412,
-    userId: 1224125, */
+    /*userId: 1224125, */
   });
 
   useEffect(() => {
@@ -66,16 +63,18 @@ export default function ModalSalon({ state, setState }) {
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
     });
-    
-  },[])
+  }, [state]);
 
   function handleClose(e) {
     setState(!state);
     setOrder({
+      ...order,
       type: "Salon",
       tableNumber: undefined,
       products: [],
       estado: "Pendiente",
+      date: undefined,
+      hour: undefined,
     });
   }
 

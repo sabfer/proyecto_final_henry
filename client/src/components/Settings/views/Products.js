@@ -72,7 +72,7 @@ export default function Productos() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
+        dispatch(deleteProduct(e, token));
         setTimeout(() => {
           dispatch(getProducts(token));
         }, 300);
