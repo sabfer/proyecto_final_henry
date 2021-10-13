@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
-import { Mesa } from "../HomeStyles";
+import { Mesa } from "../../../css/HomeStyles";
 
 export default function Mesas({ tableNumber, status, handleUpdate }) {
   /* const [tableDetails, setTableDetails] = useState({
