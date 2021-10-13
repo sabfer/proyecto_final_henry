@@ -16,7 +16,7 @@ export const OpcionesIzquierda = styled.div`
   width: 100%;
   height: 2.4rem;
   margin: 1.5rem 0;
-  padding: 1rem;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   transition: all ease 200ms;
@@ -26,7 +26,7 @@ export const OpcionesIzquierda = styled.div`
     transform: scale(1.05);
   }
   p {
-    margin-left: 1rem;
+    margin: 0 0 0 1rem;
   }
 `;
 

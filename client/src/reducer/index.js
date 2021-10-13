@@ -190,6 +190,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         };
       }
 
+    case "DELETE_TOKEN":
+      return {
+        state: { userToken: null },
+      };
+
     default:
       return state;
   }
