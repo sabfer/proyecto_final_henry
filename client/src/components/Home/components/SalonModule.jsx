@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Salon, OrderButton, Orders } from "../HomeStyles";
+import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
+import { Button } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
@@ -39,18 +40,24 @@ export default function SalonModule() {
 
   return (
     <Salon>
-      <OrderButton
-        onClick={() => setStateModal(!stateModal)}
-        width="10rem"
-        justify="space-between"
-        padding="0.625rem"
-      >
-        <FontAwesomeIcon icon={faPlus} size="lg" />
-        Crear pedido
-      </OrderButton>
-
+      <ModuleTop>
+        <h3>Salón</h3>
+        <Button
+          onClick={() => setStateModal(!stateModal)}
+          width="10rem"
+          height="2.5rem"
+          alignSelf="flex-end"
+          justify="space-between"
+          padding="0.6rem"
+          buttonColor="rgba(0, 41, 107, 1)"
+        >
+          Crear pedido
+          <FontAwesomeIcon icon={faPlus} size="lg" />
+        </Button>
+      </ModuleTop>
       <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
-      <Orders ordersColumns="repeat(10, 1fr)">
+<OrdersContainer>      
+<Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
         {mesas &&
           mesas.map((mesa) => {
             return (
@@ -74,6 +81,7 @@ export default function SalonModule() {
            3 se edita la orden por el numero de id1 
          */}
       </Orders>
+          </OrdersContainer>
     </Salon>
   );
 }

@@ -373,3 +373,11 @@ export function postOrder(payload, token) {
     });
   };
 }
+
+export function deleteToken() {
+  return async function (dispatch) {
+    return dispatch({
+      type: "DELETE_TOKEN",
+    });
+  };
+}
