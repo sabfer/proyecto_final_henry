@@ -10,6 +10,7 @@ import TakeOutModule from "./components/TakeOutModule";
 import SalonModule from "./components/SalonModule";
 import Modal from "../Modals/Modal";
 import {
+  getUserId,
   changeSettings,
   getProducts,
   getCategories,
@@ -21,6 +22,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
   const token = useSelector((state) => state.userToken);
+  const id = useSelector((state) => state.userId);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
@@ -43,6 +45,15 @@ export default function Home() {
   if (!token) {
     return <>NO TENES ACCESO, FALTA TOKEN</>;
   }
+
+  // console.log("token: ", token)
+  if(token && !id){
+    console.log("id: ", id)
+    console.log('------no hay id, debo sacarlo del token')
+    dispatch(getUserId(token));
+  }
+  console.log("id: ", id)
+  
 
   return (
     <div>

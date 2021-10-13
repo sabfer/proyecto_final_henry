@@ -3,6 +3,8 @@ import {} from "../actions/index";
 const initialState = {
   signUpData: undefined,
   userToken: undefined,
+  userId: undefined,
+  // userName: undefined,
   products: undefined,
   productTypes: undefined,
   productsCopy: undefined,
@@ -28,11 +30,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         signUpData: payload,
       };
     case "LOGIN_USER":
-      console.log("reducer LOGIN_USER, payload", payload);
+      console.log("reducer LOGIN_USER, payload: ", payload);
       return {
         ...state,
         userToken: payload.token,
+        userId: payload.id,
       };
+
+    case "GET_USER_ID":
+      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
+      return{
+        ...state,
+        userId: payload,
+      };
+
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
@@ -191,7 +202,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "DELETE_TOKEN":
       return {
-        state: { userToken: null },
+        userToken: null,
       };
 
     default:

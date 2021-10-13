@@ -207,6 +207,31 @@ export function getUsers(payload, token) {
   };
 }
 
+// ---------- OBTENER ID USUARIO PARA STORE ---------- \\
+export function getUserId(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  }
+  // console.log('estoy en actions funcion getUserId');
+  return async function (dispatch) {
+    axios
+      .get(`http://localhost:3001/getId`, auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_USER_ID",
+          payload: data.data,
+        });
+      })
+      .catch((err) => {
+        console.log('estoy en catch de axios de getUserId con err: ', err);
+      });
+  }
+}
+
+
+
 // ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload, token) {
   let auth = {
