@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    date: { type: Date, default: new Date() },
+    date: { type: String, required: true },
+    hour: { type: String, required: true },
     orderNumber: { type: Number, required: true },
     tableNumber: { type: Number },
     products: [
@@ -26,17 +27,12 @@ const OrderSchema = new Schema(
       enum: ["Pendiente", "En progreso", "Finalizada"],
       required: true,
     },
+    totalPrice: { type: Number, required: true },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
-
-OrderSchema.virtual("totalPrice").get(function () {
-  return this.products.reduce(function (prev, actual) {
-    return prev + actual.price * actual.amount;
-  }, 0);
-});
 
 module.exports = mongoose.model("Order", OrderSchema);
