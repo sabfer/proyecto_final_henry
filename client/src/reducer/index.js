@@ -167,6 +167,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
+      
     case "POST_ORDER":
       if (state.orders.salonOrders) {
         return {
