@@ -18,7 +18,13 @@ import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
 import { Paginado } from "../../../css";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../../css/Table";
 import {
   faPenSquare,
   faTrash,
@@ -66,7 +72,7 @@ export default function Productos() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
+        dispatch(deleteProduct(e, token));
         setTimeout(() => {
           dispatch(getProducts(token));
         }, 300);
@@ -237,7 +243,11 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
         </Loading>
       )}
 

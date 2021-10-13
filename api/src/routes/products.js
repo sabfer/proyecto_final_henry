@@ -10,7 +10,7 @@ const {
 } = require("../controllers/products.js");
 
 const auth = require("../controllers/auth.js");
-router.use(auth.secret);    // todas las rutas autenticadas
+router.use(auth.secret); // todas las rutas autenticadas
 
 router.get("/", async function (req, res) {
   const { name } = req.query;
@@ -75,12 +75,13 @@ router.post("/add", async function (req, res) {
         payload: null,
       });
     }
+  } else {
+    res.json({
+      succes: false,
+      msg: "Campos requeridos incompletos",
+      payload: null,
+    });
   }
-  res.json({
-    succes: false,
-    msg: "Campos requeridos incompletos",
-    payload: null,
-  });
 });
 
 router.delete("/:id", async function (req, res) {
