@@ -13,6 +13,11 @@ import {
   AjustesDerechaTop,
   ExportExcel,
 } from "../../../css/SettingStyles";
+import Modal from "../../Modals/Modal";
+import Search from "../components/Search";
+import FilterProductTypes from "../components/FilterProductTypes";
+import NumberOfProducts from "../components/NumberOfProduct";
+import { Paginado } from "../../../css";
 import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import {
   faPenSquare,
@@ -21,17 +26,18 @@ import {
   faPlus,
   faSyncAlt,
   faFileExcel,
+  faAngleDoubleRight,
+  faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Modals/Modal";
-import Search from "../components/Search";
-import FilterProductTypes from "../components/FilterProductTypes";
-import NumberOfProducts from "../components/NumberOfProduct";
 
 export default function Productos() {
-  const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+
+  const token = useSelector((state) => state.userToken);
   const products = useSelector((state) => state.products);
   const categories = useSelector((state) => state.productTypes);
+  const products2 = useSelector((state) => state.products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -44,9 +50,9 @@ export default function Productos() {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getProducts(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   function handleDelete(e) {
     MySwal.fire({
@@ -62,7 +68,7 @@ export default function Productos() {
       if (result.isConfirmed) {
         dispatch(deleteProduct(e));
         setTimeout(() => {
-          dispatch(getProducts());
+          dispatch(getProducts(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -91,8 +97,33 @@ export default function Productos() {
   }
 
   function handleButton(e) {
-    dispatch(getProducts());
+    dispatch(getProducts(token));
   }
+
+  const productPerPag = 10;
+  console.log(products2);
+  var cantPaginas = 0;
+  if (products2) {
+    cantPaginas = Math.ceil(products2.length / productPerPag);
+  }
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pagAct, setPagAct] = useState(1);
+  const getFilter = () => {
+    return products2.slice(currentPage, currentPage + productPerPag);
+  };
+  const handlePrev = () => {
+    if (pagAct > 1) {
+      setCurrentPage(currentPage - productPerPag);
+      setPagAct(pagAct - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (pagAct >= 1 && pagAct < cantPaginas) {
+      setCurrentPage(currentPage + productPerPag);
+      setPagAct(pagAct + 1);
+    }
+  };
 
   return (
     <div>
@@ -107,20 +138,6 @@ export default function Productos() {
         >
           Añadir producto
           <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-
-        <Button
-          width="10rem"
-          padding="0.8rem"
-          justify="space-between"
-          buttonColor="rgb(21, 151, 67)"
-          type="button"
-          onClick={(e) => {
-            handleButton(e);
-          }}
-        >
-          Restablecer
-          <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
         </Button>
       </AjustesDerechaTop>
       <SearchBarContainer>
@@ -177,7 +194,8 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {products.map((el) => {
+              {/* {products.map((el) => { */}
+              {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
@@ -219,11 +237,7 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
 
@@ -243,6 +257,27 @@ export default function Productos() {
         </Button>
       </ExportExcel>
 
+      <Paginado>
+        <FontAwesomeIcon
+          onClick={() => handlePrev()}
+          icon={faAngleDoubleLeft}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+        {/* <button class="btnPag"  id="1"  onClick={handlePrev}><i class="fal fa-chevron-double-right"></i></button>  */}
+        <span> </span>
+        <span>
+          {pagAct} de {cantPaginas}
+        </span>
+        {/* <button class="btnPag" onClick={handleNext}>next</button> */}
+        <span> </span>
+        <FontAwesomeIcon
+          onClick={() => handleNext()}
+          icon={faAngleDoubleRight}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+      </Paginado>
       <Modal
         idElement={inputModalProduct._id}
         id={7}

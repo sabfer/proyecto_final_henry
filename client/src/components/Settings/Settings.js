@@ -17,14 +17,16 @@ import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
 
 export default function Settings() {
-  const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch();
+  console.log({settings});
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getCategories());
+      dispatch(getCategories(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   function handleOptions(e, opt) {
     e.preventDefault();
@@ -41,6 +43,8 @@ export default function Settings() {
         return <Comercios></Comercios>;
       case "categorias":
         return <Categorias></Categorias>;
+      case "generales":
+        return <Generals></Generals>;
       default:
         return <Generals></Generals>;
     }
@@ -57,7 +61,7 @@ export default function Settings() {
       <Body display="flex" padding="4rem 6rem" justifycontent="space-between">
         <AjustesIzquierda>
           <TituloIzquierda>Opciones</TituloIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "")}>
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "generales")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Generales</p>
           </OpcionesIzquierda>
@@ -82,7 +86,7 @@ export default function Settings() {
             <p>Comercios</p>
           </OpcionesIzquierda>
         </AjustesIzquierda>
-        <AjustesDerecha>{renderSwitch(settings.show)}</AjustesDerecha>
+        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );

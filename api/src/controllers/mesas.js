@@ -97,14 +97,12 @@ mesasController.deleteMesa = async (req, res, _next) => {
 mesasController.updateMesa = async (req, res, _next) => {
   const { tableNumber } = req.params;
   const payload = req.body;
-  console.log("tableNumber:", tableNumber, "Payload:", payload);
   try {
     const updatedMesa = await Mesas.findOneAndUpdate(
       { tableNumber: `${tableNumber}` },
       payload,
       { new: true }
     );
-    console.log(updatedMesa);
     return res.json({
       succes: true,
       msg: "Mesa modificada exitosamente",

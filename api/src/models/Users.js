@@ -6,14 +6,17 @@ const saltRounds = 10;
 const UserSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true },
-  name: { type: String, required: true },
-  isAdmin: { type: Boolean, required: true },
-  category: { type: Schema.ObjectId, ref: "UserCategory" },
+  name: { type: String, required: false },
+  isAdmin: { type: Boolean, required: false },
+  puesto: {
+    type: String,
+    enum: ["Mozo", "Cajero", "Cocinero"],
+    required: false,
+  },
 });
 
 UserSchema.pre("save", function (next) {
   const user = this;
-
   if (this.isModified("password") || this.isNew) {
     bcrypt.genSalt(saltRounds, function (saltError, salt) {
       if (saltError) {

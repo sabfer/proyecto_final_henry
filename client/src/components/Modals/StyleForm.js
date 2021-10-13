@@ -47,4 +47,4 @@ const LeyendaError = styled.p`
     `}
 `;
 
-export { LeyendaError, Label };
+export { LeyendaError, Label, Input };

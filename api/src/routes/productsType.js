@@ -9,6 +9,3 @@ router.delete("/:id", controller.deleteProductType);
 //router.put("/:id", controller.updateProductType);
 
 module.exports = router;
-
-
-module.exports = router;

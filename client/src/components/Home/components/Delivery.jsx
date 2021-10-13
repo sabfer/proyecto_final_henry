@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { OrderButton, Delivery, Orders, Order } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +7,8 @@ import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
 export default function DeliveryModule() {
+  const token = useSelector((state) => state.userToken);
+
   const [stateModal5, setStateModal5] = useState(false);
   return (
     <Delivery>
