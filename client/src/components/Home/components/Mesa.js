@@ -8,10 +8,9 @@ export default function Mesas({ tableNumber, status, handleUpdate }) {
     tableNumber: undefined,
   }); */
 
-  /* onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })} */
   return (
     <div>
-      <Mesa>
+      <Mesa onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })}>
         <div className={status ? "occuped" : "available"}>
           <FontAwesomeIcon icon={faHamburger} size="4x" />
         </div>

@@ -133,7 +133,11 @@ export function postCommerce(payload, token) {
     },
   };
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload,
+      auth
+    );
     return data;
   };
 }
@@ -153,7 +157,10 @@ export function getCommerces(token) {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log("estoy en el error del catch de getCommerces, con err: ", err);
+        console.log(
+          "estoy en el error del catch de getCommerces, con err: ",
+          err
+        );
       });
   };
 }
@@ -245,7 +252,7 @@ export function changeSettings(payload) {
 }
 
 // ---------- OBTENER ORDENES ---------- \\
-export function getSalonOrders({ key, value }, token) {
+export function getSalonOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -253,7 +260,7 @@ export function getSalonOrders({ key, value }, token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`, auth)
+      .get(`http://localhost:3001/orders/active?type=Salon`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_SALON_ORDERS",
