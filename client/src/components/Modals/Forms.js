@@ -158,6 +158,8 @@ export const conditionalForm = (
             name="productType"
             required
             margin="0 0 1rem 0"
+            onKeyUp={validacion}
+            onBlur={validacion}
           >
             <option defaultValue="none" name="categorías" hidden>
               Categorías

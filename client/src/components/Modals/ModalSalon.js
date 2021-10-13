@@ -204,7 +204,14 @@ export default function ModalSalon({ state, setState }) {
 
           <SelectModal>
             <FormModal onSubmit={(e) => handleSubmit(e)}>
-              <input type="number" name="tableNumber" onChange={(e) => handleChange(e)} />
+              <InputModal>
+                <input
+                  type="number"
+                  name="tableNumber"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Mesa"
+                />
+              </InputModal>
               <Select
                 id="selectProduct"
                 width="83%"
@@ -286,9 +293,6 @@ export default function ModalSalon({ state, setState }) {
               </Table>
             </TableProductsModal>
             <TablePricesModal>
-              <p>Detalles</p>
-              <p>Subtotal: $10000</p>
-              <p>Propina: $100</p>
               <p>Monto Total: ${order.totalPrice}</p>
               <Button width="8rem" height="25px" buttonColor="#00C2FF">
                 Cerrar
