@@ -16,8 +16,8 @@ ${(props) =>
 
 `;
 
-const Input = styled.input`
-  border: 1px solid #ced4da;
+const InputContainer = styled.div`
+  margin: 1rem 0;
 `;
 
 const colores = {
@@ -47,4 +47,4 @@ const LeyendaError = styled.p`
     `}
 `;
 
-export { LeyendaError, Label, Input };
+export { LeyendaError, Label, InputContainer };

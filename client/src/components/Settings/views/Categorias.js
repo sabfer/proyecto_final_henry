@@ -10,7 +10,7 @@ import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Tab
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
-export default function Productos() {
+export default function Categorias() {
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const productTypes = useSelector((state) => state.productTypes);
