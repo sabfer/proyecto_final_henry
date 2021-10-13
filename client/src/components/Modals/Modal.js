@@ -58,15 +58,16 @@ export default function Modal({
     user: "",
     pass: "",
     location: "",
+    productType: "",
   });
 
   const expresiones = {
-    name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
+    name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    pass: /^[a-zA-Z0-9_\\-]{5,32}$/,
-    productType: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
+    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/,
+    productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
-    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/,
+    location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/,
   };
 
   useEffect(() => {
@@ -122,10 +123,17 @@ export default function Modal({
     }
   };
 
+  console.log(inpValido);
+  console.log(input);
+
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
-      if (inpValido.name && inpValido.user && inpValido.pass) {
+      if (
+        inpValido.name === "true" &&
+        inpValido.user === "true" &&
+        inpValido.pass === "true"
+      ) {
         dispatch(input);
         MySwal.fire({
           title: "¡Usuario creado correctamente!",
@@ -153,7 +161,7 @@ export default function Modal({
     }
 
     if (id === 2) {
-      if (inpValido.name && inpValido.location) {
+      if (inpValido.name === "true" && inpValido.location === "true") {
         dispatch(postCommerce(input, token));
         MySwal.fire({
           title: "¡Comercio creado corectamente!",
@@ -180,7 +188,11 @@ export default function Modal({
     }
 
     if (id === 3) {
-      if (inpValido.name && input.price > 0) {
+      if (
+        inpValido.name === "true" &&
+        inpValido.price === "true" &&
+        inpValido.productType === "true"
+      ) {
         dispatch(postProduct(input, token));
         MySwal.fire({
           title: "¡Producto creado correctamente!",

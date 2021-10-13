@@ -21,19 +21,15 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
-    dispatch(getCategories());
+    dispatch(getCategories(token));
     setTimeout(() => {
       dispatch(getProducts(token));
       //dispatch(getCommerces(token));
     }, 1000);
   }, [dispatch, token]);
 
-  if(!token){
-    return (
-      <>
-        NO TENES ACCESO, FALTA TOKEN 
-      </>
-    )
+  if (!token) {
+    return <>NO TENES ACCESO, FALTA TOKEN</>;
   }
 
   return (
