@@ -54,11 +54,8 @@ export default function ModalSalon({ state, setState }) {
     totalPrice: 0,
     date: "",
     hour: "",
-    /*clientId: 112412,
-    userId: 1224125, */
+    /*userId: 1224125, */
   });
-  // date: moment().locale("es").format("DD/MM/YYYY"),
-  // hour: moment().format("h:mm:ss a"),
 
   useEffect(() => {
     setOrder({
