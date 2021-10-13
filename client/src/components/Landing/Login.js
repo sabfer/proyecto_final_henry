@@ -23,92 +23,75 @@ import {
   ErrorRegistro,
   FormTitle,
 } from "./LandingStyles";
-import { registerUser } from "../../actions/index";
-import {
-  passwordValidation,
-  emailValidation,
-} from "../../services/passwordValidation";
+import { loginUser } from "../../actions/index";
+import { emailValidation } from "../../services/passwordValidation";
 
-function Register() {
+function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const singUpError = useSelector((state) => state.singUpErrors);
+  const token = useSelector((state) => state.userToken);
   const [input, setInput] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [signUpErrors, setSignUpErrors] = useState({
-    emailSucess: false,
-    emailNotValid: "Ya existe una cuenta con este correo electrónico.",
-    passwordSucess: false,
-    passwordNotValid: "Las contraseñas deben ser iguales",
+    emailSuccess: false,
+    emailNotValid: "El email ingresado no existe.",
+    passwordSuccess: false,
+    passwordNotValid: "Las contraseña es errónea.",
+    newTry: false,
   });
-  /* const [passwordError, setPasswordError] = useState({
-    status: Boolean,
-    msg:,
-  }); */
+
+  //const [login, setLogin] = useState(false);
 
   function handleChange(e) {
+    // console.log({[e.target.name]: e.target.value});
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    //console.log("token: ", token);
+
   }
 
   useEffect(() => {
-    if (signUpErrors.emailSucess && signUpErrors.passwordSucess) {
+    if (token) {
       history.push("/home");
+      //console.log('ya estoy logueado')
     }
-  }, [history, signUpErrors]);
+  }, [history, token]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let validatePass = passwordValidation(input);
-    let validateEmail = await emailValidation(input);
-    console.log("Password: " + validatePass, "Email:" + validateEmail);
-    if (validatePass && validateEmail === false) {
-      dispatch(registerUser(input));
+    let validateEmail = await emailValidation(input); // if true means that user exists
+    console.log("email: " + input.email, " // email existe:" + validateEmail);
+    // let validatePwd = await
+    if (validateEmail && input.password) {
+      console.log("debo despachar inicio sesion, con input: ", input);
+      dispatch(loginUser(input));
+      console.log("token: ", token);
+
       setInput({
         email: "",
         password: "",
-        confirmPassword: "",
       });
       setSignUpErrors({
         ...signUpErrors,
-        emailSucess: true,
-        passwordSucess: true,
+        emailSuccess: true,
+        passwordSuccess: true,
       });
     }
-    if (validateEmail) {
-      if (validatePass) {
-        setSignUpErrors({
-          ...signUpErrors,
-          emailSucess: true,
-          passwordSucess: false,
-        });
-      }
+    if (!validateEmail) {
+      console.log("estoy en validateEmail: FALSE");
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSuccess: false,
+        newTry: true,
+      });
       setInput({
         ...input,
         password: "",
-        confirmPassword: "",
-      });
-    }
-    if (!validatePass) {
-      console.log("Aquí");
-      if (!validateEmail) {
-        console.log("Aquí");
-        setSignUpErrors({
-          ...signUpErrors,
-          emailSucess: false,
-          passwordSucess: true,
-        });
-      }
-      setInput({
-        ...input,
-        password: "",
-        confirmPassword: "",
       });
     }
   }
@@ -131,10 +114,8 @@ function Register() {
               </StyledLink>
             </li>
             <li>
-              <StyledLink to="/login">
-                <Button border="1px solid white" bgColor="transparent">
-                  Ingresar
-                </Button>
+              <StyledLink to="/register">
+                <Button border="2px solid rgba(0, 0, 0, 0.19)">Registro</Button>
               </StyledLink>
             </li>
           </ul>
@@ -143,19 +124,12 @@ function Register() {
 
       <FormContainer>
         <FormBody>
-          <FormHeaderText
-            textshadow="0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
-              0px 5px 2px rgba(0, 0, 0, 0.5)"
-            fontsize="2rem"
-          >
-            <h2>
-              Registrate y conoce las <br /> bondades de una buena <br />{" "}
-              gestión
-            </h2>
+          <FormHeaderText textshadow="text-shadow: 0px 5px 2px rgba(0, 0, 0, 0.5)">
+            <h2>Bienvenido</h2>
             <Overlay />
           </FormHeaderText>
           <FormInputs onSubmit={(e) => handleSubmit(e)}>
-            <FormTitle margin="1rem 3.5rem 2.2rem;">Registro</FormTitle>
+            <FormTitle>Iniciar sesión</FormTitle>
             <InputContainers>
               <Inputs
                 required
@@ -170,7 +144,7 @@ function Register() {
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
-              {signUpErrors.emailSucess && (
+              {!signUpErrors.emailSuccess && signUpErrors.newTry && (
                 <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
               )}
             </InputContainers>
@@ -179,8 +153,8 @@ function Register() {
                 required
                 id="password"
                 type="password"
-                placeholder=" "
                 value={input.password}
+                placeholder=" "
                 name="password"
                 autoComplete="off"
                 onChange={(e) => handleChange(e)}
@@ -188,27 +162,9 @@ function Register() {
               <Placeholder htmlFor="password" className="placeholder">
                 Contraseña
               </Placeholder>
-              {signUpErrors.passwordSucess && (
-                <ErrorRegistro>{signUpErrors.passwordNotValid}</ErrorRegistro>
-              )}
-            </InputContainers>
-            <InputContainers>
-              <Inputs
-                required
-                id="confirmPassword"
-                type="password"
-                placeholder=" "
-                value={input.confirmPassword}
-                name="confirmPassword"
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-              />
-              <Placeholder htmlFor="confirmPassword" className="placeholder">
-                Confirmar contraseña
-              </Placeholder>
             </InputContainers>
             <SubmitContainer>
-              <Submit type="submit">Registrarme</Submit>
+              <Submit type="submit">Ingresar</Submit>
               <Submit>
                 <GSubmit>
                   <div className="Icon"></div>
@@ -230,4 +186,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

@@ -3,7 +3,9 @@ const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
   try {
-    const newOrder = await new Orders(req.body);
+    let orders = await Orders.find();
+    let ordersN = orders.length;
+    const newOrder = await new Orders({...req.body, orderNumber: ordersN + 1});
     await newOrder.save();
     res.json({
       succes: true,

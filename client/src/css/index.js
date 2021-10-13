@@ -55,6 +55,12 @@ export const Button = styled.button`
   border-radius: 0.6rem;
   cursor: pointer;
   font-weight: 600;
+  .Excel {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+  }
 `;
 
 export const Title = styled.h1`

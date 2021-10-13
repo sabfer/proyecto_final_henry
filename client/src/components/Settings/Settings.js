@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Header, Title, Button, StyledLink, Body } from "../../css";
 import {
@@ -13,37 +13,38 @@ import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Comercios from "./views/Comercios";
 import Users from "./views/Users";
-import { changeSettings } from "../../actions";
+import Categorias from "./views/Categorias";
+import { changeSettings, getCategories } from "../../actions";
 
 export default function Settings() {
-  const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch();
+  console.log({settings});
 
-  function handleProducts(e) {
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getCategories(token));
+    }, 1000);
+  }, [dispatch, token]);
+
+  function handleOptions(e, opt) {
     e.preventDefault();
-    dispatch(changeSettings({ show: "products" }));
-  }
-  function handleCommerce(e) {
-    e.preventDefault();
-    dispatch(changeSettings({ show: "commerce" }));
-  }
-  function handleUsers(e) {
-    e.preventDefault();
-    dispatch(changeSettings({ show: "users" }));
-  }
-  function handleGenerals(e) {
-    e.preventDefault();
-    dispatch(changeSettings({ show: "" }));
+    dispatch(changeSettings({ show: opt }));
   }
 
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products handle={handleProducts}></Products>;
+        return <Products></Products>;
       case "users":
         return <Users></Users>;
       case "commerce":
         return <Comercios></Comercios>;
+      case "categorias":
+        return <Categorias></Categorias>;
+      case "generales":
+        return <Generals></Generals>;
       default:
         return <Generals></Generals>;
     }
@@ -59,25 +60,33 @@ export default function Settings() {
       </Header>
       <Body display="flex" padding="4rem 6rem" justifycontent="space-between">
         <AjustesIzquierda>
-          <TituloIzquierda>Categorías</TituloIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleGenerals(e)}>
+          <TituloIzquierda>Opciones</TituloIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "generales")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Generales</p>
           </OpcionesIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleProducts(e)}>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "products")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Productos</p>
           </OpcionesIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleUsers(e)}>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Categorías</p>
+          </OpcionesIzquierda>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Usuarios</p>
           </OpcionesIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleCommerce(e)}>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Comercios</p>
           </OpcionesIzquierda>
         </AjustesIzquierda>
-        <AjustesDerecha>{renderSwitch(settings.show)}</AjustesDerecha>
+        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );

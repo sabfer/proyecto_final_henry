@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
-import { postProduct, updateProduct, postCommerce, getProducts } from "../../actions";
+import {
+  postProduct,
+  updateProduct,
+  postCommerce,
+  getProducts,
+  postCategories,
+  getCategories,
+} from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -27,43 +35,38 @@ export default function Modal({
   idElement,
   showInSettings,
 }) {
+  const token = useSelector((state) => state.userToken);
+  console.log(token);
+  const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    name: name,
-    price: price,
-    productType: productType,
+    name: "" || name,
+    price: "" || price,
+    productType: "" || productType,
     user: user,
     pass: pass,
-    location: undefined,
-    description: undefined,
-    table: undefined,
-    products: undefined,
-    orderD: undefined,
-    orderTA: undefined,
+    location: "",
+    description: "",
+    orderD: "",
+    orderTA: "",
   });
 
   const [inpValido, setInputvalido] = useState({
     name: "",
     price: "",
-    productType: "",
     user: "",
     pass: "",
     location: "",
   });
 
-  console.log(inpValido)
   const expresiones = {
-    name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
-    // name: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{3,32}$/, // Letras, numeros, guion y guion_bajo y espacio
-    //^[a-zA-ZÀ-ÿ\s]{4,40}$ /^([a-z]+[0-9]{0,2}){5,12}
+    name: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    //user: /^([a-z-ÿ\s]+[0-9]{0,2}){4,12}$/, // Letras, numeros, guion y guion_bajo
-    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/, // Letras, numeros, guion y guion_baj
-    //ubication: /^([a-z-ÿ\s]+[0-9]{0,2}){5,12}$/, // Letras, numeros, guion y guion_bajo
-    productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/, // Letras, numeros, guion y guion_bajo y espacio
-    price: /^.{0,100}$/, // 0 a 100 digitos.
-    location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/, // Letras, numeros, guion y guion_bajo y espacio
+    pass: /^[a-zA-Z0-9_\\-]{5,32}$/,
+    productType: /^[A-Za-zÀ-ÿ0-9_\\-\s]{3,32}$/,
+    price: /^.{0,100}$/,
+    location: /^[a-zA-Z0-9_\\-\s]{6,48}$/,
   };
 
   useEffect(() => {
@@ -79,7 +82,6 @@ export default function Modal({
     });
   }, [name, price, productType, user, pass, location]);
 
-  console.log(input)
   let labels = { label1, label2, label3, label4 };
   let productValues = {
     name: name,
@@ -120,28 +122,10 @@ export default function Modal({
     }
   };
 
-  // if (
-  //   input[e.target.name] &&
-  //   expresiones[e.target.name].test(input[e.target.name])
-  // ) {
-  //   setInputvalido({
-  //     ...inpValido,
-  //     [e.target.name]: "true",
-  //   });
-  // } else
-  //   setInputvalido({
-  //     ...inpValido,
-  //     [e.target.name]: "false",
-  //   });
-  // //console.log([e.target.name]) //se imprime Array [ "productType" ]
-  // if (input[e.target.name]) {
-  //   console.log(input[e.target.name].length);
-  // }
-
   function handleSubmit(e) {
     // e.preventDefault();
     if (id === 1) {
-      if (inpValido.name=="true" && inpValido.user=="true" && inpValido.pass=="true") {
+      if (inpValido.name && inpValido.user && inpValido.pass) {
         dispatch(input);
         MySwal.fire({
           title: "¡Usuario creado correctamente!",
@@ -169,8 +153,8 @@ export default function Modal({
     }
 
     if (id === 2) {
-      if (inpValido.name=="true" && inpValido.location=="true") {
-        dispatch(postCommerce(input));
+      if (inpValido.name && inpValido.location) {
+        dispatch(postCommerce(input, token));
         MySwal.fire({
           title: "¡Comercio creado corectamente!",
           icon: "success",
@@ -196,8 +180,8 @@ export default function Modal({
     }
 
     if (id === 3) {
-      if (inpValido.name=="true" && inpValido.productType=="true" && input.price > 0 ) {
-        dispatch(postProduct(input));
+      if (inpValido.name && input.price > 0) {
+        dispatch(postProduct(input, token));
         MySwal.fire({
           title: "¡Producto creado correctamente!",
           icon: "success",
@@ -206,7 +190,7 @@ export default function Modal({
         }).then((result) => {
           if (result.isConfirmed) {
             if (showInSettings) {
-              dispatch(getProducts());
+              dispatch(getProducts(token));
             }
             setStateModal(!state);
             setInput({
@@ -225,6 +209,9 @@ export default function Modal({
           confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
+
+    // if (id === 4) {}
+
     if (id === 7) {
       const payload = {};
       for (let key in input) {
@@ -232,9 +219,9 @@ export default function Modal({
           payload[key] = input[key];
         }
       }
-      dispatch(updateProduct(payload, idElement));
+      dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
-        title: "¡Produco actualizado!",
+        title: "¡Producto actualizado!",
         icon: "success",
         confirmButtonText: "Aceptar",
         confirmButtonColor: "rgb(21, 151, 67)",
@@ -244,6 +231,24 @@ export default function Modal({
           setInput({
             name: "",
             location: "",
+          });
+        }
+      });
+    }
+
+    if (id === 8) {
+      dispatch(postCategories(input, token));
+      MySwal.fire({
+        title: "Categoría creada correctamente!",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "rgb(21, 151, 67)",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(getCategories());
+          setStateModal(!state);
+          setInput({
+            name: "",
           });
         }
       });
@@ -262,31 +267,30 @@ export default function Modal({
 
   return (
     <div>
-      {state && (
-        <Overlay>
-          <ModalContainer modalContainerBox={modalContainerBox}>
-            <HeaderModal>
-              <h2>{title}</h2>
-            </HeaderModal>
-            <CloseButton onClick={(e) => handleClose(e)}>
-              <FontAwesomeIcon icon={faWindowClose} />
-            </CloseButton>
-            {conditionalForm(
-              id,
-              input,
-              handleChange,
-              labels,
-              productValues,
-              leyendaError,
-              inpValido,
-              validacion
-            )}
-            <button type="submit" onClick={(e) => handleSubmit(e)}>
-              Aceptar
-            </button>
-          </ModalContainer>
-        </Overlay>
-      )}
+      <Overlay display={state ? "flex" : "none"}>
+        <ModalContainer modalContainerBox={modalContainerBox}>
+          <HeaderModal>
+            <h2>{title}</h2>
+          </HeaderModal>
+          <CloseButton onClick={(e) => handleClose(e)}>
+            <FontAwesomeIcon icon={faWindowClose} />
+          </CloseButton>
+          {conditionalForm(
+            id,
+            input,
+            handleChange,
+            labels,
+            productValues,
+            leyendaError,
+            inpValido,
+            validacion,
+            categories
+          )}
+          <button type="submit" onClick={(e) => handleSubmit(e)}>
+            Aceptar
+          </button>
+        </ModalContainer>
+      </Overlay>
     </div>
   );
 }

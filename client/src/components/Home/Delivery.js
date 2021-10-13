@@ -1,20 +1,16 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-
-import { TakeOut, OrderButton, Orders, Order } from "../HomeStyles";
+import { OrderButton, Delivery, Orders, Order } from "../HomeStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
-export default function TakeOutModule() {
-  const token = useSelector((state) => state.userToken);
-
-  const [stateModal6, setStateModal6] = useState(false);
+export default function DeliveryModule() {
+  const [stateModal5, setStateModal5] = useState(false);
   return (
-    <TakeOut>
+    <Delivery>
       <OrderButton
-        onClick={() => setStateModal6(!stateModal6)}
+        onClick={() => setStateModal5(!stateModal5)}
         width="10rem"
         justify="space-between"
         padding="0.625rem"
@@ -23,17 +19,16 @@ export default function TakeOutModule() {
         Crear pedido
       </OrderButton>
 
-      {/* Modal 6 */}
+      {/*Modal 5*/}
       <Modal
-        id={6}
-        state={stateModal6}
-        setStateModal={setStateModal6}
+        id={5}
+        state={stateModal5}
+        setStateModal={setStateModal5}
         title="Crear pedido para llevar"
         label1="Pedido n°"
         label2="Productos"
         modalContainerBox={false}
       />
-
       <Orders>
         <Order>
           <FontAwesomeIcon icon={faPaintRoller} size="4x" />
@@ -84,6 +79,6 @@ export default function TakeOutModule() {
           <p>Pedido X</p>
         </Order>
       </Orders>
-    </TakeOut>
+    </Delivery>
   );
 }
