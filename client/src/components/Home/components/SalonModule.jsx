@@ -55,8 +55,8 @@ export default function SalonModule() {
         </Button>
       </ModuleTop>
       <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
-      <OrdersContainer>
-      <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+<OrdersContainer>      
+<Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
         {mesas &&
           mesas.map((mesa) => {
             return (
@@ -80,7 +80,7 @@ export default function SalonModule() {
            3 se edita la orden por el numero de id1 
          */}
       </Orders>
-      </OrdersContainer>
+          </OrdersContainer>
     </Salon>
   );
 }
