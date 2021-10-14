@@ -39,18 +39,16 @@ export const OrdersContainer = styled.div`
   width: 100%;
   display: flex;
   overflow-y: scroll;
+  scrollbar-color: #888888 #eaeaea;
+  scrollbar-width: thin;
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #eaeaea;
+    background: #eaeaea ;
   }
-  ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb, mo {
     background: #888;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-  }
 `;
 
 export const Orders = styled.div`
