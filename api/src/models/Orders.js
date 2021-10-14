@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
   date: { type: String, required: true },
   hour: { type: String, required: true },
+  nameClient: { type: String },
+  directionClient: { type: String },
+  phoneClient: { type:Number },
   orderNumber: { type: Number, required: true },
   tableNumber: { type: Number },
   products: [

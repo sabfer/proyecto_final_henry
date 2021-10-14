@@ -1,0 +1,4 @@
+NODE_ENV=development
+MONGODB_LOCAL=mongodb://localhost:27017/proyectoxdb
+MONGODB_HOST=mongodb+srv://enzo_derviche:enzo2810@cluster0.lct4f.mongodb.net
+MONGODB_DATABASE=test

@@ -4,6 +4,7 @@ import Landing from "./components/Landing/Landing";
 import Login from "./components/Landing/Login";
 import Register from "./components/Landing/RegisterPage";
 import Settings from "./components/Settings/Settings";
+import Kitchen from "./components/Kitchen/Kitchen";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route exact path="/register" render={() => <Register />} />
       <Route exact path="/home" render={() => <Home />} />
       <Route exact path="/settings" render={() => <Settings />} />
+      <Route exact path="/kitchenDashboard" render={() => <Kitchen />} />
     </div>
   );
 }

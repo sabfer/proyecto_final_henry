@@ -214,6 +214,31 @@ export function getUsers(payload, token) {
   };
 }
 
+// ---------- OBTENER ID USUARIO PARA STORE ---------- \\
+export function getUserId(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  }
+  // console.log('estoy en actions funcion getUserId');
+  return async function (dispatch) {
+    axios
+      .get(`http://localhost:3001/getId`, auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_USER_ID",
+          payload: data.data,
+        });
+      })
+      .catch((err) => {
+        console.log('estoy en catch de axios de getUserId con err: ', err);
+      });
+  }
+}
+
+
+
 // ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload, token) {
   let auth = {
@@ -251,7 +276,7 @@ export function changeSettings(payload) {
   };
 }
 
-// ---------- OBTENER ORDENES ---------- \\
+// ---------- OBTENER ORDENES DE SALON---------- \\
 export function getSalonOrders(token) {
   let auth = {
     headers: {
@@ -273,8 +298,8 @@ export function getSalonOrders(token) {
   };
 }
 
-// ---------- OBTENER ORDENES DELIVERY ---------- \\
-export function getDeliveryOrders(token) {
+// ---------- OBTENER ORDENES DE TAKE AWAY---------- \\
+export function getTakeAwayOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -282,10 +307,11 @@ export function getDeliveryOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
+      .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
+        console.log(data)
         return dispatch({
-          type: "GET_SALON_ORDERS",
+          type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
         });
       })
@@ -295,6 +321,7 @@ export function getDeliveryOrders(token) {
   };
 }
 
+// ---------- OBTENER MESAS---------- \\
 export function getMesas(token) {
   let auth = {
     headers: {
@@ -308,6 +335,7 @@ export function getMesas(token) {
   };
 }
 
+// ---------- CHANGE STATUS---------- \\
 export function changeStatus(payload, token) {
   let auth = {
     headers: {
@@ -380,6 +408,7 @@ export function postCategories(payload, token) {
     return data;
   };
 }
+
 // ---------- CREACIÓN DE ORDEN ---------- \\
 export function postOrder(payload, token) {
   let auth = {
@@ -391,6 +420,22 @@ export function postOrder(payload, token) {
     var data = await axios.post("http://localhost:3001/orders", payload, auth);
     return dispatch({
       type: "POST_ORDER",
+      payload: data.data.payload,
+    });
+  };
+}
+
+// ---------- CREACIÓN DE ORDEN TAKE AWAY ---------- \\
+export function postOrderTakeAway(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload, auth);
+    return dispatch({
+      type: "POST_ORDER_TAKE_AWAY",
       payload: data.data.payload,
     });
   };
