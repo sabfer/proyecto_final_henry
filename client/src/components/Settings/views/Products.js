@@ -247,6 +247,7 @@ export default function Productos() {
         </Loading>
       )}
 
+
       <ExportExcel>
         <NumberOfProducts />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
@@ -257,7 +258,6 @@ export default function Productos() {
               className="Excel"
               filename="Productos_cargados_en_el_sistema"
               sheet="Productos"
-              buttonText=""
             />
           </FontAwesomeIcon>
         </Button>
