@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { TakeOut, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
+import {
+  TakeOut,
+  Orders,
+  ModuleTop,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
 import { Button } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +17,6 @@ import TakeAway from "./OrderTakeAway";
 export default function TakeAwayModule() {
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
-
   const [stateModal, setStateModal] = useState(false);
   const ordersTakeAway = useSelector((state) => state?.orders?.takeAwayOrders);
   const [updateModal, setUpdateModal] = useState(false);
@@ -46,7 +50,7 @@ export default function TakeAwayModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalTakeAway state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
+      <ModalTakeAway state={stateModal} setState={setStateModal} />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {ordersTakeAway &&

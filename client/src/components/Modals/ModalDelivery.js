@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postOrder, changeStatus } from "../../actions";
+import { postOrderDelivery } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -25,7 +25,7 @@ import {
   OrderContainer,
   InputClient,
   DivInfo,
-} from "./ModalStyles";
+} from "../../css/ModalStyles.js";
 import { Select } from "../../css/Select";
 import {
   Table,
@@ -149,13 +149,10 @@ export default function ModalDelivery({ state, setState }) {
   }
 
   function handlePostOrder(e) {
-    dispatch(postOrder(order, token));
+    dispatch(postOrderDelivery(order, token));
     setState(!state);
-    dispatch(
-      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
-    );
     setOrder({
-      type: "Salon",
+      type: "Delivery",
       tableNumber: "",
       products: [],
       estado: "En progreso",
@@ -294,7 +291,6 @@ export default function ModalDelivery({ state, setState }) {
                   </Button>
                 </FormModal>
               </SelectModal>
-
               <TablesModal>
                 <TableProductsModal>
                   <Table id="productsTable">

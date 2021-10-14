@@ -4,24 +4,26 @@ import {
   ModuleTop,
   Delivery,
   Orders,
-  Order,
   OrdersContainer,
 } from "../../../css/HomeStyles";
 import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faMotorcycle } from "@fortawesome/free-solid-svg-icons";
 import ModalDelivery from "../../Modals/ModalDelivery";
-import { getDeliveryOrders } from "../../../actions";
+import OrderDelivery from "./OrderDelivery"
+// import { getDeliveryOrders } from "../../../actions";
+import UpdateTable from "../../Modals/UpdateTable";
 
 export default function DeliveryModule() {
-  const token = useSelector((state) => state.userToken);
-  const dispatch = useDispatch();
+  // const token = useSelector((state) => state.userToken);
+  // const dispatch = useDispatch();
   const [stateModal, setStateModal] = useState(false);
+  const ordersDelivery = useSelector((state) => state?.orders?.delivery);
+  const [updateModal, setUpdateModal] = useState(false);
 
-  useEffect(() => {
-    dispatch(getDeliveryOrders(token));
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   dispatch(getDeliveryOrders(token));
+  // }, [dispatch, token]);
 
   return (
     <Delivery>
@@ -42,11 +44,14 @@ export default function DeliveryModule() {
       </ModuleTop>
       <ModalDelivery state={stateModal} setState={setStateModal} />
       <OrdersContainer>
-        <Orders>
-          <Order>
-            <FontAwesomeIcon icon={faMotorcycle} size="4x" />
-            <p>Pedido X</p>
-          </Order>
+        <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+          {ordersDelivery &&
+            ordersDelivery.map((order) => {
+              return <OrderDelivery key={order._id} order={order.orderNumber} />;
+            })}
+          {updateModal && (
+            <UpdateTable state={updateModal} setStateModal={setUpdateModal} />
+          )}
         </Orders>
       </OrdersContainer>
     </Delivery>
