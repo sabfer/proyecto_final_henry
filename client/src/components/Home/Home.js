@@ -15,12 +15,15 @@ import {
   getProducts,
   getCategories,
   deleteToken,
+  getTakeAwayOrders
 } from "../../actions/index";
 
 export default function Home() {
   const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
+  /* const ordersTakeAway = useSelector((state) => state.orders.salonOrders);  
+  console.log(ordersTakeAway)  */
   const token = useSelector((state) => state.userToken);
   const id = useSelector((state) => state.userId);
   //Estado de las ventanas modales
@@ -35,6 +38,10 @@ export default function Home() {
       dispatch(getProducts(token));
       //dispatch(getCommerces(token));
     }, 1000);
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    dispatch(getTakeAwayOrders(token))
   }, [dispatch, token]);
 
   function handleLogOut() {
