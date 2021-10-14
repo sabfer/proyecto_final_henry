@@ -134,6 +134,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
+    case "GET_TAKE_AWAY_ORDERS":
+      console.log({payload})
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          takeAwayOrders: payload,
+        },
+      }
+
     case "GET_SALON_ORDERS":
       return {
         ...state,
@@ -148,6 +158,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         mesas: payload,
       };
+    
 
     /* case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
@@ -187,6 +198,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return {
           ...state,
           orders: { ...state.orders, salonOrders: [payload] },
+        };
+      }
+
+    case "POST_ORDER_TAKE_AWAY":
+      if (state.orders.takeAwayOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            takeAwayOrders: [...state.orders.takeAwayOrders, payload],
+          },
+        };
+      } else {
+        return {
+          ...state,
+          orders: { ...state.orders, takeAwayOrders: [payload] },
         };
       }
 
