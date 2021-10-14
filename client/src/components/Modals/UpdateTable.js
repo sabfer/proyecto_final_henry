@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrder, getSalonOrders, changeStatus } from "../../actions/index";
+import { updateOrder, changeStatus } from "../../actions/index";
 import {
   Table,
   TableHead,
@@ -26,7 +26,7 @@ import {
   TablePricesModal,
   InputAmount,
   OrderContainer,
-} from "./ModalStyles";
+} from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -41,11 +41,11 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
 
-  const ordenTableNumber = ordenes
+  const orderTableNumber = ordenes
     ? ordenes.find(
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
-    : null;
+    : undefined;
 
   const [producto, setProducto] = useState({
     name: "",
@@ -56,8 +56,8 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
 
   function handleSubmitAddProduct(e) {
     e.preventDefault();
-    ordenTableNumber.products.push(producto);
-    ordenTableNumber.totalPrice = ordenTableNumber.products.reduce(function (
+    orderTableNumber.products.push(producto);
+    orderTableNumber.totalPrice = orderTableNumber.products.reduce(function (
       prev,
       actual
     ) {
@@ -91,9 +91,9 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
 
   function handleInputAmount(e, name) {
-    const product = ordenTableNumber.products.find((p) => p.name === name);
+    const product = orderTableNumber.products.find((p) => p.name === name);
     product.amount = e.target.value;
-    ordenTableNumber.totalPrice = ordenTableNumber.products.reduce(function (
+    orderTableNumber.totalPrice = orderTableNumber.products.reduce(function (
       prev,
       actual
     ) {
@@ -158,17 +158,17 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
   return (
     <div>
-      {ordenTableNumber && (
+      {orderTableNumber && (
         <Overlay display={state ? "flex" : "none"}>
           <ModalContainer>
             <HeaderModal>
               <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
               <HeaderModalTitle>
-                <h3>Orden: {ordenTableNumber.orderNumber} </h3>
-                <h4>Mesa: {tableNumber} </h4>
+                <h3>Orden: {orderTableNumber.orderNumber} </h3>
+                <h4>Mesa: {orderTableNumber.tableNumber} </h4>
               </HeaderModalTitle>
               <HeaderModalDetails>
-                <p>Hora de pedido: {ordenTableNumber.hour}</p>
+                <p>Hora de pedido: {orderTableNumber.hour}</p>
               </HeaderModalDetails>
             </HeaderModal>
             <CloseButton onClick={(e) => handleClose(e)}>
@@ -237,8 +237,8 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                     </TableRow>
                   </TableHead>
                   <tbody>
-                    {ordenTableNumber &&
-                      ordenTableNumber.products.map((product) => {
+                    {orderTableNumber &&
+                      orderTableNumber.products.map((product) => {
                         return (
                           <TableRow key={product._id}>
                             <TableData>{product.name}</TableData>
@@ -288,15 +288,15 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               </div>
               <div style={{ display: "flex" }}>
                 <TablePricesModal>
-                  <p>Monto Total: ${ordenTableNumber.totalPrice}</p>
+                  <p>Monto Total: ${orderTableNumber.totalPrice}</p>
                   <Button
                     width="8rem"
                     height="25px"
                     buttonColor="#00C2FF"
                     onClick={() =>
-                      handleCloseOrder(ordenTableNumber._id, {
-                        products: ordenTableNumber.products,
-                        totalPrice: ordenTableNumber.totalPrice,
+                      handleCloseOrder(orderTableNumber._id, {
+                        products: orderTableNumber.products,
+                        totalPrice: orderTableNumber.totalPrice,
                         estado: "Finalizada",
                       })
                     }
@@ -309,10 +309,10 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
 
             <button
               onClick={() =>
-                modifcarOrden(ordenTableNumber._id, {
-                  products: ordenTableNumber.products,
-                  totalPrice: ordenTableNumber.totalPrice,
-                  estado: ordenTableNumber.estado,
+                modifcarOrden(orderTableNumber._id, {
+                  products: orderTableNumber.products,
+                  totalPrice: orderTableNumber.totalPrice,
+                  estado: orderTableNumber.estado,
                 })
               }
             >
