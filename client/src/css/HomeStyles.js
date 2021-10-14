@@ -90,3 +90,10 @@ export const Mesa = styled.div`
     color: rgb(229, 20, 0);
   }
 `;
+
+export const TakeAway = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;
