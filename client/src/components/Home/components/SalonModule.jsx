@@ -15,7 +15,6 @@ export default function SalonModule() {
 
   const [stateModal, setStateModal] = useState(false);
   const dispatch = useDispatch();
-  // const salonOrders = useSelector((state) => state.orders.salonOrders);
   const mesas = useSelector((state) => state.mesas);
   const [updateModal, setUpdateModal] = useState(false);
   const [tableDetails, setTableDetails] = useState({

@@ -4,10 +4,6 @@ import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import { Mesa } from "../../../css/HomeStyles";
 
 export default function Mesas({ tableNumber, status, handleUpdate }) {
-  /* const [tableDetails, setTableDetails] = useState({
-    tableNumber: undefined,
-  }); */
-
   return (
     <div>
       <Mesa onClick={(e) => handleUpdate(e, { tableNumber: tableNumber })}>
