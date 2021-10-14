@@ -49,7 +49,8 @@ export const OrdersContainer = styled.div`
   }
   ::-webkit-scrollbar-thumb, mo {
     background: #888;
-`;
+  }`;
+
 
 export const Orders = styled.div`
   height: 100%;
