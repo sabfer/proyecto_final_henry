@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import {
   Container,
   Header,
@@ -18,10 +20,82 @@ import {
   SubmitContainer,
   Submit,
   GSubmit,
+  ErrorRegistro,
   FormTitle,
 } from "./LandingStyles";
+import { loginUser } from "../../actions/index";
+import { emailValidation } from "../../services/passwordValidation";
 
 function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector((state) => state.userToken);
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [signUpErrors, setSignUpErrors] = useState({
+    emailSuccess: false,
+    emailNotValid: "El email ingresado no existe.",
+    passwordSuccess: false,
+    passwordNotValid: "Las contraseña es errónea.",
+    newTry: false,
+  });
+
+  //const [login, setLogin] = useState(false);
+
+  function handleChange(e) {
+    // console.log({[e.target.name]: e.target.value});
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    //console.log("token: ", token);
+
+  }
+
+  useEffect(() => {
+    if (token) {
+      history.push("/home");
+      //console.log('ya estoy logueado')
+    }
+  }, [history, token]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let validateEmail = await emailValidation(input); // if true means that user exists
+    console.log("email: " + input.email, " // email existe:" + validateEmail);
+    // let validatePwd = await
+    if (validateEmail && input.password) {
+      console.log("debo despachar inicio sesion, con input: ", input);
+      dispatch(loginUser(input));
+      console.log("token: ", token);
+
+      setInput({
+        email: "",
+        password: "",
+      });
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSuccess: true,
+        passwordSuccess: true,
+      });
+    }
+    if (!validateEmail) {
+      console.log("estoy en validateEmail: FALSE");
+      setSignUpErrors({
+        ...signUpErrors,
+        emailSuccess: false,
+        newTry: true,
+      });
+      setInput({
+        ...input,
+        password: "",
+      });
+    }
+  }
+
   return (
     <Container>
       <Header>
@@ -54,27 +128,36 @@ function Login() {
             <h2>Bienvenido</h2>
             <Overlay />
           </FormHeaderText>
-          <FormInputs>
+          <FormInputs onSubmit={(e) => handleSubmit(e)}>
             <FormTitle>Iniciar sesión</FormTitle>
             <InputContainers>
               <Inputs
                 required
                 id="email"
                 type="email"
+                value={input.email}
+                name="email"
                 placeholder=" "
                 autoComplete="off"
+                onChange={(e) => handleChange(e)}
               />
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
+              {!signUpErrors.emailSuccess && signUpErrors.newTry && (
+                <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
+              )}
             </InputContainers>
             <InputContainers>
               <Inputs
                 required
                 id="password"
                 type="password"
+                value={input.password}
                 placeholder=" "
+                name="password"
                 autoComplete="off"
+                onChange={(e) => handleChange(e)}
               />
               <Placeholder htmlFor="password" className="placeholder">
                 Contraseña

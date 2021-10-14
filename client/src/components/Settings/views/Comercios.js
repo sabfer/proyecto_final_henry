@@ -31,9 +31,9 @@ export default function Commerces() {
     }
   }
 
-  function handleUpdate(e) {
+  /* function handleUpdate(e) {
     dispatch(updateCommerce(e));
-  }
+  } */
 
   useEffect(() => {
     setTimeout(() => {

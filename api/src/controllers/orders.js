@@ -3,7 +3,12 @@ const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
   try {
-    const newOrder = await new Orders(req.body);
+    let orders = await Orders.find();
+    let ordersN = orders.length;
+    const newOrder = await new Orders({
+      ...req.body,
+      orderNumber: ordersN + 1,
+    });
     await newOrder.save();
     res.json({
       succes: true,
@@ -16,13 +21,21 @@ orderController.addOrder = async (req, res, next) => {
 };
 
 orderController.findOrders = async (req, res, next) => {
+  const { type } = req.query;
   try {
-    const ordersRes = await Orders.find({}, { __v: 0 });
-    if (ordersRes.length) {
+    const orders = await Orders.find({}, { __v: 0 });
+    if (type) {
+      ordersByType = orders.filter((order) => {
+        return order.type
+          .toLocaleLowerCase()
+          .includes(type.toLocaleLowerCase());
+      });
+    }
+    if (orders.length) {
       return res.json({
         succes: true,
         msg: "Ordenes encontradas",
-        payload: ordersRes,
+        payload: orders,
       });
     }
     res.json({
@@ -31,7 +44,48 @@ orderController.findOrders = async (req, res, next) => {
       payload: null,
     });
   } catch (err) {
-    next(error);
+    next(err);
+  }
+};
+
+orderController.findActiveOrders = async (req, res, next) => {
+  const { type } = req.query;
+  try {
+    const orders = await Orders.find({}, { __v: 0 });
+    ordersActives = orders.filter((order) => order.estado !== "Finalizada");
+    if (type) {
+      ordersByType = ordersActives.filter((order) => {
+        return order.type
+          .toLocaleLowerCase()
+          .includes(type.toLocaleLowerCase());
+      });
+      ordersByType.length
+        ? res.json({
+            succes: true,
+            msg: "Ordenes encontradas",
+            payload: ordersByType,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron ordenes",
+            payload: null,
+          });
+    } else {
+      if (ordersActives.length) {
+        return res.json({
+          succes: true,
+          msg: "Ordenes encontradas",
+          payload: ordersActives,
+        });
+      }
+      res.json({
+        succes: false,
+        msg: "No se encontraron ordenes",
+        payload: null,
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 

@@ -32,7 +32,6 @@ import {
 function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const singUpError = useSelector((state) => state.singUpErrors);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -40,7 +39,7 @@ function Register() {
   });
 
   const [signUpErrors, setSignUpErrors] = useState({
-    emailSucess: false,
+    emailSuccess: false,
     emailNotValid: "Ya existe una cuenta con este correo electrónico.",
     passwordSucess: false,
     passwordNotValid: "Las contraseñas deben ser iguales",
@@ -51,6 +50,7 @@ function Register() {
   }); */
 
   function handleChange(e) {
+    // console.log({[e.target.name]: e.target.value});
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -58,8 +58,8 @@ function Register() {
   }
 
   useEffect(() => {
-    if (signUpErrors.emailSucess && signUpErrors.passwordSucess) {
-      history.push("/home");
+    if (signUpErrors.emailSuccess && signUpErrors.passwordSucess) {
+      history.push("/");
     }
   }, [history, signUpErrors]);
 
@@ -67,9 +67,11 @@ function Register() {
     e.preventDefault();
     let validatePass = passwordValidation(input);
     let validateEmail = await emailValidation(input);
-    console.log("Password: " + validatePass, "Email:" + validateEmail);
+    console.log("valPwd: " + validatePass, "valEmail:" + validateEmail);
     if (validatePass && validateEmail === false) {
+      // console.log("voy a despachar registerUser(input), con input: ", input);
       dispatch(registerUser(input));
+      // console.log("pasado el dispatch de registerUser(input)");
       setInput({
         email: "",
         password: "",
@@ -77,7 +79,7 @@ function Register() {
       });
       setSignUpErrors({
         ...signUpErrors,
-        emailSucess: true,
+        emailSuccess: true,
         passwordSucess: true,
       });
     }
@@ -85,7 +87,7 @@ function Register() {
       if (validatePass) {
         setSignUpErrors({
           ...signUpErrors,
-          emailSucess: true,
+          emailSuccess: true,
           passwordSucess: false,
         });
       }
@@ -96,12 +98,12 @@ function Register() {
       });
     }
     if (!validatePass) {
-      console.log("Aquí");
+      console.log("valPwd false");
       if (!validateEmail) {
-        console.log("Aquí");
+        console.log("valEmail false");
         setSignUpErrors({
           ...signUpErrors,
-          emailSucess: false,
+          emailSuccess: false,
           passwordSucess: true,
         });
       }
@@ -170,7 +172,7 @@ function Register() {
               <Placeholder htmlFor="email" className="placeholder">
                 Correo electrónico
               </Placeholder>
-              {signUpErrors.emailSucess && (
+              {signUpErrors.emailSuccess && (
                 <ErrorRegistro>{signUpErrors.emailNotValid}</ErrorRegistro>
               )}
             </InputContainers>

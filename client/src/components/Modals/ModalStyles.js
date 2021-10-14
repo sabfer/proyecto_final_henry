@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Overlay = styled.div`
+  transition: all 0.8s ease;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -8,7 +9,7 @@ export const Overlay = styled.div`
   left: 0;
   background: rgba(0, 0, 0, 0.8);
   padding: 40px;
-  display: flex;
+  display: ${(props) => props.display};
   align-items: center;
   justify-content: center;
 `;
@@ -16,8 +17,9 @@ export const Overlay = styled.div`
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 420px;
+  align-items: ${(props) => props.align || "center"};
+  max-width: ${(props) => props.maxwidth};
+  min-width: ${(props) => props.minwidth};
   padding: 3rem;
   background: #fff;
   position: relative;
@@ -25,7 +27,6 @@ export const ModalContainer = styled.div`
   form {
     width: 100%;
     div {
-      margin-bottom: 1.5rem;
       input {
         width: 100%;
         height: 2.4rem;
@@ -43,33 +44,60 @@ export const ModalContainer = styled.div`
       }
     }
   }
-  button {
+`;
+
+export const CategoriasPedidos = styled.div`
+  width: 100%;
+  .category_filter {
     width: 100%;
-    height: 2.5rem;
-    border-radius: 0.6rem;
-    color: #ffffff;
-    border: none;
-    background: rgb(2, 101, 210);
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 1.4rem;
-    &:hover {
-      background-color: rgb(26, 103, 255);
+    .actual_filter {
+      width: 100%;
+      select {
+        width: 100%;
+        border: solid 1px black;
+        font-weight: bold;
+      }
     }
   }
 `;
 
 export const HeaderModal = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 2rem 0;
-  h2 {
-    margin: 0;
+  img {
+    height: 75px;
+  }
+`;
+
+export const HeaderModalTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 600px;
+  margin-left: 20px;
+  h3 {
+    margin: 4px 0px;
     font-weight: bold;
     font-size: 2rem;
-    line-height: 48rem
+    line-height: 2rem;
     color: #000000;
+  }
+  h4 {
+    margin: 2px 0px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+`;
+
+export const HeaderModalDetails = styled.div`
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  p {
+    margin: 1px 0px;
+    font-weight: bold;
   }
 `;
 
@@ -89,4 +117,78 @@ export const CloseButton = styled.div`
   &:hover {
     color: #ff0000;
   }
+`;
+
+export const FormModal = styled.form`
+  height: 100%;
+  display: flex;
+  gap: 0 10px;
+`;
+
+export const SelectModal = styled.div`
+  margin: 1rem 0 1rem 0;
+  display: flex;
+`;
+
+export const InputModal = styled.div`
+  width: 12%;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export const InputClient = styled.input`
+  width: ${(props) => props.width};
+  height: 2rem;
+  margin:  ${(props) => props.margin};
+  border: solid 1px black;
+  border-radius: 5px;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export const DivInfo = styled.div`
+  display: flex;
+  
+`;
+
+
+export const TablesModal = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const TableProductsModal = styled.div`
+  width: 100%;
+`;
+
+export const InputAmount = styled.input`
+  width: 30px;
+  border: transparent;
+  background-color: transparent;
+  color: black;
+`;
+
+export const TablePricesModal = styled.div`
+  display: flex;
+  align-self: flex-end;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 100%;
+  height: 200px;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 5px;
+  p {
+    margin: 5px 0px;
+  }
+`;
+
+export const OrderContainer = styled.div`
+  display: grid;
+  grid-template-columns: 70% 28%;
+  gap: 0 1rem;
 `;

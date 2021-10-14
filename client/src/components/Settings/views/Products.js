@@ -11,32 +11,40 @@ import { Button, Loading } from "../../../css";
 import {
   SearchBarContainer,
   AjustesDerechaTop,
+  ExportExcel,
 } from "../../../css/SettingStyles";
+import Modal from "../../Modals/Modal";
+import Search from "../components/Search";
+import FilterProductTypes from "../components/FilterProductTypes";
+import NumberOfProducts from "../components/NumberOfProduct";
+import { Paginado } from "../../../css";
 import {
   Table,
   TableHead,
   TableData,
   TableHd,
   TableRow,
+  Options,
 } from "../../../css/Table";
 import {
   faPenSquare,
   faTrash,
   faSortAlphaDown,
   faPlus,
+  faSyncAlt,
+  faFileExcel,
+  faAngleDoubleRight,
+  faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../Modals/Modal";
-import Search from "../components/Search";
-import FilterProductTypes from "../components/FilterProductTypes";
-import NumberOfProducts from "../components/NumberOfProduct";
-import ExcelToJson from "../components/ImportExcel";
-
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Productos() {
-  const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+
+  const token = useSelector((state) => state.userToken);
   const products = useSelector((state) => state.products);
+  const categories = useSelector((state) => state.productTypes);
+  const products2 = useSelector((state) => state.products);
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -49,9 +57,9 @@ export default function Productos() {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getProducts(token));
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   function handleDelete(e) {
     MySwal.fire({
@@ -65,9 +73,9 @@ export default function Productos() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e));
+        dispatch(deleteProduct(e, token));
         setTimeout(() => {
-          dispatch(getProducts());
+          dispatch(getProducts(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -96,24 +104,35 @@ export default function Productos() {
   }
 
   function handleButton(e) {
-    dispatch(getProducts());
+    dispatch(getProducts(token));
   }
+
+  const productPerPag = 10;
+  var cantPaginas = 0;
+  if (products2) {
+    cantPaginas = Math.ceil(products2.length / productPerPag);
+  }
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pagAct, setPagAct] = useState(1);
+  const getFilter = () => {
+    return products2.slice(currentPage, currentPage + productPerPag);
+  };
+  const handlePrev = () => {
+    if (pagAct > 1) {
+      setCurrentPage(currentPage - productPerPag);
+      setPagAct(pagAct - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (pagAct >= 1 && pagAct < cantPaginas) {
+      setCurrentPage(currentPage + productPerPag);
+      setPagAct(pagAct + 1);
+    }
+  };
 
   return (
     <div>
-      <NumberOfProducts />
-      <div align="center">
-        <ExcelToJson/>
-        <ReactHTMLTableToExcel
-          id="botonExportarProd"
-          className="btnExport"
-          table="productsTable"
-          filename="Productos_cargados_en_el_sistema"
-          sheet="Productos"
-          buttonText="Export to Excel"
-        />
-      </div>
-      <table id="table-to-xls"></table>
       <AjustesDerechaTop>
         <h1>Productos</h1>
         <Button
@@ -126,9 +145,12 @@ export default function Productos() {
           Añadir producto
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
-
+      </AjustesDerechaTop>
+      <SearchBarContainer>
+        <Search />
+        <FilterProductTypes />
         <Button
-          width="10rem"
+          width="12rem"
           padding="0.8rem"
           justify="space-between"
           buttonColor="rgb(21, 151, 67)"
@@ -140,10 +162,6 @@ export default function Productos() {
           Restablecer
           <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
         </Button>
-      </AjustesDerechaTop>
-      <SearchBarContainer>
-        <Search />
-        <FilterProductTypes />
         <Modal
           id={3}
           state={newProductModal}
@@ -155,6 +173,7 @@ export default function Productos() {
           label4="Tipo de Producto"
           modalContainerBox={true}
           showInSettings={true}
+          categories={categories}
         />
       </SearchBarContainer>
 
@@ -181,14 +200,15 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {products.map((el) => {
+              {/* {products.map((el) => { */}
+              {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
                     <TableData>{el.productType}</TableData>
                     <TableData>$ {el.price}</TableData>
                     <TableData>
-                      <div className="options">
+                      <Options justify="space-between">
                         <Button
                           onClick={(e) =>
                             handleClick(e, {
@@ -212,7 +232,7 @@ export default function Productos() {
                         >
                           <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                         </Button>
-                      </div>
+                      </Options>
                     </TableData>
                   </TableRow>
                 );
@@ -223,13 +243,45 @@ export default function Productos() {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
+
+
+      <ExportExcel>
+        <NumberOfProducts />
+        <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
+          <FontAwesomeIcon icon={faFileExcel} size="lg">
+            <ReactHTMLTableToExcel
+              id="botonExportarProd"
+              table="productsTable"
+              className="Excel"
+              filename="Productos_cargados_en_el_sistema"
+              sheet="Productos"
+            />
+          </FontAwesomeIcon>
+        </Button>
+      </ExportExcel>
+
+      <Paginado>
+        <FontAwesomeIcon
+          onClick={() => handlePrev()}
+          icon={faAngleDoubleLeft}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+        <span> </span>
+        <span>
+          {pagAct} de {cantPaginas}
+        </span>
+        <span> </span>
+        <FontAwesomeIcon
+          onClick={() => handleNext()}
+          icon={faAngleDoubleRight}
+          size="lg"
+          style={{ cursor: "pointer" }}
+        ></FontAwesomeIcon>
+      </Paginado>
 
       <Modal
         idElement={inputModalProduct._id}

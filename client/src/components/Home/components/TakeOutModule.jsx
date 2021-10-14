@@ -1,23 +1,40 @@
 import React, { useState } from "react";
-import { TakeOut, OrderButton, Orders, Order } from "../HomeStyles";
+import { useSelector } from "react-redux";
+
+import {
+  TakeOut,
+  Orders,
+  Order,
+  ModuleTop,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
+import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faPaintRoller } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../Modals/Modal";
 
 export default function TakeOutModule() {
+  const token = useSelector((state) => state.userToken);
+
   const [stateModal6, setStateModal6] = useState(false);
   return (
     <TakeOut>
-      <OrderButton
-        onClick={() => setStateModal6(!stateModal6)}
-        width="10rem"
-        justify="space-between"
-        padding="0.625rem"
-      >
-        <FontAwesomeIcon icon={faPlus} size="lg" />
-        Crear pedido
-      </OrderButton>
+      <ModuleTop>
+        <h3>Take Away</h3>
+        <Button
+          onClick={() => setStateModal6(!stateModal6)}
+          width="10rem"
+          height="2.5rem"
+          alignSelf="flex-end"
+          justify="space-between"
+          padding="0.6rem"
+          buttonColor="rgba(0, 41, 107, 1)"
+        >
+          Crear pedido
+          <FontAwesomeIcon icon={faPlus} size="lg" />
+        </Button>
+      </ModuleTop>
 
       {/* Modal 6 */}
       <Modal
@@ -29,57 +46,58 @@ export default function TakeOutModule() {
         label2="Productos"
         modalContainerBox={false}
       />
-
-      <Orders>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-        <Order>
-          <FontAwesomeIcon icon={faPaintRoller} size="4x" />
-          <p>Pedido X</p>
-        </Order>
-      </Orders>
+      <OrdersContainer>
+        <Orders>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+          <Order>
+            <FontAwesomeIcon icon={faPaintRoller} size="4x" />
+            <p>Pedido X</p>
+          </Order>
+        </Orders>
+      </OrdersContainer>
     </TakeOut>
   );
 }
