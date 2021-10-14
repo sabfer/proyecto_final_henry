@@ -15,12 +15,12 @@ import Comercios from "./views/Comercios";
 import Users from "./views/Users";
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
+import Error403 from "../Home/views/Error403";
 
 export default function Settings() {
   const settings = useSelector((state) => state.settings);
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
-  console.log({settings});
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,15 +50,21 @@ export default function Settings() {
     }
   }
 
+  if (!token) {
+    return <Error403 />;
+  }
+
   return (
     <div>
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="11rem">Regresar a Home</Button>
+          <Button width="11.5rem" height="2.5rem" padding="0.5rem">
+            Regresar a Home
+          </Button>
         </StyledLink>
       </Header>
-      <Body display="flex" padding="4rem 6rem" justifycontent="space-between">
+      <Body display="flex" padding="4rem 4rem" justifycontent="space-between">
         <AjustesIzquierda>
           <TituloIzquierda>Opciones</TituloIzquierda>
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "generales")}>

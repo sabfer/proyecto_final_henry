@@ -22,7 +22,7 @@ import {
   GSubmit,
   ErrorRegistro,
   FormTitle,
-} from "./LandingStyles";
+} from "../../css/LandingStyles";
 import { loginUser } from "../../actions/index";
 import { emailValidation } from "../../services/passwordValidation";
 

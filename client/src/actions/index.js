@@ -133,7 +133,11 @@ export function postCommerce(payload, token) {
     },
   };
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload,
+      auth
+    );
     return data;
   };
 }
@@ -153,7 +157,10 @@ export function getCommerces(token) {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log("estoy en el error del catch de getCommerces, con err: ", err);
+        console.log(
+          "estoy en el error del catch de getCommerces, con err: ",
+          err
+        );
       });
   };
 }
@@ -207,6 +214,31 @@ export function getUsers(payload, token) {
   };
 }
 
+// ---------- OBTENER ID USUARIO PARA STORE ---------- \\
+export function getUserId(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  }
+  // console.log('estoy en actions funcion getUserId');
+  return async function (dispatch) {
+    axios
+      .get(`http://localhost:3001/getId`, auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_USER_ID",
+          payload: data.data,
+        });
+      })
+      .catch((err) => {
+        console.log('estoy en catch de axios de getUserId con err: ', err);
+      });
+  }
+}
+
+
+
 // ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload, token) {
   let auth = {
@@ -244,8 +276,8 @@ export function changeSettings(payload) {
   };
 }
 
-// ---------- OBTENER ORDENES ---------- \\
-export function getSalonOrders({ key, value }, token) {
+// ---------- OBTENER ORDENES DE SALON---------- \\
+export function getSalonOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -253,10 +285,33 @@ export function getSalonOrders({ key, value }, token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/filter?key=${key}&value=${value}`, auth)
+      .get(`http://localhost:3001/orders/active?type=Salon`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_SALON_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+// ---------- OBTENER ORDENES DE TAKE AWAY---------- \\
+export function getTakeAwayOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
+      .then((data) => {
+        console.log(data)
+        return dispatch({
+          type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
         });
       })
@@ -351,6 +406,7 @@ export function postCategories(payload, token) {
     return data;
   };
 }
+
 // ---------- CREACIÓN DE ORDEN ---------- \\
 export function postOrder(payload, token) {
   let auth = {
@@ -363,6 +419,30 @@ export function postOrder(payload, token) {
     return dispatch({
       type: "POST_ORDER",
       payload: data.data.payload,
+    });
+  };
+}
+
+// ---------- CREACIÓN DE ORDEN TAKE AWAY ---------- \\
+export function postOrderTakeAway(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload, auth);
+    return dispatch({
+      type: "POST_ORDER_TAKE_AWAY",
+      payload: data.data.payload,
+    });
+  };
+}
+
+export function deleteToken() {
+  return async function (dispatch) {
+    return dispatch({
+      type: "DELETE_TOKEN",
     });
   };
 }

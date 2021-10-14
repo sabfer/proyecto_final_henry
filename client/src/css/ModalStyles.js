@@ -7,8 +7,8 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: ${(props) => props.padding || "40px"};
   display: ${(props) => props.display};
   align-items: center;
   justify-content: center;
@@ -18,7 +18,8 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => props.align || "center"};
-  width: fit-content;
+  max-width: ${(props) => props.maxwidth};
+  min-width: ${(props) => props.minwidth};
   padding: 3rem;
   background: #fff;
   position: relative;
@@ -26,7 +27,6 @@ export const ModalContainer = styled.div`
   form {
     width: 100%;
     div {
-      margin-bottom: 1.5rem;
       input {
         width: 100%;
         height: 2.4rem;
@@ -53,10 +53,9 @@ export const CategoriasPedidos = styled.div`
     .actual_filter {
       width: 100%;
       select {
-        width: 75%;
+        width: 100%;
         border: solid 1px black;
         font-weight: bold;
-        margin: 15px 0px;
       }
     }
   }
@@ -121,13 +120,14 @@ export const CloseButton = styled.div`
 `;
 
 export const FormModal = styled.form`
+  height: 100%;
   display: flex;
   gap: 0 10px;
 `;
 
 export const SelectModal = styled.div`
+  margin: 1rem 0 1rem 0;
   display: flex;
-  width: 75%;
 `;
 
 export const InputModal = styled.div`
@@ -144,7 +144,7 @@ export const TablesModal = styled.div`
 `;
 
 export const TableProductsModal = styled.div`
-  width: 75%;
+  width: 100%;
 `;
 
 export const InputAmount = styled.input`
@@ -156,15 +156,37 @@ export const InputAmount = styled.input`
 
 export const TablePricesModal = styled.div`
   display: flex;
+  align-self: flex-end;
   flex-direction: column;
   border: 1px solid black;
-  width: 25%;
+  width: 100%;
   height: 200px;
-  margin-left: 10px;
   font-size: 19px;
   font-weight: bold;
   padding: 5px;
   p {
     margin: 5px 0px;
   }
+`;
+
+export const OrderContainer = styled.div`
+  display: grid;
+  grid-template-columns: 70% 28%;
+  gap: 0 1rem;
+`;
+
+export const InputClient = styled.input`
+  width: ${(props) => props.width};
+  height: 2rem;
+  margin: ${(props) => props.margin};
+  border: solid 1px black;
+  border-radius: 5px;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export const DivInfo = styled.div`
+  display: flex;
 `;

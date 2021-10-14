@@ -13,7 +13,7 @@ import {
   ModalContainer,
   HeaderModal,
   CloseButton,
-} from "./ModalStyles";
+} from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -24,23 +24,19 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const ordenes = useSelector((state) => state.orders.salonOrders);
-  console.log(tableNumber, "HOLAaaaaaaaaaaa");
-  console.log(ordenes, "ORDENESS");
   const ordenTableNumber = ordenes
     ? ordenes.find(
         (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
       )
     : null;
-  
-  console.log(ordenTableNumber, "orden table");
+
   /* const MySwal = withReactContent(Swal);
   
 
   /* function handleChange(e) {
   } */
 
-  
-  function handleInput(e, id) {
+  function handleInputAmount(e, id) {
     const product = ordenTableNumber.products.find((p) => p._id === id);
     product.amount = e.target.value;
     ordenTableNumber.totalPrice = ordenTableNumber.products.reduce(function (
@@ -118,7 +114,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       <TableData>{product.price}</TableData>
                       <TableData>
                         <input
-                          onChange={(e) => handleInput(e, product._id)}
+                          onChange={(e) => handleInputAmount(e, product._id)}
                           placeholder={product.amount}
                         />
                       </TableData>

@@ -61,11 +61,17 @@ auth.login = async function (req, res) {
         var payload = { id: user.id };
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
         console.log('id:', user.id);
-        res.json({ message: "Logueo correcto, te va el token...", token: token });
+        res.json({ message: "Logueo correcto, te va el token...", token: token, id: user.id });
     } else {
         res.json({ message: "Password inválido.", token: null })
             .status(401);
     }
+}
+
+auth.id = async function (req, res) {
+    // console.log('----->>>>>>>>> estoy en funcion para entregar id desde token, con req: ', req.userId);
+    // res.json({ id: res.userId });
+    res.json(req.userId)
 }
 
 auth.secret = (req, res, next) => {
@@ -82,6 +88,7 @@ auth.secret = (req, res, next) => {
             // res.redirect('/auth');
             // res.json({ message: 'ok' })
             // .status(200);
+            req.userId = user._id;
             next();
         } else {
             console.log('----- typeof info: ', typeof info, Object.entries(info).length);
