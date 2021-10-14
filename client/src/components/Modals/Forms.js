@@ -1,4 +1,4 @@
-import { LeyendaError, Label, InputContainer } from "./StyleForm";
+import { LeyendaError, Label, InputContainer } from "../../css/StyleForm";
 import { Select } from "../../css/Select";
 
 export const conditionalForm = (
