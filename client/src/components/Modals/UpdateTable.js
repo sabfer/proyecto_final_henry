@@ -13,7 +13,7 @@ import {
   ModalContainer,
   HeaderModal,
   CloseButton,
-} from "./ModalStyles";
+} from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";

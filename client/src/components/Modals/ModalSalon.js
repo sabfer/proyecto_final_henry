@@ -23,7 +23,7 @@ import {
   TablePricesModal,
   InputAmount,
   OrderContainer,
-} from "./ModalStyles";
+} from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
 import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -58,6 +58,7 @@ export default function ModalSalon({ state, setState }) {
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {

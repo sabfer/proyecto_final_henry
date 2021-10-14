@@ -21,7 +21,7 @@ export const Delivery = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.6rem;
-  box-shadow: 0px 1px 12px 1px rgba(0, 0, 0, 0.49);
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 768px) {
     width: 100%;
   } ;
