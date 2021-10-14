@@ -3,6 +3,8 @@ import {} from "../actions/index";
 const initialState = {
   signUpData: undefined,
   userToken: undefined,
+  userId: undefined,
+  // userName: undefined,
   products: undefined,
   productTypes: undefined,
   productsCopy: undefined,
@@ -28,11 +30,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         signUpData: payload,
       };
     case "LOGIN_USER":
-      console.log("reducer LOGIN_USER, payload", payload);
+      console.log("reducer LOGIN_USER, payload: ", payload);
       return {
         ...state,
         userToken: payload.token,
+        userId: payload.id,
       };
+
+    case "GET_USER_ID":
+      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
+      return{
+        ...state,
+        userId: payload,
+      };
+
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
@@ -134,6 +145,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
+    case "GET_TAKE_AWAY_ORDERS":
+      console.log({payload})
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          takeAwayOrders: payload,
+        },
+      }
+
     case "GET_SALON_ORDERS":
       return {
         ...state,
@@ -148,6 +169,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         mesas: payload,
       };
+    
 
     /* case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
@@ -173,6 +195,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
+      
     case "POST_ORDER":
       if (state.orders.salonOrders) {
         return {
@@ -189,9 +212,25 @@ const rootReducer = (state = initialState, { type, payload }) => {
         };
       }
 
+    case "POST_ORDER_TAKE_AWAY":
+      if (state.orders.takeAwayOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            takeAwayOrders: [...state.orders.takeAwayOrders, payload],
+          },
+        };
+      } else {
+        return {
+          ...state,
+          orders: { ...state.orders, takeAwayOrders: [payload] },
+        };
+      }
+
     case "DELETE_TOKEN":
       return {
-        state: { userToken: null },
+        userToken: null,
       };
 
     default:

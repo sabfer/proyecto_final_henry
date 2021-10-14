@@ -11,6 +11,7 @@ export const Body = styled.section`
   height: 100%;
   padding: ${(props) => props.padding || "4rem"};
   display: ${(props) => props.display || "grid"};
+  flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
   gap: 1.4rem 0;
@@ -58,16 +59,21 @@ export const Button = styled.button`
   border-radius: 0.6rem;
   cursor: pointer;
   font-weight: 600;
+  transition: all 350ms ease-out;
   .Excel {
     width: 100%;
     height: 100%;
     background: none;
     border: none;
   }
+  &:hover {
+    background-color: ${(props) => props.hoverBgColor};
+    color: ${(props) => props.hoverColor};
+  }
 `;
 
 export const Title = styled.h1`
-  color: rgb(255, 255, 255);
+  color: ${(props) => props.color || "rgb(255, 255, 255)"};
   font-size: 2rem;
   margin: 0;
 `;

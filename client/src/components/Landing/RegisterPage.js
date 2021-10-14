@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import {
   Container,
@@ -22,12 +22,9 @@ import {
   GSubmit,
   ErrorRegistro,
   FormTitle,
-} from "./LandingStyles";
+} from "../../css/LandingStyles";
 import { registerUser } from "../../actions/index";
-import {
-  passwordValidation,
-  emailValidation,
-} from "../../services/passwordValidation";
+import { passwordValidation, emailValidation } from "../../services/passwordValidation";
 
 function Register() {
   const dispatch = useDispatch();
@@ -124,11 +121,7 @@ function Register() {
         <NavBar>
           <ul>
             <li>
-              <StyledLink
-                to="/"
-                margin="12px"
-                hover="underline solid rgb(255,255,255)"
-              >
+              <StyledLink to="/" margin="12px" hover="underline solid rgb(255,255,255)">
                 Inicio
               </StyledLink>
             </li>
@@ -151,8 +144,7 @@ function Register() {
             fontsize="2rem"
           >
             <h2>
-              Registrate y conoce las <br /> bondades de una buena <br />{" "}
-              gestión
+              Registrate y conoce las <br /> bondades de una buena <br /> gestión
             </h2>
             <Overlay />
           </FormHeaderText>

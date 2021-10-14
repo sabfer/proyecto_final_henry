@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
-import { Overlay, ModalContainer, HeaderModal, CloseButton } from "./ModalStyles";
+import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
 import {
   postProduct,
   updateProduct,

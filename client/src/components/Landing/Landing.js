@@ -8,7 +8,7 @@ import {
   Button,
   Title,
   StyledLink,
-} from "./LandingStyles";
+} from "../../css/LandingStyles";
 
 function Landing() {
   return (
