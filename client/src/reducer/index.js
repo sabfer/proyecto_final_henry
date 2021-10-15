@@ -38,7 +38,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_USER_ID":
-      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
       return {
         ...state,
         userId: payload,
