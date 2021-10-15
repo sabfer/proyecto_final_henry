@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, OptionsBar, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
 import Modal from "../../Modals/Modal";
-import DeliveryModule from "../components/Delivery";
+import DeliveryModule from "../components/DeliveryModule";
 import SalonModule from "../components/SalonModule";
 import TakeAwayModule from "../components/TakeOutModule";
 import {
@@ -16,6 +16,7 @@ import {
   getCategories,
   deleteToken,
   getTakeAwayOrders,
+  getDeliveryOrders,
 } from "../../../actions/index";
 
 export default function Dashboard() {
@@ -42,6 +43,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getTakeAwayOrders(token));
+    dispatch(getDeliveryOrders(token));    
   }, [dispatch, token]);
 
   function handleLogOut() {
@@ -76,17 +78,6 @@ export default function Dashboard() {
           padding="0.625rem"
         >
           Crear usuario
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-        <Button
-          onClick={() => setStateModal2(!stateModal2)}
-          width="11.5rem"
-          height="2.5rem"
-          justify="space-between"
-          padding="0.5rem"
-          buttonColor="rgb(0, 141, 101)"
-        >
-          Crear comercio
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
         <Button
