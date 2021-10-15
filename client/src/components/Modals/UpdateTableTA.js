@@ -7,6 +7,7 @@ import {
     TableData,
     TableHd,
     TableRow,
+    Options
 } from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
@@ -241,7 +242,7 @@ function handleCloseOrder(id, payload) {
             <Overlay display={state ? "flex" : "none"}>
             <ModalContainer>
                 <HeaderModal>
-                <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+                <img src="https://i.imgur.com/ZyWpO0s.png" alt="img not found" />
                 <HeaderModalTitle>
                     <h3>Orden: {ordenActual.orderNumber} </h3>
                     <h4>Cliente: {order.nameClient} </h4>
@@ -331,8 +332,8 @@ function handleCloseOrder(id, payload) {
                                     placeholder={product.amount}
                                 />
                                 </TableData>
-                                <TableData align="center">
-                                <div className="options">
+                                <TableData>
+                                <Options justify="center">
                                     <Button
                                     onClick={(e) =>
                                         handleDelete(product.name)
@@ -345,7 +346,7 @@ function handleCloseOrder(id, payload) {
                                         icon={faTrash}
                                     ></FontAwesomeIcon>
                                     </Button>
-                                </div>
+                                </Options>
                                 </TableData>
                             </TableRow>
                             );

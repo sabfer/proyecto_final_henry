@@ -72,15 +72,6 @@ export default function Dashboard() {
       </Header>
       <OptionsBar>
         <Button
-          onClick={() => setStateModal1(!stateModal1)}
-          width="11rem"
-          justify="space-between"
-          padding="0.625rem"
-        >
-          Crear usuario
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-        <Button
           onClick={() => setStateModal3(!stateModal3)}
           width="11.9rem"
           height="2.5rem"
