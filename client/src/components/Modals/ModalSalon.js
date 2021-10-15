@@ -49,7 +49,7 @@ export default function ModalSalon({ state, setState }) {
     type: "Salon",
     tableNumber: "",
     products: [],
-    estado: "Pendiente",
+    estado: "En proceso",
     totalPrice: 0,
     date: "",
     hour: "",
@@ -75,13 +75,17 @@ export default function ModalSalon({ state, setState }) {
       type: "Salon",
       tableNumber: undefined,
       products: [],
-      estado: "Pendiente",
+      estado: "En proceso",
       totalPrice: 0,
       date: "",
       hour: "",
     });
-    setProducto({ 
+
+    setProducto({
+      name: "",
       amount: "",
+      observations: "",
+      price: "",
     });
   }
 
@@ -173,7 +177,7 @@ export default function ModalSalon({ state, setState }) {
       type: "Salon",
       tableNumber: "",
       products: [],
-      estado: "Pendiente",
+      estado: "En proceso",
       totalPrice: 0,
       date: "",
       hour: "",
@@ -333,7 +337,8 @@ export default function ModalSalon({ state, setState }) {
                     <option
                       id="inputDefault"
                       // value={-1}
-                      value="none"
+                      value="Seleccione un producto"
+
                       selected
                       disabled
                       hidden
