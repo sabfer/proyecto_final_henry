@@ -353,7 +353,7 @@ export default function ModalSalon({ state, setState }) {
                           </option>
                         );
                       })}
-                  </Select>:"d"
+                  </Select>
                   
                   <FontAwesomeIcon
                     onClick={() => disminuir()}
