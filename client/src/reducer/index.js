@@ -138,7 +138,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
-    case "CHANGE_SETTINGS":
+    case "CHANGE_SETTINGS"  :
       return {
         ...state,
         settings: payload,
