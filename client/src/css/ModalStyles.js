@@ -62,6 +62,8 @@ export const CategoriasPedidos = styled.div`
 `;
 
 export const HeaderModal = styled.div`
+  width: 100%;
+  justify-content: space-between;
   display: flex;
   img {
     height: 75px;
@@ -73,7 +75,6 @@ export const HeaderModalTitle = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 600px;
   margin-left: 20px;
   h3 {
     margin: 4px 0px;
@@ -189,9 +190,11 @@ export const TablePricesModal = styled.div`
 `;
 
 export const OrderContainer = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: 70% 28%;
   gap: 0 1rem;
+  margin: 1rem 0 0 0;
 `;
 
 export const DivPaymentCheckBox = styled.div`

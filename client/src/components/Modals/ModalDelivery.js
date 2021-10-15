@@ -229,7 +229,7 @@ export default function ModalDelivery({ state, setState }) {
     <div>
       <Overlay display={state ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
-          <HeaderModal>
+          <HeaderModal minwidth="730px">
             <img src="https://i.imgur.com/vM38VRe.png?1" alt="img not found" />
             <HeaderModalTitle>
               <h3>Delivery</h3>

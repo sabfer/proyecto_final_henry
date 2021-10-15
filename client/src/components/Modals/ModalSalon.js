@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose, faCheck, faAirFreshener } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWindowClose,
+  faCheck,
+  faAirFreshener,
+} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
@@ -23,7 +27,6 @@ import {
   TableProductsModal,
   TablePricesModal,
   InputAmount,
-  
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
 
@@ -33,7 +36,6 @@ import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-sv
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
-
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
@@ -44,7 +46,7 @@ export default function ModalSalon({ state, setState }) {
     observations: "",
     price: undefined,
   });
-  console.log(producto.name)
+  console.log(producto.name);
 
   const [order, setOrder] = useState({
     type: "Salon",
@@ -95,7 +97,6 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       [e.target.name]: e.target.value,
     });
-  
   }
 
   function handleChangeProduct(e) {
@@ -136,8 +137,8 @@ export default function ModalSalon({ state, setState }) {
       price: "",
     });
     document.getElementById("selectProduct").value =
-    document.getElementById("inputDefault").value;
-    console.log(order.products)
+      document.getElementById("inputDefault").value;
+    console.log(order.products);
   }
 
   function handleInputAmount(e, name) {
@@ -156,13 +157,13 @@ export default function ModalSalon({ state, setState }) {
         }, 0),
       };
     });
-    console.log(order)
+    console.log(order);
   }
 
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
 
-    console.log(order)
+    console.log(order);
     setState(!state);
     dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
 
@@ -170,9 +171,7 @@ export default function ModalSalon({ state, setState }) {
       status: false,
       tableNumber: "",
     });
-    dispatch(
-      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
-    );
+    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
 
     setOrder({
       type: "Salon",
@@ -226,36 +225,36 @@ export default function ModalSalon({ state, setState }) {
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
-        amount: producto.amount - 1
+        amount: producto.amount - 1,
       });
     }
-    console.log(producto.amount)
+    console.log(producto.amount);
   }
 
   function aumentar() {
     var aux = 0;
     if (producto.amount < 30) {
-      aux = producto.amount + 1
-      aux=aux-(aux-producto.amount)
-      aux=aux+1
+      aux = producto.amount + 1;
+      aux = aux - (aux - producto.amount);
+      aux = aux + 1;
       setProducto({
         ...producto,
-        amount: aux
+        amount: aux,
       });
     }
   }
 
   function aumentarM() {
     var aux = 0;
-    console.log(order.tableNumber)
+    console.log(order.tableNumber);
     if (order.tableNumber < 30) {
-      aux = order.tableNumber + 1
-      console.log(aux)
-      aux=aux-(aux-order.tableNumber)
-      aux=aux+1
+      aux = order.tableNumber + 1;
+      console.log(aux);
+      aux = aux - (aux - order.tableNumber);
+      aux = aux + 1;
       setOrder({
         ...order,
-        tableNumber: aux
+        tableNumber: aux,
       });
     }
   }
@@ -265,20 +264,22 @@ export default function ModalSalon({ state, setState }) {
     if (order.tableNumber >= 2) {
       setOrder({
         ...order,
-        tableNumber: order.tableNumber - 1
+        tableNumber: order.tableNumber - 1,
       });
     }
-    console.log(order.tableNumber)
+    console.log(order.tableNumber);
   }
 
   return (
     <div>
       <Overlay display={state.status ? "flex" : "none"}>
-        <ModalContainer align="unset" maxwidth="945px">
+        <ModalContainer align="unset" minwidth="945px">
           <HeaderModal>
             <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
             <HeaderModalTitle>
-              <h3>Mesa: {order.tableNumber>0?order.tableNumber:"Ingrese Nª de mesa"}</h3>
+              <h3>
+                Mesa: {order.tableNumber > 0 ? order.tableNumber : "Ingrese Nª de mesa"}
+              </h3>
               <h4>Mozo: Enzo Derviche</h4>
             </HeaderModalTitle>
             <HeaderModalDetails>
@@ -292,7 +293,7 @@ export default function ModalSalon({ state, setState }) {
           <OrderContainer>
             <div>
               <CategoriasPedidos>
-                <FilterProductTypes/>
+                <FilterProductTypes />
               </CategoriasPedidos>
 
               <SelectModal>
@@ -302,8 +303,7 @@ export default function ModalSalon({ state, setState }) {
                     icon={faMinusCircle}
                     size="2x"
                     style={{ cursor: "pointer" }}
-                  >
-                  </FontAwesomeIcon>
+                  ></FontAwesomeIcon>
                   {/* <input type="button" value="-" onClick={disminuirM}></input> */}
                   <InputModal>
                     <input
@@ -312,7 +312,6 @@ export default function ModalSalon({ state, setState }) {
                       name="tableNumber"
                       min="1"
                       max="30"
-                      value={order.tableNumber}
                       onChange={(e) => handleChange(e)}
                       placeholder="Mesa"
                     />
@@ -322,10 +321,9 @@ export default function ModalSalon({ state, setState }) {
                     icon={faPlusCircle}
                     size="2x"
                     style={{ cursor: "pointer" }}
-                  >
-                  </FontAwesomeIcon>
+                  ></FontAwesomeIcon>
                   {/* <input type="button" value="+" onClick={aumentarM}></input> */}
-                  
+
                   <Select
                     id="selectProduct"
                     width="50%"
@@ -339,7 +337,6 @@ export default function ModalSalon({ state, setState }) {
                       id="inputDefault"
                       // value={-1}
                       value="Seleccione un producto"
-
                       selected
                       disabled
                       hidden
@@ -355,7 +352,7 @@ export default function ModalSalon({ state, setState }) {
                         );
                       })}
                   </Select>
-                  
+
                   <FontAwesomeIcon
                     onClick={() => disminuir()}
                     icon={faMinusCircle}
@@ -385,7 +382,6 @@ export default function ModalSalon({ state, setState }) {
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>
                 </FormModal>
-
               </SelectModal>
 
               <TablesModal>
@@ -402,21 +398,16 @@ export default function ModalSalon({ state, setState }) {
                     <tbody>
                       {order.products.length
                         ? order.products.map((el) => {
-
                             return (
                               <TableRow key={el.name}>
                                 <TableData align="center">
                                   <InputAmount
-                                    onChange={(e) =>
-                                      handleInputAmount(e, el.name)
-                                    }
+                                    onChange={(e) => handleInputAmount(e, el.name)}
                                     placeholder={el.amount}
                                   />
                                 </TableData>
                                 <TableData>{el.name}</TableData>
-                                <TableData align="center">
-                                  $ {el.price}
-                                </TableData>
+                                <TableData align="center">$ {el.price}</TableData>
                                 <TableData align="center">
                                   <Options justify="center">
                                     <Button
@@ -425,9 +416,7 @@ export default function ModalSalon({ state, setState }) {
                                       height="2rem"
                                       buttonColor="rgba(255, 0, 0, 1)"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                      ></FontAwesomeIcon>
+                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                     </Button>
                                   </Options>
                                 </TableData>
