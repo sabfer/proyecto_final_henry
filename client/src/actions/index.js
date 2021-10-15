@@ -220,7 +220,7 @@ export function getUserId(token) {
     headers: {
       Authorization: "Bearer " + token,
     },
-  }
+  };
   // console.log('estoy en actions funcion getUserId');
   return async function (dispatch) {
     axios
@@ -232,12 +232,10 @@ export function getUserId(token) {
         });
       })
       .catch((err) => {
-        console.log('estoy en catch de axios de getUserId con err: ', err);
+        console.log("estoy en catch de axios de getUserId con err: ", err);
       });
-  }
+  };
 }
-
-
 
 // ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload, token) {
@@ -309,7 +307,7 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data)
+        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
@@ -321,6 +319,30 @@ export function getTakeAwayOrders(token) {
   };
 }
 
+// ---------- OBTENER ORDENES DE DELIVERY---------- \\
+export function getDeliveryOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
+      .then((data) => {
+        console.log(data);
+        return dispatch({
+          type: "GET_DELIVERY_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+// ---------- OBTENER MESAS---------- \\
 export function getMesas(token) {
   let auth = {
     headers: {
@@ -334,6 +356,7 @@ export function getMesas(token) {
   };
 }
 
+// ---------- CHANGE STATUS---------- \\
 export function changeStatus(payload, token) {
   let auth = {
     headers: {
@@ -437,6 +460,23 @@ export function postOrderTakeAway(payload, token) {
   };
 }
 
+// ---------- CREACIÓN DE ORDEN DELIVERY ---------- \\
+export function postOrderDelivery(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload, auth);
+    return dispatch({
+      type: "POST_ORDER_DELIVERY",
+      payload: data.data.payload,
+    });
+  };
+}
+
+// ---------- DELETE TOKEN ---------- \\
 export function deleteToken() {
   return async function (dispatch) {
     return dispatch({
