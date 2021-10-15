@@ -38,7 +38,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_USER_ID":
-      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
       return {
         ...state,
         userId: payload,
@@ -168,7 +167,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         orders: {
           ...state.orders,
-          delivery: payload,
+          deliveryOrders: payload,
         },
       };
 
@@ -177,16 +176,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         mesas: payload,
       };
-
-    /* case "CHANGE_STATUS":
-      const mesa = state.mesas.find((m) => {
-        return m.tableNumber === parseInt(payload.tableNumber);
-      });
-      mesa.isOccupated = payload.isOccupated;
-      return {
-        ...state,
-        mesas: [...state.mesas],
-      }; */
 
     case "GET_PRODUCT_TYPES":
       let sortedArray = payload.sort(function (a, b) {

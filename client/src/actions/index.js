@@ -385,9 +385,7 @@ export function updateOrder(id, payload, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
-    return dispatch({
-      type: "UPDATE_ORDER",
-    });
+    return dispatch(getSalonOrders(token));
   };
 }
 
