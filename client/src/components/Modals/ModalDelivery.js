@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrderDelivery } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose, faCheck,faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
@@ -53,7 +53,7 @@ export default function ModalDelivery({ state, setState }) {
   const [order, setOrder] = useState({
     type: "Delivery",
     name: "",
-    
+
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
@@ -199,7 +199,32 @@ export default function ModalDelivery({ state, setState }) {
       }
     });
   }
+  function aumentar() {
+    var aux = 0;
+    console.log(order.tableNumber)
+    if (producto.amount < 30) {
+      aux = producto.amount + 1
+      console.log(aux)
+      aux=aux-(aux-producto.amount)
+      aux=aux+1
+      setProducto({
+        ...producto,
+        amount: aux
+      });
+    }
+  }
 
+  function disminuir() {
+    //setProducto(producto.amount+5)
+    if (producto.amount >= 2) {
+      setProducto({
+        ...producto,
+        amount: producto.amount - 1
+      });
+    }
+    console.log(producto.amount)
+  }
+  
   return (
     <div>
       <Overlay display={state ? "flex" : "none"}>
@@ -251,7 +276,7 @@ export default function ModalDelivery({ state, setState }) {
                 <FormModal onSubmit={(e) => handleSubmit(e)}>
                   <Select
                     id="selectProduct"
-                    width="83%"
+                    width="60%"
                     height="2.4rem"
                     border="solid 1px black"
                     fontWeight="bold"
@@ -277,6 +302,13 @@ export default function ModalDelivery({ state, setState }) {
                         );
                       })}
                   </Select>
+                  <FontAwesomeIcon
+                    onClick={() => disminuir()}
+                    icon={faMinusCircle}
+                    size="2x"
+                    style={{ cursor: "pointer" }}
+                  >
+                  </FontAwesomeIcon>  
                   <InputModal>
                     <input
                       type="number"
@@ -284,8 +316,17 @@ export default function ModalDelivery({ state, setState }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="amount"
                       value={producto.amount}
+                      min="1"
+                      max="30"
                     />
                   </InputModal>
+                  <FontAwesomeIcon
+                    onClick={() => aumentar()}
+                    icon={faPlusCircle}
+                    size="2x"
+                    style={{ cursor: "pointer" }}
+                  >
+                  </FontAwesomeIcon>
                   <Button type="submit" width="8%" buttonColor="#00C72C">
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>
@@ -305,37 +346,37 @@ export default function ModalDelivery({ state, setState }) {
                     <tbody>
                       {order.products.length
                         ? order.products.map((el) => {
-                            return (
-                              <TableRow key={el.name}>
-                                <TableData align="center">
-                                  <InputAmount
-                                    onChange={(e) =>
-                                      handleInputAmount(e, el.name)
-                                    }
-                                    placeholder={el.amount}
-                                  />
-                                </TableData>
-                                <TableData>{el.name}</TableData>
-                                <TableData align="center">
-                                  $ {el.price}
-                                </TableData>
-                                <TableData align="center">
-                                  <Options justify="center">
-                                    <Button
-                                      onClick={(e) => handleDelete(el.name)}
-                                      width="2rem"
-                                      height="2rem"
-                                      buttonColor="rgba(255, 0, 0, 1)"
-                                    >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                      ></FontAwesomeIcon>
-                                    </Button>
-                                  </Options>
-                                </TableData>
-                              </TableRow>
-                            );
-                          })
+                          return (
+                            <TableRow key={el.name}>
+                              <TableData align="center">
+                                <InputAmount
+                                  onChange={(e) =>
+                                    handleInputAmount(e, el.name)
+                                  }
+                                  placeholder={el.amount}
+                                />
+                              </TableData>
+                              <TableData>{el.name}</TableData>
+                              <TableData align="center">
+                                $ {el.price}
+                              </TableData>
+                              <TableData align="center">
+                                <Options justify="center">
+                                  <Button
+                                    onClick={(e) => handleDelete(el.name)}
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faTrash}
+                                    ></FontAwesomeIcon>
+                                  </Button>
+                                </Options>
+                              </TableData>
+                            </TableRow>
+                          );
+                        })
                         : null}
                     </tbody>
                   </Table>

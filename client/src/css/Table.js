@@ -60,6 +60,10 @@ export const TableData = styled.td`
         justify-content: space-between;
       }
     `};
+  input {
+    width: 40px;
+    border-color: "grey";
+  }
 `;
 
 export const Options = styled.div`
