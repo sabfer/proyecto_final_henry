@@ -18,6 +18,7 @@ export default function Kitchen() {
 
   console.log(orders);
   useEffect(() => {
+    dispatch(getKitchenOrders(token));
     setInterval(() => {
       dispatch(getKitchenOrders(token));
     }, 60000);
@@ -40,7 +41,7 @@ export default function Kitchen() {
             orders.map((order) => {
               return (
                 <OrderCard key={order._id}>
-                  <p>Pedido N° {order._id}</p>
+                  <h2>Pedido N° {order.orderNumber}</h2>
                   <p>
                     Tipo: <b>{order.type}</b>
                   </p>

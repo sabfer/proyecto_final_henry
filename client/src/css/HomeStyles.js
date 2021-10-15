@@ -49,7 +49,8 @@ export const OrdersContainer = styled.div`
   }
   ::-webkit-scrollbar-thumb, mo {
     background: #888;
-`;
+  }`;
+
 
 export const Orders = styled.div`
   height: 100%;
@@ -92,6 +93,13 @@ export const Mesa = styled.div`
 `;
 
 export const TakeAway = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const DeliveryCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

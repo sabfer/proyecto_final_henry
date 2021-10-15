@@ -39,7 +39,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_USER_ID":
-      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
       return {
         ...state,
         userId: payload,
@@ -145,7 +144,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_TAKE_AWAY_ORDERS":
-      console.log({ payload });
       return {
         ...state,
         orders: {
@@ -163,10 +161,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
       };
 
-    case "GET_KITCHEN_ORDERS":
+    case "GET_DELIVERY_ORDERS":
       return {
         ...state,
-        kitchenOrders: payload,
+        orders: {
+          ...state.orders,
+          deliveryOrders: payload,
+        },
       };
 
     case "GET_MESAS":
@@ -174,16 +175,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         mesas: payload,
       };
-
-    /* case "CHANGE_STATUS":
-      const mesa = state.mesas.find((m) => {
-        return m.tableNumber === parseInt(payload.tableNumber);
-      });
-      mesa.isOccupated = payload.isOccupated;
-      return {
-        ...state,
-        mesas: [...state.mesas],
-      }; */
 
     case "GET_PRODUCT_TYPES":
       let sortedArray = payload.sort(function (a, b) {
@@ -232,9 +223,31 @@ const rootReducer = (state = initialState, { type, payload }) => {
         };
       }
 
+    case "POST_ORDER_DELIVERY":
+      if (state.orders.deliveryOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            deliveryOrders: [...state.orders.deliveryOrders, payload],
+          },
+        };
+      } else {
+        return {
+          ...state,
+          orders: { ...state.orders, deliveryOrders: [payload] },
+        };
+      }
+
     case "DELETE_TOKEN":
       return {
         userToken: null,
+      };
+
+    case "GET_KITCHEN_ORDERS":
+      return {
+        ...state,
+        kitchenOrders: payload,
       };
 
     default:

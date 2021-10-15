@@ -54,7 +54,6 @@ export const Button = styled.button`
   justify-self: ${(props) => props.justifySelf};
   justify-content: ${(props) => props.justify || "center"};
   color: rgb(255, 255, 255);
-  text-transform: uppercase;
   background-color: ${(props) => props.buttonColor || "rgb(0, 160, 210)"};
   border: none;
   border-radius: 0.6rem;

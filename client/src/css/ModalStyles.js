@@ -62,6 +62,8 @@ export const CategoriasPedidos = styled.div`
 `;
 
 export const HeaderModal = styled.div`
+  width: 100%;
+  justify-content: space-between;
   display: flex;
   img {
     height: 75px;
@@ -73,7 +75,6 @@ export const HeaderModalTitle = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 600px;
   margin-left: 20px;
   h3 {
     margin: 4px 0px;
@@ -138,6 +139,22 @@ export const InputModal = styled.div`
   }
 `;
 
+export const InputClient = styled.input`
+  width: ${(props) => props.width};
+  height: 2rem;
+  margin: ${(props) => props.margin};
+  border: solid 1px black;
+  border-radius: 5px;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export const DivInfo = styled.div`
+  display: flex;
+`;
+
 export const TablesModal = styled.div`
   display: flex;
   width: 100%;
@@ -157,6 +174,9 @@ export const InputAmount = styled.input`
 export const TablePricesModal = styled.div`
   display: flex;
   align-self: flex-end;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   flex-direction: column;
   border: 1px solid black;
   width: 100%;
@@ -170,23 +190,21 @@ export const TablePricesModal = styled.div`
 `;
 
 export const OrderContainer = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: 70% 28%;
   gap: 0 1rem;
+  margin: 1rem 0 0 0;
 `;
 
-export const InputClient = styled.input`
-  width: ${(props) => props.width};
-  height: 2rem;
-  margin: ${(props) => props.margin};
-  border: solid 1px black;
-  border-radius: 5px;
-  input::placeholder {
-    text-align: center;
-    font-size: 12px;
-  }
-`;
-
-export const DivInfo = styled.div`
+export const DivPaymentCheckBox = styled.div`
+  margin-bottom: 2px;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  label {
+    input {
+      margin-right: 10px;
+    }
+  }
 `;

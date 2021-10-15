@@ -27,6 +27,7 @@ export const OrderCard = styled.div`
 export const OrderDetails = styled.div`
   display: grid;
   grid-template-columns: 80% 20%;
+  margin-bottom: 2.7rem;
   p {
     font-weight: bold;
     margin: 0.5rem 0;

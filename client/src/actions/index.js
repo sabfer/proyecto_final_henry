@@ -300,7 +300,6 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
@@ -312,7 +311,8 @@ export function getTakeAwayOrders(token) {
   };
 }
 
-export function getKitchenOrders(token) {
+// ---------- OBTENER ORDENES DE DELIVERY---------- \\
+export function getDeliveryOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -320,10 +320,10 @@ export function getKitchenOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/orders/active", auth)
+      .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
       .then((data) => {
         return dispatch({
-          type: "GET_KITCHEN_ORDERS",
+          type: "GET_DELIVERY_ORDERS",
           payload: data.data.payload,
         });
       })
@@ -333,6 +333,7 @@ export function getKitchenOrders(token) {
   };
 }
 
+// ---------- OBTENER MESAS---------- \\
 export function getMesas(token) {
   let auth = {
     headers: {
@@ -346,6 +347,7 @@ export function getMesas(token) {
   };
 }
 
+// ---------- CHANGE STATUS---------- \\
 export function changeStatus(payload, token) {
   let auth = {
     headers: {
@@ -374,9 +376,7 @@ export function updateOrder(id, payload, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
-    return dispatch({
-      type: "UPDATE_ORDER",
-    });
+    return dispatch(getSalonOrders(token));
   };
 }
 
@@ -451,10 +451,48 @@ export function postOrderTakeAway(payload, token) {
   };
 }
 
+// ---------- CREACIÓN DE ORDEN DELIVERY ---------- \\
+export function postOrderDelivery(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios.post("http://localhost:3001/orders", payload, auth);
+    return dispatch({
+      type: "POST_ORDER_DELIVERY",
+      payload: data.data.payload,
+    });
+  };
+}
+
+// ---------- DELETE TOKEN ---------- \\
 export function deleteToken() {
   return async function (dispatch) {
     return dispatch({
       type: "DELETE_TOKEN",
     });
+  };
+}
+
+export function getKitchenOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders/active", auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_KITCHEN_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
