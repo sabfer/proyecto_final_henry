@@ -246,6 +246,7 @@ export default function ModalTakeAway({ state, setState }) {
                                 <InputClient
                                     type="text"
                                     name="nameClient"
+                                    value={order.nameClient}
                                     onChange={(e) => handleChange(e)}
                                     placeholder="Nombre Cliente"
                                     margin="10px 0 0 0 "

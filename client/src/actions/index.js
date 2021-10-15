@@ -307,7 +307,6 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
