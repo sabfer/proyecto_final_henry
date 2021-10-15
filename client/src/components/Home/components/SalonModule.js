@@ -17,7 +17,6 @@ import Mesas from "./Mesa";
 
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
     status: false
