@@ -6,7 +6,7 @@ const OrderSchema = new Schema({
   hour: { type: String, required: true },
   nameClient: { type: String },
   directionClient: { type: String },
-  phoneClient: { type:Number },
+  phoneClient: { type: Number },
   orderNumber: { type: Number, required: true },
   tableNumber: { type: Number },
   products: [
@@ -18,8 +18,9 @@ const OrderSchema = new Schema({
       prodState: { type: Number, default: 0 },
     },
   ],
-  clientId: { type: Schema.ObjectId, ref: "Client" }, //required: true
-  userId: { type: Schema.ObjectId, ref: "User" }, //required: true
+  mozo: { type: String },
+  clientId: { type: Schema.ObjectId, ref: "Client" },
+  userId: { type: Schema.ObjectId, ref: "User" },
   type: {
     type: String,
     enum: ["Take Away", "Delivery", "Salon"],
@@ -27,7 +28,13 @@ const OrderSchema = new Schema({
   },
   estado: {
     type: String,
-    enum: ["Pendiente", "En progreso", "Finalizada"],
+    enum: ["Pendiente", "En proceso", "Finalizada", ""],
+    required: true,
+  },
+  paymentMethod: {
+    type: String,
+    enum: ["Efectivo", "Debito", "Credito", "Mercado Pago"],
+    default: "",
     required: true,
   },
   totalPrice: { type: Number, required: true },

@@ -141,7 +141,7 @@ export const InputModal = styled.div`
 export const InputClient = styled.input`
   width: ${(props) => props.width};
   height: 2rem;
-  margin:  ${(props) => props.margin};
+  margin: ${(props) => props.margin};
   border: solid 1px black;
   border-radius: 5px;
   input::placeholder {
@@ -152,9 +152,7 @@ export const InputClient = styled.input`
 
 export const DivInfo = styled.div`
   display: flex;
-  
 `;
-
 
 export const TablesModal = styled.div`
   display: flex;
@@ -196,4 +194,14 @@ export const OrderContainer = styled.div`
   gap: 0 1rem;
 `;
 
-
+export const DivPaymentCheckBox = styled.div`
+  margin-bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  label {
+    input {
+      margin-right: 10px;
+    }
+  }
+`;
