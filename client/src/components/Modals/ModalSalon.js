@@ -32,7 +32,7 @@ import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-sv
 
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalSalon({ state, setState }) {
+export default function ModalSalon({ state, setState,statusS,changeStatus }) {
 
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
@@ -88,6 +88,8 @@ export default function ModalSalon({ state, setState }) {
       observations: "",
       price: "",
     });
+
+    changeStatus({status:"false"})
   }
 
   function handleChange(e) {
@@ -137,7 +139,7 @@ export default function ModalSalon({ state, setState }) {
     });
     document.getElementById("selectProduct").value =
     document.getElementById("inputDefault").value;
-    console.log(order.products)
+
   }
 
   function handleInputAmount(e, name) {
@@ -325,7 +327,8 @@ export default function ModalSalon({ state, setState }) {
                   >
                   </FontAwesomeIcon>
                   {/* <input type="button" value="+" onClick={aumentarM}></input> */}
-                  
+                  {console.log(statusS.status,"walter")}
+                  {statusS.status=="true"? 
                   <Select
                     id="selectProduct"
                     width="50%"
@@ -339,7 +342,6 @@ export default function ModalSalon({ state, setState }) {
                       id="inputDefault"
                       // value={-1}
                       value="Seleccione un producto"
-
                       selected
                       disabled
                       hidden
@@ -354,8 +356,9 @@ export default function ModalSalon({ state, setState }) {
                           </option>
                         );
                       })}
-                  </Select>
-                  
+                  </Select>:<h1>sd</h1>
+                  }
+                
                   <FontAwesomeIcon
                     onClick={() => disminuir()}
                     icon={faMinusCircle}
@@ -402,7 +405,6 @@ export default function ModalSalon({ state, setState }) {
                     <tbody>
                       {order.products.length
                         ? order.products.map((el) => {
-
                             return (
                               <TableRow key={el.name}>
                                 <TableData align="center">

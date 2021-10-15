@@ -8,11 +8,16 @@ export default function Mesas({
   status,
   handleUpdate,
   setStateModal,
+  stateM,
+  changestateM
 }) {
   return (
     <div>
       <Mesa
         onClick={(e) => {
+          changestateM({
+            ...changestateM,status:"true"
+          })
           if (status) {
             handleUpdate(e, { tableNumber: tableNumber });
           } else {
