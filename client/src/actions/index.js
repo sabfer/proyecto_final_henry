@@ -133,11 +133,7 @@ export function postCommerce(payload, token) {
     },
   };
   return async function (dispatch) {
-    var data = await axios.post(
-      "http://localhost:3001/commerce/register",
-      payload,
-      auth
-    );
+    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
     return data;
   };
 }
@@ -157,10 +153,7 @@ export function getCommerces(token) {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log(
-          "estoy en el error del catch de getCommerces, con err: ",
-          err
-        );
+        console.log("estoy en el error del catch de getCommerces, con err: ", err);
       });
   };
 }
@@ -220,7 +213,7 @@ export function getUserId(token) {
     headers: {
       Authorization: "Bearer " + token,
     },
-  }
+  };
   // console.log('estoy en actions funcion getUserId');
   return async function (dispatch) {
     axios
@@ -232,12 +225,10 @@ export function getUserId(token) {
         });
       })
       .catch((err) => {
-        console.log('estoy en catch de axios de getUserId con err: ', err);
+        console.log("estoy en catch de axios de getUserId con err: ", err);
       });
-  }
+  };
 }
-
-
 
 // ---------- ELIMINAR USUARIOS ---------- \\
 export function deleteUser(payload, token) {
@@ -309,9 +300,30 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data)
+        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function getKitchenOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders/active", auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_KITCHEN_ORDERS",
           payload: data.data.payload,
         });
       })

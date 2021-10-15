@@ -19,6 +19,7 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
+  kitchenOrders: undefined,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -39,7 +40,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "GET_USER_ID":
       // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
-      return{
+      return {
         ...state,
         userId: payload,
       };
@@ -79,9 +80,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
         ...state,
         products: array,
@@ -146,14 +145,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_TAKE_AWAY_ORDERS":
-      console.log({payload})
+      console.log({ payload });
       return {
         ...state,
         orders: {
           ...state.orders,
           takeAwayOrders: payload,
         },
-      }
+      };
 
     case "GET_SALON_ORDERS":
       return {
@@ -164,12 +163,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    case "GET_KITCHEN_ORDERS":
+      return {
+        ...state,
+        kitchenOrders: payload,
+      };
+
     case "GET_MESAS":
       return {
         ...state,
         mesas: payload,
       };
-    
 
     /* case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
@@ -195,7 +199,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
-      
+
     case "POST_ORDER":
       if (state.orders.salonOrders) {
         return {

@@ -51,6 +51,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   align-self: ${(props) => props.alignSelf};
+  justify-self: ${(props) => props.justifySelf};
   justify-content: ${(props) => props.justify || "center"};
   color: rgb(255, 255, 255);
   text-transform: uppercase;
@@ -60,6 +61,8 @@ export const Button = styled.button`
   cursor: pointer;
   font-weight: 600;
   transition: all 350ms ease-out;
+  position: ${(props) => props.position};
+  bottom: ${(props) => props.bottom};
   .Excel {
     width: 100%;
     height: 100%;
