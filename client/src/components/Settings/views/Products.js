@@ -4,10 +4,12 @@ import { getProducts, deleteProduct, orderTheProducts } from "../../../actions";
 //------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //------------------------------------------\\
 import { Button, Loading } from "../../../css";
+
 import {
   SearchBarContainer,
   AjustesDerechaTop,
@@ -43,8 +45,10 @@ export default function Productos() {
 
   const token = useSelector((state) => state.userToken);
   const products = useSelector((state) => state.products);
+
   const categories = useSelector((state) => state.productTypes);
   const products2 = useSelector((state) => state.products);
+
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -247,6 +251,7 @@ export default function Productos() {
         </Loading>
       )}
 
+
       <ExportExcel>
         <NumberOfProducts />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
@@ -257,7 +262,6 @@ export default function Productos() {
               className="Excel"
               filename="Productos_cargados_en_el_sistema"
               sheet="Productos"
-              buttonText=""
             />
           </FontAwesomeIcon>
         </Button>

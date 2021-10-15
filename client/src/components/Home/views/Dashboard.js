@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, OptionsBar, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
 import Modal from "../../Modals/Modal";
-import DeliveryModule from "../components/Delivery";
+import DeliveryModule from "../components/DeliveryModule";
 import SalonModule from "../components/SalonModule";
 import TakeAwayModule from "../components/TakeOutModule";
 import {
@@ -16,6 +16,7 @@ import {
   getCategories,
   deleteToken,
   getTakeAwayOrders,
+  getDeliveryOrders,
 } from "../../../actions/index";
 
 export default function Dashboard() {
@@ -42,6 +43,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getTakeAwayOrders(token));
+    dispatch(getDeliveryOrders(token));    
   }, [dispatch, token]);
 
   function handleLogOut() {
