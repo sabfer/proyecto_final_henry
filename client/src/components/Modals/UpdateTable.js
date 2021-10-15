@@ -17,6 +17,7 @@ import {
   InputModal,
   TablePricesModal,
   OrderContainer,
+  TableContainer,
 } from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -266,7 +267,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" selected disabled hidden>
+                      <option id="inputDefault" value="none" defaultValue disabled hidden>
                         Seleccione un producto
                       </option>
                       {products &&
@@ -292,49 +293,51 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                     </Button>
                   </FormModal>
                 </SelectModal>
-                <Table id="productsTable">
-                  <TableHead>
-                    <TableRow>
-                      <TableHd width="45%">
-                        <span className="productName">
-                          <p style={{ margin: 0 }}>Nombre</p>
-                        </span>
-                      </TableHd>
-                      <TableHd width="15%">Precio</TableHd>
-                      <TableHd width="20%">Cantidad</TableHd>
-                      <TableHd width="20%">Option</TableHd>
-                    </TableRow>
-                  </TableHead>
-                  <tbody>
-                    {ordenActual &&
-                      ordenActual.products.map((product) => {
-                        return (
-                          <TableRow key={product.name}>
-                            <TableData align="center">{product.name}</TableData>
-                            <TableData align="center">{product.price}</TableData>
-                            <TableData align="center">
-                              <input
-                                onChange={(e) => handleInputAmount(e, product.name)}
-                                placeholder={product.amount}
-                              />
-                            </TableData>
-                            <TableData align="center">
-                              <div className="options">
-                                <Button
-                                  onClick={(e) => handleDelete(product.name)}
-                                  width="2rem"
-                                  height="2rem"
-                                  buttonColor="rgba(255, 0, 0, 1)"
-                                >
-                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                                </Button>
-                              </div>
-                            </TableData>
-                          </TableRow>
-                        );
-                      })}
-                  </tbody>
-                </Table>
+                <TableContainer>
+                  <Table id="productsTable">
+                    <TableHead>
+                      <TableRow>
+                        <TableHd width="45%">
+                          <span className="productName">
+                            <p style={{ margin: 0 }}>Nombre</p>
+                          </span>
+                        </TableHd>
+                        <TableHd width="15%">Precio</TableHd>
+                        <TableHd width="20%">Cantidad</TableHd>
+                        <TableHd width="20%">Option</TableHd>
+                      </TableRow>
+                    </TableHead>
+                    <tbody>
+                      {ordenActual &&
+                        ordenActual.products.map((product) => {
+                          return (
+                            <TableRow key={product.name}>
+                              <TableData align="center">{product.name}</TableData>
+                              <TableData align="center">{product.price}</TableData>
+                              <TableData align="center">
+                                <input
+                                  onChange={(e) => handleInputAmount(e, product.name)}
+                                  placeholder={product.amount}
+                                />
+                              </TableData>
+                              <TableData align="center">
+                                <div className="options">
+                                  <Button
+                                    onClick={(e) => handleDelete(product.name)}
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                  >
+                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                  </Button>
+                                </div>
+                              </TableData>
+                            </TableRow>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </TableContainer>
               </div>
               <div style={{ display: "flex" }}>
                 <TablePricesModal>

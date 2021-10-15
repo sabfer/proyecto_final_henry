@@ -208,3 +208,21 @@ export const DivPaymentCheckBox = styled.div`
     }
   }
 `;
+
+export const TableContainer = styled.div`
+  width: 100%;
+  max-height: 300px;
+  display: flex;
+  overflow-y: scroll;
+  scrollbar-color: #888888 #eaeaea;
+  scrollbar-width: thin;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #eaeaea;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+`;

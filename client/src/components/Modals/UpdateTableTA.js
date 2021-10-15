@@ -264,7 +264,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" selected disabled hidden>
+                      <option id="inputDefault" value="none" defaultValue disabled hidden>
                         Seleccione un producto
                       </option>
                       {products &&
