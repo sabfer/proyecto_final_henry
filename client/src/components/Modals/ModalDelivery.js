@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postOrder, changeStatus } from "../../actions";
+import { postOrderDelivery } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
@@ -23,7 +23,9 @@ import {
   TablePricesModal,
   InputAmount,
   OrderContainer,
-} from "../../css/ModalStyles";
+  InputClient,
+  DivInfo,
+} from "../../css/ModalStyles.js";
 import { Select } from "../../css/Select";
 import {
   Table,
@@ -36,7 +38,7 @@ import {
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalSalon({ state, setState }) {
+export default function ModalDelivery({ state, setState }) {
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
@@ -49,14 +51,14 @@ export default function ModalSalon({ state, setState }) {
   });
 
   const [order, setOrder] = useState({
-    type: "Salon",
-    tableNumber: "",
+    type: "Delivery",
+    name: "",
+    
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
     date: "",
     hour: "",
-    /*userId: 1224125, */
   });
 
   useEffect(() => {
@@ -64,24 +66,19 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
-      tableNumber: state.tableNumber,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
-    setState({
-      status: false,
-      tableNumber: "",
-    });
+    setState(!state);
     setOrder({
+      ...order,
       type: "Salon",
-      tableNumber: "",
+      tableNumber: undefined,
       products: [],
       estado: "Pendiente",
-      totalPrice: 0,
-      date: "",
-      hour: "",
+      date: undefined,
+      hour: undefined,
     });
   }
 
@@ -152,23 +149,19 @@ export default function ModalSalon({ state, setState }) {
   }
 
   function handlePostOrder(e) {
-    dispatch(postOrder(order, token));
-    setState({
-      status: false,
-      tableNumber: "",
-    });
-    dispatch(
-      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
-    );
+    dispatch(postOrderDelivery(order, token));
+    setState(!state);
     setOrder({
-      type: "Salon",
+      type: "Delivery",
       tableNumber: "",
       products: [],
-      estado: "Pendiente",
-      totalPrice: 0,
+      estado: "En progreso",
       date: "",
       hour: "",
     });
+    /* setTimeout(function () {
+      dispatch(getSalonOrders({key:'type' , value: "Salon"}));
+    }, 1000) */
   }
 
   function handleDelete(name) {
@@ -209,13 +202,13 @@ export default function ModalSalon({ state, setState }) {
 
   return (
     <div>
-      <Overlay display={state.status ? "flex" : "none"}>
+      <Overlay display={state ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
           <HeaderModal>
-            <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+            <img src="https://i.imgur.com/vM38VRe.png?1" alt="img not found" />
             <HeaderModalTitle>
-              <h3>Mesa: {order.tableNumber}</h3>
-              <h4>Mozo: Enzo Derviche</h4>
+              <h3>Delivery</h3>
+              <h4>Fede "Chime"</h4>
             </HeaderModalTitle>
             <HeaderModalDetails>
               <p>Fecha: {order.date}</p>
@@ -227,21 +220,35 @@ export default function ModalSalon({ state, setState }) {
           </CloseButton>
           <OrderContainer>
             <div>
+              <DivInfo>
+                <InputClient
+                  type="text"
+                  name="name"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Nombre Cliente"
+                  margin="10px 0 0 0 "
+                ></InputClient>
+                <InputClient
+                  type="number"
+                  name="name"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Teléfono"
+                  margin="10px 0 0 12px "
+                ></InputClient>
+              </DivInfo>
+              <InputClient
+                type="text"
+                name="name"
+                onChange={(e) => handleChange(e)}
+                placeholder="Dirección"
+                margin="7px 0 "
+                width="25rem"
+              ></InputClient>
               <CategoriasPedidos>
                 <FilterProductTypes />
               </CategoriasPedidos>
-
               <SelectModal>
                 <FormModal onSubmit={(e) => handleSubmit(e)}>
-                  <InputModal>
-                    <input
-                      value={order.tableNumber}
-                      type="number"
-                      name="tableNumber"
-                      onChange={(e) => handleChange(e)}
-                      placeholder="Mesa"
-                    />
-                  </InputModal>
                   <Select
                     id="selectProduct"
                     width="83%"
@@ -284,7 +291,6 @@ export default function ModalSalon({ state, setState }) {
                   </Button>
                 </FormModal>
               </SelectModal>
-
               <TablesModal>
                 <TableProductsModal>
                   <Table id="productsTable">

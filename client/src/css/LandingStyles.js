@@ -91,8 +91,7 @@ export const FormBody = styled.div`
   min-height: 570px;
   background-color: rgba(0, 41, 107, 1);
   border-radius: 16px;
-  box-shadow: 4px -4px 6px 1px rgba(0, 0, 0, 0.25),
-    -4px 4px 6px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
 `;
 
 export const FormHeaderText = styled.div`
@@ -273,4 +272,30 @@ export const Button = styled.button`
 export const ErrorRegistro = styled.label`
   margin-top: 1rem;
   color: rgb(255, 255, 255);
+`;
+
+export const ErrorMessage = styled.div`
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  h3 {
+    font-size: 4rem;
+    color: black;
+    margin: 1rem 0;
+    font-style: italic;
+  }
+  p {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  div {
+    margin: 2rem 0;
+    display: flex;
+    gap: 0 1rem;
+  }
 `;

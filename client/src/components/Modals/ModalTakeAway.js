@@ -25,7 +25,7 @@ import {
     OrderContainer,
     InputClient,
     DivInfo,
-} from "./ModalStyles";
+} from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
 import {
     Table,

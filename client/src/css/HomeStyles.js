@@ -21,7 +21,7 @@ export const Delivery = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.6rem;
-  box-shadow: 0px 1px 12px 1px rgba(0, 0, 0, 0.49);
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
   @media screen and (max-width: 768px) {
     width: 100%;
   } ;
@@ -39,19 +39,18 @@ export const OrdersContainer = styled.div`
   width: 100%;
   display: flex;
   overflow-y: scroll;
+  scrollbar-color: #888888 #eaeaea;
+  scrollbar-width: thin;
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #eaeaea;
+    background: #eaeaea ;
   }
-  ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb, mo {
     background: #888;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-`;
+  }`;
+
 
 export const Orders = styled.div`
   height: 100%;
@@ -94,6 +93,13 @@ export const Mesa = styled.div`
 `;
 
 export const TakeAway = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const DeliveryCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

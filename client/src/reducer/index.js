@@ -3,6 +3,8 @@ import {} from "../actions/index";
 const initialState = {
   signUpData: undefined,
   userToken: undefined,
+  userId: undefined,
+  // userName: undefined,
   products: undefined,
   productTypes: undefined,
   productsCopy: undefined,
@@ -28,11 +30,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
         signUpData: payload,
       };
     case "LOGIN_USER":
-      console.log("reducer LOGIN_USER, payload", payload);
+      console.log("reducer LOGIN_USER, payload: ", payload);
       return {
         ...state,
         userToken: payload.token,
+        userId: payload.id,
       };
+
+    case "GET_USER_ID":
+      return {
+        ...state,
+        userId: payload,
+      };
+
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
@@ -141,7 +151,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state.orders,
           takeAwayOrders: payload,
         },
-      }
+      };
 
     case "GET_SALON_ORDERS":
       return {
@@ -152,22 +162,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    case "GET_DELIVERY_ORDERS":
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          deliveryOrders: payload,
+        },
+      };
+
     case "GET_MESAS":
       return {
         ...state,
         mesas: payload,
       };
-    
-
-    /* case "CHANGE_STATUS":
-      const mesa = state.mesas.find((m) => {
-        return m.tableNumber === parseInt(payload.tableNumber);
-      });
-      mesa.isOccupated = payload.isOccupated;
-      return {
-        ...state,
-        mesas: [...state.mesas],
-      }; */
 
     case "GET_PRODUCT_TYPES":
       let sortedArray = payload.sort(function (a, b) {
@@ -183,7 +191,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
-      
+
     case "POST_ORDER":
       if (state.orders.salonOrders) {
         return {
@@ -216,9 +224,25 @@ const rootReducer = (state = initialState, { type, payload }) => {
         };
       }
 
+    case "POST_ORDER_DELIVERY":
+      if (state.orders.deliveryOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            deliveryOrders: [...state.orders.deliveryOrders, payload],
+          },
+        };
+      } else {
+        return {
+          ...state,
+          orders: { ...state.orders, deliveryOrders: [payload] },
+        };
+      }
+
     case "DELETE_TOKEN":
       return {
-        state: { userToken: null },
+        userToken: null,
       };
 
     default:

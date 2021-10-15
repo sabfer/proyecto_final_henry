@@ -5,7 +5,8 @@ export const AjustesIzquierda = styled.div`
   height: 100%;
   width: 25%;
   display: block;
-  box-shadow: 0 0 11px 6px #ddd;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
 `;
 
 export const TituloIzquierda = styled.h2`
@@ -21,9 +22,11 @@ export const OpcionesIzquierda = styled.div`
   align-items: center;
   transition: all ease 200ms;
   cursor: pointer;
+  border-radius: 12px;
   &:hover {
-    box-shadow: 0 0 11px 6px #ddd;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
     transform: scale(1.05);
+    border-radius: 6px;
   }
   p {
     margin: 0 0 0 1rem;

@@ -7,8 +7,8 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: ${(props) => props.padding || "40px"};
   display: ${(props) => props.display};
   align-items: center;
   justify-content: center;
@@ -138,6 +138,24 @@ export const InputModal = styled.div`
   }
 `;
 
+export const InputClient = styled.input`
+  width: ${(props) => props.width};
+  height: 2rem;
+  margin:  ${(props) => props.margin};
+  border: solid 1px black;
+  border-radius: 5px;
+  input::placeholder {
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export const DivInfo = styled.div`
+  display: flex;
+  
+`;
+
+
 export const TablesModal = styled.div`
   display: flex;
   width: 100%;
@@ -157,6 +175,9 @@ export const InputAmount = styled.input`
 export const TablePricesModal = styled.div`
   display: flex;
   align-self: flex-end;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   flex-direction: column;
   border: 1px solid black;
   width: 100%;
@@ -175,19 +196,4 @@ export const OrderContainer = styled.div`
   gap: 0 1rem;
 `;
 
-export const InputClient = styled.input`
-  width: ${(props) => props.width};
-  height: 2rem;
-  margin:  ${(props) => props.margin};
-  border: solid 1px black;
-  border-radius: 5px;
-  input::placeholder {
-    text-align: center;
-    font-size: 12px;
-  }
-`;
 
-export const DivInfo = styled.div`
-  display: flex;
-  
-`;
