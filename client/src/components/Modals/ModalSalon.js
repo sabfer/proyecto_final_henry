@@ -8,6 +8,7 @@ import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
 import { Button } from "../../css";
 import {
+  OrderContainer,
   Overlay,
   ModalContainer,
   HeaderModal,
@@ -22,7 +23,7 @@ import {
   TableProductsModal,
   TablePricesModal,
   InputAmount,
-  OrderContainer,
+  
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
 
