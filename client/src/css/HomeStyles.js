@@ -97,3 +97,10 @@ export const TakeAway = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+export const DeliveryCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;

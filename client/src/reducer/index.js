@@ -39,7 +39,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case "GET_USER_ID":
       // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
-      return{
+      return {
         ...state,
         userId: payload,
       };
@@ -146,14 +146,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_TAKE_AWAY_ORDERS":
-      console.log({payload})
       return {
         ...state,
         orders: {
           ...state.orders,
           takeAwayOrders: payload,
         },
-      }
+      };
 
     case "GET_SALON_ORDERS":
       return {
@@ -164,12 +163,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    case "GET_DELIVERY_ORDERS":
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          delivery: payload,
+        },
+      };
+
     case "GET_MESAS":
       return {
         ...state,
         mesas: payload,
       };
-    
 
     /* case "CHANGE_STATUS":
       const mesa = state.mesas.find((m) => {
@@ -195,7 +202,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productTypes: sortedArray,
       };
-      
+
     case "POST_ORDER":
       if (state.orders.salonOrders) {
         return {
@@ -225,6 +232,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return {
           ...state,
           orders: { ...state.orders, takeAwayOrders: [payload] },
+        };
+      }
+
+    case "POST_ORDER_DELIVERY":
+      if (state.orders.deliveryOrders) {
+        return {
+          ...state,
+          orders: {
+            ...state.orders,
+            deliveryOrders: [...state.orders.deliveryOrders, payload],
+          },
+        };
+      } else {
+        return {
+          ...state,
+          orders: { ...state.orders, deliveryOrders: [payload] },
         };
       }
 
