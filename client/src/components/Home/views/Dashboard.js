@@ -81,17 +81,6 @@ export default function Dashboard() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
         <Button
-          onClick={() => setStateModal2(!stateModal2)}
-          width="11.5rem"
-          height="2.5rem"
-          justify="space-between"
-          padding="0.5rem"
-          buttonColor="rgb(0, 141, 101)"
-        >
-          Crear comercio
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-        <Button
           onClick={() => setStateModal3(!stateModal3)}
           width="11.9rem"
           height="2.5rem"

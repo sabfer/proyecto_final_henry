@@ -132,6 +132,29 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
+  function handleDelete(name) {
+    MySwal.fire({
+        title: "¿Estas seguro?",
+        text: "¡El producto será borrado de la orden!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ABD53",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+          handleDeleteProcut(name);
+            MySwal.fire({
+            title: "Producto borrado",
+            text: "El producto se borró correctamente!",
+            icon: "success",
+            confirmButtonColor: "#00A0D2",
+            });
+        }
+    });
+}
+
   //Eliminar Producto de la orden en estado local //
   function handleDeleteProcut(name) {
     setOrdenActual((prev) => {
@@ -319,7 +342,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                               <div className="options">
                                 <Button
                                   onClick={(e) =>
-                                    handleDeleteProcut(product.name)
+                                    handleDelete(product.name)
                                   }
                                   width="2rem"
                                   height="2rem"
