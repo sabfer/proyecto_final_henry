@@ -21,18 +21,16 @@ import {
     FormModal,
     SelectModal,
     InputModal,
-    TablesModal,
-    TableProductsModal,
     TablePricesModal,
-    InputAmount,
     OrderContainer,
 } from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
+import PaymentCheckBox from "./Components/PaymentCheckBox";
 
 export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
     const token = useSelector((state) => state.userToken);
@@ -65,6 +63,7 @@ const [ordenActual, setOrdenActual] = useState({
         return { ...prod };
     }),
     estado: order.estado,
+    paymentMethod: order.paymentMethod,
     totalPrice: order.totalPrice,
 });
 
@@ -128,7 +127,49 @@ function handleInputAmount(e, name) {
     });
 }
 
-    function modifcarOrden(id, payload) {
+function handleDelete(name) {
+    MySwal.fire({
+        title: "¿Estas seguro?",
+        text: "¡El producto será borrado de la orden!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ABD53",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            handleDeleteProduct(name);
+            MySwal.fire({
+            title: "Producto borrado",
+            text: "El producto se borró correctamente!",
+            icon: "success",
+            confirmButtonColor: "#00A0D2",
+            });
+        }
+    });
+}
+
+//Eliminar Producto de la orden en estado local //
+function handleDeleteProduct(name) {
+    setOrdenActual((prev) => {
+        return {
+        ...prev,
+        products: prev.products.filter((p) => p.name !== name),
+        };
+    });
+}
+
+function handlePaymentInput(e) {
+    setOrdenActual((prev) => {
+        return {
+        ...prev,
+        paymentMethod: e.target.name,
+        };
+    });
+}
+
+function modifcarOrden(id, payload) {
     MySwal.fire({
         title: "¿Estas seguro?",
         text: "Se modificara el pedido del cliente",
@@ -203,7 +244,7 @@ function handleCloseOrder(id, payload) {
                 <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
                 <HeaderModalTitle>
                     <h3>Orden: {ordenActual.orderNumber} </h3>
-                    <h4>Mesa: {ordenActual.tableNumber} </h4>
+                    <h4>Cliente: {order.nameClient} </h4>
                 </HeaderModalTitle>
                 <HeaderModalDetails>
                     <p>Hora de pedido: {ordenActual.hour}</p>
@@ -265,13 +306,14 @@ function handleCloseOrder(id, payload) {
                     <Table id="productsTable">
                     <TableHead>
                         <TableRow>
-                        <TableHd width="40%">
+                        <TableHd width="45%">
                             <span className="productName">
                             <p style={{ margin: 0 }}>Nombre</p>
                             </span>
                         </TableHd>
-                        <TableHd width="10%">Precio</TableHd>
-                        <TableHd width="10%">Cantidad</TableHd>
+                        <TableHd width="15%">Precio</TableHd>
+                        <TableHd width="20%">Cantidad</TableHd>
+                        <TableHd width="20%">Option</TableHd>
                         </TableRow>
                     </TableHead>
                     <tbody>
@@ -289,35 +331,22 @@ function handleCloseOrder(id, payload) {
                                     placeholder={product.amount}
                                 />
                                 </TableData>
-                                {/* <TableData>
-                            <div className="options">
-                                <Button
-                                onClick={(e) =>
-                                    handleClick(e, {
-                                    name: product.name,
-                                    price: product.price,
-                                    cantidad: product.cantidad,
-                                    _id: el._id,
-                                    })
-                                }
-                                width="2rem"
-                                height="2rem"
-                                buttonColor="rgb(2, 101, 210)"
-                                >
-                                <FontAwesomeIcon
-                                    icon={faPenSquare}
-                                ></FontAwesomeIcon>
-                                </Button>
-                                <Button
-                                onClick={(e) => handleDelete(el._id)}
-                                width="2rem"
-                                height="2rem"
-                                buttonColor="rgba(255, 0, 0, 1)"
-                                >
-                                <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                                </Button>
-                            </div>
-                            </TableData> */}
+                                <TableData align="center">
+                                <div className="options">
+                                    <Button
+                                    onClick={(e) =>
+                                        handleDelete(product.name)
+                                    }
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                    >
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                    ></FontAwesomeIcon>
+                                    </Button>
+                                </div>
+                                </TableData>
                             </TableRow>
                             );
                         })}
@@ -326,6 +355,7 @@ function handleCloseOrder(id, payload) {
                 </div>
                 <div style={{ display: "flex" }}>
                     <TablePricesModal>
+                    <PaymentCheckBox handlePaymentInput={handlePaymentInput} />
                     <p>Monto Total: ${ordenActual.totalPrice}</p>
                     <Button
                         width="8rem"
@@ -345,17 +375,22 @@ function handleCloseOrder(id, payload) {
                 </div>
                 </OrderContainer>
 
-                <button
+                <Button
+                padding="5px"
+                margin="20px 0 0 0"
+                width="14rem"
+                height="2rem"
                 onClick={() =>
                     modifcarOrden(ordenActual.id, {
                     products: ordenActual.products,
                     totalPrice: ordenActual.totalPrice,
                     estado: ordenActual.estado,
+                    paymentMethod: ordenActual.paymentMethod,
                     })
                 }
-                >
-                Aceptar
-                </button>
+            >
+            MODIFICAR ORDEN
+            </Button>
             </ModalContainer>
             </Overlay>
         )}
