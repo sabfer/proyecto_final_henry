@@ -31,8 +31,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
+import PaymentCheckBox from "./Components/PaymentCheckBox";
 
 export default function UptadeTable({ state, setStateModal, tableNumber }) {
   const token = useSelector((state) => state.userToken);
@@ -63,10 +64,12 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     products: orderTableNumber.products.map((prod) => {
       return { ...prod };
     }),
+    paymentMethod: orderTableNumber.paymentMethod,
     estado: orderTableNumber.estado,
     totalPrice: orderTableNumber.totalPrice,
   });
 
+  //Agregar producto a la orden actual estado local
   function handleSubmitAddProduct(e) {
     e.preventDefault();
     setOrdenActual((prev) => {
@@ -94,6 +97,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
       document.getElementById("inputDefault").value;
   }
 
+  //Estado local product: modifica cantidad o agrega un producto
   function handleChangeProduct(e) {
     if (e.target.name === "amount") {
       setProducto({
@@ -109,6 +113,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }
   }
 
+  //Modificar cantidad de un producto en la orden de estado local y recalcular precio total //
   function handleInputAmount(e, name) {
     setOrdenActual((prev) => {
       const product = prev.products.find((p) => p.name === name);
@@ -127,6 +132,26 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
+  //Eliminar Producto de la orden en estado local //
+  function handleDeleteProcut(name) {
+    setOrdenActual((prev) => {
+      return {
+        ...prev,
+        products: prev.products.filter((p) => p.name !== name),
+      };
+    });
+  }
+
+  function handlePaymentInput(e) {
+    setOrdenActual((prev) => {
+      return {
+        ...prev,
+        paymentMethod: e.target.name,
+      };
+    });
+  }
+
+  //Update Order, put a DataBase//
   function modifcarOrden(id, payload) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -153,6 +178,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
+  //Cerrar Modal //
   function handleClose(e) {
     setStateModal(!state);
     setOrdenActual({
@@ -167,6 +193,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
+  //Cerrar Orden, put a DataBase, cambio estado de mesa en DataBase//
   function handleCloseOrder(id, payload) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -214,7 +241,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 <CategoriasPedidos>
                   <FilterProductTypes />
                 </CategoriasPedidos>
-
                 <SelectModal>
                   <FormModal onSubmit={(e) => handleSubmitAddProduct(e)}>
                     <Select
@@ -262,13 +288,14 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 <Table id="productsTable">
                   <TableHead>
                     <TableRow>
-                      <TableHd width="40%">
+                      <TableHd width="45%">
                         <span className="productName">
                           <p style={{ margin: 0 }}>Nombre</p>
                         </span>
                       </TableHd>
-                      <TableHd width="10%">Precio</TableHd>
-                      <TableHd width="10%">Cantidad</TableHd>
+                      <TableHd width="15%">Precio</TableHd>
+                      <TableHd width="20%">Cantidad</TableHd>
+                      <TableHd width="20%">Option</TableHd>
                     </TableRow>
                   </TableHead>
                   <tbody>
@@ -276,9 +303,11 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       ordenActual.products.map((product) => {
                         return (
                           <TableRow key={product.name}>
-                            <TableData>{product.name}</TableData>
-                            <TableData>{product.price}</TableData>
-                            <TableData>
+                            <TableData align="center">{product.name}</TableData>
+                            <TableData align="center">
+                              {product.price}
+                            </TableData>
+                            <TableData align="center">
                               <input
                                 onChange={(e) =>
                                   handleInputAmount(e, product.name)
@@ -286,35 +315,22 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                                 placeholder={product.amount}
                               />
                             </TableData>
-                            {/* <TableData>
-                          <div className="options">
-                            <Button
-                              onClick={(e) =>
-                                handleClick(e, {
-                                  name: product.name,
-                                  price: product.price,
-                                  cantidad: product.cantidad,
-                                  _id: el._id,
-                                })
-                              }
-                              width="2rem"
-                              height="2rem"
-                              buttonColor="rgb(2, 101, 210)"
-                            >
-                              <FontAwesomeIcon
-                                icon={faPenSquare}
-                              ></FontAwesomeIcon>
-                            </Button>
-                            <Button
-                              onClick={(e) => handleDelete(el._id)}
-                              width="2rem"
-                              height="2rem"
-                              buttonColor="rgba(255, 0, 0, 1)"
-                            >
-                              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                            </Button>
-                          </div>
-                        </TableData> */}
+                            <TableData align="center">
+                              <div className="options">
+                                <Button
+                                  onClick={(e) =>
+                                    handleDeleteProcut(product.name)
+                                  }
+                                  width="2rem"
+                                  height="2rem"
+                                  buttonColor="rgba(255, 0, 0, 1)"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
+                                </Button>
+                              </div>
+                            </TableData>
                           </TableRow>
                         );
                       })}
@@ -323,6 +339,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               </div>
               <div style={{ display: "flex" }}>
                 <TablePricesModal>
+                  <PaymentCheckBox handlePaymentInput={handlePaymentInput} />
                   <p>Monto Total: ${ordenActual.totalPrice}</p>
                   <Button
                     width="8rem"
@@ -333,6 +350,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                         products: ordenActual.products,
                         totalPrice: ordenActual.totalPrice,
                         estado: "Finalizada",
+                        paymentMethod: ordenActual.paymentMethod,
                       })
                     }
                   >
@@ -342,17 +360,22 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               </div>
             </OrderContainer>
 
-            <button
+            <Button
+              padding="5px"
+              margin="15px 0 0 0"
+              width="9rem"
+              height="2rem"
               onClick={() =>
                 modifcarOrden(ordenActual.id, {
                   products: ordenActual.products,
                   totalPrice: ordenActual.totalPrice,
                   estado: ordenActual.estado,
+                  paymentMethod: ordenActual.paymentMethod,
                 })
               }
             >
-              Aceptar
-            </button>
+              MODIFICAR
+            </Button>
           </ModalContainer>
         </Overlay>
       )}
