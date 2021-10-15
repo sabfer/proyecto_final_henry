@@ -25,11 +25,14 @@ import {
   OrderContainer,
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
+
 import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
+
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
@@ -40,6 +43,7 @@ export default function ModalSalon({ state, setState }) {
     observations: "",
     price: undefined,
   });
+  console.log(producto.name)
 
   const [order, setOrder] = useState({
     type: "Salon",
@@ -57,25 +61,28 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
+      tableNumber: state.tableNumber,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
-    setState(!state);
-    setOrder({
-      ...order,
-      type: "Salon",
+    setState({
+      status: false,
       tableNumber: "",
-      //tableNumber: undefined,PREGUNTAR
+    });
+    setOrder({
+      type: "Salon",
+      tableNumber: undefined,
       products: [],
       estado: "Pendiente",
-      date: undefined,
-      hour: undefined,
+      totalPrice: 0,
+      date: "",
+      hour: "",
     });
-    // setProducto({ //PREGUNTAR
-    //   amount: "",
-    // });
+    setProducto({ 
+      amount: "",
+    });
   }
 
   function handleChange(e) {
@@ -83,7 +90,7 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       [e.target.name]: e.target.value,
     });
-    
+  
   }
 
   function handleChangeProduct(e) {
@@ -124,7 +131,8 @@ export default function ModalSalon({ state, setState }) {
       price: "",
     });
     document.getElementById("selectProduct").value =
-      document.getElementById("inputDefault").value;
+    document.getElementById("inputDefault").value;
+    console.log(order.products)
   }
 
   function handleInputAmount(e, name) {
@@ -148,20 +156,28 @@ export default function ModalSalon({ state, setState }) {
 
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
+
     console.log(order)
     setState(!state);
     dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
+
+    setState({
+      status: false,
+      tableNumber: "",
+    });
+    dispatch(
+      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
+    );
+
     setOrder({
       type: "Salon",
       tableNumber: "",
       products: [],
-      estado: "En progreso",
+      estado: "Pendiente",
+      totalPrice: 0,
       date: "",
       hour: "",
     });
-    /* setTimeout(function () {
-      dispatch(getSalonOrders({key:'type' , value: "Salon"}));
-    }, 1000) */
   }
 
   function handleDelete(name) {
@@ -252,7 +268,7 @@ export default function ModalSalon({ state, setState }) {
 
   return (
     <div>
-      <Overlay display={state ? "flex" : "none"}>
+      <Overlay display={state.status ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
           <HeaderModal>
             <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
@@ -271,7 +287,7 @@ export default function ModalSalon({ state, setState }) {
           <OrderContainer>
             <div>
               <CategoriasPedidos>
-                <FilterProductTypes />
+                <FilterProductTypes/>
               </CategoriasPedidos>
 
               <SelectModal>
@@ -286,6 +302,7 @@ export default function ModalSalon({ state, setState }) {
                   {/* <input type="button" value="-" onClick={disminuirM}></input> */}
                   <InputModal>
                     <input
+                      value={order.tableNumber}
                       type="number"
                       name="tableNumber"
                       min="1"
@@ -303,6 +320,7 @@ export default function ModalSalon({ state, setState }) {
                   >
                   </FontAwesomeIcon>
                   {/* <input type="button" value="+" onClick={aumentarM}></input> */}
+                  
                   <Select
                     id="selectProduct"
                     width="50%"
@@ -312,19 +330,26 @@ export default function ModalSalon({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option id="inputDefault" value="none" selected disabled hidden>
+                    <option
+                      id="inputDefault"
+                      // value={-1}
+                      value="none"
+                      selected
+                      disabled
+                      hidden
+                    >
                       Seleccione un producto
                     </option>
                     {products &&
                       products.map((e) => {
                         return (
                           <option key={e._id} value={e.name}>
-                            {" "}
-                            {e.name}{" "}
+                            {e.name}
                           </option>
                         );
                       })}
-                  </Select>
+                  </Select>:"d"
+                  
                   <FontAwesomeIcon
                     onClick={() => disminuir()}
                     icon={faMinusCircle}
@@ -371,31 +396,38 @@ export default function ModalSalon({ state, setState }) {
                     <tbody>
                       {order.products.length
                         ? order.products.map((el) => {
-                          return (
-                            <TableRow key={el.name}>
-                              <TableData align="center">
-                                <InputAmount
-                                  onChange={(e) => handleInputAmount(e, el.name)}
-                                  placeholder={el.amount}
-                                />
-                              </TableData>
-                              <TableData>{el.name}</TableData>
-                              <TableData align="center">$ {el.price}</TableData>
-                              <TableData align="center">
-                                <Options justify="center">
-                                  <Button
-                                    onClick={(e) => handleDelete(el.name)}
-                                    width="2rem"
-                                    height="2rem"
-                                    buttonColor="rgba(255, 0, 0, 1)"
-                                  >
-                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                                  </Button>
-                                </Options>
-                              </TableData>
-                            </TableRow>
-                          );
-                        })
+
+                            return (
+                              <TableRow key={el.name}>
+                                <TableData align="center">
+                                  <InputAmount
+                                    onChange={(e) =>
+                                      handleInputAmount(e, el.name)
+                                    }
+                                    placeholder={el.amount}
+                                  />
+                                </TableData>
+                                <TableData>{el.name}</TableData>
+                                <TableData align="center">
+                                  $ {el.price}
+                                </TableData>
+                                <TableData align="center">
+                                  <Options justify="center">
+                                    <Button
+                                      onClick={(e) => handleDelete(el.name)}
+                                      width="2rem"
+                                      height="2rem"
+                                      buttonColor="rgba(255, 0, 0, 1)"
+                                    >
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                      ></FontAwesomeIcon>
+                                    </Button>
+                                  </Options>
+                                </TableData>
+                              </TableRow>
+                            );
+                          })
                         : null}
                     </tbody>
                   </Table>

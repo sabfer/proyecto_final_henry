@@ -175,6 +175,9 @@ export const InputAmount = styled.input`
 export const TablePricesModal = styled.div`
   display: flex;
   align-self: flex-end;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   flex-direction: column;
   border: 1px solid black;
   width: 100%;
