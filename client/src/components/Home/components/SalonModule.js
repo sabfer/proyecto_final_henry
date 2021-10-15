@@ -30,7 +30,6 @@ export default function SalonModule() {
 
   useEffect(() => {
     dispatch(getSalonOrders(token));
-
     if (mesas === undefined) {
       dispatch(getMesas(token));
     }
