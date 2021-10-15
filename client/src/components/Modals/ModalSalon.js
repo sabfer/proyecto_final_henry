@@ -83,6 +83,12 @@ export default function ModalSalon({ state, setState }) {
       date: "",
       hour: "",
     });
+    setProducto({
+      name: "",
+      amount: "",
+      observations: "",
+      price: "",
+    });
   }
 
   function handleChange(e) {
@@ -253,7 +259,7 @@ export default function ModalSalon({ state, setState }) {
                   >
                     <option
                       id="inputDefault"
-                      value="none"
+                      value="Seleccione un producto"
                       selected
                       disabled
                       hidden
