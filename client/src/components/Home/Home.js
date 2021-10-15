@@ -21,8 +21,6 @@ export default function Home() {
   const history = useHistory();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.productTypes);
-  /* const ordersTakeAway = useSelector((state) => state.orders.salonOrders);  
-  console.log(ordersTakeAway)  */
   const token = useSelector((state) => state.userToken);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
@@ -34,7 +32,6 @@ export default function Home() {
     dispatch(getCategories(token));
     setTimeout(() => {
       dispatch(getProducts(token));
-      //dispatch(getCommerces(token));
     }, 1000);
   }, [dispatch, token]);
 
