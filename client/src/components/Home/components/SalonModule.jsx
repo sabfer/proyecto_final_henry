@@ -18,7 +18,10 @@ import Mesas from "./Mesa";
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
 
-  const [stateModal, setStateModal] = useState(false);
+  const [stateModal, setStateModal] = useState({
+    tableNumber: "",
+    status: false
+  });
   const dispatch = useDispatch();
   const mesas = useSelector((state) => state.mesas);
   const [updateModal, setUpdateModal] = useState(false);
@@ -47,7 +50,7 @@ export default function SalonModule() {
       <ModuleTop>
         <h3>Salón</h3>
         <Button
-          onClick={() => setStateModal(!stateModal)}
+          onClick={() => setStateModal({status: true, tableNumber: ""})}
           width="10rem"
           height="2.5rem"
           alignSelf="flex-end"

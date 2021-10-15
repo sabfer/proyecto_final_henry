@@ -64,20 +64,24 @@ export default function ModalSalon({ state, setState }) {
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
+      tableNumber: state.tableNumber,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
-    setState(!state);
+    setState({
+      status: false,
+      tableNumber: "",
+    });
     setOrder({
-      ...order,
       type: "Salon",
       tableNumber: "",
       products: [],
       estado: "Pendiente",
-      date: undefined,
-      hour: undefined,
+      totalPrice: 0,
+      date: "",
+      hour: "",
     });
   }
 
@@ -149,7 +153,10 @@ export default function ModalSalon({ state, setState }) {
 
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
-    setState(!state);
+    setState({
+      status: false,
+      tableNumber: "",
+    });
     dispatch(
       changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
     );
@@ -175,7 +182,7 @@ export default function ModalSalon({ state, setState }) {
       confirmButtonText: "Sí",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      if (result.isConfirmed) { 
+      if (result.isConfirmed) {
         setOrder((prev) => {
           return {
             ...order,
@@ -202,7 +209,7 @@ export default function ModalSalon({ state, setState }) {
 
   return (
     <div>
-      <Overlay display={state ? "flex" : "none"}>
+      <Overlay display={state.status ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
           <HeaderModal>
             <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
