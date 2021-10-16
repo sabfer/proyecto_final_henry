@@ -52,7 +52,7 @@ export default function ModalTakeAway({ state, setState }) {
     type: "Take Away",
     nameClient: "",
     products: [],
-    estado: "Pendiente",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -64,6 +64,7 @@ export default function ModalTakeAway({ state, setState }) {
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
@@ -73,7 +74,7 @@ export default function ModalTakeAway({ state, setState }) {
       type: "Take Away",
       nameClient: "",
       products: [],
-      estado: "Pendiente",
+      estado: 1,
       date: undefined,
       hour: undefined,
     });
@@ -152,7 +153,7 @@ export default function ModalTakeAway({ state, setState }) {
       type: "Take Away",
       nameClient: "",
       products: [],
-      estado: "En progreso",
+      estado: 1,
       date: "",
       hour: "",
     });
@@ -264,7 +265,7 @@ export default function ModalTakeAway({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option id="inputDefault" value="none" selected disabled hidden>
+                    <option id="inputDefault" value="none" defaultValue disabled hidden>
                       Seleccione un producto
                     </option>
                     {products &&

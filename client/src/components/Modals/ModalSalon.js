@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrder, changeStatus } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faWindowClose,
-  faCheck,
-  faAirFreshener,
-} from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
@@ -46,13 +42,12 @@ export default function ModalSalon({ state, setState }) {
     observations: "",
     price: undefined,
   });
-  console.log(producto.name);
 
   const [order, setOrder] = useState({
     type: "Salon",
     tableNumber: "",
     products: [],
-    estado: "En proceso",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -78,7 +73,7 @@ export default function ModalSalon({ state, setState }) {
       type: "Salon",
       tableNumber: undefined,
       products: [],
-      estado: "En proceso",
+      estado: 1,
       totalPrice: 0,
       date: "",
       hour: "",
@@ -177,7 +172,7 @@ export default function ModalSalon({ state, setState }) {
       type: "Salon",
       tableNumber: "",
       products: [],
-      estado: "En proceso",
+      estado: 1,
       totalPrice: 0,
       date: "",
       hour: "",
@@ -337,8 +332,7 @@ export default function ModalSalon({ state, setState }) {
                       id="inputDefault"
                       // value={-1}
                       value="Seleccione un producto"
-                      selected
-                      disabled
+                      defaultValue
                       hidden
                     >
                       Seleccione un producto
