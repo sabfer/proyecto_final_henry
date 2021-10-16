@@ -104,6 +104,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
+    case "DELETE_CATEGORY":
+      return {
+        ...state,
+      };
+
     case "PUT_PRODUCT":
       return {
         ...state,
@@ -138,7 +143,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
-    case "CHANGE_SETTINGS":
+    case "CHANGE_SETTINGS"  :
       return {
         ...state,
         settings: payload,

@@ -307,7 +307,6 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
@@ -425,6 +424,22 @@ export function postCategories(payload, token) {
         return data;
       });
     return data;
+  };
+}
+
+// ---------- ELIMINAR CATEGORÍAS DE PRODUCTOS ---------- \\
+export function deleteCategory(payload, token) {
+  console.log(payload)
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/productTypes/${payload}`, auth);
+    return dispatch({
+      type: "DELETE_CATEGORY",
+    });
   };
 }
 
