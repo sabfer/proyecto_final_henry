@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, getTakeAwayOrders } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
 import {
@@ -233,9 +233,9 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
     <div>
       {order && (
         <Overlay display={state ? "flex" : "none"}>
-          <ModalContainer minwidth="945px">
+          <ModalContainer>
             <HeaderModal>
-              <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+              <img src="https://i.imgur.com/ZyWpO0s.png" alt="img not found" />
               <HeaderModalTitle>
                 <h3>Orden: {ordenActual.orderNumber} </h3>
                 <h4>Cliente: {order.nameClient} </h4>
@@ -317,8 +317,8 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                                 placeholder={product.amount}
                               />
                             </TableData>
-                            <TableData align="center">
-                              <div className="options">
+                            <TableData>
+                              <Options justify="center">
                                 <Button
                                   onClick={(e) => handleDelete(product.name)}
                                   width="2rem"
@@ -327,7 +327,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                                 >
                                   <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                 </Button>
-                              </div>
+                              </Options>
                             </TableData>
                           </TableRow>
                         );
