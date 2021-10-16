@@ -496,3 +496,17 @@ export function getKitchenOrders(token) {
       });
   };
 }
+
+export function updateOrderKitchen(id, payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
+      console.log(err);
+    });
+    return dispatch(getKitchenOrders(token));
+  };
+}

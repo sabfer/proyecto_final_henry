@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  ModuleTop,
-  Delivery,
-  Orders,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
-import { Button } from "../../../css";
+import { ModuleTop, Delivery, Orders, OrdersContainer } from "../../../css/HomeStyles";
+import { Button, Loading } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalDelivery from "../../Modals/ModalDelivery";
@@ -45,12 +40,20 @@ export default function DeliveryModule() {
       <ModalDelivery state={stateModal} setState={setStateModal} />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {ordersDelivery &&
+          {ordersDelivery && ordersDelivery ? (
             ordersDelivery.map((order) => {
-              return (
-                <OrderDelivery key={order._id} order={order.orderNumber} />
-              );
-            })}
+              return <OrderDelivery key={order._id} order={order.orderNumber} />;
+            })
+          ) : (
+            <Loading gridcolumn="span 2">
+              <p>Loading...</p>
+              <img
+                src="https://i.imgur.com/5JQ02CS.gif"
+                alt="loading gif"
+                width="100px"
+              />
+            </Loading>
+          )}
           {updateModal && (
             <UpdateTable state={updateModal} setStateModal={setUpdateModal} />
           )}

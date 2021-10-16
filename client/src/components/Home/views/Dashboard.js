@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getTakeAwayOrders(token));
-    dispatch(getDeliveryOrders(token));    
+    dispatch(getDeliveryOrders(token));
   }, [dispatch, token]);
 
   function handleLogOut() {
@@ -71,15 +71,6 @@ export default function Dashboard() {
         </Button>
       </Header>
       <OptionsBar>
-        <Button
-          onClick={() => setStateModal1(!stateModal1)}
-          width="10rem"
-          justify="space-between"
-          padding="0.625rem"
-        >
-          Crear usuario
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
         <Button
           onClick={() => setStateModal3(!stateModal3)}
           width="10.5rem"

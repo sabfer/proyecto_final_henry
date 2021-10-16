@@ -9,14 +9,13 @@ import {
 } from "../../css/KitchenStyles";
 import { Button } from "../../css/";
 import Error403 from "../Home/views/Error403";
-import { getKitchenOrders } from "../../actions";
+import { getKitchenOrders, updateOrderKitchen } from "../../actions";
 
 export default function Kitchen() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
   const orders = useSelector((state) => state.kitchenOrders);
 
-  console.log(orders);
   useEffect(() => {
     dispatch(getKitchenOrders(token));
     setInterval(() => {
@@ -29,6 +28,13 @@ export default function Kitchen() {
     return <Error403 />;
   }
 
+  function cambiarEstado(id, estado, orden) {
+    if (estado === 1 || estado === 2) {
+      dispatch(updateOrderKitchen(id, orden, token));
+      dispatch(getKitchenOrders(token));
+    }
+  }
+
   return (
     <div>
       <Header>
@@ -39,6 +45,7 @@ export default function Kitchen() {
         <OrdersContainer>
           {orders &&
             orders.map((order) => {
+              console.log(order);
               return (
                 <OrderCard key={order._id}>
                   <h2>Pedido N° {order.orderNumber}</h2>
@@ -59,14 +66,33 @@ export default function Kitchen() {
                       })}
                   </OrderDetails>
                   <Button
+                    onClick={() =>
+                      order.estado === 1
+                        ? cambiarEstado(order._id, order.estado, { ...order, estado: 2 })
+                        : order.estado === 2
+                        ? cambiarEstado(order._id, order.estado, { ...order, estado: 3 })
+                        : null
+                    }
                     width="78%"
+                    height="2.5rem"
                     padding="0.6rem"
-                    buttonColor="rgb(0, 168, 120)"
+                    color={order.estado === 1 ? "rgb(0, 0, 0) " : null}
+                    buttonColor={
+                      order.estado === 1
+                        ? "rgb(254, 228, 64)"
+                        : order.estado === 2
+                        ? "rgb(0, 168, 120)"
+                        : null
+                    }
                     alignSelf="center"
                     position="absolute"
                     bottom="2rem"
                   >
-                    Orden completa
+                    {order.estado === 1
+                      ? "Empezar orden"
+                      : order.estado === 2
+                      ? "Orden completada"
+                      : null}
                   </Button>
                 </OrderCard>
               );
@@ -76,3 +102,5 @@ export default function Kitchen() {
     </div>
   );
 }
+
+/* () => cambiarEstado(order._id, order.estado, { ...order, estado: 3}) */

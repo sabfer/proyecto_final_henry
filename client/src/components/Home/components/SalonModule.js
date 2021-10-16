@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
-import { Button } from "../../../css/index";
+import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
@@ -59,7 +59,7 @@ export default function SalonModule() {
       <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {mesas &&
+          {mesas && mesas ? (
             mesas.map((mesa) => {
               return (
                 <Mesas
@@ -70,7 +70,17 @@ export default function SalonModule() {
                   handleUpdate={handleUpdateModal}
                 />
               );
-            })}
+            })
+          ) : (
+            <Loading gridcolumn="span 5">
+              <p>Loading...</p>
+              <img
+                src="https://i.imgur.com/5JQ02CS.gif"
+                alt="loading gif"
+                width="100px"
+              />
+            </Loading>
+          )}
           {updateModal && (
             <UpdateTable
               state={updateModal}

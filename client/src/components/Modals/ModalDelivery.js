@@ -53,7 +53,7 @@ export default function ModalDelivery({ state, setState }) {
     name: "",
 
     products: [],
-    estado: "Pendiente",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -75,7 +75,7 @@ export default function ModalDelivery({ state, setState }) {
       type: "Salon",
       tableNumber: undefined,
       products: [],
-      estado: "Pendiente",
+      estado: 1,
       date: undefined,
       hour: undefined,
     });
@@ -154,7 +154,7 @@ export default function ModalDelivery({ state, setState }) {
       type: "Delivery",
       tableNumber: "",
       products: [],
-      estado: "En progreso",
+      estado: 1,
       date: "",
       hour: "",
     });

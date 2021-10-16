@@ -245,9 +245,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_KITCHEN_ORDERS":
+      let ordersToKitchen = [];
+      for (let order in payload) {
+        if (payload[order].estado === 1 || payload[order].estado === 2) {
+          ordersToKitchen.push(payload[order]);
+        }
+      }
       return {
         ...state,
-        kitchenOrders: payload,
+        kitchenOrders: ordersToKitchen,
       };
 
     default:
