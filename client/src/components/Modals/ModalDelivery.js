@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrderDelivery } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose, faCheck,faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWindowClose,
+  faCheck,
+  faPlusCircle,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
@@ -27,14 +32,7 @@ import {
   DivInfo,
 } from "../../css/ModalStyles.js";
 import { Select } from "../../css/Select";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-  Options,
-} from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
@@ -55,7 +53,7 @@ export default function ModalDelivery({ state, setState }) {
     name: "",
 
     products: [],
-    estado: "Pendiente",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -67,6 +65,7 @@ export default function ModalDelivery({ state, setState }) {
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("h:mm:ss a"),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
@@ -76,7 +75,7 @@ export default function ModalDelivery({ state, setState }) {
       type: "Salon",
       tableNumber: undefined,
       products: [],
-      estado: "Pendiente",
+      estado: 1,
       date: undefined,
       hour: undefined,
     });
@@ -155,7 +154,7 @@ export default function ModalDelivery({ state, setState }) {
       type: "Delivery",
       tableNumber: "",
       products: [],
-      estado: "En progreso",
+      estado: 1,
       date: "",
       hour: "",
     });
@@ -201,15 +200,15 @@ export default function ModalDelivery({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber)
+    console.log(order.tableNumber);
     if (producto.amount < 30) {
-      aux = producto.amount + 1
-      console.log(aux)
-      aux=aux-(aux-producto.amount)
-      aux=aux+1
+      aux = producto.amount + 1;
+      console.log(aux);
+      aux = aux - (aux - producto.amount);
+      aux = aux + 1;
       setProducto({
         ...producto,
-        amount: aux
+        amount: aux,
       });
     }
   }
@@ -219,17 +218,17 @@ export default function ModalDelivery({ state, setState }) {
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
-        amount: producto.amount - 1
+        amount: producto.amount - 1,
       });
     }
-    console.log(producto.amount)
+    console.log(producto.amount);
   }
-  
+
   return (
     <div>
       <Overlay display={state ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
-          <HeaderModal>
+          <HeaderModal minwidth="730px">
             <img src="https://i.imgur.com/vM38VRe.png?1" alt="img not found" />
             <HeaderModalTitle>
               <h3>Delivery</h3>
@@ -283,13 +282,7 @@ export default function ModalDelivery({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option
-                      id="inputDefault"
-                      value="none"
-                      selected
-                      disabled
-                      hidden
-                    >
+                    <option id="inputDefault" value="none" defaultValue disabled hidden>
                       Seleccione un producto
                     </option>
                     {products &&
@@ -307,8 +300,7 @@ export default function ModalDelivery({ state, setState }) {
                     icon={faMinusCircle}
                     size="2x"
                     style={{ cursor: "pointer" }}
-                  >
-                  </FontAwesomeIcon>  
+                  ></FontAwesomeIcon>
                   <InputModal>
                     <input
                       type="number"
@@ -325,8 +317,7 @@ export default function ModalDelivery({ state, setState }) {
                     icon={faPlusCircle}
                     size="2x"
                     style={{ cursor: "pointer" }}
-                  >
-                  </FontAwesomeIcon>
+                  ></FontAwesomeIcon>
                   <Button type="submit" width="8%" buttonColor="#00C72C">
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>
@@ -346,37 +337,31 @@ export default function ModalDelivery({ state, setState }) {
                     <tbody>
                       {order.products.length
                         ? order.products.map((el) => {
-                          return (
-                            <TableRow key={el.name}>
-                              <TableData align="center">
-                                <InputAmount
-                                  onChange={(e) =>
-                                    handleInputAmount(e, el.name)
-                                  }
-                                  placeholder={el.amount}
-                                />
-                              </TableData>
-                              <TableData>{el.name}</TableData>
-                              <TableData align="center">
-                                $ {el.price}
-                              </TableData>
-                              <TableData align="center">
-                                <Options justify="center">
-                                  <Button
-                                    onClick={(e) => handleDelete(el.name)}
-                                    width="2rem"
-                                    height="2rem"
-                                    buttonColor="rgba(255, 0, 0, 1)"
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                    ></FontAwesomeIcon>
-                                  </Button>
-                                </Options>
-                              </TableData>
-                            </TableRow>
-                          );
-                        })
+                            return (
+                              <TableRow key={el.name}>
+                                <TableData align="center">
+                                  <InputAmount
+                                    onChange={(e) => handleInputAmount(e, el.name)}
+                                    placeholder={el.amount}
+                                  />
+                                </TableData>
+                                <TableData>{el.name}</TableData>
+                                <TableData align="center">$ {el.price}</TableData>
+                                <TableData align="center">
+                                  <Options justify="center">
+                                    <Button
+                                      onClick={(e) => handleDelete(el.name)}
+                                      width="2rem"
+                                      height="2rem"
+                                      buttonColor="rgba(255, 0, 0, 1)"
+                                    >
+                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                    </Button>
+                                  </Options>
+                                </TableData>
+                              </TableRow>
+                            );
+                          })
                         : null}
                     </tbody>
                   </Table>

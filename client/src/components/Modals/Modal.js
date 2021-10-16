@@ -44,8 +44,8 @@ export default function Modal({
     name: "" || name,
     price: "" || price,
     productType: "" || productType,
-    user: user,
-    pass: pass,
+    user: "" || user,
+    pass: "" || pass,
     location: "",
     description: "",
     orderD: "",
@@ -72,14 +72,12 @@ export default function Modal({
 
   useEffect(() => {
     setInput({
-      name: name,
-      price: price,
-      productType: productType,
-
-      user: user,
-      pass: pass,
-
-      location: location,
+      name: "" || name,
+      price: "" || price,
+      productType: "" || productType,
+      user: "" || user,
+      pass: "" || pass,
+      location: "" || location,
     });
   }, [name, price, productType, user, pass, location]);
 
@@ -90,15 +88,15 @@ export default function Modal({
     productType: productType,
     user: user,
     pass: pass,
-    location,
+    location: location,
   };
   let leyendaError = {
-    ley1: "primer nombre tiene que tener mas de 2 digitos",
-    ley2: "ingrese numeros positivos",
-    ley3: "ingrese tipo de producto con mas de 3 digitos",
-    ley4: "ingrese usuario con formato de correo sin espacio sin acentos",
-    ley5: "ingrese un password con mas de 4 digitos sin espacios",
-    ley6: "primera palabra tiene que tener mas de 3 digitos",
+    ley1: "El nombre tiene que tener mas de 2 digitos",
+    ley2: "Ingresar números positivos",
+    ley3: "Ingrese tipo de producto",
+    ley4: "Ingrese usuario con formato de correo sin espacio y sin acentos",
+    ley5: "Ingrese una contraseña con mas de 4 digitos sin espacios",
+    ley6: "Primera palabra tiene que tener mas de 3 digitos",
   };
 
   function handleChange(e) {
@@ -222,12 +220,11 @@ export default function Modal({
     // if (id === 4) {}
 
     if (id === 7) {
-      const payload = {};
-      for (let key in input) {
-        if (input[key] !== undefined) {
-          payload[key] = input[key];
-        }
-      }
+      const payload = {
+        name: input.name,
+        price: input.price,
+        productType: input.productType,
+      };
       dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
         title: "¡Producto actualizado!",
@@ -237,10 +234,6 @@ export default function Modal({
       }).then((result) => {
         if (result.isConfirmed) {
           setStateModal(!state);
-          setInput({
-            name: "",
-            location: "",
-          });
         }
       });
     }
