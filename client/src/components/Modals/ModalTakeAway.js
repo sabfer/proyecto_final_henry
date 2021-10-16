@@ -54,7 +54,7 @@ export default function ModalTakeAway({ state, setState }) {
         type: "Take Away",
         nameClient: "",
         products: [],
-        estado: "Pendiente",
+        estado: 1,
         totalPrice: 0,
         date: "",
         hour: "",
@@ -75,7 +75,7 @@ export default function ModalTakeAway({ state, setState }) {
             type: "Take Away",
             nameClient: "",
             products: [],
-            estado: "Pendiente",
+            estado: 1,
             date: undefined,
             hour: undefined,
         });
@@ -154,7 +154,7 @@ export default function ModalTakeAway({ state, setState }) {
             type: "Take Away",
             nameClient: "",
             products: [],
-            estado: "En progreso",
+            estado: 1,
             date: "",
             hour: "",
         });
@@ -200,7 +200,6 @@ export default function ModalTakeAway({ state, setState }) {
         console.log(order.tableNumber)
         if (producto.amount < 30) {
           aux = producto.amount + 1
-          console.log(aux)
           aux=aux-(aux-producto.amount)
           aux=aux+1
           setProducto({
