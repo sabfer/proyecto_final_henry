@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  TakeOut,
-  Orders,
-  ModuleTop,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
-import { Button } from "../../../css/index";
+import { TakeOut, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
+import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import UpdateTableTA from "../../Modals/UpdateTableTA";
@@ -26,7 +21,7 @@ export default function TakeAwayModule() {
 
   useEffect(() => {
     dispatch(getTakeAwayOrders(token));
-  }, [dispatch, token]);  
+  }, [dispatch, token]);
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
@@ -34,7 +29,7 @@ export default function TakeAwayModule() {
     setTableDetails({
       orderNumber: props.orderNumber,
     });
-  } 
+  }
 
   return (
     <TakeOut>
@@ -42,7 +37,7 @@ export default function TakeAwayModule() {
         <h3>Take Away</h3>
         <Button
           onClick={() => setStateModal(!stateModal)}
-          width="10rem"
+          width="9.4rem"
           height="2.5rem"
           alignSelf="flex-end"
           justify="space-between"
@@ -56,19 +51,31 @@ export default function TakeAwayModule() {
       <ModalTakeAway state={stateModal} setState={setStateModal} />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {ordersTakeAway &&
+          {ordersTakeAway && ordersTakeAway ? (
             ordersTakeAway.map((order) => {
-              return <TakeAway 
-                key={order._id} 
-                orderNumber={order.orderNumber} 
-                setStateModal={setStateModal} 
-                handleUpdate={handleUpdateModal} 
-                />;
-            })}
+              return (
+                <TakeAway
+                  key={order._id}
+                  orderNumber={order.orderNumber}
+                  setStateModal={setStateModal}
+                  handleUpdate={handleUpdateModal}
+                />
+              );
+            })
+          ) : (
+            <Loading gridcolumn="span 2">
+              <p>Loading...</p>
+              <img
+                src="https://i.imgur.com/5JQ02CS.gif"
+                alt="loading gif"
+                width="100px"
+              />
+            </Loading>
+          )}
           {updateModal && (
-            <UpdateTableTA 
-              state={updateModal} 
-              setStateModal={setUpdateModal} 
+            <UpdateTableTA
+              state={updateModal}
+              setStateModal={setUpdateModal}
               orderNumber={tableDetails.orderNumber}
             />
           )}

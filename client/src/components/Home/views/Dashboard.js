@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getTakeAwayOrders(token));
-    dispatch(getDeliveryOrders(token));    
+    dispatch(getDeliveryOrders(token));
   }, [dispatch, token]);
 
   function handleLogOut() {
@@ -73,7 +73,7 @@ export default function Dashboard() {
       <OptionsBar>
         <Button
           onClick={() => setStateModal3(!stateModal3)}
-          width="11.9rem"
+          width="10.5rem"
           height="2.5rem"
           justify="space-between"
           padding="0.5rem"

@@ -19,6 +19,7 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
+  kitchenOrders: undefined,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -78,9 +79,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
         ...state,
         products: array,
@@ -143,7 +142,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
-    case "CHANGE_SETTINGS"  :
+    case "CHANGE_SETTINGS":
       return {
         ...state,
         settings: payload,
@@ -248,6 +247,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "DELETE_TOKEN":
       return {
         userToken: null,
+      };
+
+    case "GET_KITCHEN_ORDERS":
+      let ordersToKitchen = [];
+      for (let order in payload) {
+        if (payload[order].estado === 1 || payload[order].estado === 2) {
+          ordersToKitchen.push(payload[order]);
+        }
+      }
+      return {
+        ...state,
+        kitchenOrders: ordersToKitchen,
       };
 
     default:
