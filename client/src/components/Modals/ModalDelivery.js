@@ -53,7 +53,6 @@ export default function ModalDelivery({ state, setState }) {
   const [order, setOrder] = useState({
     type: "Delivery",
     name: "",
-
     products: [],
     estado: "Pendiente",
     totalPrice: 0,
@@ -248,22 +247,22 @@ export default function ModalDelivery({ state, setState }) {
               <DivInfo>
                 <InputClient
                   type="text"
-                  name="name"
+                  name="nameClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre Cliente"
                   margin="10px 0 0 0 "
                 ></InputClient>
                 <InputClient
                   type="number"
-                  name="name"
+                  name="telefono"
                   onChange={(e) => handleChange(e)}
-                  placeholder="Teléfono"
+                  placeholder="phoneClient"
                   margin="10px 0 0 12px "
                 ></InputClient>
               </DivInfo>
               <InputClient
                 type="text"
-                name="name"
+                name="directionClient"
                 onChange={(e) => handleChange(e)}
                 placeholder="Dirección"
                 margin="7px 0 "

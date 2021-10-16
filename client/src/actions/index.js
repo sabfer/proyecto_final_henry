@@ -32,6 +32,25 @@ export function loginUser(payload) {
   };
 }
 
+// ---------- OBTENER ORDENES ---------- \\
+export function getOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders", auth)
+      .then((data) => {
+        return dispatch({ type: "GET_ORDERS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 // ---------- OBTENER PRODUCTOS ---------- \\
 export function getProducts(token) {
   let auth = {

@@ -10,20 +10,32 @@ import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalDelivery from "../../Modals/ModalDelivery";
+import UpdateDelivery from "../../Modals/UpdateDelivery";
 import OrderDelivery from "./OrderDelivery";
-// import { getDeliveryOrders } from "../../../actions";
+import { getDeliveryOrders } from "../../../actions";
 import UpdateTable from "../../Modals/UpdateTable";
 
 export default function DeliveryModule() {
-  // const token = useSelector((state) => state.userToken);
-  // const dispatch = useDispatch();
+  const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch();
   const [stateModal, setStateModal] = useState(false);
   const ordersDelivery = useSelector((state) => state?.orders?.deliveryOrders);
   const [updateModal, setUpdateModal] = useState(false);
+  const [tableDetails, setTableDetails] = useState({
+    orderNumber: undefined,
+  });
 
-  // useEffect(() => {
-  //   dispatch(getDeliveryOrders(token));
-  // }, [dispatch, token]);
+  function handleUpdateModal(e, props) {
+    e.preventDefault();
+    setUpdateModal(true);
+    setTableDetails({
+      orderNumber: props.orderNumber,
+    });
+  }
+
+  useEffect(() => {
+    dispatch(getDeliveryOrders(token));
+  }, [dispatch, token]);
 
   return (
     <Delivery>
@@ -48,11 +60,20 @@ export default function DeliveryModule() {
           {ordersDelivery &&
             ordersDelivery.map((order) => {
               return (
-                <OrderDelivery key={order._id} order={order.orderNumber} />
+                <OrderDelivery
+                  key={order._id}
+                  order={order.orderNumber}
+                  setStateModal={setStateModal}
+                  handleUpdate={handleUpdateModal}
+                />
               );
             })}
           {updateModal && (
-            <UpdateTable state={updateModal} setStateModal={setUpdateModal} />
+            <UpdateDelivery
+              state={updateModal}
+              setStateModal={setUpdateModal}
+              orderNumber={tableDetails.orderNumber}
+            />
           )}
         </Orders>
       </OrdersContainer>

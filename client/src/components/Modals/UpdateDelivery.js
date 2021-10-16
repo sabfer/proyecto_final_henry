@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrder, changeStatus } from "../../actions/index";
+import { updateOrder, getTakeAwayOrders } from "../../actions/index";
 import {
   Table,
   TableHead,
@@ -21,29 +21,28 @@ import {
   FormModal,
   SelectModal,
   InputModal,
-  TablesModal,
-  TableProductsModal,
   TablePricesModal,
-  InputAmount,
   OrderContainer,
 } from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
+import PaymentCheckBox from "./Components/PaymentCheckBox";
 
-export default function UptadeTable({ state, setStateModal, tableNumber }) {
+export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
   const token = useSelector((state) => state.userToken);
+  const ordenes = useSelector((state) => state.orders.deliveryOrders);
   const products = useSelector((state) => state.products);
-  const ordenes = useSelector((state) => state.orders.salonOrders);
+
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
 
-  const orderTableNumber = ordenes
+  const order = ordenes
     ? ordenes.find(
-        (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
+        (ord) => ord.orderNumber === orderNumber && ord.estado !== "Finalizada"
       )
     : undefined;
 
@@ -55,16 +54,17 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   });
 
   const [ordenActual, setOrdenActual] = useState({
-    id: orderTableNumber._id,
-    orderNumber: orderTableNumber.orderNumber,
-    date: orderTableNumber.date,
-    hour: orderTableNumber.hour,
-    tableNumber: orderTableNumber.tableNumber,
-    products: orderTableNumber.products.map((prod) => {
+    id: order._id,
+    orderNumber: order.orderNumber,
+    name: order.name,
+    date: order.date,
+    hour: order.hour,
+    products: order.products.map((prod) => {
       return { ...prod };
     }),
-    estado: orderTableNumber.estado,
-    totalPrice: orderTableNumber.totalPrice,
+    estado: order.estado,
+    paymentMethod: order.paymentMethod,
+    totalPrice: order.totalPrice,
   });
 
   function handleSubmitAddProduct(e) {
@@ -127,6 +127,48 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
+  function handleDelete(name) {
+    MySwal.fire({
+      title: "¿Estas seguro?",
+      text: "¡El producto será borrado de la orden!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1ABD53",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteProduct(name);
+        MySwal.fire({
+          title: "Producto borrado",
+          text: "El producto se borró correctamente!",
+          icon: "success",
+          confirmButtonColor: "#00A0D2",
+        });
+      }
+    });
+  }
+
+  //Eliminar Producto de la orden en estado local //
+  function handleDeleteProduct(name) {
+    setOrdenActual((prev) => {
+      return {
+        ...prev,
+        products: prev.products.filter((p) => p.name !== name),
+      };
+    });
+  }
+
+  function handlePaymentInput(e) {
+    setOrdenActual((prev) => {
+      return {
+        ...prev,
+        paymentMethod: e.target.name,
+      };
+    });
+  }
+
   function modifcarOrden(id, payload) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -140,6 +182,9 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
+        setTimeout(() => {
+          dispatch(getTakeAwayOrders(token));
+        }, 600);
         MySwal.fire({
           title: "Pedido editado",
           text: "La orden se modifico correctamente.",
@@ -156,14 +201,14 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   function handleClose(e) {
     setStateModal(!state);
     setOrdenActual({
-      id: orderTableNumber._id,
-      orderNumber: orderTableNumber.orderNumber,
-      date: orderTableNumber.date,
-      hour: orderTableNumber.hour,
-      tableNumber: orderTableNumber.tableNumber,
-      products: orderTableNumber.products,
-      estado: orderTableNumber.estado,
-      totalPrice: orderTableNumber.totalPrice,
+      id: order._id,
+      orderNumber: order.orderNumber,
+      name: order.name,
+      date: order.date,
+      hour: order.hour,
+      products: order.products,
+      estado: order.estado,
+      totalPrice: order.totalPrice,
     });
   }
 
@@ -180,7 +225,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
-        dispatch(changeStatus({ isOccupated: false, tableNumber }, token));
         MySwal.fire({
           title: "Pedido cerrado",
           text: "El pedido se cerro correctamente.",
@@ -193,7 +237,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
   return (
     <div>
-      {orderTableNumber && (
+      {order && (
         <Overlay display={state ? "flex" : "none"}>
           <ModalContainer>
             <HeaderModal>
@@ -203,6 +247,9 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               />
               <HeaderModalTitle>
                 <h3>Orden: {ordenActual.orderNumber} </h3>
+                <h4>Cliente: {order.nameClient} </h4>
+                <h4>Domicilio: {order.directionClient} </h4>
+                <h4>Telefono: {order.phoneClient} </h4>
               </HeaderModalTitle>
               <HeaderModalDetails>
                 <p>Hora de pedido: {ordenActual.hour}</p>
@@ -216,7 +263,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 <CategoriasPedidos>
                   <FilterProductTypes />
                 </CategoriasPedidos>
-
                 <SelectModal>
                   <FormModal onSubmit={(e) => handleSubmitAddProduct(e)}>
                     <Select
@@ -241,7 +287,8 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                         products.map((e) => {
                           return (
                             <option key={e._id} value={e.name}>
-                              {e.name}
+                              {" "}
+                              {e.name}{" "}
                             </option>
                           );
                         })}
@@ -263,13 +310,14 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 <Table id="productsTable">
                   <TableHead>
                     <TableRow>
-                      <TableHd width="40%">
+                      <TableHd width="45%">
                         <span className="productName">
                           <p style={{ margin: 0 }}>Nombre</p>
                         </span>
                       </TableHd>
-                      <TableHd width="10%">Precio</TableHd>
-                      <TableHd width="10%">Cantidad</TableHd>
+                      <TableHd width="15%">Precio</TableHd>
+                      <TableHd width="20%">Cantidad</TableHd>
+                      <TableHd width="20%">Option</TableHd>
                     </TableRow>
                   </TableHead>
                   <tbody>
@@ -287,6 +335,20 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                                 placeholder={product.amount}
                               />
                             </TableData>
+                            <TableData align="center">
+                              <div className="options">
+                                <Button
+                                  onClick={(e) => handleDelete(product.name)}
+                                  width="2rem"
+                                  height="2rem"
+                                  buttonColor="rgba(255, 0, 0, 1)"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
+                                </Button>
+                              </div>
+                            </TableData>
                           </TableRow>
                         );
                       })}
@@ -295,6 +357,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               </div>
               <div style={{ display: "flex" }}>
                 <TablePricesModal>
+                  <PaymentCheckBox handlePaymentInput={handlePaymentInput} />
                   <p>Monto Total: ${ordenActual.totalPrice}</p>
                   <Button
                     width="8rem"
@@ -314,17 +377,22 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
               </div>
             </OrderContainer>
 
-            <button
+            <Button
+              padding="5px"
+              margin="20px 0 0 0"
+              width="14rem"
+              height="2rem"
               onClick={() =>
                 modifcarOrden(ordenActual.id, {
                   products: ordenActual.products,
                   totalPrice: ordenActual.totalPrice,
                   estado: ordenActual.estado,
+                  paymentMethod: ordenActual.paymentMethod,
                 })
               }
             >
-              Aceptar
-            </button>
+              MODIFICAR ORDEN
+            </Button>
           </ModalContainer>
         </Overlay>
       )}

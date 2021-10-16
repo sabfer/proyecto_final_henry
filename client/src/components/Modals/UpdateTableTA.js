@@ -172,7 +172,7 @@ function handlePaymentInput(e) {
 function modifcarOrden(id, payload) {
     MySwal.fire({
         title: "¿Estas seguro?",
-        text: "Se modificara el pedido del cliente",
+        text: "Se modificará el pedido del cliente",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#1ABD53",
@@ -215,7 +215,7 @@ function handleClose(e) {
 function handleCloseOrder(id, payload) {
     MySwal.fire({
         title: "¿Estas seguro?",
-        text: "Se cerrara el pedido del cliente",
+        text: "Se cerrará el pedido del cliente",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#1ABD53",
@@ -241,7 +241,7 @@ function handleCloseOrder(id, payload) {
             <Overlay display={state ? "flex" : "none"}>
             <ModalContainer>
                 <HeaderModal>
-                <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+                <img src="https://i.imgur.com/ZyWpO0s.png" alt="img not found" />
                 <HeaderModalTitle>
                     <h3>Orden: {ordenActual.orderNumber} </h3>
                     <h4>Cliente: {order.nameClient} </h4>
