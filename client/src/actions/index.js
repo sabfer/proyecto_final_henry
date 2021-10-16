@@ -419,6 +419,22 @@ export function postCategories(payload, token) {
   };
 }
 
+// ---------- ELIMINAR CATEGORÍAS DE PRODUCTOS ---------- \\
+export function deleteCategory(payload, token) {
+  console.log(payload)
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/productTypes/${payload}`, auth);
+    return dispatch({
+      type: "DELETE_CATEGORY",
+    });
+  };
+}
+
 // ---------- CREACIÓN DE ORDEN ---------- \\
 export function postOrder(payload, token) {
   let auth = {

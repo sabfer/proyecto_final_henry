@@ -103,6 +103,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
+    case "DELETE_CATEGORY":
+      return {
+        ...state,
+      };
+
     case "PUT_PRODUCT":
       return {
         ...state,
