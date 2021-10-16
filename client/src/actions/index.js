@@ -133,11 +133,7 @@ export function postCommerce(payload, token) {
     },
   };
   return async function (dispatch) {
-    var data = await axios.post(
-      "http://localhost:3001/commerce/register",
-      payload,
-      auth
-    );
+    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
     return data;
   };
 }
@@ -157,10 +153,7 @@ export function getCommerces(token) {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log(
-          "estoy en el error del catch de getCommerces, con err: ",
-          err
-        );
+        console.log("estoy en el error del catch de getCommerces, con err: ", err);
       });
   };
 }
@@ -329,7 +322,6 @@ export function getDeliveryOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_DELIVERY_ORDERS",
           payload: data.data.payload,
@@ -497,5 +489,40 @@ export function deleteToken() {
     return dispatch({
       type: "DELETE_TOKEN",
     });
+  };
+}
+
+export function getKitchenOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders/active", auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_KITCHEN_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function updateOrderKitchen(id, payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
+      console.log(err);
+    });
+    return dispatch(getKitchenOrders(token));
   };
 }
