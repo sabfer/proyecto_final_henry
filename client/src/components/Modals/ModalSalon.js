@@ -164,7 +164,7 @@ export default function ModalSalon({ state, setState,statusS,changeStatus }) {
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
 
-    console.log(order)
+    
     setState(!state);
     dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
 
@@ -327,7 +327,7 @@ export default function ModalSalon({ state, setState,statusS,changeStatus }) {
                   >
                   </FontAwesomeIcon>
                   {/* <input type="button" value="+" onClick={aumentarM}></input> */}
-                  {console.log(statusS.status,"walter")}
+                  
                   {statusS.status=="true"? 
                   <Select
                     id="selectProduct"
@@ -356,7 +356,7 @@ export default function ModalSalon({ state, setState,statusS,changeStatus }) {
                           </option>
                         );
                       })}
-                  </Select>:<h1>sd</h1>
+                  </Select>:null
                   }
                 
                   <FontAwesomeIcon
