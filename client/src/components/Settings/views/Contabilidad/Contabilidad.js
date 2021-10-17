@@ -31,7 +31,7 @@ export default function Contabilidad() {
     <>
       <div>
         <center>
-          <h1>Informes Contables</h1>
+          <h1>INFORMES CONTABLES</h1>
           <button onClick={(e) => handleRender(1)}>Informe Diario</button>
           <button onClick={(e) => handleRender(2)}>Informe por fecha</button>
           <button onClick={(e) => handleRender(3)}>Informe Total</button>

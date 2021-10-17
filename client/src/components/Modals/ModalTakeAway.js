@@ -32,14 +32,7 @@ import {
   DivInfo,
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-  Options,
-} from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
@@ -59,7 +52,7 @@ export default function ModalTakeAway({ state, setState }) {
     type: "Take Away",
     nameClient: "",
     products: [],
-    estado: "Pendiente",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -69,8 +62,9 @@ export default function ModalTakeAway({ state, setState }) {
     setOrder({
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      hour: moment().format("HH:mm:ss"),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
@@ -80,7 +74,7 @@ export default function ModalTakeAway({ state, setState }) {
       type: "Take Away",
       nameClient: "",
       products: [],
-      estado: "Pendiente",
+      estado: 1,
       date: undefined,
       hour: undefined,
     });
@@ -159,7 +153,7 @@ export default function ModalTakeAway({ state, setState }) {
       type: "Take Away",
       nameClient: "",
       products: [],
-      estado: "En progreso",
+      estado: 1,
       date: "",
       hour: "",
     });
@@ -230,7 +224,7 @@ export default function ModalTakeAway({ state, setState }) {
     <div>
       <Overlay display={state ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
-          <HeaderModal>
+          <HeaderModal minwidth="730px">
             <img src="https://i.imgur.com/ZyWpO0s.png" alt="img not found" />
             <HeaderModalTitle>
               <h3>Take Away</h3>
@@ -271,13 +265,7 @@ export default function ModalTakeAway({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option
-                      id="inputDefault"
-                      value="none"
-                      selected
-                      disabled
-                      hidden
-                    >
+                    <option id="inputDefault" value="none" defaultValue disabled hidden>
                       Seleccione un producto
                     </option>
                     {products &&
@@ -337,16 +325,12 @@ export default function ModalTakeAway({ state, setState }) {
                               <TableRow key={el.name}>
                                 <TableData align="center">
                                   <InputAmount
-                                    onChange={(e) =>
-                                      handleInputAmount(e, el.name)
-                                    }
+                                    onChange={(e) => handleInputAmount(e, el.name)}
                                     placeholder={el.amount}
                                   />
                                 </TableData>
                                 <TableData>{el.name}</TableData>
-                                <TableData align="center">
-                                  $ {el.price}
-                                </TableData>
+                                <TableData align="center">$ {el.price}</TableData>
                                 <TableData align="center">
                                   <Options justify="center">
                                     <Button
@@ -355,9 +339,7 @@ export default function ModalTakeAway({ state, setState }) {
                                       height="2rem"
                                       buttonColor="rgba(255, 0, 0, 1)"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                      ></FontAwesomeIcon>
+                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                     </Button>
                                   </Options>
                                 </TableData>
