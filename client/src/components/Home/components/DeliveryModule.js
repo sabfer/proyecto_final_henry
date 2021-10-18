@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ModuleTop, Delivery, Orders, OrdersContainer } from "../../../css/HomeStyles";
+import {
+  ModuleTop,
+  Delivery,
+  Orders,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -20,17 +25,17 @@ export default function DeliveryModule() {
     orderNumber: undefined,
   });
 
-  // function handleUpdateModal(e, props) {
-  //   e.preventDefault();
-  //   setUpdateModal(true);
-  //   setTableDetails({
-  //     orderNumber: props.orderNumber,
-  //   });
-  // }
-
   useEffect(() => {
     dispatch(getDeliveryOrders(token));
   }, [dispatch, token]);
+
+  function handleUpdateModal(e, props) {
+    e.preventDefault();
+    setUpdateModal(true);
+    setTableDetails({
+      orderNumber: props.orderNumber,
+    });
+  }
 
   return (
     <Delivery>
@@ -54,7 +59,14 @@ export default function DeliveryModule() {
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {ordersDelivery && ordersDelivery ? (
             ordersDelivery.map((order) => {
-              return <OrderDelivery key={order._id} order={order.orderNumber} />;
+              return (
+                <OrderDelivery
+                  key={order._id}
+                  orderNumber={order.orderNumber}
+                  setStateModal={setStateModal}
+                  handleUpdate={handleUpdateModal}
+                />
+              );
             })
           ) : (
             <Loading gridcolumn="span 2">

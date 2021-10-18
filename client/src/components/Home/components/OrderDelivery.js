@@ -3,18 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMotorcycle } from "@fortawesome/free-solid-svg-icons";
 import { DeliveryCard } from "../../../css/HomeStyles";
 
-export default function OrderDelivery({ order, handleUpdate }) {
+export default function OrderDelivery({ orderNumber, handleUpdate }) {
   return (
     <div>
       <DeliveryCard
         onClick={(e) => {
-          handleUpdate(e, { orderNumber: order });
+          handleUpdate(e, { orderNumber: orderNumber });
         }}
       >
         <div>
           <FontAwesomeIcon icon={faMotorcycle} size="4x" />
         </div>
-        <p>Pedido: {order}</p>
+        <p>Pedido: {orderNumber}</p>
       </DeliveryCard>
     </div>
   );

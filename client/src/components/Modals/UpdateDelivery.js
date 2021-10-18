@@ -41,10 +41,10 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
   const dispatch = useDispatch();
 
   const order = ordenes
-    ? ordenes.find(
-        (ord) => ord.orderNumber === orderNumber && ord.estado !== "Finalizada"
-      )
+    ? ordenes.find((ord) => ord.orderNumber === orderNumber && ord.estado !== 4)
     : undefined;
+
+  console.log("_____________>", orderNumber);
 
   const [producto, setProducto] = useState({
     name: "",
@@ -214,8 +214,8 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
 
   function handleCloseOrder(id, payload) {
     MySwal.fire({
-      title: "¿Estas seguro?",
-      text: "Se cerrara el pedido del cliente",
+      title: "¿Estás seguro?",
+      text: "Se cerrará el pedido del cliente",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#1ABD53",
@@ -227,7 +227,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
         dispatch(updateOrder(id, payload, token));
         MySwal.fire({
           title: "Pedido cerrado",
-          text: "El pedido se cerro correctamente.",
+          text: "El pedido se cerró correctamente.",
           icon: "success",
           confirmButtonColor: "#00A0D2",
         });
@@ -287,8 +287,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
                         products.map((e) => {
                           return (
                             <option key={e._id} value={e.name}>
-                              {" "}
-                              {e.name}{" "}
+                              {e.name}
                             </option>
                           );
                         })}
@@ -367,7 +366,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
                       handleCloseOrder(ordenActual.id, {
                         products: ordenActual.products,
                         totalPrice: ordenActual.totalPrice,
-                        estado: "Finalizada",
+                        estado: 4,
                       })
                     }
                   >

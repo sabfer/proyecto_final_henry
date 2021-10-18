@@ -71,7 +71,7 @@ export default function ModalDelivery({ state, setState }) {
     setState(!state);
     setOrder({
       ...order,
-      type: "Salon",
+      type: "Delivery",
       tableNumber: undefined,
       products: [],
       estado: 1,
@@ -253,9 +253,9 @@ export default function ModalDelivery({ state, setState }) {
                 ></InputClient>
                 <InputClient
                   type="number"
-                  name="telefono"
+                  name="phoneClient"
                   onChange={(e) => handleChange(e)}
-                  placeholder="phoneClient"
+                  placeholder="Teléfono"
                   margin="10px 0 0 12px "
                 ></InputClient>
               </DivInfo>
