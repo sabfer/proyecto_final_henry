@@ -32,7 +32,7 @@ import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-sv
 
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalSalon({ state, setState,statusS,changeStatus }) {
+export default function ModalSalon({ state, setState,statusS,changeSt }) {
 
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
@@ -342,9 +342,9 @@ export default function ModalSalon({ state, setState,statusS,changeStatus }) {
                       id="inputDefault"
                       // value={-1}
                       value="Seleccione un producto"
-                      selected
+                      selected="true"
                       disabled
-                      hidden
+                      //hidden
                     >
                       Seleccione un producto
                     </option>
