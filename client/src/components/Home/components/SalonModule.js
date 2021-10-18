@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
+import {
+  Salon,
+  Orders,
+  ModuleTop,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +17,6 @@ import Mesas from "./Mesa";
 
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
     status: false,
@@ -56,7 +60,11 @@ export default function SalonModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
+      <ModalSalon
+        state={stateModal}
+        setState={setStateModal}
+        title="Consumo Mesa: "
+      />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {mesas && mesas ? (
