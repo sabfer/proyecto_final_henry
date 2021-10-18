@@ -36,7 +36,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
 
   const orderTableNumber = ordenes
     ? ordenes.find(
-        (ord) => ord.tableNumber === tableNumber && ord.estado !== "Finalizada"
+        (ord) => ord.tableNumber === tableNumber && ord.estado !== 4
       )
     : undefined;
 
