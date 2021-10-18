@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postOrderDelivery } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWindowClose, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWindowClose,
+  faCheck,
+  faPlusCircle,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
 import withReactContent from "sweetalert2-react-content";
@@ -27,14 +32,7 @@ import {
   DivInfo,
 } from "../../css/ModalStyles.js";
 import { Select } from "../../css/Select";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-  Options,
-} from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
@@ -53,9 +51,8 @@ export default function ModalDelivery({ state, setState }) {
   const [order, setOrder] = useState({
     type: "Delivery",
     name: "",
-    
     products: [],
-    estado: "Pendiente",
+    estado: 1,
     totalPrice: 0,
     date: "",
     hour: "",
@@ -65,18 +62,19 @@ export default function ModalDelivery({ state, setState }) {
     setOrder({
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      hour: moment().format("HH:mm:ss"),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
     setState(!state);
     setOrder({
       ...order,
-      type: "Salon",
+      type: "Delivery",
       tableNumber: undefined,
       products: [],
-      estado: "Pendiente",
+      estado: 1,
       date: undefined,
       hour: undefined,
     });
@@ -155,7 +153,7 @@ export default function ModalDelivery({ state, setState }) {
       type: "Delivery",
       tableNumber: "",
       products: [],
-      estado: "En progreso",
+      estado: 1,
       date: "",
       hour: "",
     });
@@ -199,12 +197,37 @@ export default function ModalDelivery({ state, setState }) {
       }
     });
   }
+  function aumentar() {
+    var aux = 0;
+    console.log(order.tableNumber);
+    if (producto.amount < 30) {
+      aux = producto.amount + 1;
+      console.log(aux);
+      aux = aux - (aux - producto.amount);
+      aux = aux + 1;
+      setProducto({
+        ...producto,
+        amount: aux,
+      });
+    }
+  }
+
+  function disminuir() {
+    //setProducto(producto.amount+5)
+    if (producto.amount >= 2) {
+      setProducto({
+        ...producto,
+        amount: producto.amount - 1,
+      });
+    }
+    console.log(producto.amount);
+  }
 
   return (
     <div>
       <Overlay display={state ? "flex" : "none"}>
         <ModalContainer align="unset" maxwidth="945px">
-          <HeaderModal>
+          <HeaderModal minwidth="730px">
             <img src="https://i.imgur.com/vM38VRe.png?1" alt="img not found" />
             <HeaderModalTitle>
               <h3>Delivery</h3>
@@ -223,14 +246,14 @@ export default function ModalDelivery({ state, setState }) {
               <DivInfo>
                 <InputClient
                   type="text"
-                  name="name"
+                  name="nameClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre Cliente"
                   margin="10px 0 0 0 "
                 ></InputClient>
                 <InputClient
                   type="number"
-                  name="name"
+                  name="phoneClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Teléfono"
                   margin="10px 0 0 12px "
@@ -238,7 +261,7 @@ export default function ModalDelivery({ state, setState }) {
               </DivInfo>
               <InputClient
                 type="text"
-                name="name"
+                name="directionClient"
                 onChange={(e) => handleChange(e)}
                 placeholder="Dirección"
                 margin="7px 0 "
@@ -251,20 +274,14 @@ export default function ModalDelivery({ state, setState }) {
                 <FormModal onSubmit={(e) => handleSubmit(e)}>
                   <Select
                     id="selectProduct"
-                    width="83%"
+                    width="60%"
                     height="2.4rem"
                     border="solid 1px black"
                     fontWeight="bold"
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option
-                      id="inputDefault"
-                      value="none"
-                      selected
-                      disabled
-                      hidden
-                    >
+                    <option id="inputDefault" value="none" defaultValue disabled hidden>
                       Seleccione un producto
                     </option>
                     {products &&
@@ -277,6 +294,12 @@ export default function ModalDelivery({ state, setState }) {
                         );
                       })}
                   </Select>
+                  <FontAwesomeIcon
+                    onClick={() => disminuir()}
+                    icon={faMinusCircle}
+                    size="2x"
+                    style={{ cursor: "pointer" }}
+                  ></FontAwesomeIcon>
                   <InputModal>
                     <input
                       type="number"
@@ -284,8 +307,16 @@ export default function ModalDelivery({ state, setState }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="amount"
                       value={producto.amount}
+                      min="1"
+                      max="30"
                     />
                   </InputModal>
+                  <FontAwesomeIcon
+                    onClick={() => aumentar()}
+                    icon={faPlusCircle}
+                    size="2x"
+                    style={{ cursor: "pointer" }}
+                  ></FontAwesomeIcon>
                   <Button type="submit" width="8%" buttonColor="#00C72C">
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>
@@ -309,16 +340,12 @@ export default function ModalDelivery({ state, setState }) {
                               <TableRow key={el.name}>
                                 <TableData align="center">
                                   <InputAmount
-                                    onChange={(e) =>
-                                      handleInputAmount(e, el.name)
-                                    }
+                                    onChange={(e) => handleInputAmount(e, el.name)}
                                     placeholder={el.amount}
                                   />
                                 </TableData>
                                 <TableData>{el.name}</TableData>
-                                <TableData align="center">
-                                  $ {el.price}
-                                </TableData>
+                                <TableData align="center">$ {el.price}</TableData>
                                 <TableData align="center">
                                   <Options justify="center">
                                     <Button
@@ -327,9 +354,7 @@ export default function ModalDelivery({ state, setState }) {
                                       height="2rem"
                                       buttonColor="rgba(255, 0, 0, 1)"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                      ></FontAwesomeIcon>
+                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                     </Button>
                                   </Options>
                                 </TableData>

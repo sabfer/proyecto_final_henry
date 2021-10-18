@@ -22,7 +22,7 @@ export const conditionalForm = (
             type="text"
             name="name"
             required
-            value={input.name}
+            //value={input.name}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
@@ -39,7 +39,7 @@ export const conditionalForm = (
             type="text"
             name="user"
             required
-            value={input.user}
+            //value={input.user}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
@@ -56,7 +56,7 @@ export const conditionalForm = (
             type="text"
             name="pass"
             required
-            value={input.pass}
+            //value={input.pass}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
@@ -70,7 +70,7 @@ export const conditionalForm = (
       </form>
     );
   }
-  //Formulario: "CREAR COMERCIO"
+  /* //Formulario: "CREAR COMERCIO"
   if (id === 2) {
     return (
       <form>
@@ -110,18 +110,18 @@ export const conditionalForm = (
         </InputContainer>
       </form>
     );
-  }
+  } */
   //Formulario: "CREAR PRODUCTO"
   if (id === 3) {
     return (
       <form>
         <InputContainer>
-          <Label valido={inpValido.name}>{label1}</Label>
+          <Label>{label1}</Label>
           <input
             type="text"
             name="name"
             required
-            value={input.name}
+            //value={input.name}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
@@ -133,13 +133,13 @@ export const conditionalForm = (
           <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
         </InputContainer>
         <InputContainer>
-          <Label valido={inpValido.price}>{label3}</Label>
+          <Label>{label3}</Label>
           <input
             type="number"
             name="price"
             min="1"
             required
-            value={input.price}
+            //value={input.price}
             onChange={(e) => onChange(e)}
             leyenda={ley2}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
@@ -175,35 +175,7 @@ export const conditionalForm = (
       </form>
     );
   }
-  // Formulario: "CREAR PEDIDO SALON"
-  // if (id === 4) {
-  //   return (
-  //     <form>
-  //       <InputContainer>
-  //         <label>{label1}</label>
-  //         <input
-  //           type="string"
-  //           name="table"
-  //           value={input.table}
-  //           onChange={(e) => onChange(e)}
-  //         />
-  //       </InputContainer>
-  //       <InputContainer>
-  //         <label>{label2}</label>
-  //         <input
-  //           type="text"
-  //           name="products"
-  //           value={input.products}
-  //           onChange={(e) => onChange(e)}
-  //         />
-  //       </InputContainer>
-  //       <InputContainer>
-  //         <label>{label3}</label>
-  //         <input type="text" name="user" value={input.user} onChange={onChange} />
-  //       </InputContainer>
-  //     </form>
-  //   );
-  // }
+  /* 
   // Formulario: "CREAR PEDIDO PARA LLEVAR"
   if (id === 5) {
     return (
@@ -253,7 +225,7 @@ export const conditionalForm = (
         </InputContainer>
       </form>
     );
-  }
+  } */
   // Formulario: "MODIFICAR PRODUCTO"
   if (id === 7) {
     return (

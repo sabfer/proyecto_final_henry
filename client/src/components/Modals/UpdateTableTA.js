@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrder, changeStatus } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
+import { updateOrder, getTakeAwayOrders } from "../../actions/index";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
 import {
@@ -17,7 +17,6 @@ import {
   InputModal,
   TablePricesModal,
   OrderContainer,
-  TableContainer,
 } from "../../css/ModalStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -27,16 +26,17 @@ import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 import PaymentCheckBox from "./Components/PaymentCheckBox";
 
-export default function UptadeTable({ state, setStateModal, tableNumber }) {
+export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
   const token = useSelector((state) => state.userToken);
+  const ordenes = useSelector((state) => state.orders.takeAwayOrders);
   const products = useSelector((state) => state.products);
-  const ordenes = useSelector((state) => state.orders.salonOrders);
+
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
 
-  const orderTableNumber = ordenes
+  const order = ordenes
     ? ordenes.find(
-        (ord) => ord.tableNumber === tableNumber && ord.estado !== 4
+        (ord) => ord.orderNumber === orderNumber && ord.estado !== 4
       )
     : undefined;
 
@@ -48,20 +48,19 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   });
 
   const [ordenActual, setOrdenActual] = useState({
-    id: orderTableNumber._id,
-    orderNumber: orderTableNumber.orderNumber,
-    date: orderTableNumber.date,
-    hour: orderTableNumber.hour,
-    tableNumber: orderTableNumber.tableNumber,
-    products: orderTableNumber.products.map((prod) => {
+    id: order._id,
+    orderNumber: order.orderNumber,
+    name: order.name,
+    date: order.date,
+    hour: order.hour,
+    products: order.products.map((prod) => {
       return { ...prod };
     }),
-    paymentMethod: orderTableNumber.paymentMethod,
-    estado: orderTableNumber.estado,
-    totalPrice: orderTableNumber.totalPrice,
+    estado: order.estado,
+    paymentMethod: order.paymentMethod,
+    totalPrice: order.totalPrice,
   });
 
-  //Agregar producto a la orden actual estado local
   function handleSubmitAddProduct(e) {
     e.preventDefault();
     setOrdenActual((prev) => {
@@ -89,7 +88,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
       document.getElementById("inputDefault").value;
   }
 
-  //Estado local product: modifica cantidad o agrega un producto
   function handleChangeProduct(e) {
     if (e.target.name === "amount") {
       setProducto({
@@ -105,7 +103,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }
   }
 
-  //Modificar cantidad de un producto en la orden de estado local y recalcular precio total //
   function handleInputAmount(e, name) {
     setOrdenActual((prev) => {
       const product = prev.products.find((p) => p.name === name);
@@ -136,7 +133,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteProcut(name);
+        handleDeleteProduct(name);
         MySwal.fire({
           title: "Producto borrado",
           text: "El producto se borró correctamente!",
@@ -148,7 +145,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
 
   //Eliminar Producto de la orden en estado local //
-  function handleDeleteProcut(name) {
+  function handleDeleteProduct(name) {
     setOrdenActual((prev) => {
       return {
         ...prev,
@@ -158,23 +155,14 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
 
   function handlePaymentInput(e) {
-    console.log("TARGET:", e.target);
     setOrdenActual((prev) => {
-      if (e.target.checked) {
-        return {
-          ...prev,
-          paymentMethod: e.target.name,
-        };
-      } else {
-        return {
-          ...prev,
-          paymentMethod: undefined,
-        };
-      }
+      return {
+        ...prev,
+        paymentMethod: e.target.name,
+      };
     });
   }
 
-  //Update Order, put a DataBase//
   function modifcarOrden(id, payload) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -188,6 +176,9 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
+        setTimeout(() => {
+          dispatch(getTakeAwayOrders(token));
+        }, 600);
         MySwal.fire({
           title: "Pedido editado",
           text: "La orden se modifico correctamente.",
@@ -201,22 +192,20 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     });
   }
 
-  //Cerrar Modal //
   function handleClose(e) {
     setStateModal(!state);
     setOrdenActual({
-      id: orderTableNumber._id,
-      orderNumber: orderTableNumber.orderNumber,
-      date: orderTableNumber.date,
-      hour: orderTableNumber.hour,
-      tableNumber: orderTableNumber.tableNumber,
-      products: orderTableNumber.products,
-      estado: orderTableNumber.estado,
-      totalPrice: orderTableNumber.totalPrice,
+      id: order._id,
+      orderNumber: order.orderNumber,
+      name: order.name,
+      date: order.date,
+      hour: order.hour,
+      products: order.products,
+      estado: order.estado,
+      totalPrice: order.totalPrice,
     });
   }
 
-  //Cerrar Orden, put a DataBase, cambio estado de mesa en DataBase//
   function handleCloseOrder(id, payload) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -230,7 +219,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
-        dispatch(changeStatus({ isOccupated: false, tableNumber }, token));
         MySwal.fire({
           title: "Pedido cerrado",
           text: "El pedido se cerro correctamente.",
@@ -243,14 +231,14 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
   return (
     <div>
-      {orderTableNumber && (
+      {order && (
         <Overlay display={state ? "flex" : "none"}>
-          <ModalContainer minwidth="945px">
+          <ModalContainer>
             <HeaderModal>
-              <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
+              <img src="https://i.imgur.com/ZyWpO0s.png" alt="img not found" />
               <HeaderModalTitle>
                 <h3>Orden: {ordenActual.orderNumber} </h3>
-                <h4>Mesa: {ordenActual.tableNumber} </h4>
+                <h4>Cliente: {order.nameClient} </h4>
               </HeaderModalTitle>
               <HeaderModalDetails>
                 <p>Hora de pedido: {ordenActual.hour}</p>
@@ -264,6 +252,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 <CategoriasPedidos>
                   <FilterProductTypes />
                 </CategoriasPedidos>
+
                 <SelectModal>
                   <FormModal onSubmit={(e) => handleSubmitAddProduct(e)}>
                     <Select
@@ -275,14 +264,15 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" defaultValue disabled hidden>
+                      <option id="inputDefault" value="none" selected disabled hidden>
                         Seleccione un producto
                       </option>
                       {products &&
                         products.map((e) => {
                           return (
                             <option key={e._id} value={e.name}>
-                              {e.name}
+                              {" "}
+                              {e.name}{" "}
                             </option>
                           );
                         })}
@@ -301,51 +291,49 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                     </Button>
                   </FormModal>
                 </SelectModal>
-                <TableContainer>
-                  <Table id="productsTable">
-                    <TableHead>
-                      <TableRow>
-                        <TableHd width="45%">
-                          <span className="productName">
-                            <p style={{ margin: 0 }}>Nombre</p>
-                          </span>
-                        </TableHd>
-                        <TableHd width="15%">Precio</TableHd>
-                        <TableHd width="20%">Cantidad</TableHd>
-                        <TableHd width="20%">Option</TableHd>
-                      </TableRow>
-                    </TableHead>
-                    <tbody>
-                      {ordenActual &&
-                        ordenActual.products.map((product) => {
-                          return (
-                            <TableRow key={product.name}>
-                              <TableData align="center">{product.name}</TableData>
-                              <TableData align="center">{product.price}</TableData>
-                              <TableData align="center">
-                                <input
-                                  onChange={(e) => handleInputAmount(e, product.name)}
-                                  placeholder={product.amount}
-                                />
-                              </TableData>
-                              <TableData align="center">
-                                <div className="options">
-                                  <Button
-                                    onClick={(e) => handleDelete(product.name)}
-                                    width="2rem"
-                                    height="2rem"
-                                    buttonColor="rgba(255, 0, 0, 1)"
-                                  >
-                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                                  </Button>
-                                </div>
-                              </TableData>
-                            </TableRow>
-                          );
-                        })}
-                    </tbody>
-                  </Table>
-                </TableContainer>
+                <Table id="productsTable">
+                  <TableHead>
+                    <TableRow>
+                      <TableHd width="45%">
+                        <span className="productName">
+                          <p style={{ margin: 0 }}>Nombre</p>
+                        </span>
+                      </TableHd>
+                      <TableHd width="15%">Precio</TableHd>
+                      <TableHd width="20%">Cantidad</TableHd>
+                      <TableHd width="20%">Option</TableHd>
+                    </TableRow>
+                  </TableHead>
+                  <tbody>
+                    {ordenActual &&
+                      ordenActual.products.map((product) => {
+                        return (
+                          <TableRow key={product.name}>
+                            <TableData>{product.name}</TableData>
+                            <TableData>{product.price}</TableData>
+                            <TableData>
+                              <input
+                                onChange={(e) => handleInputAmount(e, product.name)}
+                                placeholder={product.amount}
+                              />
+                            </TableData>
+                            <TableData>
+                              <Options justify="center">
+                                <Button
+                                  onClick={(e) => handleDelete(product.name)}
+                                  width="2rem"
+                                  height="2rem"
+                                  buttonColor="rgba(255, 0, 0, 1)"
+                                >
+                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                </Button>
+                              </Options>
+                            </TableData>
+                          </TableRow>
+                        );
+                      })}
+                  </tbody>
+                </Table>
               </div>
               <div style={{ display: "flex" }}>
                 <TablePricesModal>
@@ -359,8 +347,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                       handleCloseOrder(ordenActual.id, {
                         products: ordenActual.products,
                         totalPrice: ordenActual.totalPrice,
-                        estado: "Finalizada",
-                        paymentMethod: ordenActual.paymentMethod,
+                        estado: 4,
                       })
                     }
                   >
@@ -372,8 +359,8 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
 
             <Button
               padding="5px"
-              margin="15px 0 0 0"
-              width="9rem"
+              margin="20px 0 0 0"
+              width="14rem"
               height="2rem"
               onClick={() =>
                 modifcarOrden(ordenActual.id, {
@@ -384,7 +371,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                 })
               }
             >
-              MODIFICAR
+              MODIFICAR ORDEN
             </Button>
           </ModalContainer>
         </Overlay>

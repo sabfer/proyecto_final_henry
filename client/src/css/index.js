@@ -51,15 +51,17 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   align-self: ${(props) => props.alignSelf};
+  justify-self: ${(props) => props.justifySelf};
   justify-content: ${(props) => props.justify || "center"};
-  color: rgb(255, 255, 255);
-  text-transform: uppercase;
+  color: ${(props) => props.color || "rgb(255, 255, 255)"};
   background-color: ${(props) => props.buttonColor || "rgb(0, 160, 210)"};
   border: none;
   border-radius: 0.6rem;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 350ms ease-out;
+  position: ${(props) => props.position};
+  bottom: ${(props) => props.bottom};
   .Excel {
     width: 100%;
     height: 100%;
@@ -89,6 +91,9 @@ export const OptionsBar = styled.div`
 `;
 
 export const Loading = styled.div`
+  grid-column: ${(props) => props.gridcolumn};
+  grid-row: ${(props) => props.gridrow};
+  text-align: center;
   margin: 2rem;
   display: flex;
   flex-direction: column;

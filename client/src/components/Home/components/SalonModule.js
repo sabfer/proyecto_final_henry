@@ -5,7 +5,7 @@ import {
   ModuleTop,
   OrdersContainer,
 } from "../../../css/HomeStyles";
-import { Button } from "../../../css/index";
+import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
@@ -17,10 +17,9 @@ import Mesas from "./Mesa";
 
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
-    status: false
+    status: false,
   });
   const dispatch = useDispatch();
   const mesas = useSelector((state) => state.mesas);
@@ -31,7 +30,6 @@ export default function SalonModule() {
 
   useEffect(() => {
     dispatch(getSalonOrders(token));
-
     if (mesas === undefined) {
       dispatch(getMesas(token));
     }
@@ -50,8 +48,8 @@ export default function SalonModule() {
       <ModuleTop>
         <h3>Salón</h3>
         <Button
-          onClick={() => setStateModal({status: true, tableNumber: ""})}
-          width="10rem"
+          onClick={() => setStateModal({ status: true, tableNumber: "" })}
+          width="9.4rem"
           height="2.5rem"
           alignSelf="flex-end"
           justify="space-between"
@@ -69,18 +67,28 @@ export default function SalonModule() {
       />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {mesas &&
+          {mesas && mesas ? (
             mesas.map((mesa) => {
               return (
                 <Mesas
                   tableNumber={mesa.tableNumber}
                   status={mesa.isOccupated}
-                  key={mesa.numero}
+                  key={mesa._id}
                   setStateModal={setStateModal}
                   handleUpdate={handleUpdateModal}
                 />
               );
-            })}
+            })
+          ) : (
+            <Loading gridcolumn="span 5">
+              <p>Loading...</p>
+              <img
+                src="https://i.imgur.com/5JQ02CS.gif"
+                alt="loading gif"
+                width="100px"
+              />
+            </Loading>
+          )}
           {updateModal && (
             <UpdateTable
               state={updateModal}

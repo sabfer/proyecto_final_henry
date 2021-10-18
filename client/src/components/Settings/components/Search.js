@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getNameProducts } from "../../../actions";
 import { SearchContainer } from "../../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function Search() {
   const dispatch = useDispatch();

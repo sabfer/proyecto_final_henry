@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, updateUsers, deleteUser } from "../../../actions";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../../css/Table";
+import { getUsers, deleteUser } from "../../../actions";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../../css/Table";
 import { Button } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -19,11 +13,7 @@ export default function Users() {
   const [stateModal7, setStateModal7] = useState(false);
 
   function handleDelete(e) {
-    if (
-      window.confirm(
-        "¿Estás seguro de querer eliminar el usuario seleccionado?"
-      )
-    ) {
+    if (window.confirm("¿Estás seguro de querer eliminar el usuario seleccionado?")) {
       dispatch(deleteUser(e));
       setTimeout(() => {
         dispatch(getUsers());
@@ -31,9 +21,9 @@ export default function Users() {
     }
   }
 
-  function handleUpdate(e) {
+  /* function handleUpdate(e) {
     dispatch(updateUsers(e));
-  }
+  } */
 
   useEffect(() => {
     setTimeout(() => {
