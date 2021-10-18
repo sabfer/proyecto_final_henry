@@ -16,6 +16,12 @@ import { getSalonOrders, getMesas } from "../../../actions";
 import Mesas from "./Mesa";
 
 export default function SalonModule() {
+
+  //////////////////////////////////////////////////
+  const[sesion,setSesion]=useState({status:false})
+  console.log(sesion,"SalonModule")
+  //////////////////////////////////////////////////
+
   const token = useSelector((state) => state.userToken);
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
@@ -64,6 +70,10 @@ export default function SalonModule() {
         state={stateModal}
         setState={setStateModal}
         title="Consumo Mesa: "
+      ///////////////////  
+        sesionMS={sesion}
+        setSesionMS={setSesion}
+      ///////////////////
       />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
@@ -76,6 +86,10 @@ export default function SalonModule() {
                   key={mesa._id}
                   setStateModal={setStateModal}
                   handleUpdate={handleUpdateModal}
+                   //////////////////////////////////
+                  stateM={sesion}
+                  setStateM={setSesion}
+                  /////////////////////////////////
                 />
               );
             })

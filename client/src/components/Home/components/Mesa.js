@@ -9,12 +9,23 @@ export default function Mesas({
   status,
   handleUpdate,
   setStateModal,
-}) {
-  console.log(status)
+  ///////////
+  stateM,
+  setStateM
+/////////////
+}) 
+
+{
+
   return (
     <div>
       <Mesa
         onClick={(e) => {
+          //////////////////////
+          setStateM({
+          ...stateM,status:"true"
+          })
+          ///////////////////////
           if (status) {
             handleUpdate(e, { tableNumber: tableNumber });
           } else {
@@ -23,8 +34,9 @@ export default function Mesas({
               tableNumber: tableNumber,
             });
           }
-        }}
+        }}          
       >
+       {/* / {console.log(stateM.status,"DE MESA")} */}
         <div>
           <MesaIco
             color={

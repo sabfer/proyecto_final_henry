@@ -31,7 +31,21 @@ import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-sv
 
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalSalon({ state, setState }) {
+export default function ModalSalon({ state, setState,sesionMS,setSesionMS}) {
+
+//////////////////////////
+
+function selectInCombo(combo,val)
+{
+    for(var indice=0 ;indice<document.getElementById(combo).length;indice++)
+    {
+        if (document.getElementById(combo).options[indice].text==val )
+            document.getElementById(combo).selectedIndex =indice;
+    }      
+}
+//////////////////////////
+
+  //console.log(sesionMS.status,"modelsalon")
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
@@ -54,6 +68,8 @@ export default function ModalSalon({ state, setState }) {
     /*userId: 1224125, */
   });
 
+  console.log(producto)
+
   useEffect(() => {
     setOrder({
       ...order,
@@ -62,6 +78,8 @@ export default function ModalSalon({ state, setState }) {
       tableNumber: state.tableNumber,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return()=>{
+    }
   }, [state]);
 
   function handleClose(e) {
@@ -79,12 +97,21 @@ export default function ModalSalon({ state, setState }) {
       hour: "",
     });
 
-    setProducto({
-      name: "",
-      amount: "",
-      observations: "",
-      price: "",
-    });
+    // setProducto({
+    //   name: "",
+    //   amount: "",
+    //   observations: "",
+    //   price: "",
+    // });
+////////////////////
+    setSesionMS({
+      ...sesionMS,
+      status:"false"
+      })
+///////////////////   
+    // document.getElementById("selectProduct").selectedIndex =3;
+    // console.log(document.getElementById("selectProduct"))
+    //selectInCombo('selectProduct','f')
   }
 
   function handleChange(e) {
@@ -132,7 +159,7 @@ export default function ModalSalon({ state, setState }) {
       price: "",
     });
     document.getElementById("selectProduct").value =
-      document.getElementById("inputDefault").value;
+    document.getElementById("inputDefault").value;
     console.log(order.products);
   }
 
@@ -265,6 +292,7 @@ export default function ModalSalon({ state, setState }) {
     console.log(order.tableNumber);
   }
 
+
   return (
     <div>
       <Overlay display={state.status ? "flex" : "none"}>
@@ -287,9 +315,13 @@ export default function ModalSalon({ state, setState }) {
           </CloseButton>
           <OrderContainer>
             <div>
+              {sesionMS.status="true"?
               <CategoriasPedidos>
                 <FilterProductTypes />
-              </CategoriasPedidos>
+              </CategoriasPedidos>:null}
+              {/* <CategoriasPedidos>
+                <FilterProductTypes />
+              </CategoriasPedidos> */}
 
               <SelectModal>
                 <FormModal onSubmit={(e) => handleSubmit(e)}>
@@ -319,6 +351,7 @@ export default function ModalSalon({ state, setState }) {
                   ></FontAwesomeIcon>
                   {/* <input type="button" value="+" onClick={aumentarM}></input> */}
 
+                  {/* {sesionMS.status=true? */}
                   <Select
                     id="selectProduct"
                     width="50%"
@@ -330,12 +363,14 @@ export default function ModalSalon({ state, setState }) {
                   >
                     <option
                       id="inputDefault"
-                      // value={-1}
-                      value="Seleccione un producto"
+                      //value={-1}
+                      value="producto"
+                      //selected="true"
+                      //disabled
                       defaultValue
                       hidden
                     >
-                      Seleccione un producto
+                      Seleccione producto
                     </option>
                     {products &&
                       products.map((e) => {
@@ -346,7 +381,8 @@ export default function ModalSalon({ state, setState }) {
                         );
                       })}
                   </Select>
-
+                  {/* :null
+} */}
                   <FontAwesomeIcon
                     onClick={() => disminuir()}
                     icon={faMinusCircle}
