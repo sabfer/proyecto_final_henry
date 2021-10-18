@@ -143,11 +143,19 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
   }
 
   function handlePaymentInput(e) {
+    console.log("TARGET:", e.target);
     setOrdenActual((prev) => {
-      return {
-        ...prev,
-        paymentMethod: e.target.name,
-      };
+      if (e.target.checked) {
+        return {
+          ...prev,
+          paymentMethod: e.target.name,
+        };
+      } else {
+        return {
+          ...prev,
+          paymentMethod: undefined,
+        };
+      }
     });
   }
 

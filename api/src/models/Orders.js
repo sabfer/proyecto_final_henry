@@ -34,8 +34,6 @@ const OrderSchema = new Schema({
   paymentMethod: {
     type: String,
     enum: ["Efectivo", "Debito", "Credito", "Mercado Pago"],
-    default: "",
-    required: true,
   },
   totalPrice: { type: Number, required: true },
 });
