@@ -2,13 +2,18 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import { Mesa } from "../../../css/HomeStyles";
+import {useState} from "react"
 
 export default function Mesas({
   tableNumber,
   status,
   handleUpdate,
   setStateModal,
-}) {
+  stateM,
+  setStateM
+}){
+  
+
   return (
     <div>
       <Mesa
@@ -21,7 +26,13 @@ export default function Mesas({
               tableNumber: tableNumber,
             });
           }
+////////////////////////////
+          setStateM({
+            ...stateM,status:"true"
+          })
+/////////////////////////////          
         }}
+       
       >
         <div className={status ? "occuped" : "available"}>
           <FontAwesomeIcon icon={faHamburger} size="4x" />

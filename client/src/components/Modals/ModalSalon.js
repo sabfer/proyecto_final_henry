@@ -31,7 +31,7 @@ import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-sv
 
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalSalon({ state, setState }) {
+export default function ModalSalon({ state, setState,statusS,changeStatusD}) {
   const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
@@ -43,6 +43,8 @@ export default function ModalSalon({ state, setState }) {
     price: undefined,
   });
 
+  // const [valido,setValido]=useState({state:true})
+  // console.log(valido)
   const [order, setOrder] = useState({
     type: "Salon",
     tableNumber: "",
@@ -85,6 +87,11 @@ export default function ModalSalon({ state, setState }) {
       observations: "",
       price: "",
     });
+
+    // setValido({
+    //   state:false
+    // })
+    
   }
 
   function handleChange(e) {
@@ -288,7 +295,7 @@ export default function ModalSalon({ state, setState }) {
           <OrderContainer>
             <div>
               <CategoriasPedidos>
-                <FilterProductTypes />
+                {statusS.status="true"?<FilterProductTypes/>:<h5>gfdg</h5>}
               </CategoriasPedidos>
 
               <SelectModal>
@@ -330,10 +337,11 @@ export default function ModalSalon({ state, setState }) {
                   >
                     <option
                       id="inputDefault"
-                      // value={-1}
                       value="Seleccione un producto"
-                      defaultValue
-                      hidden
+                      selected="true"
+                      disabled
+                      //defaultValue
+                      //hidden
                     >
                       Seleccione un producto
                     </option>

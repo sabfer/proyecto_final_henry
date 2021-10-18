@@ -12,7 +12,12 @@ import Mesas from "./Mesa";
 
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-
+  
+  //////////////////////////////////////////////////
+  const[sesion,setSesion]=useState({status:"false"})
+  //////////////////////////////////////////////////
+  
+  
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
     status: false,
@@ -56,7 +61,8 @@ export default function SalonModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
+      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " statusS={sesion}
+      changeStatus={setSesion} />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {mesas && mesas ? (
@@ -68,6 +74,11 @@ export default function SalonModule() {
                   key={mesa._id}
                   setStateModal={setStateModal}
                   handleUpdate={handleUpdateModal}
+                  
+                  //////////////////////////////////
+                  stateM={sesion}
+                  setStateM={setSesion}
+                  /////////////////////////////////
                 />
               );
             })

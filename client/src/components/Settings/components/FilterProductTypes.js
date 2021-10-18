@@ -22,7 +22,9 @@ export default function FilterProductTypes() {
       <div className="actual_filter">
         <p>Filtrar por categoría</p>
         <Select onChange={(e) => handleFilterType(e)} width="50%" height="2.4rem">
-          <option hidden defaultValue>
+          <option 
+          //hidden 
+          defaultValue selected="true" disabled>
             Categorías
           </option>
           {/* <option value="-1">Categorías</option> */}
