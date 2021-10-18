@@ -148,6 +148,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
+    case "GET_ORDERS":
+      return {
+        ...state,
+        orders: payload,
+      };
+
     case "GET_TAKE_AWAY_ORDERS":
       return {
         ...state,

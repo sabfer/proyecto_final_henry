@@ -32,6 +32,25 @@ export function loginUser(payload) {
   };
 }
 
+// ---------- OBTENER ORDENES ---------- \\
+export function getOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders", auth)
+      .then((data) => {
+        return dispatch({ type: "GET_ORDERS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 // ---------- OBTENER PRODUCTOS ---------- \\
 export function getProducts(token) {
   let auth = {
@@ -133,7 +152,11 @@ export function postCommerce(payload, token) {
     },
   };
   return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
+    var data = await axios.post(
+      "http://localhost:3001/commerce/register",
+      payload,
+      auth
+    );
     return data;
   };
 }
@@ -153,7 +176,10 @@ export function getCommerces(token) {
         return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
       })
       .catch((err) => {
-        console.log("estoy en el error del catch de getCommerces, con err: ", err);
+        console.log(
+          "estoy en el error del catch de getCommerces, con err: ",
+          err
+        );
       });
   };
 }
@@ -376,7 +402,7 @@ export function updateOrder(id, payload, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
-    return dispatch(getSalonOrders(token));
+    return (dispatch(getSalonOrders(token)), dispatch(getDeliveryOrders(token)));
   };
 }
 
@@ -421,7 +447,7 @@ export function postCategories(payload, token) {
 
 // ---------- ELIMINAR CATEGORÍAS DE PRODUCTOS ---------- \\
 export function deleteCategory(payload, token) {
-  console.log(payload)
+  console.log(payload);
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -520,9 +546,11 @@ export function updateOrderKitchen(id, payload, token) {
     },
   };
   return function (dispatch) {
-    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
-      console.log(err);
-    });
+    axios
+      .put(`http://localhost:3001/orders/${id}`, payload, auth)
+      .catch((err) => {
+        console.log(err);
+      });
     return dispatch(getKitchenOrders(token));
   };
 }
