@@ -30,9 +30,10 @@ export const Delivery = styled.div`
 export const TakeOut = styled(Delivery)``;
 
 export const Salon = styled(Delivery)`
-  grid-row: 3 / 4;
+  grid-row: 2 / 3;
   grid-column: span 2;
   width: 100%;
+  height: 100%;
 `;
 
 export const OrdersContainer = styled.div`

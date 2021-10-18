@@ -59,19 +59,7 @@ export default function Dashboard() {
     <div>
       <Header>
         <Title>Bienvenido "nombre"</Title>
-        <Button
-          buttonColor="rgb(255, 0, 0)"
-          width="5rem"
-          height="2.5rem"
-          padding="0.5rem"
-          textSize="18px"
-          onClick={handleLogOut}
-        >
-          Salir
-        </Button>
-      </Header>
-      <OptionsBar>
-        <Button
+        {/* <Button
           onClick={() => setStateModal3(!stateModal3)}
           width="10.5rem"
           height="2.5rem"
@@ -81,7 +69,7 @@ export default function Dashboard() {
         >
           Crear producto
           <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
+        </Button> */}
         <StyledLink to="/settings">
           <Button
             width="7rem"
@@ -95,9 +83,18 @@ export default function Dashboard() {
             <FontAwesomeIcon icon={faCog} size="lg" />
           </Button>
         </StyledLink>
-      </OptionsBar>
-
-      <Body>
+        <Button
+          buttonColor="rgb(255, 0, 0)"
+          width="5rem"
+          height="2.5rem"
+          padding="0.5rem"
+          textSize="18px"
+          onClick={handleLogOut}
+        >
+          Salir
+        </Button>
+      </Header>
+      <Body padding="3rem 3rem 0 3rem">
         <BodyTop>
           <DeliveryModule />
           <TakeAwayModule />

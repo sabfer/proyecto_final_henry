@@ -9,12 +9,12 @@ export const Paginado = styled.div`
 export const Body = styled.section`
   width: 100%;
   height: 100%;
-  padding: ${(props) => props.padding || "4rem"};
+  padding: ${(props) => props.padding || "3rem"};
   display: ${(props) => props.display || "grid"};
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
-  gap: 1.4rem 0;
+  grid-template-rows: 420px 420px;
 `;
 
 export const Header = styled.header`
