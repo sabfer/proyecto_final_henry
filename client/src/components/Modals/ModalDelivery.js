@@ -51,7 +51,6 @@ export default function ModalDelivery({ state, setState }) {
   const [order, setOrder] = useState({
     type: "Delivery",
     name: "",
-
     products: [],
     estado: 1,
     totalPrice: 0,
@@ -63,7 +62,7 @@ export default function ModalDelivery({ state, setState }) {
     setOrder({
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      hour: moment().format("HH:mm:ss"),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -72,7 +71,7 @@ export default function ModalDelivery({ state, setState }) {
     setState(!state);
     setOrder({
       ...order,
-      type: "Salon",
+      type: "Delivery",
       tableNumber: undefined,
       products: [],
       estado: 1,
@@ -247,14 +246,14 @@ export default function ModalDelivery({ state, setState }) {
               <DivInfo>
                 <InputClient
                   type="text"
-                  name="name"
+                  name="nameClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre Cliente"
                   margin="10px 0 0 0 "
                 ></InputClient>
                 <InputClient
                   type="number"
-                  name="name"
+                  name="phoneClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Teléfono"
                   margin="10px 0 0 12px "
@@ -262,7 +261,7 @@ export default function ModalDelivery({ state, setState }) {
               </DivInfo>
               <InputClient
                 type="text"
-                name="name"
+                name="directionClient"
                 onChange={(e) => handleChange(e)}
                 placeholder="Dirección"
                 margin="7px 0 "

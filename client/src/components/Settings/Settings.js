@@ -12,6 +12,7 @@ import { faWrench } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Comercios from "./views/Comercios";
+import Contabilidad from "./views/Contabilidad/Contabilidad";
 import Users from "./views/Users";
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
@@ -36,17 +37,19 @@ export default function Settings() {
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products></Products>;
+        return <Products/>;
       case "users":
-        return <Users></Users>;
+        return <Users/>;
       case "commerce":
-        return <Comercios></Comercios>;
+        return <Comercios/>;
       case "categorias":
-        return <Categorias></Categorias>;
+        return <Categorias/>;
       case "generales":
-        return <Generals></Generals>;
+        return <Generals/>;
+      case "contabilidad":
+        return <Contabilidad/>;
       default:
-        return <Generals></Generals>;
+        return <Generals/>;
     }
   }
 
@@ -75,6 +78,11 @@ export default function Settings() {
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "products")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Productos</p>
+          </OpcionesIzquierda>
+          
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "contabilidad")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Informes Contables</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
