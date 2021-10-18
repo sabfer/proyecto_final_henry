@@ -52,7 +52,7 @@ orderController.findActiveOrders = async (req, res, next) => {
   const { type } = req.query;
   try {
     const orders = await Orders.find({}, { __v: 0 });
-    ordersActives = orders.filter((order) => order.estado !== "Finalizada");
+    ordersActives = orders.filter((order) => order.estado !== 4);
     if (type) {
       ordersByType = ordersActives.filter((order) => {
         return order.type

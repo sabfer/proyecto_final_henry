@@ -62,7 +62,7 @@ export default function ModalTakeAway({ state, setState }) {
     setOrder({
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      hour: moment().format("HH:mm:ss"),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -217,6 +217,31 @@ export default function ModalTakeAway({ state, setState }) {
         amount: producto.amount - 1,
       });
     }
+    function aumentar() {
+        var aux = 0;
+        console.log(order.tableNumber)
+        if (producto.amount < 30) {
+          aux = producto.amount + 1
+          aux=aux-(aux-producto.amount)
+          aux=aux+1
+          setProducto({
+            ...producto,
+            amount: aux
+          });
+        }
+      }
+    
+      function disminuir() {
+        //setProducto(producto.amount+5)
+        if (producto.amount >= 2) {
+          setProducto({
+            ...producto,
+            amount: producto.amount - 1
+          });
+        }
+        console.log(producto.amount)
+      }
+    
     console.log(producto.amount);
   }
 

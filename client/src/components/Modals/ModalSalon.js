@@ -60,7 +60,7 @@ export default function ModalSalon({ state, setState,statusS,changeStatusD}) {
     setOrder({
       ...order,
       date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      hour: moment().format("HH:mm:ss"),
       tableNumber: state.tableNumber,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

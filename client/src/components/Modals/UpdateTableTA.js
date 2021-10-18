@@ -36,7 +36,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
 
   const order = ordenes
     ? ordenes.find(
-        (ord) => ord.orderNumber === orderNumber && ord.estado !== "Finalizada"
+        (ord) => ord.orderNumber === orderNumber && ord.estado !== 4
       )
     : undefined;
 
@@ -347,7 +347,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       handleCloseOrder(ordenActual.id, {
                         products: ordenActual.products,
                         totalPrice: ordenActual.totalPrice,
-                        estado: "Finalizada",
+                        estado: 4,
                       })
                     }
                   >

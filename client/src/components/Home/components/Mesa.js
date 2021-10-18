@@ -35,7 +35,7 @@ export default function Mesas({
        
       >
         <div className={status ? "occuped" : "available"}>
-          <FontAwesomeIcon icon={faHamburger} size="4x" />
+          <img src="https://i.imgur.com/wQYAx50.png" width="100" height="100" />
         </div>
         <p>Mesa {tableNumber}</p>
       </Mesa>

@@ -1,24 +1,41 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { ModuleTop, Delivery, Orders, OrdersContainer } from "../../../css/HomeStyles";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  ModuleTop,
+  Delivery,
+  Orders,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalDelivery from "../../Modals/ModalDelivery";
+import UpdateDelivery from "../../Modals/UpdateDelivery";
 import OrderDelivery from "./OrderDelivery";
-// import { getDeliveryOrders } from "../../../actions";
-import UpdateTable from "../../Modals/UpdateTable";
+import { getDeliveryOrders } from "../../../actions";
+// import UpdateTable from "../../Modals/UpdateTable";
 
 export default function DeliveryModule() {
-  // const token = useSelector((state) => state.userToken);
-  // const dispatch = useDispatch();
+  const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch();
   const [stateModal, setStateModal] = useState(false);
   const ordersDelivery = useSelector((state) => state?.orders?.deliveryOrders);
   const [updateModal, setUpdateModal] = useState(false);
+  const [tableDetails, setTableDetails] = useState({
+    orderNumber: undefined,
+  });
 
-  // useEffect(() => {
-  //   dispatch(getDeliveryOrders(token));
-  // }, [dispatch, token]);
+  useEffect(() => {
+    dispatch(getDeliveryOrders(token));
+  }, [dispatch, token]);
+
+  function handleUpdateModal(e, props) {
+    e.preventDefault();
+    setUpdateModal(true);
+    setTableDetails({
+      orderNumber: props.orderNumber,
+    });
+  }
 
   return (
     <Delivery>
@@ -42,7 +59,14 @@ export default function DeliveryModule() {
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {ordersDelivery && ordersDelivery ? (
             ordersDelivery.map((order) => {
-              return <OrderDelivery key={order._id} order={order.orderNumber} />;
+              return (
+                <OrderDelivery
+                  key={order._id}
+                  orderNumber={order.orderNumber}
+                  setStateModal={setStateModal}
+                  handleUpdate={handleUpdateModal}
+                />
+              );
             })
           ) : (
             <Loading gridcolumn="span 2">
@@ -55,7 +79,11 @@ export default function DeliveryModule() {
             </Loading>
           )}
           {updateModal && (
-            <UpdateTable state={updateModal} setStateModal={setUpdateModal} />
+            <UpdateDelivery
+              state={updateModal}
+              setStateModal={setUpdateModal}
+              orderNumber={tableDetails.orderNumber}
+            />
           )}
         </Orders>
       </OrdersContainer>
