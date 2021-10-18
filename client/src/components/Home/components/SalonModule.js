@@ -14,7 +14,7 @@ export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
   
   //////////////////////////////////////////////////
-  const[sesion,setSesion]=useState({status:"false"})
+  //const[sesion,setSesion]=useState({status:"false"})
   //////////////////////////////////////////////////
   
   
@@ -61,8 +61,7 @@ export default function SalonModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " statusS={sesion}
-      changeStatus={setSesion} />
+      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {mesas && mesas ? (
@@ -76,8 +75,8 @@ export default function SalonModule() {
                   handleUpdate={handleUpdateModal}
                   
                   //////////////////////////////////
-                  stateM={sesion}
-                  setStateM={setSesion}
+                  //stateM={sesion}
+                  //setStateM={setSesion}
                   /////////////////////////////////
                 />
               );

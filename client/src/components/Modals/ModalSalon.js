@@ -295,7 +295,8 @@ export default function ModalSalon({ state, setState,statusS,changeStatusD}) {
           <OrderContainer>
             <div>
               <CategoriasPedidos>
-                {statusS.status="true"?<FilterProductTypes/>:<h5>gfdg</h5>}
+               {/* {statusS.status="true"?<FilterProductTypes/>:<h5>gfdg</h5>} */}
+                <FilterProductTypes/>
               </CategoriasPedidos>
 
               <SelectModal>

@@ -9,8 +9,8 @@ export default function Mesas({
   status,
   handleUpdate,
   setStateModal,
-  stateM,
-  setStateM
+  //stateM,
+  //setStateM
 }){
   
 
@@ -27,9 +27,9 @@ export default function Mesas({
             });
           }
 ////////////////////////////
-          setStateM({
-            ...stateM,status:"true"
-          })
+         //</div> setStateM({
+           // ...stateM,status:"true"
+         // })
 /////////////////////////////          
         }}
        
