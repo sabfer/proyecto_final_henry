@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
-import { TakeAway, Circle } from "../../../css/HomeStyles";
+import { TakeAway, Time } from "../../../css/HomeStyles";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -34,36 +34,26 @@ export default function OrderTakeAway({ handleUpdate, orderNumber, estado }) {
   }, 60000);
 
   return (
-    <div>
-      <TakeAway
-        onClick={(e) => {
-          handleUpdate(e, { orderNumber: orderNumber });
-        }}
-      >
+    <TakeAway
+      onClick={(e) => {
+        handleUpdate(e, { orderNumber: orderNumber });
+      }}>
         <div>
-            <TakeAway 
-                onClick={(e) => {
-                    handleUpdate(e, { orderNumber: orderNumber });
-                }}
-            >
-                <div>
-                <Circle color={
-                    estado === 1
-                    ? "rgb(254, 228, 64)"
-                    : estado === 2
-                    ? "rgb(0, 168, 120)"
-                    : estado === 3
-                    ? "rgb(255, 48, 38)"
-                    : null
-                }></Circle>
-                </div>
-                <FontAwesomeIcon icon={faShoppingBag} size="4x" />
-                <p>Pedido: {orderNumber}</p>
-            </TakeAway>
+          <Time>{orderTime.demora} min.</Time>
         </div>
+        <FontAwesomeIcon 
+          icon={faShoppingBag} 
+          size="4x" 
+          color={
+            orderTime.demora >= 25
+              ? "#ED4245"
+              : orderTime.demora > 15
+              ? "#FFA43D"
+              : orderTime.demora <= 15
+              ? "#4DD87A"
+              : null
+          }/>
         <p>Pedido: {orderNumber}</p>
-        <p>{orderTime.demora} min</p>
-      </TakeAway>
-    </div>
+    </TakeAway>
   );
 }

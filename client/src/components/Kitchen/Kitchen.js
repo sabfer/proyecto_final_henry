@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Title, Body } from "../../css/";
 import {
@@ -15,7 +15,6 @@ export default function Kitchen() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
   const orders = useSelector((state) => state.kitchenOrders);
-  const [products, setproducts] = useState([]);
 
   useEffect(() => {
     dispatch(getKitchenOrders(token));
@@ -41,7 +40,6 @@ export default function Kitchen() {
             };
           }),
         };
-        console.log(orderChange);
         dispatch(updateOrderKitchen(id, orderChange, token));
         dispatch(getKitchenOrders(token));
       } else {
@@ -61,7 +59,6 @@ export default function Kitchen() {
         <OrdersContainer>
           {orders &&
             orders.map((order) => {
-              console.log(order);
               return (
                 <OrderCard key={order._id}>
                   <h2>Pedido N° {order.orderNumber}</h2>

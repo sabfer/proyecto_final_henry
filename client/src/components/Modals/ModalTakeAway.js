@@ -203,10 +203,8 @@ export default function ModalTakeAway({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber);
     if (producto.amount < 30) {
       aux = producto.amount + 1;
-      console.log(aux);
       aux = aux - (aux - producto.amount);
       aux = aux + 1;
       setProducto({
@@ -217,39 +215,12 @@ export default function ModalTakeAway({ state, setState }) {
   }
 
   function disminuir() {
-    //setProducto(producto.amount+5)
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
         amount: producto.amount - 1,
       });
     }
-    function aumentar() {
-      var aux = 0;
-      console.log(order.tableNumber);
-      if (producto.amount < 30) {
-        aux = producto.amount + 1;
-        aux = aux - (aux - producto.amount);
-        aux = aux + 1;
-        setProducto({
-          ...producto,
-          amount: aux,
-        });
-      }
-    }
-
-    function disminuir() {
-      //setProducto(producto.amount+5)
-      if (producto.amount >= 2) {
-        setProducto({
-          ...producto,
-          amount: producto.amount - 1,
-        });
-      }
-      console.log(producto.amount);
-    }
-
-    console.log(producto.amount);
   }
 
   return (

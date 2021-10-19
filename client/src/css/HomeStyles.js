@@ -111,13 +111,10 @@ export const DeliveryCard = styled.div`
   cursor: pointer;
 `;
 
-export const Circle = styled.div`
-  width: 15px;
-  height: 15px;
-  border-radius: 100%;
-  border: 1px solid white;
-  background-color: ${(props) => props.color};
-  position: relative;
-  top: 60px;
-  left: 27px;
+export const Time = styled.p`
+    display: flex;
+    align-items: flex-end;
+    font-weight: 500;
+    color: black;
+    font-weight: bold;
 `;
