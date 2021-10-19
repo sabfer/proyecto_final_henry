@@ -371,7 +371,6 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                 </TablePricesModal>
               </div>
             </OrderContainer>
-
             <Button
               padding="5px"
               margin="20px 0 0 0"
