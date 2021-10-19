@@ -16,18 +16,21 @@ export default function OrderTakeAway({ handleUpdate, orderNumber }) {
   });
 
   useEffect(() => {
-    const horaActual = moment().format("HH:mm:ss").substr(3, 2);
-
+    const now = moment();
+    const end = moment(order.date + " " + order.hour);
+    const diferencia = now.diff(end, "minutes");
     setOrderTime({
-      demora: horaActual - order.hour.substr(3, 2),
+      demora: diferencia,
     });
   }, []);
 
   setInterval(() => {
-    const horaActual = moment().format("HH:mm:ss").substr(3, 2);
-
+    const now = moment();
+    console.log("TAKE AWAY:", order.date);
+    const end = moment(order.date + " " + order.hour);
+    const diferencia = now.diff(end, "minutes");
     setOrderTime({
-      demora: horaActual - order.hour.substr(3, 2),
+      demora: diferencia,
     });
   }, 60000);
 
@@ -42,7 +45,7 @@ export default function OrderTakeAway({ handleUpdate, orderNumber }) {
           <FontAwesomeIcon icon={faShoppingBag} size="4x" />
         </div>
         <p>Pedido: {orderNumber}</p>
-        <p>{orderTime.demora} '</p>
+        <p>{orderTime.demora} min</p>
       </TakeAway>
     </div>
   );
