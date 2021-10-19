@@ -26,7 +26,6 @@ export default function OrderDelivery({ orderNumber, handleUpdate }) {
 
   setInterval(() => {
     const now = moment();
-    console.log("DELIVERY:", order.date);
     const end = moment(order.date + " " + order.hour);
     const diferencia = now.diff(end, "minutes");
     setOrderTime({

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, getTakeAwayOrders } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+  Options,
+} from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
 import {
@@ -35,9 +42,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
   const dispatch = useDispatch();
 
   const order = ordenes
-    ? ordenes.find(
-        (ord) => ord.orderNumber === orderNumber && ord.estado !== 4
-      )
+    ? ordenes.find((ord) => ord.orderNumber === orderNumber && ord.estado !== 4)
     : undefined;
 
   const [producto, setProducto] = useState({
@@ -264,7 +269,13 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" selected disabled hidden>
+                      <option
+                        id="inputDefault"
+                        value="none"
+                        selected
+                        disabled
+                        hidden
+                      >
                         Seleccione un producto
                       </option>
                       {products &&
@@ -313,7 +324,9 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                             <TableData>{product.price}</TableData>
                             <TableData>
                               <input
-                                onChange={(e) => handleInputAmount(e, product.name)}
+                                onChange={(e) =>
+                                  handleInputAmount(e, product.name)
+                                }
                                 placeholder={product.amount}
                               />
                             </TableData>
@@ -325,7 +338,9 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                                   height="2rem"
                                   buttonColor="rgba(255, 0, 0, 1)"
                                 >
-                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
                                 </Button>
                               </Options>
                             </TableData>
@@ -366,8 +381,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                 modifcarOrden(ordenActual.id, {
                   products: ordenActual.products,
                   totalPrice: ordenActual.totalPrice,
-                  estado: ordenActual.estado,
-                  paymentMethod: ordenActual.paymentMethod,
+                  estado: 1,
                 })
               }
             >

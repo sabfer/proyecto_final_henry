@@ -395,7 +395,6 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                   products: ordenActual.products,
                   totalPrice: ordenActual.totalPrice,
                   estado: 1,
-                  paymentMethod: ordenActual.paymentMethod,
                 })
               }
             >
