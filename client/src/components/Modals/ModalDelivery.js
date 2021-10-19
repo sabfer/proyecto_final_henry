@@ -381,7 +381,7 @@ export default function ModalDelivery({ state, setState }) {
             width="9rem"
             height="2.5rem"
             buttonColor="#00C72C"
-            alignSelf="center"
+            alignself="center"
             margin="1rem 0 0 0"
           >
             Crear Pedido

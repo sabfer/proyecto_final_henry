@@ -51,7 +51,7 @@ export default function SalonModule() {
           onClick={() => setStateModal({ status: true, tableNumber: "" })}
           width="9.4rem"
           height="2.5rem"
-          alignSelf="flex-end"
+          alignself="flex-end"
           justify="space-between"
           padding="0.6rem"
           buttonColor="rgba(0, 41, 107, 1)"
@@ -82,7 +82,7 @@ export default function SalonModule() {
               );
             })
           ) : (
-            <Loading gridcolumn="span 5">
+            <Loading gridcolumn="span 10">
               <p>Loading...</p>
               <img
                 src="https://i.imgur.com/5JQ02CS.gif"

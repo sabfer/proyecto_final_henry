@@ -272,7 +272,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       <option
                         id="inputDefault"
                         value="none"
-                        selected
+                        defaultValue
                         disabled
                         hidden
                       >
@@ -282,8 +282,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                         products.map((e) => {
                           return (
                             <option key={e._id} value={e.name}>
-                              {" "}
-                              {e.name}{" "}
+                              {e.name}
                             </option>
                           );
                         })}

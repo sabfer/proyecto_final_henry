@@ -247,7 +247,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
     <div>
       {orderTableNumber && (
         <Overlay display={state ? "flex" : "none"}>
-          <ModalContainer minwidth="945px">
+          <ModalContainer manwidth="945px">
             <HeaderModal>
               <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
               <HeaderModalTitle>
