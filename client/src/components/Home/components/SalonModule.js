@@ -60,11 +60,13 @@ export default function SalonModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalSalon
-        state={stateModal}
-        setState={setStateModal}
-        title="Consumo Mesa: "
-      />
+      {stateModal.status && (
+        <ModalSalon
+          state={stateModal}
+          setState={setStateModal}
+          title="Consumo Mesa: "
+        />
+      )}
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {mesas && mesas ? (
@@ -96,12 +98,6 @@ export default function SalonModule() {
               tableNumber={tableDetails.tableNumber}
             />
           )}
-          {/* buscar la orden que coincida con el numero de mesa
-            1 modal mesa obtiene por props el numero de la mesa
-            2 el modal busca en el estado de redux la orden que este pendiente o en proceso 
-            que coincida con el numero de la mesa  en el estado de ordenes
-           3 se edita la orden por el numero de id1 
-         */}
         </Orders>
       </OrdersContainer>
     </Salon>
