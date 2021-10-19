@@ -253,7 +253,7 @@ export default function Productos() {
 
 
       <ExportExcel>
-        <NumberOfProducts />
+        <NumberOfProducts title=" productos cargados exitosamente" total={products.length} />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel

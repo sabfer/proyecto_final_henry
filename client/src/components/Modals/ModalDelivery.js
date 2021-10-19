@@ -61,8 +61,8 @@ export default function ModalDelivery({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("HH:mm:ss"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
+      hour: moment().format("HH:mm:ss"),               
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Total from "./components/Views/Total";
-import Subdiario from "./components/Views/Subdiario";
-import PorFecha from "./components/Views/PorFecha";
+import Total from "./Views/Total";
+import Subdiario from "./Views/Subdiario";
+import PorFecha from "./Views/PorFecha";
 import { getOrders } from "../../../../actions";
 
 export default function Contabilidad() {
@@ -59,6 +59,10 @@ export default function Contabilidad() {
           <center>
             <Total text aling="center" />
           </center>
+        </div>
+      )}
+      {render === undefined && (
+        <div>
         </div>
       )}
     </>

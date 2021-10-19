@@ -61,7 +61,7 @@ export default function ModalTakeAway({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
       hour: moment().format("HH:mm:ss"),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
