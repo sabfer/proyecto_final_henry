@@ -14,8 +14,6 @@ import {
   getProducts,
   getCategories,
   deleteToken,
-  getTakeAwayOrders,
-  getDeliveryOrders,
 } from "../../../actions/index";
 
 export default function Dashboard() {

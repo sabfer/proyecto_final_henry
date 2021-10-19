@@ -63,6 +63,7 @@ export default function TakeAwayModule() {
               return (
                 <TakeAway
                   key={order._id}
+                  estado={order.estado}
                   orderNumber={order.orderNumber}
                   setStateModal={setStateModal}
                   handleUpdate={handleUpdateModal}

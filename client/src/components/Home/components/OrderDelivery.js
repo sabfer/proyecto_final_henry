@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMotorcycle } from "@fortawesome/free-solid-svg-icons";
-import { DeliveryCard } from "../../../css/HomeStyles";
+import { DeliveryCard, Time } from "../../../css/HomeStyles";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -34,18 +34,27 @@ export default function OrderDelivery({ orderNumber, handleUpdate }) {
     });
   }, 60000);
   return (
-    <div>
       <DeliveryCard
         onClick={(e) => {
           handleUpdate(e, { orderNumber: orderNumber });
         }}
       >
         <div>
-          <FontAwesomeIcon icon={faMotorcycle} size="4x" />
+          <Time>{orderTime.demora} min.</Time>
         </div>
+        <FontAwesomeIcon 
+          icon={faMotorcycle} 
+          size="4x" 
+          color={
+            orderTime.demora > 25
+              ? "#ED4245"
+              : orderTime.demora > 15
+              ? "#FFA43D"
+              : orderTime.demora < 15
+              ? "#4DD87A"
+              : null
+          }/>
         <p>Pedido: {orderNumber}</p>
-        <p>{orderTime.demora} min</p>
       </DeliveryCard>
-    </div>
   );
 }

@@ -11,6 +11,8 @@ export const BodyTop = styled.div`
   }
 `;
 
+
+
 export const Delivery = styled.div`
   width: 47%;
   padding: 1.25rem;
@@ -107,4 +109,12 @@ export const DeliveryCard = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+export const Time = styled.p`
+    display: flex;
+    align-items: flex-end;
+    font-weight: 500;
+    color: black;
+    font-weight: bold;
 `;
