@@ -269,36 +269,38 @@ export default function Modal({
 
   return (
     <div>
-      <Overlay display={state ? "flex" : "none"}>
-        <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
-          <HeaderModal>
-            <h2>{title}</h2>
-          </HeaderModal>
-          <CloseButton onClick={(e) => handleClose(e)}>
-            <FontAwesomeIcon icon={faWindowClose} />
-          </CloseButton>
-          {conditionalForm(
-            id,
-            input,
-            handleChange,
-            labels,
-            productValues,
-            leyendaError,
-            inpValido,
-            validacion,
-            categories
-          )}
-          <Button
-            width="100%"
-            height="2.5rem"
-            margin="1rem 0 0 0"
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Aceptar
-          </Button>
-        </ModalContainer>
-      </Overlay>
+      {state && (
+        <Overlay>
+          <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
+            <HeaderModal>
+              <h2>{title}</h2>
+            </HeaderModal>
+            <CloseButton onClick={(e) => handleClose(e)}>
+              <FontAwesomeIcon icon={faWindowClose} />
+            </CloseButton>
+            {conditionalForm(
+              id,
+              input,
+              handleChange,
+              labels,
+              productValues,
+              leyendaError,
+              inpValido,
+              validacion,
+              categories
+            )}
+            <Button
+              width="100%"
+              height="2.5rem"
+              margin="1rem 0 0 0"
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
+              Aceptar
+            </Button>
+          </ModalContainer>
+        </Overlay>
+      )}
     </div>
   );
 }

@@ -42,11 +42,11 @@ function Landing() {
         </h1>
         <StyledLink
           to="/login"
-          gridRow="4 / 5"
+          gridrow="4 / 5"
           gridcolumn="2 / span 3"
           width="45%"
           justifyself="center"
-          alignSelf="center"
+          alignself="center"
         >
           <Button
             width="100%"

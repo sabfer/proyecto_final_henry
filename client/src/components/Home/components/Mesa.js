@@ -10,7 +10,6 @@ export default function Mesas({
   handleUpdate,
   setStateModal,
 }) {
-  console.log(status)
   return (
     <div>
       <Mesa

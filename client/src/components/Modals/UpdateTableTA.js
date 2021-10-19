@@ -35,9 +35,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
   const dispatch = useDispatch();
 
   const order = ordenes
-    ? ordenes.find(
-        (ord) => ord.orderNumber === orderNumber && ord.estado !== 4
-      )
+    ? ordenes.find((ord) => ord.orderNumber === orderNumber && ord.estado !== 4)
     : undefined;
 
   const [producto, setProducto] = useState({
@@ -264,15 +262,14 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" selected disabled hidden>
+                      <option id="inputDefault" value="none" defaultValue disabled hidden>
                         Seleccione un producto
                       </option>
                       {products &&
                         products.map((e) => {
                           return (
-                            <option key={e._id} value={e.name}>
-                              {" "}
-                              {e.name}{" "}
+                            <option key={e._id} value={e.name}>                              
+                              {e.name}
                             </option>
                           );
                         })}

@@ -71,7 +71,7 @@ export default function ModalSalon({ state, setState }) {
     });
     setOrder({
       type: "Salon",
-      tableNumber: undefined,
+      tableNumber: "",
       products: [],
       estado: 1,
       totalPrice: 0,
@@ -239,36 +239,10 @@ export default function ModalSalon({ state, setState }) {
     }
   }
 
-  function aumentarM() {
-    var aux = 0;
-    console.log(order.tableNumber);
-    if (order.tableNumber < 30) {
-      aux = order.tableNumber + 1;
-      console.log(aux);
-      aux = aux - (aux - order.tableNumber);
-      aux = aux + 1;
-      setOrder({
-        ...order,
-        tableNumber: aux,
-      });
-    }
-  }
-
-  function disminuirM() {
-    //setProducto(producto.amount+5)
-    if (order.tableNumber >= 2) {
-      setOrder({
-        ...order,
-        tableNumber: order.tableNumber - 1,
-      });
-    }
-    console.log(order.tableNumber);
-  }
-
   return (
     <div>
       <Overlay display={state.status ? "flex" : "none"}>
-        <ModalContainer align="unset" minwidth="945px">
+        <ModalContainer align="unset" manwidth="945px">
           <HeaderModal>
             <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
             <HeaderModalTitle>
@@ -293,13 +267,6 @@ export default function ModalSalon({ state, setState }) {
 
               <SelectModal>
                 <FormModal onSubmit={(e) => handleSubmit(e)}>
-                  <FontAwesomeIcon
-                    onClick={() => disminuirM()}
-                    icon={faMinusCircle}
-                    size="2x"
-                    style={{ cursor: "pointer" }}
-                  ></FontAwesomeIcon>
-                  {/* <input type="button" value="-" onClick={disminuirM}></input> */}
                   <InputModal>
                     <input
                       value={order.tableNumber}
@@ -311,14 +278,6 @@ export default function ModalSalon({ state, setState }) {
                       placeholder="Mesa"
                     />
                   </InputModal>
-                  <FontAwesomeIcon
-                    onClick={() => aumentarM()}
-                    icon={faPlusCircle}
-                    size="2x"
-                    style={{ cursor: "pointer" }}
-                  ></FontAwesomeIcon>
-                  {/* <input type="button" value="+" onClick={aumentarM}></input> */}
-
                   <Select
                     id="selectProduct"
                     width="50%"
@@ -437,7 +396,7 @@ export default function ModalSalon({ state, setState }) {
             width="9rem"
             height="2.5rem"
             buttonColor="#00C72C"
-            alignSelf="center"
+            alignself="center"
             margin="1rem 0 0 0"
           >
             Crear Pedido

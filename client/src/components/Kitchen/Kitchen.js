@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Title, Body } from "../../css/";
 import {
@@ -15,6 +15,7 @@ export default function Kitchen() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
   const orders = useSelector((state) => state.kitchenOrders);
+  const [products, setproducts] = useState([]);
 
   useEffect(() => {
     dispatch(getKitchenOrders(token));
@@ -22,7 +23,7 @@ export default function Kitchen() {
       dispatch(getKitchenOrders(token));
     }, 60000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, []);
 
   if (!token) {
     return <Error403 />;
@@ -30,8 +31,23 @@ export default function Kitchen() {
 
   function cambiarEstado(id, estado, orden) {
     if (estado === 1 || estado === 2) {
-      dispatch(updateOrderKitchen(id, orden, token));
-      dispatch(getKitchenOrders(token));
+      if (estado === 2) {
+        let orderChange = {
+          ...orden,
+          products: orden.products.map((product) => {
+            return {
+              ...product,
+              prodState: 2,
+            };
+          }),
+        };
+        console.log(orderChange);
+        dispatch(updateOrderKitchen(id, orderChange, token));
+        dispatch(getKitchenOrders(token));
+      } else {
+        dispatch(updateOrderKitchen(id, orden, token));
+        dispatch(getKitchenOrders(token));
+      }
     }
   }
 
@@ -57,12 +73,12 @@ export default function Kitchen() {
                     <p>Cant.</p>
                     {order.products &&
                       order.products.map((product) => {
-                        return (
+                        return product.prodState !== 2 ? (
                           <OrderProducts key={product._id}>
                             <p>{product.name}</p>
                             <p>{product.amount}</p>
                           </OrderProducts>
-                        );
+                        ) : null;
                       })}
                   </OrderDetails>
                   <Button
@@ -84,7 +100,7 @@ export default function Kitchen() {
                         ? "rgb(0, 168, 120)"
                         : null
                     }
-                    alignSelf="center"
+                    alignself="center"
                     position="absolute"
                     bottom="2rem"
                   >
