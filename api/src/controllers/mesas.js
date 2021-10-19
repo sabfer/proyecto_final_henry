@@ -5,7 +5,7 @@ const mesasController = {};
 mesasController.findMesaByNum = async (req, res, next) => {
   const { numero } = req.query;
   try {
-    const mesa = await Mesas.findByIdAndRemove({ numero: numero });
+    const mesa = await Mesas.findOne({ numero: numero });
     if (mesa) {
       res.json({
         succes: true,
@@ -24,29 +24,42 @@ mesasController.findMesaByNum = async (req, res, next) => {
   }
 };
 
-mesasController.findMesas = async (_req, res, next) => {
-  try {
-    const mesas = await Mesas.find();
-    if (mesas.length) {
-      res.json({
-        succes: true,
-        msg: "Mesas encontradas",
-        payload: mesas,
-      });
-    } else {
+mesasController.findMesas = async (req, res, next) => {
+  const { userId } = req.query;
+  if (userId) {
+    try {
+      const mesas = await Mesas.find({ userId });
+      if (mesas.length) {
+        res.json({
+          succes: true,
+          msg: "Mesas encontradas",
+          payload: mesas,
+        });
+      } else {
+        res.json({
+          succes: false,
+          msg: "Mesas no encontrados",
+          payload: null,
+        });
+      }
+    } catch (err) {
       res.json({
         succes: false,
-        msg: "Mesas no encontrados",
-        payload: null,
+        msg: "Error",
+        payload: err,
       });
     }
-  } catch (err) {
-    next(err);
+  } else {
+    res.json({
+      succes: false,
+      msg: "Se requiere userId",
+      payload: null,
+    });
   }
 };
 
 // POST
-mesasController.addMesa = async (req, res, _next) => {
+mesasController.addMesa = async (req, res, next) => {
   const payload = req.body;
   try {
     const mesas = await Mesas.findOne({ numero: payload.numero });
@@ -77,18 +90,26 @@ mesasController.addMesa = async (req, res, _next) => {
 // DELETE
 mesasController.deleteMesa = async (req, res, _next) => {
   const { id } = req.params;
-  try {
-    await Mesas.deleteOne({ _id: `${id}` });
-    return res.json({
-      succes: true,
-      msg: "Mesa eliminada exitosamente!",
-      payload: null,
-    });
-  } catch (err) {
+  if (id) {
+    try {
+      await Mesas.deleteOne({ _id: `${id}` });
+      return res.json({
+        succes: true,
+        msg: "Mesa eliminada exitosamente!",
+        payload: null,
+      });
+    } catch (err) {
+      res.json({
+        succes: false,
+        msg: "No se pudo eliminar la mesa",
+        payload: err,
+      });
+    }
+  } else {
     res.json({
       succes: false,
-      msg: "No se pudo eliminar la mesa",
-      payload: err,
+      msg: "Se requiere id",
+      payload: null,
     });
   }
 };
@@ -97,22 +118,30 @@ mesasController.deleteMesa = async (req, res, _next) => {
 mesasController.updateMesa = async (req, res, _next) => {
   const { tableNumber } = req.params;
   const payload = req.body;
-  try {
-    const updatedMesa = await Mesas.findOneAndUpdate(
-      { tableNumber: `${tableNumber}` },
-      payload,
-      { new: true }
-    );
-    return res.json({
-      succes: true,
-      msg: "Mesa modificada exitosamente",
-      payload: updatedMesa,
-    });
-  } catch (err) {
+  if (tableNumber && payload) {
+    try {
+      const updatedMesa = await Mesas.findOneAndUpdate(
+        { tableNumber: `${tableNumber}` },
+        payload,
+        { new: true }
+      );
+      return res.json({
+        succes: true,
+        msg: "Mesa modificada exitosamente",
+        payload: updatedMesa,
+      });
+    } catch (err) {
+      res.json({
+        succes: false,
+        msg: "No se pudo modificar la mesa",
+        payload: err,
+      });
+    }
+  } else {
     res.json({
       succes: false,
-      msg: "No se pudo modificar la mesa",
-      payload: err,
+      msg: "Se requiere nro de mesa y payload",
+      payload: null,
     });
   }
 };

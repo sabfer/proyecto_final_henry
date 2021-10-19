@@ -1,13 +1,13 @@
 const Products = require("../models/Products");
 
 // GETS
-const searchProduct = async (name) => {
-  const product = await Products.findOne({ name: `${name}` });
+const searchProduct = async (name, userId) => {
+  const product = await Products.findOne({ name: `${name}`, userId });
   return product ? product : null;
 };
 
-const searchProducts = async () => {
-  const products = await Products.find();
+const searchProducts = async (userId) => {
+  const products = await Products.find({ userId });
   return products ? products : null;
 };
 
@@ -34,7 +34,6 @@ const updateProduct = async (id, update) => {
   const updated = await Products.findOneAndUpdate({ _id: `${id}` }, update, {
     new: true,
   });
-  console.log(updated);
   return updated ? true : false;
 };
 
