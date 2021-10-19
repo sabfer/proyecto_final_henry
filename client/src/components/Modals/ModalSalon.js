@@ -26,13 +26,25 @@ import {
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
 
-import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
-import { faTrash, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+  Options,
+} from "../../css/Table";
+import {
+  faTrash,
+  faPlusCircle,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalSalon({ state, setState }) {
   const token = useSelector((state) => state.userToken);
+  const userId = useSelector((state) => state.userId);
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
@@ -51,7 +63,7 @@ export default function ModalSalon({ state, setState }) {
     totalPrice: 0,
     date: "",
     hour: "",
-    /*userId: 1224125, */
+    userId: "",
   });
 
   useEffect(() => {
@@ -60,8 +72,8 @@ export default function ModalSalon({ state, setState }) {
       date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("HH:mm:ss"),
       tableNumber: state.tableNumber,
+      userId,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
@@ -77,6 +89,7 @@ export default function ModalSalon({ state, setState }) {
       totalPrice: 0,
       date: "",
       hour: "",
+      userId: "",
     });
 
     setProducto({
@@ -131,9 +144,6 @@ export default function ModalSalon({ state, setState }) {
       observations: "",
       price: "",
     });
-    document.getElementById("selectProduct").value =
-      document.getElementById("inputDefault").value;
-    console.log(order.products);
   }
 
   function handleInputAmount(e, name) {
@@ -152,21 +162,22 @@ export default function ModalSalon({ state, setState }) {
         }, 0),
       };
     });
-    console.log(order);
   }
 
   function handlePostOrder(e) {
     dispatch(postOrder(order, token));
-
-    console.log(order);
     setState(!state);
-    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
+    dispatch(
+      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
+    );
 
     setState({
       status: false,
       tableNumber: "",
     });
-    dispatch(changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token));
+    dispatch(
+      changeStatus({ isOccupated: true, tableNumber: order.tableNumber }, token)
+    );
 
     setOrder({
       type: "Salon",
@@ -176,6 +187,7 @@ export default function ModalSalon({ state, setState }) {
       totalPrice: 0,
       date: "",
       hour: "",
+      userId: "",
     });
   }
 
@@ -247,7 +259,10 @@ export default function ModalSalon({ state, setState }) {
             <img src="https://i.imgur.com/0OF9UWi.png" alt="img not found" />
             <HeaderModalTitle>
               <h3>
-                Mesa: {order.tableNumber > 0 ? order.tableNumber : "Ingrese Nª de mesa"}
+                Mesa:{" "}
+                {order.tableNumber > 0
+                  ? order.tableNumber
+                  : "Ingrese Nª de mesa"}
               </h3>
               <h4>Mozo: Enzo Derviche</h4>
             </HeaderModalTitle>
@@ -355,12 +370,16 @@ export default function ModalSalon({ state, setState }) {
                               <TableRow key={el.name}>
                                 <TableData align="center">
                                   <InputAmount
-                                    onChange={(e) => handleInputAmount(e, el.name)}
+                                    onChange={(e) =>
+                                      handleInputAmount(e, el.name)
+                                    }
                                     placeholder={el.amount}
                                   />
                                 </TableData>
                                 <TableData>{el.name}</TableData>
-                                <TableData align="center">$ {el.price}</TableData>
+                                <TableData align="center">
+                                  $ {el.price}
+                                </TableData>
                                 <TableData align="center">
                                   <Options justify="center">
                                     <Button
@@ -369,7 +388,9 @@ export default function ModalSalon({ state, setState }) {
                                       height="2rem"
                                       buttonColor="rgba(255, 0, 0, 1)"
                                     >
-                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                      ></FontAwesomeIcon>
                                     </Button>
                                   </Options>
                                 </TableData>

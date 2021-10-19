@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import { Mesa } from "../../../css/HomeStyles";
 import MesaIco from "../../../assets/MesaIco";
 
@@ -25,15 +23,7 @@ export default function Mesas({
         }}
       >
         <div>
-          <MesaIco
-            color={
-              status 
-                ? "#ED4245"
-                : !status
-                ? "#4DD87A"
-                : "#000"
-            }
-          />
+          <MesaIco color={status ? "#ED4245" : !status ? "#4DD87A" : "#000"} />
         </div>
         <p>Mesa {tableNumber}</p>
       </Mesa>

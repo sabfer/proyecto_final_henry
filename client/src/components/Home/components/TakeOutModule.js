@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { TakeOut, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
+import {
+  TakeOut,
+  Orders,
+  ModuleTop,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +53,9 @@ export default function TakeAwayModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalTakeAway state={stateModal} setState={setStateModal} />
+      {stateModal && (
+        <ModalTakeAway state={stateModal} setState={setStateModal} />
+      )}
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {ordersTakeAway && ordersTakeAway ? (
@@ -76,6 +83,7 @@ export default function TakeAwayModule() {
             />
           )}
         </Orders>
+        {}
       </OrdersContainer>
     </TakeOut>
   );

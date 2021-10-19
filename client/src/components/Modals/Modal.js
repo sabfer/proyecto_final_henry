@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
-import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
+import {
+  Overlay,
+  ModalContainer,
+  HeaderModal,
+  CloseButton,
+} from "../../css/ModalStyles";
 import {
   postProduct,
   updateProduct,
@@ -271,7 +276,10 @@ export default function Modal({
     <div>
       {state && (
         <Overlay>
-          <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
+          <ModalContainer
+            modalContainerBox={modalContainerBox}
+            minwidth="390px"
+          >
             <HeaderModal>
               <h2>{title}</h2>
             </HeaderModal>

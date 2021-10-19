@@ -348,6 +348,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
                         products: ordenActual.products,
                         totalPrice: ordenActual.totalPrice,
                         estado: 4,
+                        paymentMethod: ordenActual.paymentMethod,
                       })
                     }
                   >
@@ -366,8 +367,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
                 modifcarOrden(ordenActual.id, {
                   products: ordenActual.products,
                   totalPrice: ordenActual.totalPrice,
-                  estado: ordenActual.estado,
-                  paymentMethod: ordenActual.paymentMethod,
+                  estado: 1,
                 })
               }
             >
