@@ -26,17 +26,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
-    // dispatch(getCategories(token));
-    /* setTimeout(() => {
-      dispatch(getProducts(token));
-      //dispatch(getCommerces(token));
-    }, 1000); */
+    dispatch(getCategories(token));
+    dispatch(getProducts(token));
   }, [dispatch, token]);
-
-  /*   useEffect(() => {
-    dispatch(getTakeAwayOrders(token));
-    dispatch(getDeliveryOrders(token));
-  }, [dispatch, token]); */
 
   function handleLogOut() {
     dispatch(deleteToken());
