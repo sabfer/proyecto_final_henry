@@ -19,6 +19,7 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
+  kitchenOrders: undefined,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -38,7 +39,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_USER_ID":
-      // console.log('estoy en REDUCER GET_USER_ID con payload: ', payload);
       return {
         ...state,
         userId: payload,
@@ -79,9 +79,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
         ...state,
         products: array,
@@ -101,6 +99,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "DELETE_PRODUCT":
+      return {
+        ...state,
+      };
+
+    case "DELETE_CATEGORY":
       return {
         ...state,
       };
@@ -145,6 +148,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
+    case "GET_ORDERS":
+      return {
+        ...state,
+        orders: payload,
+      };
+
     case "GET_TAKE_AWAY_ORDERS":
       return {
         ...state,
@@ -168,7 +177,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         orders: {
           ...state.orders,
-          delivery: payload,
+          deliveryOrders: payload,
         },
       };
 
@@ -177,16 +186,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         mesas: payload,
       };
-
-    /* case "CHANGE_STATUS":
-      const mesa = state.mesas.find((m) => {
-        return m.tableNumber === parseInt(payload.tableNumber);
-      });
-      mesa.isOccupated = payload.isOccupated;
-      return {
-        ...state,
-        mesas: [...state.mesas],
-      }; */
 
     case "GET_PRODUCT_TYPES":
       let sortedArray = payload.sort(function (a, b) {
@@ -254,6 +253,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "DELETE_TOKEN":
       return {
         userToken: null,
+      };
+
+    case "GET_KITCHEN_ORDERS":
+      let ordersToKitchen = [];
+      for (let order in payload) {
+        if (payload[order].estado === 1 || payload[order].estado === 2) {
+          ordersToKitchen.push(payload[order]);
+        }
+      }
+      return {
+        ...state,
+        kitchenOrders: ordersToKitchen,
       };
 
     default:

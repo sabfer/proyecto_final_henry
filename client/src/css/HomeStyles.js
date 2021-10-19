@@ -38,6 +38,7 @@ export const Salon = styled(Delivery)`
 export const OrdersContainer = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
   overflow-y: scroll;
   scrollbar-color: #888888 #eaeaea;
   scrollbar-width: thin;
@@ -45,10 +46,12 @@ export const OrdersContainer = styled.div`
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #eaeaea ;
+    background: #eaeaea;
   }
-  ::-webkit-scrollbar-thumb, mo {
+  ::-webkit-scrollbar-thumb,
+  mo {
     background: #888;
+  }
 `;
 
 export const Orders = styled.div`

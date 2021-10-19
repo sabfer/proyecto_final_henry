@@ -32,6 +32,25 @@ export function loginUser(payload) {
   };
 }
 
+// ---------- OBTENER ORDENES ---------- \\
+export function getOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders", auth)
+      .then((data) => {
+        return dispatch({ type: "GET_ORDERS", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 // ---------- OBTENER PRODUCTOS ---------- \\
 export function getProducts(token) {
   let auth = {
@@ -307,7 +326,6 @@ export function getTakeAwayOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
           payload: data.data.payload,
@@ -330,7 +348,6 @@ export function getDeliveryOrders(token) {
     axios
       .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
       .then((data) => {
-        console.log(data);
         return dispatch({
           type: "GET_DELIVERY_ORDERS",
           payload: data.data.payload,
@@ -385,9 +402,7 @@ export function updateOrder(id, payload, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
-    return dispatch({
-      type: "UPDATE_ORDER",
-    });
+    return (dispatch(getSalonOrders(token)), dispatch(getDeliveryOrders(token)), dispatch(getTakeAwayOrders(token)));
   };
 }
 
@@ -427,6 +442,22 @@ export function postCategories(payload, token) {
         return data;
       });
     return data;
+  };
+}
+
+// ---------- ELIMINAR CATEGORÍAS DE PRODUCTOS ---------- \\
+export function deleteCategory(payload, token) {
+  console.log(payload);
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/productTypes/${payload}`, auth);
+    return dispatch({
+      type: "DELETE_CATEGORY",
+    });
   };
 }
 
@@ -484,5 +515,42 @@ export function deleteToken() {
     return dispatch({
       type: "DELETE_TOKEN",
     });
+  };
+}
+
+export function getKitchenOrders(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/orders/active", auth)
+      .then((data) => {
+        return dispatch({
+          type: "GET_KITCHEN_ORDERS",
+          payload: data.data.payload,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function updateOrderKitchen(id, payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .put(`http://localhost:3001/orders/${id}`, payload, auth)
+      .catch((err) => {
+        console.log(err);
+      });
+    return dispatch(getKitchenOrders(token));
   };
 }
