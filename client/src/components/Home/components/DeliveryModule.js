@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  ModuleTop,
-  Delivery,
-  Orders,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
+import { ModuleTop, Delivery, Orders, OrdersContainer } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import ModalDelivery from "../../Modals/ModalDelivery";
 import UpdateDelivery from "../../Modals/UpdateDelivery";
 import OrderDelivery from "./OrderDelivery";
@@ -70,12 +65,8 @@ export default function DeliveryModule() {
             })
           ) : (
             <Loading gridcolumn="span 5">
-              <p>Loading...</p>
-              <img
-                src="https://i.imgur.com/5JQ02CS.gif"
-                alt="loading gif"
-                width="100px"
-              />
+              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+              <p>Aún no hay ordenes</p>
             </Loading>
           )}
           {updateModal && (

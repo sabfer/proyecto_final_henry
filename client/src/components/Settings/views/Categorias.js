@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Loading } from "../../../css";
 import { AjustesDerechaTop } from "../../../css/SettingStyles";
 import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../../css/Table";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Modal from "../../Modals/Modal";
@@ -109,10 +109,10 @@ export default function Categorias() {
           </Table>
         </div>
       ) : (
-        <Loading>
-          <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
-        </Loading>
+        <Loading gridcolumn="span 5">
+        <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+        <p>Aún no hay ordenes</p>
+      </Loading>
       )}
 
       <Modal
