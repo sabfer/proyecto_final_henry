@@ -7,8 +7,10 @@ import {
   updateProduct,
   postCommerce,
   getProducts,
+  getProductsInv,
   postCategories,
   getCategories,
+  postProductInv
 } from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,15 +23,25 @@ export default function Modal({
   state,
   setStateModal,
   title,
-  label1,
+  label1,//nombre
   label2,
-  label3,
-  label4,
+  label3,//precio
+  label4,//tipoProd
+  ////////
+  label5,//tipoProvee
+  label6,//cant
+
+  ///////
   modalContainerBox,
   id,
   name,
   price,
-  productType,
+  prodInvType,
+  ///////
+  proveeType,
+  fecha,
+  cant,
+  ///////
   user,
   pass,
   location,
@@ -37,20 +49,39 @@ export default function Modal({
   showInSettings,
 }) {
   const token = useSelector((state) => state.userToken);
-  const categories = useSelector((state) => state.productTypes);
-  
+  /////////////////////////////////////////////////////////////
+
+  //const categoriesProducts = useSelector((state) => state.prodInvTypesInv);
+  const categoriesProducts = [{ _id: "6163535ae098f3500c2d35dc", name: "Carnes" },
+  { _id: "11", name: "Pescados" },
+  { _id: "12", name: "Bebidas" },
+  { _id: "13", name: "Bebidas Alcoholicas" },
+  { _id: "14", name: "Verduras" },
+  { _id: "15", name: "Mercaderias" }]
+
+  const categoriesProv = [{ _id: "6163535ae098f3500c2d35dc", name: "CocaCola" },
+  { _id: "21", name: "Carniceria Bermejo" },
+  { _id: "22", name: "Jumbo" },
+  { _id: "23", name: "Super Vea" },
+  { _id: "24", name: "Polleria 9 de Julio" },
+  { _id: "25", name: "Libreria San Marcos" }]
+  /////////////////////////////////////////////////////////////
+  const categories = useSelector((state) => state.prodInvTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     name: "" || name,
     price: "" || price,
-    productType: "" || productType,
+    prodInvType: "" || prodInvType,
     user: "" || user,
     pass: "" || pass,
     location: "",
     description: "",
     orderD: "",
     orderTA: "",
+    proveeType: "" || proveeType,
+    fecha: "" || fecha,
+    cant:""|| cant
   });
 
   const [inpValido, setInputvalido] = useState({
@@ -59,15 +90,22 @@ export default function Modal({
     user: "",
     pass: "",
     location: "",
-    productType: "",
+    prodInvType: "",
+    proveeType: "",
+    fecha: "",
+    cant:""
   });
+  console.log(input)
+  console.log(inpValido)
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
     user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/,
-    productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
+    prodInvType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
+    proveeType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
+    cant:/^.{0,100}$/,
     location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/,
   };
 
@@ -75,21 +113,27 @@ export default function Modal({
     setInput({
       name: "" || name,
       price: "" || price,
-      productType: "" || productType,
+      prodInvType: "" || prodInvType,
       user: "" || user,
       pass: "" || pass,
       location: "" || location,
+      proveeType: "" || proveeType,
+      fecha: "" || fecha,
+      cant:""|| cant
     });
-  }, [name, price, productType, user, pass, location]);
+  }, [name, price, prodInvType, user, pass, location, proveeType, fecha,cant]);
 
-  let labels = { label1, label2, label3, label4 };
+  let labels = { label1, label2, label3, label4, label5,label6};
   let productValues = {
     name: name,
     price: price,
-    productType: productType,
+    prodInvType: prodInvType,
     user: user,
     pass: pass,
     location: location,
+    proveeType: proveeType,
+    fecha: fecha,
+    cant:cant
   };
   let leyendaError = {
     ley1: "El nombre tiene que tener mas de 2 digitos",
@@ -187,7 +231,7 @@ export default function Modal({
       if (
         inpValido.name === "true" &&
         inpValido.price === "true" &&
-        inpValido.productType === "true"
+        inpValido.prodInvType === "true"
       ) {
         dispatch(postProduct(input, token));
         MySwal.fire({
@@ -204,7 +248,7 @@ export default function Modal({
             setInput({
               name: "",
               price: "",
-              productType: "",
+              prodInvType: "",
             });
           }
         });
@@ -218,13 +262,59 @@ export default function Modal({
         });
     }
 
-    // if (id === 4) {}
+    /////////////////////////////////////////////////// 
+    if (id === 4) {
+      if (
+        inpValido.name === "true" &&
+        inpValido.price === "true" &&
+        inpValido.prodInvType === "true" &&
+        inpValido.proveeType==="true" &&
+        inpValido.cant==="true"
+      ) {
+        const objeto={
+          name:input.name,
+          prodInvType:input.prodInvType,
+          price:input.price,
+          cant:input.cant,
+          proveedor:input.proveeType
+        }
+        dispatch(postProductInv(objeto, token));
+        MySwal.fire({
+          title: "¡Inventario creado correctamente!",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "rgb(21, 151, 67)",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if (showInSettings) {
+              dispatch(getProductsInv(token));
+            }
+            setStateModal(!state);
+            setInput({
+              name: "",
+              price: "",
+              prodInvType: "",
+              proveeType:"",
+              cant:""
+            });
+          }
+        });
+      } else
+        MySwal.fire({
+          title: "¡Espera!",
+          text: "Faltan campos por llenar",
+          icon: "error",
+          confirmButtonText: "Cool",
+          confirmButtonColor: "rgb(21, 151, 67)",
+        });
+    }
+    ///////////////////////////////////////////////
 
     if (id === 7) {
       const payload = {
         name: input.name,
         price: input.price,
-        productType: input.productType,
+        prodInvType: input.prodInvType,
       };
       dispatch(updateProduct(payload, idElement, token));
       MySwal.fire({
@@ -264,7 +354,7 @@ export default function Modal({
       ...input,
       name: "",
       price: "",
-      productType: "",
+      prodInvType: "",
     });
   }
 
@@ -287,7 +377,11 @@ export default function Modal({
             leyendaError,
             inpValido,
             validacion,
-            categories
+            categories,
+            //////////////////
+            categoriesProducts,
+            categoriesProv
+            //////////////////
           )}
           <Button
             width="100%"

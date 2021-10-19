@@ -70,6 +70,25 @@ export function getProducts(token) {
   };
 }
 
+// ---------- OBTENER PRODUCTOS INVENTARIO ---------- \\
+export function getProductsInv(token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return function (dispatch) {
+    axios
+      .get("http://localhost:3001/products", auth)
+      .then((data) => {
+        return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
 // ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \
 export function orderTheProducts(payload) {
   return {
@@ -110,6 +129,24 @@ export function postProduct(payload, token) {
     return data;
   };
 }
+
+// ---------- CREACIÓN DE PRODUCTO ---------- \\
+export function postProductInv(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    var data = await axios
+      .post("http://localhost:3001/productsinv/add", payload, auth)
+      .then((data) => {
+        return data;
+      });
+    return data;
+  };
+}
+
 
 // ---------- ELIMINAR PRODUCTO ---------- \\
 export function deleteProduct(payload, token) {

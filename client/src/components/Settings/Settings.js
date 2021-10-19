@@ -13,6 +13,7 @@ import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Comercios from "./views/Comercios";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
+import InformesGenerales from "./views/Informes/InformesGenerales"
 import Users from "./views/Users";
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
@@ -48,6 +49,8 @@ export default function Settings() {
         return <Generals/>;
       case "contabilidad":
         return <Contabilidad/>;
+      case "informesGrles":
+        return <InformesGenerales/>;  
       default:
         return <Generals/>;
     }
@@ -99,6 +102,12 @@ export default function Settings() {
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Comercios</p>
           </OpcionesIzquierda>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Informes Generales</p>
+          </OpcionesIzquierda>
+
         </AjustesIzquierda>
         <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>

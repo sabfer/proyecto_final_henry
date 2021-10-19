@@ -5,12 +5,14 @@ export const conditionalForm = (
   id,
   input,
   onChange,
-  { label1, label2, label3, label4 },
-  { name, price },
+  { label1, label2, label3, label4, label5,label6},
+  { name, price, fecha },
   { ley1, ley2, ley3, ley4, ley5, ley6 },
   inpValido,
   validacion,
-  categories
+  categories,
+  categoriesProducts,
+  categoriesProv
 ) => {
   //Formulario: "CREAR USUARIO"
   if (id === 1) {
@@ -70,47 +72,7 @@ export const conditionalForm = (
       </form>
     );
   }
-  /* //Formulario: "CREAR COMERCIO"
-  if (id === 2) {
-    return (
-      <form>
-        <InputContainer>
-          <Label valido={inpValido.name}>{label1}</Label>
-          <input
-            type="text"
-            name="name"
-            required
-            value={input.name}
-            onChange={(e) => onChange(e)}
-            leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
-        </InputContainer>
-        <InputContainer>
-          <Label valido={inpValido.name}>{label2}</Label>
-          <input
-            type="text"
-            name="location"
-            required
-            value={input.location}
-            onChange={(e) => onChange(e)}
-            leyenda={ley6}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.location}>{ley6}</LeyendaError>
-        </InputContainer>
-      </form>
-    );
-  } */
+
   //Formulario: "CREAR PRODUCTO"
   if (id === 3) {
     return (
@@ -171,6 +133,112 @@ export const conditionalForm = (
                 </option>
               ))}
           </Select>
+        </InputContainer>
+      </form>
+    );
+  }
+
+  //Formulario: "CREAR PRODUCTO INVENTARIO"
+  if (id === 4) {
+    return (
+      <form>
+        <InputContainer>
+          <Label>{label1}</Label>
+          <input
+            type="text"
+            name="name"
+            required
+            //value={input.name}
+            onChange={(e) => onChange(e)}
+            leyenda={ley1}
+            //cuando precionas una tecla se la presiona hacia adentro y cuando se
+            //levanta el dedo es donde se ejecuta esta funcion
+            onKeyUp={validacion}
+            //cuando se hace click fuiera del input
+            onBlur={validacion}
+          />
+          <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
+        </InputContainer>
+        <InputContainer>
+          <Label>{label3}</Label>
+          <input
+            type="number"
+            name="price"
+            min="1"
+            required
+            //value={input.price}
+            onChange={(e) => onChange(e)}
+            leyenda={ley2}
+            //cuando precionas una tecla se la presiona hacia adentro y cuando se
+            //levanta el dedo es donde se ejecuta esta funcion
+            onKeyUp={validacion}
+            //cuando se hace click fuiera del input
+            onBlur={validacion}
+          />
+
+          <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError>
+        </InputContainer>
+        <InputContainer>
+          <Label>{label4}</Label>
+          <Select
+            onChange={(e) => onChange(e)}
+            name="productType"
+            required
+            margin="0 0 1rem 0"
+            onKeyUp={validacion}
+            onBlur={validacion}
+          >
+            <option defaultValue="none" name="categorías" hidden>
+              Categorias
+            </option>
+            {categoriesProducts &&
+              categoriesProducts.map((ctg) => (
+                <option key={ctg._id} name={ctg.name} value={ctg.name}>
+                  {ctg.name}
+                </option>
+              ))}
+          </Select>
+        </InputContainer>
+        <InputContainer>
+          <Label>{label5}</Label>
+          <Select
+            onChange={(e) => onChange(e)}
+            name="proveeType"
+            required
+            margin="0 0 1rem 0"
+            onKeyUp={validacion}
+            onBlur={validacion}
+          >
+            <option defaultValue="none" name="categoríasProvee" hidden>
+              Categorias Proveedores
+            </option>
+            {categoriesProv &&
+              categoriesProv.map((ctg) => (
+                <option key={ctg._id} name={ctg.name} value={ctg.name}>
+                  {ctg.name}
+                </option>
+              ))}
+          </Select>
+        </InputContainer>
+
+        <InputContainer>
+          <Label>{label6}</Label>
+          <input
+            type="number"
+            name="cant"
+            min="1"
+            required
+            //value={input.price}
+            onChange={(e) => onChange(e)}
+            leyenda={ley2}
+            //cuando precionas una tecla se la presiona hacia adentro y cuando se
+            //levanta el dedo es donde se ejecuta esta funcion
+            onKeyUp={validacion}
+            //cuando se hace click fuiera del input
+            onBlur={validacion}
+          />
+
+          <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError>
         </InputContainer>
       </form>
     );
