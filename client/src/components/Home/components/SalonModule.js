@@ -7,7 +7,7 @@ import {
 } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
 import UpdateTable from "../../Modals/UpdateTable";
 import ModalSalon from "../../Modals/ModalSalon";
@@ -82,14 +82,10 @@ export default function SalonModule() {
               );
             })
           ) : (
-            <Loading gridcolumn="span 10">
-              <p>Loading...</p>
-              <img
-                src="https://i.imgur.com/5JQ02CS.gif"
-                alt="loading gif"
-                width="100px"
-              />
-            </Loading>
+            <Loading gridcolumn="span 5">
+            <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+            <p>Aún no hay ordenes</p>
+          </Loading>
           )}
           {updateModal && (
             <UpdateTable

@@ -37,6 +37,7 @@ import {
   faFileExcel,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Productos() {
@@ -245,10 +246,10 @@ export default function Productos() {
           </Table>
         </div>
       ) : (
-        <Loading>
-          <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
-        </Loading>
+        <Loading gridcolumn="span 5">
+        <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+        <p>Aún no hay ordenes</p>
+      </Loading>
       )}
 
 
