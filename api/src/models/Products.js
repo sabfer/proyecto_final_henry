@@ -6,6 +6,7 @@ const ProductSchema = new Schema({
   name: { type: String, required: true },
   productType: { type: String, required: true },
   codigo: { type: Number },
+  userId: { type: Schema.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Product", ProductSchema);
