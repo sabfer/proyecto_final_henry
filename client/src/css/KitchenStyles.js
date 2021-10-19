@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
-export const OrdersContainer = styled.section`
+export const OrdersContainerPending = styled.section`
   display: grid;
   grid-template-columns: ${(props) =>
-    props.ordersColumns || "repeat(auto-fill, minmax(259px, 1fr))"};
+    props.ordersColumns || "repeat(auto-fill, minmax(260px, 1fr))"};
   gap: 2rem;
-  padding: 3rem;
+  padding: 1.5rem;
   background: rgb(225, 225, 225);
   border-radius: 12px;
-  width: 100%;
+  width: 49%;
   height: 100%;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
 `;
+export const OrdersContainerInProgress = styled(OrdersContainerPending)``;
 
 export const OrderCard = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ export const OrderCard = styled.div`
   flex-direction: column;
   background: #fff;
   padding: 2rem;
-  min-height: 450px;
+  min-height: 350px;
   border-radius: 12px;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
 `;

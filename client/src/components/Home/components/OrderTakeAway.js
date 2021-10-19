@@ -22,6 +22,7 @@ export default function OrderTakeAway({ handleUpdate, orderNumber }) {
     setOrderTime({
       demora: diferencia,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   setInterval(() => {
