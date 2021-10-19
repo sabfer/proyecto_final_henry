@@ -33,7 +33,7 @@ export const StyledLink = styled(Link)`
   color: rgb(255, 255, 255);
   text-decoration: none;
   margin-right: ${(props) => props.margin || 0};
-  grid-row: ${(props) => props.gridRow || "unset"};
+  grid-row: ${(props) => props.gridrow || "unset"};
   grid-column: ${(props) => props.gridColumn || "unset"};
   width: ${(props) => props.width || "unset"};
   justify-self: ${(props) => props.justifySelf || "unset"};
@@ -50,7 +50,7 @@ export const Button = styled.button`
   font-size: ${(props) => props.textSize};
   display: flex;
   align-items: center;
-  align-self: ${(props) => props.alignSelf};
+  align-self: ${(props) => props.alignself};
   justify-self: ${(props) => props.justifySelf};
   justify-content: ${(props) => props.justify || "center"};
   color: ${(props) => props.color || "rgb(255, 255, 255)"};
