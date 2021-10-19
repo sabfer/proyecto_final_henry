@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header, Title, Body } from "../../css/";
 import Orders from "./OrderCard.js";
 import {
-  OrdersContainerPending,
   OrdersContainerInProgress,
+  OrdersContainerPending,
 } from "../../css/KitchenStyles";
 import Error403 from "../Home/views/Error403";
 import { getKitchenOrders } from "../../actions";
