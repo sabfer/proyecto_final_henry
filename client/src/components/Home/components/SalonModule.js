@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Salon,
-  Orders,
-  ModuleTop,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
+import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -51,7 +46,7 @@ export default function SalonModule() {
           onClick={() => setStateModal({ status: true, tableNumber: "" })}
           width="9.4rem"
           height="2.5rem"
-          alignSelf="flex-end"
+          alignself="flex-end"
           justify="space-between"
           padding="0.6rem"
           buttonColor="rgba(0, 41, 107, 1)"
@@ -60,11 +55,7 @@ export default function SalonModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      <ModalSalon
-        state={stateModal}
-        setState={setStateModal}
-        title="Consumo Mesa: "
-      />
+      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
           {mesas && mesas ? (
@@ -80,7 +71,7 @@ export default function SalonModule() {
               );
             })
           ) : (
-            <Loading gridcolumn="span 5">
+            <Loading gridcolumn="span 10">
               <p>Loading...</p>
               <img
                 src="https://i.imgur.com/5JQ02CS.gif"
@@ -96,12 +87,6 @@ export default function SalonModule() {
               tableNumber={tableDetails.tableNumber}
             />
           )}
-          {/* buscar la orden que coincida con el numero de mesa
-            1 modal mesa obtiene por props el numero de la mesa
-            2 el modal busca en el estado de redux la orden que este pendiente o en proceso 
-            que coincida con el numero de la mesa  en el estado de ordenes
-           3 se edita la orden por el numero de id1 
-         */}
         </Orders>
       </OrdersContainer>
     </Salon>

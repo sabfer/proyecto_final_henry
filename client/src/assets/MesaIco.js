@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function MesaIco({color}) {
-  console.log(color)
   return (
     <>
       <svg
