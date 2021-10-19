@@ -74,7 +74,6 @@ export default function ModalSalon({ state, setState }) {
       tableNumber: state.tableNumber,
       userId,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   function handleClose(e) {
