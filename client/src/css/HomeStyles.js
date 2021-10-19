@@ -11,6 +11,8 @@ export const BodyTop = styled.div`
   }
 `;
 
+
+
 export const Delivery = styled.div`
   width: 47%;
   padding: 1.25rem;
@@ -106,4 +108,15 @@ export const DeliveryCard = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+export const Circle = styled.div`
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  border: 1px solid white;
+  background-color: ${(props) => props.color};
+  position: relative;
+  top: 60px;
+  left: 27px;
 `;
