@@ -63,7 +63,7 @@ router.post("/add", async function (req, res) {
   const payload = req.body;
   if (payload) {
     try {
-      const product = await filterProduct(payload.name);
+      const product = await filterProduct(payload.name, payload.userId);
       if (product) {
         return res.json({
           succes: false,
