@@ -9,12 +9,12 @@ export const Paginado = styled.div`
 export const Body = styled.section`
   width: 100%;
   height: 100%;
-  padding: ${(props) => props.padding || "4rem"};
+  padding: ${(props) => props.padding || "3rem"};
   display: ${(props) => props.display || "grid"};
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
-  gap: 1.4rem 0;
+  gap: ${(props) => props.gap || "3rem 0"};
 `;
 
 export const Header = styled.header`
@@ -33,7 +33,7 @@ export const StyledLink = styled(Link)`
   color: rgb(255, 255, 255);
   text-decoration: none;
   margin-right: ${(props) => props.margin || 0};
-  grid-row: ${(props) => props.gridRow || "unset"};
+  grid-row: ${(props) => props.gridrow || "unset"};
   grid-column: ${(props) => props.gridColumn || "unset"};
   width: ${(props) => props.width || "unset"};
   justify-self: ${(props) => props.justifySelf || "unset"};
@@ -50,7 +50,7 @@ export const Button = styled.button`
   font-size: ${(props) => props.textSize};
   display: flex;
   align-items: center;
-  align-self: ${(props) => props.alignSelf};
+  align-self: ${(props) => props.alignself};
   justify-self: ${(props) => props.justifySelf};
   justify-content: ${(props) => props.justify || "center"};
   color: ${(props) => props.color || "rgb(255, 255, 255)"};
@@ -78,6 +78,7 @@ export const Title = styled.h1`
   color: ${(props) => props.color || "rgb(255, 255, 255)"};
   font-size: 2rem;
   margin: 0;
+  grid-column: 1 / -1;
 `;
 
 export const OptionsBar = styled.div`

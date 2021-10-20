@@ -5,7 +5,7 @@ export const StyledLink = styled(Link)`
   color: rgb(255, 255, 255);
   text-decoration: none;
   margin-right: ${(props) => props.margin || 0};
-  grid-row: ${(props) => props.gridRow || "unset"};
+  grid-row: ${(props) => props.gridrow || "unset"};
   grid-column: ${(props) => props.gridcolumn || "unset"};
   width: ${(props) => props.width || "unset"};
   justify-self: ${(props) => props.justifyself || "unset"};
@@ -252,7 +252,7 @@ export const GSubmit = styled.div`
 export const Button = styled.button`
   width: ${(props) => props.width || "7.5rem"};
   height: ${(props) => props.height || "2.5rem"};
-  align-self: ${(props) => props.alignSelf || "unset"};
+  align-self: ${(props) => props.alignself || "unset"};
   background-color: ${(props) => props.bgColor || "rgba(0, 41, 107, 1)"};
   font-size: ${(props) => props.fontSize || "1.125rem"};
   border-radius: ${(props) => props.borderRadius || "1.5rem"};

@@ -11,6 +11,8 @@ export const BodyTop = styled.div`
   }
 `;
 
+
+
 export const Delivery = styled.div`
   width: 47%;
   padding: 1.25rem;
@@ -30,9 +32,10 @@ export const Delivery = styled.div`
 export const TakeOut = styled(Delivery)``;
 
 export const Salon = styled(Delivery)`
-  grid-row: 3 / 4;
+  grid-row: 2 / 3;
   grid-column: span 2;
   width: 100%;
+  height: 100%;
 `;
 
 export const OrdersContainer = styled.div`
@@ -106,4 +109,12 @@ export const DeliveryCard = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+export const Time = styled.p`
+    display: flex;
+    align-items: flex-end;
+    font-weight: 500;
+    color: black;
+    font-weight: bold;
 `;

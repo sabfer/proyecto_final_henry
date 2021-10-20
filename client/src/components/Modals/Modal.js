@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
-import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
+import {
+  Overlay,
+  ModalContainer,
+  HeaderModal,
+  CloseButton,
+} from "../../css/ModalStyles";
 import {
   postProduct,
   updateProduct,
@@ -270,36 +275,41 @@ export default function Modal({
 
   return (
     <div>
-      <Overlay display={state ? "flex" : "none"}>
-        <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
-          <HeaderModal>
-            <h2>{title}</h2>
-          </HeaderModal>
-          <CloseButton onClick={(e) => handleClose(e)}>
-            <FontAwesomeIcon icon={faWindowClose} />
-          </CloseButton>
-          {conditionalForm(
-            id,
-            input,
-            handleChange,
-            labels,
-            productValues,
-            leyendaError,
-            inpValido,
-            validacion,
-            categories
-          )}
-          <Button
-            width="100%"
-            height="2.5rem"
-            margin="1rem 0 0 0"
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
+      {state && (
+        <Overlay>
+          <ModalContainer
+            modalContainerBox={modalContainerBox}
+            minwidth="390px"
           >
-            Aceptar
-          </Button>
-        </ModalContainer>
-      </Overlay>
+            <HeaderModal>
+              <h2>{title}</h2>
+            </HeaderModal>
+            <CloseButton onClick={(e) => handleClose(e)}>
+              <FontAwesomeIcon icon={faWindowClose} />
+            </CloseButton>
+            {conditionalForm(
+              id,
+              input,
+              handleChange,
+              labels,
+              productValues,
+              leyendaError,
+              inpValido,
+              validacion,
+              categories
+            )}
+            <Button
+              width="100%"
+              height="2.5rem"
+              margin="1rem 0 0 0"
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
+              Aceptar
+            </Button>
+          </ModalContainer>
+        </Overlay>
+      )}
     </div>
   );
 }

@@ -199,10 +199,8 @@ export default function ModalDelivery({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber);
     if (producto.amount < 30) {
       aux = producto.amount + 1;
-      console.log(aux);
       aux = aux - (aux - producto.amount);
       aux = aux + 1;
       setProducto({
@@ -213,14 +211,12 @@ export default function ModalDelivery({ state, setState }) {
   }
 
   function disminuir() {
-    //setProducto(producto.amount+5)
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
         amount: producto.amount - 1,
       });
     }
-    console.log(producto.amount);
   }
 
   return (
@@ -381,7 +377,7 @@ export default function ModalDelivery({ state, setState }) {
             width="9rem"
             height="2.5rem"
             buttonColor="#00C72C"
-            alignSelf="center"
+            alignself="center"
             margin="1rem 0 0 0"
           >
             Crear Pedido
