@@ -19,7 +19,6 @@ const UserCategorySchema = new Schema({
   crear: [{ type: String, enum: values }],
   modificar: [{ type: String, enum: values }],
   eliminar: [{ type: String, enum: values }],
-  userId: { type: Schema.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("UserCategory", UserCategorySchema);

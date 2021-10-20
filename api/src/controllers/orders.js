@@ -16,170 +16,122 @@ orderController.addOrder = async (req, res, next) => {
       payload: newOrder,
     });
   } catch (err) {
-    res.json({
-      succes: false,
-      msg: "Error al crear la orden",
-      payload: newOrder,
-    });
+    next(err);
   }
 };
 
 orderController.findOrders = async (req, res, next) => {
-  const { type, userId } = req.query;
-  if (userId) {
-    try {
-      const orders = await Orders.find({ userId }, { __v: 0 });
-      if (type) {
-        ordersByType = orders.filter((order) => {
-          return order.type
-            .toLocaleLowerCase()
-            .includes(type.toLocaleLowerCase());
-        });
-      }
-      if (orders.length) {
-        return res.json({
-          succes: true,
-          msg: "Ordenes encontradas",
-          payload: orders,
-        });
-      }
-      res.json({
-        succes: false,
-        msg: "No se encontraron ordenes",
-        payload: null,
-      });
-    } catch (err) {
-      res.json({
-        succes: false,
-        msg: "No se encontraron ordenes",
-        payload: err,
+  const { type } = req.query;
+  try {
+    const orders = await Orders.find({}, { __v: 0 });
+    if (type) {
+      ordersByType = orders.filter((order) => {
+        return order.type
+          .toLocaleLowerCase()
+          .includes(type.toLocaleLowerCase());
       });
     }
-  } else {
+    if (orders.length) {
+      return res.json({
+        succes: true,
+        msg: "Ordenes encontradas",
+        payload: orders,
+      });
+    }
     res.json({
       succes: false,
-      msg: "Se requiere userId",
+      msg: "No se encontraron ordenes",
       payload: null,
     });
+  } catch (err) {
+    next(err);
   }
 };
 
 orderController.findActiveOrders = async (req, res, next) => {
-  const { type, userId } = req.query;
-  if (userId) {
-    try {
-      const orders = await Orders.find({ userId }, { __v: 0 });
-      ordersActives = orders.filter((order) => order.estado !== 4);
-      if (type) {
-        ordersByType = ordersActives.filter((order) => {
-          return order.type
-            .toLocaleLowerCase()
-            .includes(type.toLocaleLowerCase());
-        });
-        ordersByType.length
-          ? res.json({
-              succes: true,
-              msg: "Ordenes encontradas",
-              payload: ordersByType,
-            })
-          : res.json({
-              succes: false,
-              msg: "No se encontraron ordenes",
-              payload: null,
-            });
-      } else {
-        if (ordersActives.length) {
-          return res.json({
+  const { type } = req.query;
+  try {
+    const orders = await Orders.find({}, { __v: 0 });
+    ordersActives = orders.filter((order) => order.estado !== 4);
+    if (type) {
+      ordersByType = ordersActives.filter((order) => {
+        return order.type
+          .toLocaleLowerCase()
+          .includes(type.toLocaleLowerCase());
+      });
+      ordersByType.length
+        ? res.json({
             succes: true,
             msg: "Ordenes encontradas",
-            payload: ordersActives,
+            payload: ordersByType,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron ordenes",
+            payload: null,
           });
-        }
-        res.json({
-          succes: false,
-          msg: "No se encontraron ordenes",
-          payload: null,
+    } else {
+      if (ordersActives.length) {
+        return res.json({
+          succes: true,
+          msg: "Ordenes encontradas",
+          payload: ordersActives,
         });
       }
-    } catch (err) {
       res.json({
         succes: false,
         msg: "No se encontraron ordenes",
         payload: null,
       });
     }
-  } else {
-    res.json({
-      succes: false,
-      msg: "Se requiere userId",
-      payload: null,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
 //Filter Dinamico (por cualquier prop)
 orderController.filterOrders = async (req, res, next) => {
-  const { key, value, userId } = req.query;
-  if (userId) {
-    try {
-      const orders = await Orders.find({ userId }, { __v: 0 });
-      if (orders.length) {
-        const filterOrders = orders.filter((order) => {
-          if (typeof value === Number) return order[key] === value;
-          return order[key]
-            .toLocaleLowerCase()
-            .includes(value.toLocaleLowerCase());
-        });
-        filterOrders.length
-          ? res.json({
-              succes: true,
-              msg: "Ordenes encontradas",
-              payload: filterOrders,
-            })
-          : res.json({
-              succes: false,
-              msg: "No se encontraron ordenes",
-              payload: null,
-            });
-      }
-    } catch (err) {
-      res.json({
-        succes: false,
-        msg: "Error",
-        payload: err,
+  const { key, value } = req.query;
+  try {
+    const orders = await Orders.find({}, { __v: 0 });
+    if (orders.length) {
+      const filterOrders = orders.filter((order) => {
+        if (typeof value === Number) return order[key] === value;
+        return order[key]
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
       });
+      filterOrders.length
+        ? res.json({
+            succes: true,
+            msg: "Ordenes encontradas",
+            payload: filterOrders,
+          })
+        : res.json({
+            succes: false,
+            msg: "No se encontraron ordenes",
+            payload: null,
+          });
     }
-  } else {
-    res.json({
-      succes: false,
-      msg: "Se requiere userId",
-      payload: null,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
 orderController.deleteOrder = async (req, res, next) => {
   const { id } = req.params;
-  if (id) {
-    try {
-      await Orders.deleteOne({ _id: `${id}` });
-      return res.json({
-        succes: true,
-        msg: "Ordene Eliminada",
-        payload: null,
-      });
-    } catch (err) {
-      res.json({
-        succes: false,
-        msg: "No se pudo eliminar la orden",
-        payload: err,
-      });
-    }
-  } else {
+  try {
+    await Orders.deleteOne({ _id: `${id}` });
+    return res.json({
+      succes: true,
+      msg: "Ordene Eliminada",
+      payload: null,
+    });
+  } catch (err) {
     res.json({
       succes: false,
-      msg: "Se requiere id",
-      payload: null,
+      msg: "No se pudo eliminar la orden",
+      payload: err,
     });
   }
 };
@@ -187,32 +139,25 @@ orderController.deleteOrder = async (req, res, next) => {
 orderController.updateOrder = async (req, res, next) => {
   const { id } = req.params;
   const payload = req.body;
-  if (id && payload) {
-    try {
-      const updatedOrder = await Orders.findOneAndUpdate(
-        { _id: `${id}` },
-        payload,
-        {
-          new: true,
-        }
-      );
-      return res.json({
-        succes: true,
-        msg: "Ordene modificada exitosamente",
-        payload: updatedOrder,
-      });
-    } catch (err) {
-      res.json({
-        succes: false,
-        msg: "No se pudo modificar la orden",
-        payload: err,
-      });
-    }
-  } else {
+  console.log(payload);
+  try {
+    const updatedOrder = await Orders.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      {
+        new: true,
+      }
+    );
+    return res.json({
+      succes: true,
+      msg: "Ordene modificada exitosamente",
+      payload: updatedOrder,
+    });
+  } catch (err) {
     res.json({
       succes: false,
-      msg: "Se requiere id y payload",
-      payload: null,
+      msg: "No se pudo modificar la orden",
+      payload: err,
     });
   }
 };
