@@ -33,51 +33,53 @@ export default function DeliveryModule() {
   }
 
   return (
-    <Delivery>
-      <ModuleTop>
-        <h3>Delivery</h3>
-        <Button
-          onClick={() => setStateModal(!stateModal)}
-          width="9.4rem"
-          height="2.5rem"
-          alignself="flex-end"
-          justify="space-between"
-          padding="0.6rem"
-          buttonColor="rgba(0, 41, 107, 1)"
-        >
-          Crear pedido
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-      </ModuleTop>
-      <ModalDelivery state={stateModal} setState={setStateModal} />
-      <OrdersContainer>
-        <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {ordersDelivery && ordersDelivery ? (
-            ordersDelivery.map((order) => {
-              return (
-                <OrderDelivery
-                  key={order._id}
-                  orderNumber={order.orderNumber}
-                  setStateModal={setStateModal}
-                  handleUpdate={handleUpdateModal}
-                />
-              );
-            })
-          ) : (
-            <Loading gridcolumn="span 5">
-              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-              <p>Aún no hay ordenes</p>
-            </Loading>
-          )}
-          {updateModal && (
-            <UpdateDelivery
-              state={updateModal}
-              setStateModal={setUpdateModal}
-              orderNumber={tableDetails.orderNumber}
-            />
-          )}
-        </Orders>
-      </OrdersContainer>
-    </Delivery>
+    <>
+      <Delivery>
+        <ModuleTop>
+          <h3>Delivery</h3>
+          <Button
+            onClick={() => setStateModal(!stateModal)}
+            width="9.4rem"
+            height="2.5rem"
+            alignself="flex-end"
+            justify="space-between"
+            padding="0.6rem"
+            buttonColor="rgba(0, 41, 107, 1)"
+          >
+            Crear pedido
+            <FontAwesomeIcon icon={faPlus} size="lg" />
+          </Button>
+        </ModuleTop>
+        <OrdersContainer>
+          <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+            {ordersDelivery && ordersDelivery ? (
+              ordersDelivery.map((order) => {
+                return (
+                  <OrderDelivery
+                    key={order._id}
+                    orderNumber={order.orderNumber}
+                    setStateModal={setStateModal}
+                    handleUpdate={handleUpdateModal}
+                  />
+                );
+              })
+            ) : (
+              <Loading gridcolumn="1/-1">
+                <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+                <p>Aún no hay ordenes</p>
+              </Loading>
+            )}
+            {updateModal && (
+              <UpdateDelivery
+                state={updateModal}
+                setStateModal={setUpdateModal}
+                orderNumber={tableDetails.orderNumber}
+              />
+            )}
+          </Orders>
+        </OrdersContainer>
+        {stateModal && <ModalDelivery state={stateModal} setState={setStateModal} />}
+      </Delivery>
+    </>
   );
 }

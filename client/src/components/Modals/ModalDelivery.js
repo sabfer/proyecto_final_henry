@@ -35,6 +35,7 @@ import { Select } from "../../css/Select";
 import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
+moment.suppressDeprecationWarnings = true;
 
 export default function ModalDelivery({ state, setState }) {
   const token = useSelector((state) => state.userToken);
@@ -61,9 +62,10 @@ export default function ModalDelivery({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
       hour: moment().format("HH:mm:ss"),
     });
+    return function () {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 

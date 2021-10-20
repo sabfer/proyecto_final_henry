@@ -26,7 +26,7 @@ const productsTypeController = {};
 
 productsTypeController.findProductsType = async (req, res, next) => {
   try {
-    const types = await ProductsType.find();
+    const types = await ProductsType.find().sort({ name: 1 });
     if (types.length) {
       res.json({
         succes: true,

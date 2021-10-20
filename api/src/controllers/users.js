@@ -34,7 +34,7 @@ usersController.filterUser = async (req, res, next) => {
 
 usersController.findUniqueEmail = async (req, res, next) => {
   // console.log('---- controller findUniqueEmail');
-  console.log('---- req.params.email: ', req.params.email);
+  // console.log('---- req.params.email: ', req.params.email);
   const results = await Users.find({ email: req.params.email });
   // console.log('---------- results: ', results);
   res.send(results.length ? true : false);
@@ -83,7 +83,7 @@ usersController.addUser = async (req, res, _next) => {
       // console.log('ingreso al ELSE para tirar el newUser, con payload: ', payload);
       const newUser = await new Users(payload);
       await newUser.save();
-      console.log('grabé correctamente el newUser.');
+      //console.log('grabé correctamente el newUser.');
       res.json({
         succes: true,
         msg: "Usuario Creado",

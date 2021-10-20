@@ -34,7 +34,7 @@ const updateProduct = async (id, update) => {
   const updated = await Products.findOneAndUpdate({ _id: `${id}` }, update, {
     new: true,
   });
-  console.log(updated);
+  // console.log(updated);
   return updated ? true : false;
 };
 

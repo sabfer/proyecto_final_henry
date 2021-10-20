@@ -19,19 +19,22 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
-  kitchenOrders: undefined,
+  kitchenOrders: {
+    inProgress: undefined,
+    toBeDone: undefined,
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "REGISTER_USER":
-      console.log("-------------signUpData: payload = ", payload);
+      // console.log("-------------signUpData: payload = ", payload);
       return {
         ...state,
         signUpData: payload,
       };
     case "LOGIN_USER":
-      console.log("reducer LOGIN_USER, payload: ", payload);
+      // console.log("reducer LOGIN_USER, payload: ", payload);
       return {
         ...state,
         userToken: payload.token,
@@ -188,18 +191,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_PRODUCT_TYPES":
-      let sortedArray = payload.sort(function (a, b) {
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (b.name > a.name) {
-          return -1;
-        }
-        return 0;
-      });
       return {
         ...state,
-        productTypes: sortedArray,
+        productTypes: payload,
       };
 
     case "POST_ORDER":
@@ -256,15 +250,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_KITCHEN_ORDERS":
-      let ordersToKitchen = [];
+      let inProgress = [];
+      let toBeDone = [];
       for (let order in payload) {
-        if (payload[order].estado === 1 || payload[order].estado === 2) {
-          ordersToKitchen.push(payload[order]);
-        }
+        if (payload[order].estado === 1) toBeDone.push(payload[order]);
+        if (payload[order].estado === 2) inProgress.push(payload[order]);
       }
       return {
         ...state,
-        kitchenOrders: ordersToKitchen,
+        kitchenOrders: {
+          inProgress,
+          toBeDone,
+        },
       };
 
     default:
