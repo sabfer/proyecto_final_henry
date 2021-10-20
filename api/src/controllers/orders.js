@@ -3,7 +3,7 @@ const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
   try {
-    let orders = await Orders.find({ userId: `${req.body.userId}` });
+    let orders = await Orders.find();
     let ordersN = orders.length;
     const newOrder = await new Orders({
       ...req.body,
