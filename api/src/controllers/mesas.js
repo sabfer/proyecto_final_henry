@@ -57,7 +57,7 @@ mesasController.addMesa = async (req, res, _next) => {
         payload: null,
       });
     } else {
-      const newMesa = await new Mesas(payload);
+      const newMesa = await new Mesas({ tableNumber, userId });
       await newMesa.save();
       res.json({
         succes: true,
