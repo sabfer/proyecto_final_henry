@@ -55,6 +55,8 @@ export default function ModalSalon({ state, setState }) {
     price: undefined,
   });
 
+  let currentDate = moment().locale("es").format("DD/MM/YYYY")
+
   const [order, setOrder] = useState({
     type: "Salon",
     tableNumber: "",
@@ -69,7 +71,7 @@ export default function ModalSalon({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
       hour: moment().format("HH:mm:ss"),
       tableNumber: state.tableNumber,
       userId,
@@ -268,7 +270,7 @@ export default function ModalSalon({ state, setState }) {
               <h4>Mozo: Enzo Derviche</h4>
             </HeaderModalTitle>
             <HeaderModalDetails>
-              <p>Fecha: {order.date}</p>
+              <p>Fecha: {currentDate}</p>
               <p>Hora: {order.hour}</p>
             </HeaderModalDetails>
           </HeaderModal>

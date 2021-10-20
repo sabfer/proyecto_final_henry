@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import DoughnutChart from "../components/DoughnutChart";
 
-export default function Subdiario() {
+export default function PorHora() {
   let ordersDb = useSelector((state) => state.orders);
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
-  let yesterdayDate = moment().locale("es").add(0, "days").format("DD/MM/YYYY");
-  let currentDate = moment().locale("es").format("DD/MM/YYYY");
+  let yesterdayDate = moment().locale("es").add(0, "days").format("YYYY/MM/DD");
+  let currentDate = moment().locale("es").format("YYYY/MM/DD");
 
   function handleChangeInit(e) {
     setInit((init = e.target.value));
@@ -27,8 +28,8 @@ export default function Subdiario() {
       let ordersCurrent = ordersDb.filter(
         (e) => e.date === currentDate && e.hour <= finish
       );
-      let OrdersTotal = [...ordersYesterday, ...ordersCurrent];
-      return OrdersTotal;
+      let ordersTotal = [...ordersYesterday, ...ordersCurrent];
+      return ordersTotal;
 
       //Horario comercio que abarca un día
     } else {
@@ -38,7 +39,7 @@ export default function Subdiario() {
     }
   };
 
-  let OrdersTotal = currentOrders();
+  let ordersTotal = currentOrders();
 
   const totalFact = () => {
     if (init !== undefined && finish !== undefined) {
@@ -55,19 +56,43 @@ export default function Subdiario() {
     }
   };
 
+  function salon() {
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Salon");
+      return salonOrders.length;
+    }
+    return null;
+  };
+
+  function delivery() {
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Delivery");
+      return salonOrders.length;
+    }
+    return null;
+  };
+
+  function taway() {
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Take Away");
+      return salonOrders.length;
+    }
+    return null;
+  };
+  
   return (
     <>
       <header>
-        <h1>Informe Sub-Diario</h1>
+        <h1>Informe del turno del Servicio</h1>
       </header>
       <div>
-        <label> Horario Inico Local </label>
+        <label> Horario Inicio </label>
         <input
           type="time"
           name="init"
           onChange={(e) => handleChangeInit(e)}
         ></input>
-        <label> Horario Cierre Local </label>
+        <label> Horario Cierre </label>
         <input
           type="time"
           name="finish"
@@ -75,7 +100,12 @@ export default function Subdiario() {
         ></input>
       </div>
       <h3>{totalFact()}</h3>
-      {OrdersTotal.length && <h3>Total de órdenes: {OrdersTotal.length}</h3>}
+      {ordersTotal.length && <h3>Total de órdenes: {ordersTotal.length}</h3>}
+
+      <br />
+      <div>
+        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
+      </div>
     </>
   );
 }

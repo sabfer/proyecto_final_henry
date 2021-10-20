@@ -33,6 +33,7 @@ export const OpcionesIzquierda = styled.div`
   }
 `;
 
+
 export const AjustesDerecha = styled(AjustesIzquierda)`
   width: 70%;
   padding: 3rem;
