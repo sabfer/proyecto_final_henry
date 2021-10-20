@@ -28,6 +28,8 @@ import PaymentCheckBox from "./Components/PaymentCheckBox";
 
 export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
   const token = useSelector((state) => state.userToken);
+  const userId = useSelector((state) => state.userId);
+
   const ordenes = useSelector((state) => state.orders.deliveryOrders);
   const products = useSelector((state) => state.products);
 
@@ -177,7 +179,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
         setTimeout(() => {
-          dispatch(getTakeAwayOrders(token));
+          dispatch(getTakeAwayOrders(token, userId));
         }, 600);
         MySwal.fire({
           title: "Pedido editado",
@@ -265,7 +267,7 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" defaultValue disabled hidden>
+                      <option id="inputDefault" value="none" defaultValue hidden>
                         Seleccione un producto
                       </option>
                       {products &&

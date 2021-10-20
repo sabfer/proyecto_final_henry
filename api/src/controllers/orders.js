@@ -2,6 +2,7 @@ const Orders = require("../models/Orders");
 const orderController = {};
 
 orderController.addOrder = async (req, res, next) => {
+  
   try {
     let orders = await Orders.find();
     let ordersN = orders.length;

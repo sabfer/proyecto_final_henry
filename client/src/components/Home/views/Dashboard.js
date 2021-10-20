@@ -5,9 +5,9 @@ import { faCog, faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
-import DeliveryModule from "../components/DeliveryModule";
-import SalonModule from "../components/SalonModule";
-import TakeAwayModule from "../components/TakeOutModule";
+import DeliveryModule from "../components/modules/Delivery";
+import SalonModule from "../components/modules/Salon";
+import TakeAwayModule from "../components/modules/TakeOut";
 import {
   getUserId,
   changeSettings,
@@ -20,21 +20,22 @@ export default function Dashboard() {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
-  const id = useSelector((state) => state.userId);
+  const userId = useSelector((state) => state.userId);
+
+  if (token && !userId) {
+    dispatch(getUserId(token));
+  }
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
-    dispatch(getCategories(token));
-    dispatch(getProducts(token));
-  }, [dispatch, token]);
+    dispatch(getCategories(token, userId));
+    dispatch(getProducts(token, userId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, userId]);
 
   function handleLogOut() {
     dispatch(deleteToken());
     history.push("/");
-  }
-
-  if (token && !id) {
-    dispatch(getUserId(token));
   }
 
   return (

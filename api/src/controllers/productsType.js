@@ -3,10 +3,10 @@ const productsTypeController = {};
 
 //GET
 productsTypeController.findProductsType = async (req, res, next) => {
-  const { userId } = req.body;
+  const { userId } = req.query;
   if (userId) {
     try {
-      const types = await ProductsType.find({ userId });
+      const types = await ProductsType.find({ userId }).sort({ name: 1 });
       if (types.length) {
         res.json({
           succes: true,
@@ -40,7 +40,10 @@ productsTypeController.findProductsType = async (req, res, next) => {
 productsTypeController.addProductType = async (req, res, _next) => {
   const payload = req.body;
   try {
-    const type = await ProductsType.findOne({ name: payload.name });
+    const type = await ProductsType.findOne({
+      name: payload.name,
+      userId: `${payload.userId}`,
+    });
     if (type) {
       res.json({
         succes: false,

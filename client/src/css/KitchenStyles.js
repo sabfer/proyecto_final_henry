@@ -1,5 +1,18 @@
 import styled from "styled-components";
 
+export const OrdersContainer = styled.section`
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.ordersColumns || "repeat(auto-fill, minmax(259px, 1fr))"};
+  gap: 2rem;
+  padding: 3rem;
+  background: rgb(225, 225, 225);
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
+`;
+
 export const OrdersContainerPending = styled.section`
   display: grid;
   grid-template-columns: ${(props) =>
