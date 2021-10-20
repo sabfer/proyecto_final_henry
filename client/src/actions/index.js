@@ -33,7 +33,7 @@ export function loginUser(payload) {
 }
 
 // ---------- OBTENER ORDENES ---------- \\
-export function getOrders(token) {
+export function getOrders(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -41,7 +41,7 @@ export function getOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/orders", auth)
+      .get(`http://localhost:3001/orders?userId=${id_user}`, auth)
       .then((data) => {
         return dispatch({ type: "GET_ORDERS", payload: data.data.payload });
       })
@@ -52,17 +52,20 @@ export function getOrders(token) {
 }
 
 // ---------- OBTENER PRODUCTOS ---------- \\
-export function getProducts(token) {
+export function getProducts(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
+  console.log(id_user);
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/products", auth)
+      .get(`http://localhost:3001/products?userId=${id_user}`, auth)
       .then((data) => {
-        return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
+        if (data.data.succes) {
+          return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -101,6 +104,7 @@ export function postProduct(payload, token) {
       Authorization: "Bearer " + token,
     },
   };
+  console.log(payload);
   return async function (dispatch) {
     var data = await axios
       .post("http://localhost:3001/products/add", payload, auth)
@@ -127,7 +131,7 @@ export function deleteProduct(payload, token) {
 }
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
-export function updateProduct(payload, id, token) {
+export function updateProduct(payload, id, token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -135,16 +139,18 @@ export function updateProduct(payload, id, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload, auth);
-    await axios.get("http://localhost:3001/products", auth).then((data) => {
-      return dispatch({
-        type: "PUT_PRODUCT",
-        payload: data.data.payload,
+    await axios
+      .get(`http://localhost:3001/products?userId=${id_user}`, auth)
+      .then((data) => {
+        return dispatch({
+          type: "PUT_PRODUCT",
+          payload: data.data.payload,
+        });
       });
-    });
   };
 }
 
-// ---------- CREACIÓN DE COMERCIO ---------- \\
+/* // ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload, token) {
   let auth = {
     headers: {
@@ -212,7 +218,7 @@ export function updateCommerce(payload, id, token) {
       type: "PUT_COMMERCE",
     });
   };
-}
+} */
 
 // ---------- OBTENER USUARIOS ---------- \\
 export function getUsers(payload, token) {
@@ -294,7 +300,7 @@ export function changeSettings(payload) {
 }
 
 // ---------- OBTENER ORDENES DE SALON---------- \\
-export function getSalonOrders(token) {
+export function getSalonOrders(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -302,7 +308,7 @@ export function getSalonOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Salon`, auth)
+      .get(`http://localhost:3001/orders/active?type=Salon&userId=${id_user}`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_SALON_ORDERS",
@@ -316,7 +322,7 @@ export function getSalonOrders(token) {
 }
 
 // ---------- OBTENER ORDENES DE TAKE AWAY---------- \\
-export function getTakeAwayOrders(token) {
+export function getTakeAwayOrders(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -324,7 +330,7 @@ export function getTakeAwayOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
+      .get(`http://localhost:3001/orders/active?type=Take%20Away&userId=${id_user}`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
@@ -338,7 +344,7 @@ export function getTakeAwayOrders(token) {
 }
 
 // ---------- OBTENER ORDENES DE DELIVERY---------- \\
-export function getDeliveryOrders(token) {
+export function getDeliveryOrders(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -346,7 +352,7 @@ export function getDeliveryOrders(token) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
+      .get(`http://localhost:3001/orders/active?type=Delivery&userId=${id_user}`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_DELIVERY_ORDERS",
@@ -360,15 +366,18 @@ export function getDeliveryOrders(token) {
 }
 
 // ---------- OBTENER MESAS---------- \\
-export function getMesas(token) {
+export function getMesas(token, userId) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
+  console.log(userId);
   return function (dispatch) {
-    axios.get("http://localhost:3001/mesas", auth).then((data) => {
-      return dispatch({ type: "GET_MESAS", payload: data.data.payload });
+    axios.get(`http://localhost:3001/mesas?userId=${userId}`, auth).then((data) => {
+      if (data.data.succes) {
+        return dispatch({ type: "GET_MESAS", payload: data.data.payload });
+      }
     });
   };
 }
@@ -394,7 +403,7 @@ export function changeStatus(payload, token) {
 }
 
 // ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
-export function updateOrder(id, payload, token) {
+export function updateOrder(id, payload, token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -403,15 +412,15 @@ export function updateOrder(id, payload, token) {
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
     return (
-      dispatch(getSalonOrders(token)),
-      dispatch(getDeliveryOrders(token)),
-      dispatch(getTakeAwayOrders(token))
+      dispatch(getSalonOrders(token, id_user)),
+      dispatch(getDeliveryOrders(token, id_user)),
+      dispatch(getTakeAwayOrders(token, id_user))
     );
   };
 }
 
 // OBTENER CATEGORÍAS DE PRODUCTOS \\
-export function getCategories(token) {
+export function getCategories(token, id_user) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -419,7 +428,7 @@ export function getCategories(token) {
   };
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/productTypes", auth)
+      .get(`http://localhost:3001/productTypes?userId=${id_user}`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_PRODUCT_TYPES",
@@ -521,15 +530,16 @@ export function deleteToken() {
   };
 }
 
-export function getKitchenOrders(token) {
+export function getKitchenOrders(token, userId) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
+  console.log({ userId });
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/orders/active", auth)
+      .get(`http://localhost:3001/orders/active?userId=${userId}`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_KITCHEN_ORDERS",
@@ -537,24 +547,21 @@ export function getKitchenOrders(token) {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log("error del catch------", err);
       });
   };
 }
 
 export function updateOrderKitchen(id, payload, token) {
-  console.log(payload);
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
   return function (dispatch) {
-    axios
-      .put(`http://localhost:3001/orders/${id}`, payload, auth)
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
+      console.log(err);
+    });
     return dispatch(getKitchenOrders(token));
   };
 }

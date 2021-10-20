@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
-import {
-  Overlay,
-  ModalContainer,
-  HeaderModal,
-  CloseButton,
-} from "../../css/ModalStyles";
+import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
 import {
   postProduct,
   updateProduct,
-  postCommerce,
   getProducts,
   postCategories,
   getCategories,
@@ -37,42 +31,37 @@ export default function Modal({
   productType,
   user,
   pass,
-  location,
   idElement,
   showInSettings,
 }) {
   const token = useSelector((state) => state.userToken);
+  const userId = useSelector((state) => state.userId);
+
   const categories = useSelector((state) => state.productTypes);
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     name: "" || name,
     price: "" || price,
     productType: "" || productType,
-    user: "" || user,
-    pass: "" || pass,
-    location: "",
     description: "",
     orderD: "",
     orderTA: "",
+    userId,
   });
 
   const [inpValido, setInputvalido] = useState({
     name: "",
     price: "",
-    user: "",
-    pass: "",
-    location: "",
     productType: "",
+    userId,
   });
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
-    user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/,
     productType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
-    location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/,
   };
 
   useEffect(() => {
@@ -80,20 +69,17 @@ export default function Modal({
       name: "" || name,
       price: "" || price,
       productType: "" || productType,
-      user: "" || user,
-      pass: "" || pass,
-      location: "" || location,
+      userId,
     });
-  }, [name, price, productType, user, pass, location]);
+    return function () {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, price, productType]);
 
   let labels = { label1, label2, label3, label4 };
   let productValues = {
     name: name,
     price: price,
     productType: productType,
-    user: user,
-    pass: pass,
-    location: location,
   };
   let leyendaError = {
     ley1: "El nombre tiene que tener mas de 2 digitos",
@@ -128,64 +114,6 @@ export default function Modal({
 
   function handleSubmit(e) {
     // e.preventDefault();
-    if (id === 1) {
-      if (
-        inpValido.name === "true" &&
-        inpValido.user === "true" &&
-        inpValido.pass === "true"
-      ) {
-        dispatch(input);
-        MySwal.fire({
-          title: "¡Usuario creado correctamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              user: "",
-              pass: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
-
-    if (id === 2) {
-      if (inpValido.name === "true" && inpValido.location === "true") {
-        dispatch(postCommerce(input, token));
-        MySwal.fire({
-          title: "¡Comercio creado corectamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              location: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
 
     if (id === 3) {
       if (
@@ -202,7 +130,7 @@ export default function Modal({
         }).then((result) => {
           if (result.isConfirmed) {
             if (showInSettings) {
-              dispatch(getProducts(token));
+              dispatch(getProducts(token, userId));
             }
             setStateModal(!state);
             setInput({
@@ -244,6 +172,7 @@ export default function Modal({
     }
 
     if (id === 8) {
+      console.log(input);
       dispatch(postCategories(input, token));
       MySwal.fire({
         title: "Categoría creada correctamente!",
@@ -252,7 +181,7 @@ export default function Modal({
         confirmButtonColor: "rgb(21, 151, 67)",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(getCategories());
+          dispatch(getCategories(token, userId));
           setStateModal(!state);
           setInput({
             name: "",
@@ -276,10 +205,7 @@ export default function Modal({
     <div>
       {state && (
         <Overlay>
-          <ModalContainer
-            modalContainerBox={modalContainerBox}
-            minwidth="390px"
-          >
+          <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
             <HeaderModal>
               <h2>{title}</h2>
             </HeaderModal>

@@ -14,7 +14,7 @@ export const Body = styled.section`
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justifycontent || "unset"};
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 420px 420px;
+  gap: ${(props) => props.gap || "3rem 0"};
 `;
 
 export const Header = styled.header`
@@ -78,6 +78,7 @@ export const Title = styled.h1`
   color: ${(props) => props.color || "rgb(255, 255, 255)"};
   font-size: 2rem;
   margin: 0;
+  grid-column: 1 / -1;
 `;
 
 export const OptionsBar = styled.div`

@@ -2,14 +2,17 @@ import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
 import reducer from "../reducer";
-import { loadState, saveState } from './localStorage';
+import { loadUserId, loadUserToken, saveState } from "./localStorage";
 
-
-const persistedToken = loadState();
+const persistedToken = loadUserToken();
+const persistedUserId = loadUserId();
 
 const store = createStore(
   reducer,
-  { userToken: persistedToken },
+  {
+    userToken: persistedToken,
+    userId: persistedUserId,
+  },
   composeWithDevTools(applyMiddleware(reduxThunk))
 );
 
@@ -18,4 +21,3 @@ store.subscribe(() => {
 });
 
 export default store;
-

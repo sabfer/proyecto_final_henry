@@ -188,7 +188,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_PRODUCT_TYPES":
-      let sortedArray = payload.sort(function (a, b) {
+      /* let sortedArray = payload.sort(function (a, b) {
         if (a.name > b.name) {
           return 1;
         }
@@ -196,10 +196,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
           return -1;
         }
         return 0;
-      });
+      }); */
       return {
         ...state,
-        productTypes: sortedArray,
+        productTypes: payload,
       };
 
     case "POST_ORDER":

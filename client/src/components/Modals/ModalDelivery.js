@@ -38,6 +38,8 @@ import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalDelivery({ state, setState }) {
   const token = useSelector((state) => state.userToken);
+  const userId = useSelector((state) => state.userId);
+
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
@@ -61,8 +63,9 @@ export default function ModalDelivery({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
       hour: moment().format("HH:mm:ss"),
+      userId,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -157,9 +160,6 @@ export default function ModalDelivery({ state, setState }) {
       date: "",
       hour: "",
     });
-    /* setTimeout(function () {
-      dispatch(getSalonOrders({key:'type' , value: "Salon"}));
-    }, 1000) */
   }
 
   function handleDelete(name) {
@@ -199,10 +199,8 @@ export default function ModalDelivery({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber);
     if (producto.amount < 30) {
       aux = producto.amount + 1;
-      console.log(aux);
       aux = aux - (aux - producto.amount);
       aux = aux + 1;
       setProducto({
@@ -213,14 +211,12 @@ export default function ModalDelivery({ state, setState }) {
   }
 
   function disminuir() {
-    //setProducto(producto.amount+5)
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
         amount: producto.amount - 1,
       });
     }
-    console.log(producto.amount);
   }
 
   return (
@@ -281,10 +277,10 @@ export default function ModalDelivery({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option id="inputDefault" value="none" defaultValue disabled hidden>
+                    <option id="inputDefault" value="none" defaultValue hidden>
                       Seleccione un producto
                     </option>
-                    {products &&
+                    {Array.isArray(products) &&
                       products.map((e) => {
                         return (
                           <option key={e._id} value={e.name}>

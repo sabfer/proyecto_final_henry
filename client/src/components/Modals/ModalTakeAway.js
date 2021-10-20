@@ -32,19 +32,15 @@ import {
   DivInfo,
 } from "../../css/ModalStyles";
 import { Select } from "../../css/Select";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-  Options,
-} from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
-export default function ModalTakeAway({ state, setState }) {
+export default function ModalTakeAway({ state, setState}) {
   const token = useSelector((state) => state.userToken);
+  const userId = useSelector((state) => state.userId);
+
+
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
@@ -70,6 +66,7 @@ export default function ModalTakeAway({ state, setState }) {
       ...order,
       date: moment().locale("es").format("YYYY/MM/DD"),
       hour: moment().format("HH:mm:ss"),
+      userId,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -203,10 +200,8 @@ export default function ModalTakeAway({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber);
     if (producto.amount < 30) {
       aux = producto.amount + 1;
-      console.log(aux);
       aux = aux - (aux - producto.amount);
       aux = aux + 1;
       setProducto({
@@ -217,39 +212,12 @@ export default function ModalTakeAway({ state, setState }) {
   }
 
   function disminuir() {
-    //setProducto(producto.amount+5)
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
         amount: producto.amount - 1,
       });
     }
-    function aumentar() {
-      var aux = 0;
-      console.log(order.tableNumber);
-      if (producto.amount < 30) {
-        aux = producto.amount + 1;
-        aux = aux - (aux - producto.amount);
-        aux = aux + 1;
-        setProducto({
-          ...producto,
-          amount: aux,
-        });
-      }
-    }
-
-    function disminuir() {
-      //setProducto(producto.amount+5)
-      if (producto.amount >= 2) {
-        setProducto({
-          ...producto,
-          amount: producto.amount - 1,
-        });
-      }
-      console.log(producto.amount);
-    }
-
-    console.log(producto.amount);
   }
 
   return (
@@ -297,13 +265,7 @@ export default function ModalTakeAway({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option
-                      id="inputDefault"
-                      value="none"
-                      defaultValue
-                      disabled
-                      hidden
-                    >
+                    <option id="inputDefault" value="none" defaultValue hidden>
                       Seleccione un producto
                     </option>
                     {products &&
@@ -363,16 +325,12 @@ export default function ModalTakeAway({ state, setState }) {
                               <TableRow key={el.name}>
                                 <TableData align="center">
                                   <InputAmount
-                                    onChange={(e) =>
-                                      handleInputAmount(e, el.name)
-                                    }
+                                    onChange={(e) => handleInputAmount(e, el.name)}
                                     placeholder={el.amount}
                                   />
                                 </TableData>
                                 <TableData>{el.name}</TableData>
-                                <TableData align="center">
-                                  $ {el.price}
-                                </TableData>
+                                <TableData align="center">$ {el.price}</TableData>
                                 <TableData align="center">
                                   <Options justify="center">
                                     <Button
@@ -381,9 +339,7 @@ export default function ModalTakeAway({ state, setState }) {
                                       height="2rem"
                                       buttonColor="rgba(255, 0, 0, 1)"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                      ></FontAwesomeIcon>
+                                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                     </Button>
                                   </Options>
                                 </TableData>
