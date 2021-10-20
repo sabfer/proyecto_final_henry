@@ -25,7 +25,6 @@ export default function FilterProductTypes() {
           <option hidden defaultValue>
             Categorías
           </option>
-          {/* <option value="-1">Categorías</option> */}
           {array &&
             array.map((e, i) => (
               <option key={i++} value={e}>

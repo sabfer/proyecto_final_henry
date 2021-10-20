@@ -205,7 +205,6 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {/* {products.map((el) => { */}
               {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
@@ -247,14 +246,19 @@ export default function Productos() {
         </div>
       ) : (
         <Loading gridcolumn="span 5">
-        <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-        <p>Aún no hay ordenes</p>
-      </Loading>
+          <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+          <p>Aún no hay ordenes</p>
+        </Loading>
       )}
 
-
       <ExportExcel>
-        <NumberOfProducts />
+        {products && (
+          <NumberOfProducts
+            title=" productos cargados exitosamente"
+            total={products.length}
+          />
+        )}
+
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel

@@ -7,9 +7,6 @@ export default function PorFecha() {
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
-  let yesterdayDate = moment().locale("es").add(0, "days").format("DD/MM/YYYY");
-  let currentDate = moment().locale("es").format("DD/MM/YYYY");
-
   function handleChangeInit(e) {
     setInit((init = e.target.value));
   }
@@ -18,11 +15,12 @@ export default function PorFecha() {
     setFinish((finish = e.target.value));
   }
 
-  const currentOrders = () => {};
+  const currentOrders = () => {
+    let filter = ordersDb.filter((e) => e.date >= init );
+    console.log("acá-->", filter);
+  };
 
-  let OrdersTotal = currentOrders();
-
-  const totalFact = () => {};
+  currentOrders()
 
   return (
     <>
@@ -43,8 +41,6 @@ export default function PorFecha() {
           onChange={(e) => handleChangeFinish(e)}
         ></input>
       </div>
-      <h3>{totalFact()}</h3>
-      {OrdersTotal.length && <h3>Total de órdenes: {OrdersTotal.length}</h3>}
     </>
   );
 }

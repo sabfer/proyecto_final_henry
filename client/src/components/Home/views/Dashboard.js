@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { faCog, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
@@ -77,7 +77,8 @@ export default function Dashboard() {
             textSize="18px"
             onClick={handleLogOut}
           >
-            Salir
+            Ajustes
+            <FontAwesomeIcon icon={faCogs} size="lg" />
           </Button>
         </div>
       </Header>
