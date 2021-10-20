@@ -139,7 +139,6 @@ orderController.deleteOrder = async (req, res, next) => {
 orderController.updateOrder = async (req, res, next) => {
   const { id } = req.params;
   const payload = req.body;
-  console.log(payload);
   try {
     const updatedOrder = await Orders.findOneAndUpdate(
       { _id: `${id}` },

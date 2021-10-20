@@ -38,8 +38,6 @@ export default function UpdateDelivery({ state, setStateModal, orderNumber }) {
     ? ordenes.find((ord) => ord.orderNumber === orderNumber && ord.estado !== 4)
     : undefined;
 
-  console.log("_____________>", orderNumber);
-
   const [producto, setProducto] = useState({
     name: "",
     amount: "",

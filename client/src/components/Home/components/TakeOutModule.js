@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  TakeOut,
-  Orders,
-  ModuleTop,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
+import { TakeOut, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -37,55 +32,55 @@ export default function TakeAwayModule() {
   }
 
   return (
-    <TakeOut>
-      <ModuleTop>
-        <h3>Take Away</h3>
-        <Button
-          onClick={() => setStateModal(!stateModal)}
-          width="9.4rem"
-          height="2.5rem"
-          alignself="flex-end"
-          justify="space-between"
-          padding="0.6rem"
-          buttonColor="rgba(0, 41, 107, 1)"
-        >
-          Crear pedido
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-      </ModuleTop>
-      {stateModal && (
-        <ModalTakeAway state={stateModal} setState={setStateModal} />
-      )}
-      <OrdersContainer>
-        <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {ordersTakeAway && ordersTakeAway ? (
-            ordersTakeAway.map((order) => {
-              return (
-                <TakeAway
-                  key={order._id}
-                  estado={order.estado}
-                  orderNumber={order.orderNumber}
-                  setStateModal={setStateModal}
-                  handleUpdate={handleUpdateModal}
-                />
-              );
-            })
-          ) : (
-            <Loading gridcolumn="span 5">
-              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-              <p>Aún no hay ordenes</p>
-            </Loading>
-          )}
-          {updateModal && (
-            <UpdateTableTA
-              state={updateModal}
-              setStateModal={setUpdateModal}
-              orderNumber={tableDetails.orderNumber}
-            />
-          )}
-        </Orders>
-        {}
-      </OrdersContainer>
-    </TakeOut>
+    <>
+      <TakeOut>
+        <ModuleTop>
+          <h3>Take Away</h3>
+          <Button
+            onClick={() => setStateModal(!stateModal)}
+            width="9.4rem"
+            height="2.5rem"
+            alignself="flex-end"
+            justify="space-between"
+            padding="0.6rem"
+            buttonColor="rgba(0, 41, 107, 1)"
+          >
+            Crear pedido
+            <FontAwesomeIcon icon={faPlus} size="lg" />
+          </Button>
+        </ModuleTop>
+        <OrdersContainer>
+          <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+            {ordersTakeAway && ordersTakeAway ? (
+              ordersTakeAway.map((order) => {
+                return (
+                  <TakeAway
+                    key={order._id}
+                    estado={order.estado}
+                    orderNumber={order.orderNumber}
+                    setStateModal={setStateModal}
+                    handleUpdate={handleUpdateModal}
+                  />
+                );
+              })
+            ) : (
+              <Loading gridcolumn="1/-1">
+                <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+                <p>Aún no hay ordenes</p>
+              </Loading>
+            )}
+            {updateModal && (
+              <UpdateTableTA
+                state={updateModal}
+                setStateModal={setUpdateModal}
+                orderNumber={tableDetails.orderNumber}
+              />
+            )}
+          </Orders>
+          {}
+        </OrdersContainer>
+      </TakeOut>
+      {stateModal && <ModalTakeAway state={stateModal} setState={setStateModal} />}
+    </>
   );
 }

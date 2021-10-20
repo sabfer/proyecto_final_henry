@@ -187,7 +187,7 @@ export default function Productos() {
           <Table id="productsTable">
             <TableHead>
               <TableRow>
-                <TableHd width="40%">
+                <TableHd width="38%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
@@ -199,9 +199,9 @@ export default function Productos() {
                     ></FontAwesomeIcon>
                   </span>
                 </TableHd>
-                <TableHd width="40%">Tipo de producto</TableHd>
-                <TableHd width="10%">Precio</TableHd>
-                <TableHd width="10%">Opciones</TableHd>
+                <TableHd width="36%">Tipo de producto</TableHd>
+                <TableHd width="12%">Precio</TableHd>
+                <TableHd width="12%">Opciones</TableHd>
               </TableRow>
             </TableHead>
             <tbody>
