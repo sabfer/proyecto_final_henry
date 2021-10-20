@@ -1,19 +1,19 @@
 const Products = require("../models/Products");
 
 // GETS
-const searchProduct = async (name, userId) => {
-  const product = await Products.findOne({ name: `${name}`, userId });
+const searchProduct = async (name) => {
+  const product = await Products.findOne({ name: `${name}` });
   return product ? product : null;
 };
 
-const searchProducts = async (userId) => {
-  const products = await Products.find({ userId });
+const searchProducts = async () => {
+  const products = await Products.find();
   return products ? products : null;
 };
 
 // POSTS
-const filterProduct = async (name, userId) => {
-  const product = await Products.findOne({ name: `${name}`, userId });
+const filterProduct = async (name) => {
+  const product = await Products.findOne({ name: `${name}` });
   return product ? true : false;
 };
 
@@ -34,6 +34,7 @@ const updateProduct = async (id, update) => {
   const updated = await Products.findOneAndUpdate({ _id: `${id}` }, update, {
     new: true,
   });
+  console.log(updated);
   return updated ? true : false;
 };
 

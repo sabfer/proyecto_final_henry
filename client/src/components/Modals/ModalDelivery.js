@@ -38,8 +38,6 @@ import FilterProductTypes from "../Settings/components/FilterProductTypes";
 
 export default function ModalDelivery({ state, setState }) {
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
   const products = useSelector((state) => state.products);
@@ -63,9 +61,8 @@ export default function ModalDelivery({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("YYYY/MM/DD"),
+      date: moment().locale("es").format("DD/MM/YYYY"),
       hour: moment().format("HH:mm:ss"),
-      userId,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -160,6 +157,9 @@ export default function ModalDelivery({ state, setState }) {
       date: "",
       hour: "",
     });
+    /* setTimeout(function () {
+      dispatch(getSalonOrders({key:'type' , value: "Salon"}));
+    }, 1000) */
   }
 
   function handleDelete(name) {
@@ -277,10 +277,10 @@ export default function ModalDelivery({ state, setState }) {
                     onChange={(e) => handleChangeProduct(e)}
                     name="name"
                   >
-                    <option id="inputDefault" value="none" defaultValue hidden>
+                    <option id="inputDefault" value="none" defaultValue disabled hidden>
                       Seleccione un producto
                     </option>
-                    {Array.isArray(products) &&
+                    {products &&
                       products.map((e) => {
                         return (
                           <option key={e._id} value={e.name}>

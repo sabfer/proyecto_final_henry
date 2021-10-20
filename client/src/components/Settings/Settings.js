@@ -11,27 +11,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
-// import Comercios from "./views/Comercios";
+import Comercios from "./views/Comercios";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
-// import Users from "./views/Users";
+import Users from "./views/Users";
 import Categorias from "./views/Categorias";
-import { changeSettings, getCategories, getUserId } from "../../actions";
+import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
 
 export default function Settings() {
   const settings = useSelector((state) => state.settings);
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-  console.log(userId);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserId(token));
     setTimeout(() => {
-      dispatch(getCategories(token, userId));
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      dispatch(getCategories(token));
+    }, 1000);
   }, [dispatch, token]);
 
   function handleOptions(e, opt) {
@@ -42,19 +37,19 @@ export default function Settings() {
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products />;
-      /* case "users":
-        return <Users />;
+        return <Products/>;
+      case "users":
+        return <Users/>;
       case "commerce":
-        return <Comercios />; */
+        return <Comercios/>;
       case "categorias":
-        return <Categorias />;
+        return <Categorias/>;
       case "generales":
-        return <Generals />;
+        return <Generals/>;
       case "contabilidad":
-        return <Contabilidad />;
+        return <Contabilidad/>;
       default:
-        return <Generals />;
+        return <Generals/>;
     }
   }
 
@@ -84,7 +79,7 @@ export default function Settings() {
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Productos</p>
           </OpcionesIzquierda>
-
+          
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "contabilidad")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Informes Contables</p>
@@ -93,6 +88,16 @@ export default function Settings() {
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Categorías</p>
+          </OpcionesIzquierda>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Usuarios</p>
+          </OpcionesIzquierda>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Comercios</p>
           </OpcionesIzquierda>
         </AjustesIzquierda>
         <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>

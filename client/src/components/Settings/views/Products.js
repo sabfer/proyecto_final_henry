@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getProducts,
-  deleteProduct,
-  orderTheProducts,
-  getUserId,
-} from "../../../actions";
+import { getProducts, deleteProduct, orderTheProducts } from "../../../actions";
 //------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -50,9 +45,6 @@ export default function Productos() {
   const MySwal = withReactContent(Swal);
 
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-  console.log(userId);
-
   const products = useSelector((state) => state.products);
 
   const categories = useSelector((state) => state.productTypes);
@@ -66,15 +58,12 @@ export default function Productos() {
     name: "",
     price: "",
     productType: "",
-    userId,
   });
 
   useEffect(() => {
-    dispatch(getUserId(token));
     setTimeout(() => {
-      dispatch(getProducts(token, userId));
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      dispatch(getProducts(token));
+    }, 1000);
   }, [dispatch, token]);
 
   function handleDelete(e) {
@@ -91,7 +80,7 @@ export default function Productos() {
       if (result.isConfirmed) {
         dispatch(deleteProduct(e, token));
         setTimeout(() => {
-          dispatch(getProducts(token, userId));
+          dispatch(getProducts(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -110,7 +99,6 @@ export default function Productos() {
       name: props.name,
       price: props.price,
       productType: props.productType,
-      userId,
     });
     setEditProductModal(!editProductModal);
   }
@@ -121,7 +109,7 @@ export default function Productos() {
   }
 
   function handleButton(e) {
-    dispatch(getProducts(token, userId));
+    dispatch(getProducts(token));
   }
 
   const productPerPag = 10;
@@ -179,22 +167,19 @@ export default function Productos() {
           Restablecer
           <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
         </Button>
-        {newProductModal && (
-          <Modal
-            id={3}
-            userId={userId}
-            state={newProductModal}
-            setStateModal={setNewProductModal}
-            title="Crear un Producto"
-            label1="Nombre"
-            label2="Descripción"
-            label3="Precio"
-            label4="Tipo de Producto"
-            modalContainerBox={true}
-            showInSettings={true}
-            categories={categories}
-          />
-        )}
+        <Modal
+          id={3}
+          state={newProductModal}
+          setStateModal={setNewProductModal}
+          title="Crear un Producto"
+          label1="Nombre"
+          label2="Descripción"
+          label3="Precio"
+          label4="Tipo de Producto"
+          modalContainerBox={true}
+          showInSettings={true}
+          categories={categories}
+        />
       </SearchBarContainer>
 
       {Array.isArray(products) ? (
@@ -262,10 +247,11 @@ export default function Productos() {
         </div>
       ) : (
         <Loading gridcolumn="span 5">
-          <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-          <p>Aún no hay ordenes</p>
-        </Loading>
+        <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+        <p>Aún no hay ordenes</p>
+      </Loading>
       )}
+
 
       <ExportExcel>
         <NumberOfProducts />
@@ -301,23 +287,21 @@ export default function Productos() {
           style={{ cursor: "pointer" }}
         ></FontAwesomeIcon>
       </Paginado>
-      {editProductModal && (
-        <Modal
-          idElement={inputModalProduct._id}
-          id={7}
-          userId={userId}
-          state={editProductModal}
-          setStateModal={setEditProductModal}
-          title="Modificar Producto"
-          label1="Nombre"
-          label2="Precio"
-          label3="Tipo de Producto"
-          name={inputModalProduct.name}
-          price={inputModalProduct.price}
-          productType={inputModalProduct.productType}
-          modalContainerBox={true}
-        />
-      )}
+
+      <Modal
+        idElement={inputModalProduct._id}
+        id={7}
+        state={editProductModal}
+        setStateModal={setEditProductModal}
+        title="Modificar Producto"
+        label1="Nombre"
+        label2="Precio"
+        label3="Tipo de Producto"
+        name={inputModalProduct.name}
+        price={inputModalProduct.price}
+        productType={inputModalProduct.productType}
+        modalContainerBox={true}
+      />
     </div>
   );
 }

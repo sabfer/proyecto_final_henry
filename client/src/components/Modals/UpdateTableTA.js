@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, getTakeAwayOrders } from "../../actions/index";
-import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+  Options,
+} from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
 import {
@@ -28,8 +35,6 @@ import PaymentCheckBox from "./Components/PaymentCheckBox";
 
 export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
   const ordenes = useSelector((state) => state.orders.takeAwayOrders);
   const products = useSelector((state) => state.products);
 
@@ -177,7 +182,7 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
       if (result.isConfirmed) {
         dispatch(updateOrder(id, payload, token));
         setTimeout(() => {
-          dispatch(getTakeAwayOrders(token, userId));
+          dispatch(getTakeAwayOrders(token));
         }, 600);
         MySwal.fire({
           title: "Pedido editado",
@@ -264,7 +269,13 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                       onChange={(e) => handleChangeProduct(e)}
                       name="name"
                     >
-                      <option id="inputDefault" value="none" defaultValue hidden>
+                      <option
+                        id="inputDefault"
+                        value="none"
+                        defaultValue
+                        disabled
+                        hidden
+                      >
                         Seleccione un producto
                       </option>
                       {products &&
@@ -312,7 +323,9 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                             <TableData>{product.price}</TableData>
                             <TableData>
                               <input
-                                onChange={(e) => handleInputAmount(e, product.name)}
+                                onChange={(e) =>
+                                  handleInputAmount(e, product.name)
+                                }
                                 placeholder={product.amount}
                               />
                             </TableData>
@@ -324,7 +337,9 @@ export default function UptadeTableTA({ state, setStateModal, orderNumber }) {
                                   height="2rem"
                                   buttonColor="rgba(255, 0, 0, 1)"
                                 >
-                                  <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
                                 </Button>
                               </Options>
                             </TableData>

@@ -1,45 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { TakeOut, Orders, ModuleTop, OrdersContainer } from "../../../../css/HomeStyles";
-import { Button, Loading } from "../../../../css/index";
+import {
+  Salon,
+  Orders,
+  ModuleTop,
+  OrdersContainer,
+} from "../../../css/HomeStyles";
+import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
-import UpdateTableTA from "../../../Modals/UpdateTableTA";
-import ModalTakeAway from "../../../Modals/ModalTakeAway";
+// import Modal from "../../Modals/Modal";
+import UpdateTable from "../../Modals/UpdateTable";
+import ModalSalon from "../../Modals/ModalSalon";
 import { useDispatch, useSelector } from "react-redux";
-import { getTakeAwayOrders } from "../../../../actions";
-import TakeAway from "../OrderTakeAway";
+import { getSalonOrders, getMesas } from "../../../actions";
+import Mesas from "./Mesa";
 
-export default function TakeAwayModule() {
+export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
+  const [stateModal, setStateModal] = useState({
+    tableNumber: "",
+    status: false,
+  });
   const dispatch = useDispatch();
-  const [stateModal, setStateModal] = useState(false);
-  const ordersTakeAway = useSelector((state) => state?.orders?.takeAwayOrders);
+  const mesas = useSelector((state) => state.mesas);
   const [updateModal, setUpdateModal] = useState(false);
   const [tableDetails, setTableDetails] = useState({
-    orderNumber: undefined,
+    tableNumber: undefined,
   });
 
   useEffect(() => {
-    dispatch(getTakeAwayOrders(token, userId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(getSalonOrders(token));
+    if (mesas === undefined) {
+      dispatch(getMesas(token));
+    }
+  }, [dispatch, mesas, token]);
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
     setUpdateModal(true);
     setTableDetails({
-      orderNumber: props.orderNumber,
+      tableNumber: props.tableNumber,
     });
   }
 
   return (
-    <TakeOut>
+    <Salon>
       <ModuleTop>
-        <h3>Take Away</h3>
+        <h3>Salón</h3>
         <Button
-          onClick={() => setStateModal(!stateModal)}
+          onClick={() => setStateModal({ status: true, tableNumber: "" })}
           width="9.4rem"
           height="2.5rem"
           alignself="flex-end"
@@ -51,18 +60,22 @@ export default function TakeAwayModule() {
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </ModuleTop>
-      {stateModal && (
-        <ModalTakeAway state={stateModal} setState={setStateModal} userId={userId} />
+      {stateModal.status && (
+        <ModalSalon
+          state={stateModal}
+          setState={setStateModal}
+          title="Consumo Mesa: "
+        />
       )}
       <OrdersContainer>
         <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {ordersTakeAway && ordersTakeAway ? (
-            ordersTakeAway.map((order) => {
+          {mesas && mesas ? (
+            mesas.map((mesa) => {
               return (
-                <TakeAway
-                  key={order._id}
-                  estado={order.estado}
-                  orderNumber={order.orderNumber}
+                <Mesas
+                  tableNumber={mesa.tableNumber}
+                  status={mesa.isOccupated}
+                  key={mesa._id}
                   setStateModal={setStateModal}
                   handleUpdate={handleUpdateModal}
                 />
@@ -70,20 +83,19 @@ export default function TakeAwayModule() {
             })
           ) : (
             <Loading gridcolumn="span 5">
-              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-              <p>Aún no hay ordenes</p>
-            </Loading>
+            <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+            <p>Aún no hay ordenes</p>
+          </Loading>
           )}
           {updateModal && (
-            <UpdateTableTA
+            <UpdateTable
               state={updateModal}
               setStateModal={setUpdateModal}
-              orderNumber={tableDetails.orderNumber}
+              tableNumber={tableDetails.tableNumber}
             />
           )}
         </Orders>
-        {}
       </OrdersContainer>
-    </TakeOut>
+    </Salon>
   );
 }

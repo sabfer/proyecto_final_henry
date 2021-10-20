@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, deleteCategory, getUserId } from "../../../actions";
+import { getCategories, deleteCategory } from "../../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Loading } from "../../../css";
 import { AjustesDerechaTop } from "../../../css/SettingStyles";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-  Options,
-} from "../../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../../css/Table";
 import { faExclamationCircle, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -19,44 +12,42 @@ import Modal from "../../Modals/Modal";
 
 export default function Categorias() {
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const productTypes = useSelector((state) => state.productTypes);
   const [newCategory, setNewCategory] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserId(token));
-    dispatch(getCategories(token, userId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setTimeout(() => {
+      dispatch(getCategories(token));
+    }, 1000);
   }, [dispatch, token]);
 
   function handleDelete(id) {
     MySwal.fire({
-      title: "¿Estas seguro?",
-      text: "¡El producto será borrado de la orden!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#1ABD53",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteCategory(id));
-        setTimeout(() => {
-          dispatch(getCategories(token, userId));
-        }, 500);
-        MySwal.fire({
-          title: "Producto borrado",
-          text: "El producto se borró correctamente!",
-          icon: "success",
-          confirmButtonColor: "#00A0D2",
-        });
-      }
+        title: "¿Estas seguro?",
+        text: "¡El producto será borrado de la orden!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1ABD53",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            dispatch(deleteCategory(id));
+            setTimeout(() => {
+              dispatch(getCategories(token))
+            }, 500)
+            MySwal.fire({
+            title: "Producto borrado",
+            text: "El producto se borró correctamente!",
+            icon: "success",
+            confirmButtonColor: "#00A0D2",
+            });
+        }
     });
-  }
+}
 
   return (
     <div>
@@ -96,17 +87,21 @@ export default function Categorias() {
                   <TableRow key={el._id}>
                     <TableData>{el.name}</TableData>
                     <TableData align="center">
-                      <Options justify="center">
-                        <Button
-                          onClick={(e) => handleDelete(el._id)}
-                          width="2rem"
-                          height="2rem"
-                          buttonColor="rgba(255, 0, 0, 1)"
-                        >
-                          <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                        </Button>
-                      </Options>
-                    </TableData>
+                                <Options justify="center">
+                                    <Button
+                                    onClick={(e) =>
+                                        handleDelete(el._id)
+                                    }
+                                    width="2rem"
+                                    height="2rem"
+                                    buttonColor="rgba(255, 0, 0, 1)"
+                                    >
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                    ></FontAwesomeIcon>
+                                    </Button>
+                                </Options>
+                                </TableData>
                   </TableRow>
                 );
               })}
@@ -115,21 +110,19 @@ export default function Categorias() {
         </div>
       ) : (
         <Loading gridcolumn="span 5">
-          <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-          <p>Aún no hay ordenes</p>
-        </Loading>
+        <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+        <p>Aún no hay ordenes</p>
+      </Loading>
       )}
-      {newCategory && (
-        <Modal
-          id={8}
-          userId={userId}
-          state={newCategory}
-          setStateModal={setNewCategory}
-          title="Crear un categoría"
-          label1="Nombre"
-          modalContainerBox={true}
-        />
-      )}
+
+      <Modal
+        id={8}
+        state={newCategory}
+        setStateModal={setNewCategory}
+        title="Crear un categoría"
+        label1="Nombre"
+        modalContainerBox={true}
+      />
     </div>
   );
 }

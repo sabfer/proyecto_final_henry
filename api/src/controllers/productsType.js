@@ -1,38 +1,47 @@
 const ProductsType = require("../models/ProductsType");
 const productsTypeController = {};
 
-//GET
-productsTypeController.findProductsType = async (req, res, next) => {
-  const { userId } = req.query;
-  if (userId) {
+// GETS
+/* productsTypeController.findProductType = async (req, res, next) => {
+    const { name } = req.params;
     try {
-      const types = await ProductsType.find({ userId }).sort({ name: 1 });
-      if (types.length) {
+        const type = await ProductsType.findByIdAndRemove({name : name})
+    if(type) {
         res.json({
-          succes: true,
-          msg: "Categoría encontradas",
-          payload: types,
-        });
-      } else {
+            succes: true,
+            msg: "Tipo de mesa encontrada",
+            payload: type
+        })
+    } else {
         res.json({
-          succes: false,
-          msg: "Categorías no encontradas",
-          payload: null,
-        });
-      }
+            succes: false,
+            msg: "Tipo de mesa no encontrada",
+            payload: null
+        })
+    }
     } catch (err) {
+        next(err);
+    }
+} */
+
+productsTypeController.findProductsType = async (req, res, next) => {
+  try {
+    const types = await ProductsType.find();
+    if (types.length) {
+      res.json({
+        succes: true,
+        msg: "Categoría de productos creadas",
+        payload: types,
+      });
+    } else {
       res.json({
         succes: false,
-        msg: "Error",
-        payload: err,
+        msg: "Categoría de productos no creadas",
+        payload: { categories: null },
       });
     }
-  } else {
-    res.json({
-      succes: false,
-      msg: "Se requiere userId",
-      payload: null,
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -40,10 +49,7 @@ productsTypeController.findProductsType = async (req, res, next) => {
 productsTypeController.addProductType = async (req, res, _next) => {
   const payload = req.body;
   try {
-    const type = await ProductsType.findOne({
-      name: payload.name,
-      userId: `${payload.userId}`,
-    });
+    const type = await ProductsType.findOne({ name: payload.name });
     if (type) {
       res.json({
         succes: false,
@@ -71,28 +77,44 @@ productsTypeController.addProductType = async (req, res, _next) => {
 // DELETE
 productsTypeController.deleteProductType = async (req, res, _next) => {
   const { id } = req.params;
-  if (id) {
-    try {
-      await ProductsType.deleteOne({ _id: `${id}` });
-      return res.json({
-        succes: true,
-        msg: "Tipo de producto eliminado exitosamente!",
-        payload: null,
-      });
-    } catch (err) {
-      res.json({
-        succes: false,
-        msg: "No se pudo eliminar el tipo de producto",
-        payload: err,
-      });
-    }
-  } else {
+  try {
+    await ProductsType.deleteOne({ _id: `${id}` });
+    return res.json({
+      succes: true,
+      msg: "Tipo de producto eliminado exitosamente!",
+      payload: null,
+    });
+  } catch (err) {
     res.json({
       succes: false,
-      msg: "Se requiere id",
-      payload: null,
+      msg: "No se pudo eliminar el tipo de producto",
+      payload: err,
     });
   }
 };
+
+/* // UPDATE/PUT
+productsTypeController.updateProductType = async (req, res, _next) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+    const updatedProductType = await ProductsType.findOneAndUpdate(
+      { _id: `${id}` },
+      payload,
+      { new: true }
+    );
+    return res.json({
+      succes: true,
+      msg: "Tipo de producto modificado exitosamente!",
+      payload: updatedProductType,
+    });
+  } catch (err) {
+    res.json({
+      succes: false,
+      msg: "No se pudo modificar el tipo de producto",
+      payload: err,
+    });
+  }
+}; */
 
 module.exports = productsTypeController;

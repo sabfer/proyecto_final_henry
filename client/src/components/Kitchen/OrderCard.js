@@ -9,14 +9,12 @@ import withReactContent from "sweetalert2-react-content";
 export default function Orders({ ordenPendiente }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
   const MySwal = withReactContent(Swal);
 
   function cambiarEstado(id, estado, orden) {
     if (estado === 1) {
       dispatch(updateOrderKitchen(id, orden, token));
-      dispatch(getKitchenOrders(token, userId));
+      dispatch(getKitchenOrders(token));
     }
     if (estado === 2) {
       let orderChange = {
@@ -40,14 +38,15 @@ export default function Orders({ ordenPendiente }) {
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(updateOrderKitchen(id, orderChange, token));
-          dispatch(getKitchenOrders(token, userId));
+          dispatch(getKitchenOrders(token));
         }
       });
     }
   }
 
   return (
-      <OrderCard>
+    <div>
+      <OrderCard key={ordenPendiente._id}>
         <h2>Pedido N° {ordenPendiente.orderNumber}</h2>
         <p>
           Tipo: <b>{ordenPendiente.type}</b>
@@ -101,5 +100,6 @@ export default function Orders({ ordenPendiente }) {
             : null}
         </Button>
       </OrderCard>
-  )
+    </div>
+  );
 }
