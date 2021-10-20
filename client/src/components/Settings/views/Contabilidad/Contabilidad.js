@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Total from "./Views/Total";
-import Subdiario from "./Views/Subdiario";
+import PorHora from "./Views/PorHora";
 import PorFecha from "./Views/PorFecha";
 import { getOrders } from "../../../../actions";
+import BarChart from "./components/BarChart";
 
 export default function Contabilidad() {
   const token = useSelector((state) => state.userToken);
@@ -32,8 +33,11 @@ export default function Contabilidad() {
       <div>
         <center>
           <h1>INFORMES CONTABLES</h1>
-          <button onClick={(e) => handleRender(1)}>Informe Diario</button>
-          <button onClick={(e) => handleRender(2)}>Informe por fecha</button>
+          <button onClick={(e) => handleRender(undefined)}>
+            Informe Diario
+          </button>
+          <button onClick={(e) => handleRender(1)}>Informe por Hora</button>
+          <button onClick={(e) => handleRender(2)}>Informe por Fecha</button>
           <button onClick={(e) => handleRender(3)}>Informe Total</button>
         </center>
       </div>
@@ -43,7 +47,7 @@ export default function Contabilidad() {
       {render === 1 && (
         <div>
           <center>
-            <Subdiario text aling="center" />
+            <PorHora text aling="center" />
           </center>
         </div>
       )}
@@ -62,8 +66,18 @@ export default function Contabilidad() {
         </div>
       )}
       {render === undefined && (
-        <div>
-        </div>
+        <>
+        <br/> 
+        <br/> 
+        <center>
+          <header>
+            <h1>Informe Diario</h1>
+          </header>
+          </center>
+          <div>
+            <BarChart />
+          </div>
+        </>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { faCog, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCogs, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, OptionsBar, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
@@ -92,7 +92,7 @@ export default function Dashboard() {
             hoverColor="rgb(166, 166, 166)"
           >
             Ajustes
-            <FontAwesomeIcon icon={faCog} size="lg" />
+            <FontAwesomeIcon icon={faCogs} size="lg" />
           </Button>
         </StyledLink>
       </OptionsBar>

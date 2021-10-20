@@ -402,7 +402,11 @@ export function updateOrder(id, payload, token) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
-    return (dispatch(getSalonOrders(token)), dispatch(getDeliveryOrders(token)), dispatch(getTakeAwayOrders(token)));
+    return (
+      dispatch(getSalonOrders(token)),
+      dispatch(getDeliveryOrders(token)),
+      dispatch(getTakeAwayOrders(token))
+    );
   };
 }
 

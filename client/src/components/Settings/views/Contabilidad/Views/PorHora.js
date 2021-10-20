@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import DoughnutChart from "../components/DoughnutChart";
 
-export default function Subdiario() {
+export default function PorHora() {
   let ordersDb = useSelector((state) => state.orders);
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
@@ -80,15 +80,13 @@ export default function Subdiario() {
     return null;
   };
   
-
-
   return (
     <>
       <header>
         <h1>Informe por Hora</h1>
       </header>
       <div>
-        <label> Horario Inico </label>
+        <label> Horario Inicio </label>
         <input
           type="time"
           name="init"

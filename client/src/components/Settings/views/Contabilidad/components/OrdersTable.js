@@ -35,7 +35,6 @@ export default function OrdersTable() {
   const token = useSelector((state) => state.userToken);
 
   const ordersTotal = useSelector((state) => state.orders);
-  console.log(ordersTotal);
 
   function handleNumberOrder(e) {}
 
@@ -44,8 +43,6 @@ export default function OrdersTable() {
   function handleClientOrder(e) {}
 
   function handleCashOrder(e) {}
-
-
 
   //BOTON RESTABLECER PÁGINA
   function handleButton(e) {
@@ -146,6 +143,9 @@ export default function OrdersTable() {
                     ></FontAwesomeIcon>
                   </span>
                 </TableHd>
+                <TableHd width="20%">
+                  <p>Productos</p>
+                </TableHd>
                 <TableHd width="10%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Ingreso</p>
@@ -174,8 +174,17 @@ export default function OrdersTable() {
                     </TableData>
                     <TableData>{el.hour}</TableData>
                     <TableData>{el.type}</TableData>
-                    <TableData>{el.nameClient? el.nameClient : "--"}</TableData>
-                    <TableData>$ {new Intl.NumberFormat().format(el.totalPrice)}
+                    <TableData>
+                      {el.nameClient ? el.nameClient : "--"}
+                    </TableData>
+                    <TableData>
+                      {el.products
+                        .map((e) => e.name)
+                        .toString()
+                        .replaceAll(",", ", ")}
+                    </TableData>
+                    <TableData>
+                      $ {new Intl.NumberFormat().format(el.totalPrice)}
                     </TableData>
                   </TableRow>
                 );
@@ -195,7 +204,10 @@ export default function OrdersTable() {
       )}
 
       <ExportExcel>
-        <NumberOfProducts title=" ordenes cargadas exitosamente" total={ordersTotal.length}/>
+        <NumberOfProducts
+          title=" ordenes cargadas exitosamente"
+          total={ordersTotal.length}
+        />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel
