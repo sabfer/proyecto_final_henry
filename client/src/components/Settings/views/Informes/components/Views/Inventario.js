@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, deleteProduct, orderTheProducts } from "../../../../../../actions";
+import { getProductsInv,getProducts, deleteProduct, orderTheProducts } from "../../../../../../actions";
 //------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -46,16 +46,9 @@ export default function Inventario() {
   const token = useSelector((state) => state.userToken);
 
   ///////////////////PRODUCTOS INVENTARIO///////////////////////
-  const products = useSelector((state) => state.products);
-  //////////////////////////////////////////////////////////////
+
   const categories = useSelector((state) => state.productTypes);
-  const products2 = useSelector((state) => state.products);
-  const productsInv3=[{ _id: "6163535ae098f3500c2d35dc", name: "Pechuga",cant:4,price:155,prodInvType:"Pollo",proveeType:"Polleria 9 de Julio"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Salsa de Tomate",cant:20,price:35,prodInvType:"Mercaderia",proveeType:"Jumbo"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Cerveza Quilmes" ,cant:40,price:160,prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Coca Cola",cant:15,price:182,prodInvType:"Coca Cola",proveeType:"Coca Cola"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Vino Balbo",cant:10,price:215, prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"}]
-  
+  const productsInv3=useSelector((state)=>state.productsInv)
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -68,7 +61,7 @@ export default function Inventario() {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getProducts(token));
+      dispatch(getProductsInv(token));
     }, 1000);
   }, [dispatch, token]);
 
@@ -155,7 +148,7 @@ export default function Inventario() {
           padding="0.625rem"
           buttonColor="rgb(2, 101, 210)"
         >
-          Añadir producto
+          Añadir Compra
           <FontAwesomeIcon icon={faPlus} size="lg" />
         </Button>
       </AjustesDerechaTop>
@@ -191,7 +184,7 @@ export default function Inventario() {
         />
       </SearchBarContainer>
 
-      {Array.isArray(products) ? (
+      {Array.isArray(productsInv3) ? (
         <div>
           <Table id="productsTable">
             <TableHead>

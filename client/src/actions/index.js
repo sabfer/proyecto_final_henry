@@ -1,5 +1,12 @@
 import axios from "axios";
 
+const productsInv3=[{ _id: "6163535ae098f3500c2d35dc", name: "Pechuga",cant:4,price:155,prodInvType:"Pollo",proveeType:"Polleria 9 de Julio"},
+  { _id: "6163535ae098f3500c2d35dc", name: "Salsa de Tomate",cant:20,price:35,prodInvType:"Mercaderia",proveeType:"Jumbo"},
+  { _id: "6163535ae098f3500c2d35dc", name: "Cerveza Quilmes" ,cant:40,price:160,prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"},
+  { _id: "6163535ae098f3500c2d35dc", name: "Coca Cola",cant:15,price:182,prodInvType:"Coca Cola",proveeType:"Coca Cola"},
+  { _id: "6163535ae098f3500c2d35dc", name: "Vino Balbo",cant:10,price:215, prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"}]
+
+
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
   console.log("estoy en registerUser, con payload: ", payload);
@@ -77,22 +84,37 @@ export function getProductsInv(token) {
       Authorization: "Bearer " + token,
     },
   };
+
+  // return function (dispatch) {
+  //   axios
+  //     .get("http://localhost:3001/products", auth)
+  //     .then((data) => {
+  //       return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  console.log(productsInv3)
   return function (dispatch) {
-    axios
-      .get("http://localhost:3001/products", auth)
-      .then((data) => {
-        return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        return dispatch({ type: "GET_PRODUCTS_INV", payload: productsInv3});
+        
+      }
+     
+  };
+
+// ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \
+export function orderTheProductsInv(payload) {
+  return {
+    type: "ORDER_BY_NAME",
+    payload,
   };
 }
 
-// ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \
+// ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
 export function orderTheProducts(payload) {
   return {
-    type: "ORDER_BY_NAME",
+    type: "ORDER_BY_NAME_INV",
     payload,
   };
 }
@@ -159,6 +181,21 @@ export function deleteProduct(payload, token) {
     await axios.delete(`http://localhost:3001/products/${payload}`, auth);
     return dispatch({
       type: "DELETE_PRODUCT",
+    });
+  };
+}
+
+// ---------- ELIMINAR PRODUCTO INVENTARIO ---------- \\
+export function deleteProductInv(payload, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.delete(`http://localhost:3001/products/${payload}`, auth);
+    return dispatch({
+      type: "DELETE_PRODUCT_INV",
     });
   };
 }

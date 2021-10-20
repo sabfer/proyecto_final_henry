@@ -3,10 +3,7 @@ import { useSelector } from "react-redux";
 import { Button } from "../../css";
 import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
 import {
-  postProduct,
   updateProduct,
-  postCommerce,
-  getProducts,
   getProductsInv,
   postCategories,
   getCategories,
@@ -30,6 +27,7 @@ export default function Modal({
   ////////
   label5,//tipoProvee
   label6,//cant
+  label7,//fecha
 
   ///////
   modalContainerBox,
@@ -42,9 +40,7 @@ export default function Modal({
   fecha,
   cant,
   ///////
-  user,
-  pass,
-  location,
+  
   idElement,
   showInSettings,
 }) {
@@ -73,9 +69,6 @@ export default function Modal({
     name: "" || name,
     price: "" || price,
     prodInvType: "" || prodInvType,
-    user: "" || user,
-    pass: "" || pass,
-    location: "",
     description: "",
     orderD: "",
     orderTA: "",
@@ -87,9 +80,6 @@ export default function Modal({
   const [inpValido, setInputvalido] = useState({
     name: "",
     price: "",
-    user: "",
-    pass: "",
-    location: "",
     prodInvType: "",
     proveeType: "",
     fecha: "",
@@ -100,13 +90,10 @@ export default function Modal({
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
-    user: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    pass: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{5,32}$/,
     prodInvType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     proveeType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
-    cant:/^.{0,100}$/,
-    location: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{4,48}\s?/,
+    cant:/^.{0,100}$/
   };
 
   useEffect(() => {
@@ -114,23 +101,17 @@ export default function Modal({
       name: "" || name,
       price: "" || price,
       prodInvType: "" || prodInvType,
-      user: "" || user,
-      pass: "" || pass,
-      location: "" || location,
       proveeType: "" || proveeType,
       fecha: "" || fecha,
       cant:""|| cant
     });
-  }, [name, price, prodInvType, user, pass, location, proveeType, fecha,cant]);
+  }, [name, price, prodInvType,proveeType, fecha,cant,fecha]);
 
-  let labels = { label1, label2, label3, label4, label5,label6};
+  let labels = { label1, label2, label3, label4, label5,label6,label7};
   let productValues = {
     name: name,
     price: price,
     prodInvType: prodInvType,
-    user: user,
-    pass: pass,
-    location: location,
     proveeType: proveeType,
     fecha: fecha,
     cant:cant
@@ -168,99 +149,6 @@ export default function Modal({
 
   function handleSubmit(e) {
     // e.preventDefault();
-    if (id === 1) {
-      if (
-        inpValido.name === "true" &&
-        inpValido.user === "true" &&
-        inpValido.pass === "true"
-      ) {
-        dispatch(input);
-        MySwal.fire({
-          title: "¡Usuario creado correctamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              user: "",
-              pass: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
-
-    if (id === 2) {
-      if (inpValido.name === "true" && inpValido.location === "true") {
-        dispatch(postCommerce(input, token));
-        MySwal.fire({
-          title: "¡Comercio creado corectamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              location: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
-
-    if (id === 3) {
-      if (
-        inpValido.name === "true" &&
-        inpValido.price === "true" &&
-        inpValido.prodInvType === "true"
-      ) {
-        dispatch(postProduct(input, token));
-        MySwal.fire({
-          title: "¡Producto creado correctamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            if (showInSettings) {
-              dispatch(getProducts(token));
-            }
-            setStateModal(!state);
-            setInput({
-              name: "",
-              price: "",
-              prodInvType: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
 
     /////////////////////////////////////////////////// 
     if (id === 4) {
@@ -295,7 +183,8 @@ export default function Modal({
               price: "",
               prodInvType: "",
               proveeType:"",
-              cant:""
+              cant:"",
+              fecha:""
             });
           }
         });
@@ -355,6 +244,8 @@ export default function Modal({
       name: "",
       price: "",
       prodInvType: "",
+      fecha:"",
+      cant:""
     });
   }
 

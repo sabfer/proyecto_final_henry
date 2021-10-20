@@ -1,4 +1,4 @@
-import {} from "../actions/index";
+import { } from "../actions/index";
 
 const initialState = {
   signUpData: undefined,
@@ -6,6 +6,7 @@ const initialState = {
   userId: undefined,
   // userName: undefined,
   products: undefined,
+  productsInv: undefined,
   productTypes: undefined,
   productsCopy: undefined,
   users: undefined,
@@ -21,6 +22,7 @@ const initialState = {
   },
   kitchenOrders: undefined,
 };
+
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -60,24 +62,47 @@ const rootReducer = (state = initialState, { type, payload }) => {
       let arrayOrderName =
         payload === true
           ? products.sort(function (a, b) {
-              const aName = a.name.toLocaleLowerCase();
-              const bName = b.name.toLocaleLowerCase();
-              if (aName > bName) return 1;
-              if (bName > aName) return -1;
-              return 0;
-            })
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return 1;
+            if (bName > aName) return -1;
+            return 0;
+          })
           : products.sort(function (a, b) {
-              const aName = a.name.toLocaleLowerCase();
-              const bName = b.name.toLocaleLowerCase();
-              if (aName > bName) return -1;
-              if (bName < aName) return 1;
-              return 0;
-            });
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return -1;
+            if (bName < aName) return 1;
+            return 0;
+          });
       return {
         ...state,
         products: arrayOrderName,
       };
-
+    //////////////////////////////////////////////////////////
+    case "ORDER_BY_NAME_INV":
+      const productsInv = state.productsInv;
+      let arrayOrderNameInv =
+        payload === true
+          ? productsInv.sort(function (a, b) {
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return 1;
+            if (bName > aName) return -1;
+            return 0;
+          })
+          : productsInv.sort(function (a, b) {
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return -1;
+            if (bName < aName) return 1;
+            return 0;
+          });
+      return {
+        ...state,
+        productsInv: arrayOrderNameInv,
+      };
+    ///////////////////////////////////////////////////////////
     case "FILTER_PRODUCTS_TYPE":
       const array = [...state.productsCopy].filter((e) => e.productType === payload);
       return {
@@ -92,16 +117,45 @@ const rootReducer = (state = initialState, { type, payload }) => {
         productsCopy: payload,
       };
 
+    /////////////////////////////////////
+
+    case "GET_PRODUCTS_INV":
+      
+      return {
+        ...state,
+        productsInv: payload,
+        productaInvCopy: payload,
+      }
+     
+    /////////////////////////////////////
+
     case "POST_PRODUCTS":
       return {
         ...state,
         products: payload,
       };
 
+    ///////////////////////////////
+
+    case "POST_PRODUCTS_INV":
+      return {
+        ...state,
+        productsInv: payload,
+      };
+    ///////////////////////////////
+
     case "DELETE_PRODUCT":
       return {
         ...state,
       };
+
+   /////////////////////////////////
+   
+    case "DELETE_PRODUCT_INV":
+      return {
+        ...state,
+      };
+   /////////////////////////////////
 
     case "DELETE_CATEGORY":
       return {
