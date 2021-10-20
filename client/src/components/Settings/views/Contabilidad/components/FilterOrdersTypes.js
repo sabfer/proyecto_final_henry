@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Select } from "../../../css/Select";
-import { getOrders } from "../../../actions";
+import { Select } from "../../../../../css/Select"
+// import { getOrders } from "../../../../../actions";
 
 export default function FilterOrdersTypes() {
   const dispatch = useDispatch()
-  let OrdersTypes = useSelector((state)=> state.getOrders)
 
   function handleFilterType(e) {
     // dispatch(filterOrdersType(e.target.value));

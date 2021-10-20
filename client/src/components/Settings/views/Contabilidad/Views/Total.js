@@ -4,11 +4,12 @@ import OrdersTable from "../components/OrdersTable";
 
 export default function Total() {
   let ordersDb = useSelector((state) => state.orders);
-  let deliveryOrders = ordersDb.filter(e=> e.type === "Delivery")
-  let salonOrders = ordersDb.filter(e=> e.type === "Salon")
-  let takeAwayOrders = ordersDb.filter(e=> e.type === "Take Away")
+  let deliveryOrders = ordersDb.filter((e) => e.type === "Delivery");
+  let salonOrders = ordersDb.filter((e) => e.type === "Salon");
+  let takeAwayOrders = ordersDb.filter((e) => e.type === "Take Away");
 
-  
+  console.log("estoy aqui --->",deliveryOrders);
+
 
   const totalFact = () => {
     let totalFact = ordersDb.map((e) => e.totalPrice);

@@ -1,10 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getProducts } from "../../../actions";
 
 export default function NumberOfProducts(props) {
+  const dispatch = useDispatch()
   const products = useSelector((state) => state.products);
-  return products && products.length >= 1 ? (
+
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, []);
+  
+  console.log(products)
+  return products && products.length ? (
     <Products>
       <span>{props.total}</span>
       {props.title}

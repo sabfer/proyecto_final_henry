@@ -9,8 +9,8 @@ import {
   AjustesDerechaTop,
   ExportExcel,
 } from "../../../../../css/SettingStyles";
-import SearchOrders from "../../../components/SearchOrders";
-import FilterOrdersTypes from "../../../components/FilterOrdersTypes";
+import SearchOrders from "../components/SearchOrders";
+import FilterOrdersTypes from "../components/FilterOrdersTypes";
 import NumberOfProducts from "../../../components/NumberOfProduct";
 import { Paginado } from "../../../../../css";
 import {

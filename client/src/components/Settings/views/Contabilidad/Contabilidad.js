@@ -33,16 +33,12 @@ export default function Contabilidad() {
       <div>
         <center>
           <h1>INFORMES CONTABLES</h1>
-          <button onClick={(e) => handleRender(undefined)}>
-            Informe Diario
-          </button>
+          
           <button onClick={(e) => handleRender(1)}>Informe por Hora</button>
           <button onClick={(e) => handleRender(2)}>Informe por Fecha</button>
           <button onClick={(e) => handleRender(3)}>Informe Total</button>
         </center>
       </div>
-
-      <div></div>
 
       {render === 1 && (
         <div>
@@ -71,7 +67,7 @@ export default function Contabilidad() {
         <br/> 
         <center>
           <header>
-            <h1>Informe Diario</h1>
+           
           </header>
           </center>
           <div>

@@ -8,8 +8,8 @@ export default function PorHora() {
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
-  let yesterdayDate = moment().locale("es").add(0, "days").format("DD/MM/YYYY");
-  let currentDate = moment().locale("es").format("DD/MM/YYYY");
+  let yesterdayDate = moment().locale("es").add(0, "days").format("YYYY/MM/DD");
+  let currentDate = moment().locale("es").format("YYYY/MM/DD");
 
   function handleChangeInit(e) {
     setInit((init = e.target.value));
@@ -83,7 +83,7 @@ export default function PorHora() {
   return (
     <>
       <header>
-        <h1>Informe por Hora</h1>
+        <h1>Informe del turno del Servicio</h1>
       </header>
       <div>
         <label> Horario Inicio </label>

@@ -4,16 +4,13 @@ import { Chart } from "primereact/chart";
 export default function BarChart() {
   const basicData = {
     labels: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
+      "09-10-21",
+      "10-10-21",
+      "11-10-21",
+      "12-10-21",
+      "13-10-21",
+      "14-10-21",
+      "15-10-21",
     ],
     datasets: [
       {
@@ -27,9 +24,19 @@ export default function BarChart() {
         data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
       },
       {
-        label: "My third dataset",
-        backgroundColor: "##FFA726",
-        data: [28, 48, 40, 19, 86, 27, 90, 89, 89, 46],
+        label: "My Second dataset",
+        backgroundColor: "#FFA726",
+        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
+      },
+      {
+        label: "cualquiercosa",
+        backgroundColor: "#FF6344",
+        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
+      },
+      {
+        label: "My Second dataset",
+        backgroundColor: "#FFA726",
+        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
       },
     ],
   };
