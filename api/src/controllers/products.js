@@ -12,11 +12,8 @@ const searchProducts = async (userId) => {
 };
 
 // POSTS
-const filterProduct = async (name, userId) => {
-  const product = await Products.findOne({
-    name: `${name}`,
-    userId: `${userId}`,
-  });
+const filterProduct = async (name) => {
+  const product = await Products.findOne({ name: `${name}` });
   return product ? true : false;
 };
 

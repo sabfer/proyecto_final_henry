@@ -7,8 +7,6 @@ import { getOrders } from "../../../../actions";
 
 export default function Contabilidad() {
   const token = useSelector((state) => state.userToken);
-  const userId = useSelector((state) => state.userId);
-
   const dispatch = useDispatch();
   let [render, setRender] = useState(undefined);
   const ordenes = useSelector((state) => state.orders);
@@ -26,8 +24,7 @@ export default function Contabilidad() {
   }
 
   useEffect(() => {
-    dispatch(getOrders(token, userId));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getOrders(token));
   }, [dispatch, token]);
 
   return (

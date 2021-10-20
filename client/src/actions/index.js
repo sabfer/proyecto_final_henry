@@ -33,7 +33,7 @@ export function loginUser(payload) {
 }
 
 // ---------- OBTENER ORDENES ---------- \\
-export function getOrders(token, id_user) {
+export function getOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -41,7 +41,7 @@ export function getOrders(token, id_user) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders?userId=${id_user}`, auth)
+      .get("http://localhost:3001/orders", auth)
       .then((data) => {
         return dispatch({ type: "GET_ORDERS", payload: data.data.payload });
       })
@@ -52,20 +52,17 @@ export function getOrders(token, id_user) {
 }
 
 // ---------- OBTENER PRODUCTOS ---------- \\
-export function getProducts(token, id_user) {
+export function getProducts(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
-  console.log(id_user);
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/products?userId=${id_user}`, auth)
+      .get("http://localhost:3001/products", auth)
       .then((data) => {
-        if (data.data.succes) {
-          return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
-        }
+        return dispatch({ type: "GET_PRODUCTS", payload: data.data.payload });
       })
       .catch((err) => {
         console.log(err);
@@ -104,7 +101,6 @@ export function postProduct(payload, token) {
       Authorization: "Bearer " + token,
     },
   };
-  console.log(payload);
   return async function (dispatch) {
     var data = await axios
       .post("http://localhost:3001/products/add", payload, auth)
@@ -131,7 +127,7 @@ export function deleteProduct(payload, token) {
 }
 
 // ---------- MODIFICAR PRODUCTO ---------- \\
-export function updateProduct(payload, id, token, id_user) {
+export function updateProduct(payload, id, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -139,18 +135,16 @@ export function updateProduct(payload, id, token, id_user) {
   };
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/products/${id}`, payload, auth);
-    await axios
-      .get(`http://localhost:3001/products?userId=${id_user}`, auth)
-      .then((data) => {
-        return dispatch({
-          type: "PUT_PRODUCT",
-          payload: data.data.payload,
-        });
+    await axios.get("http://localhost:3001/products", auth).then((data) => {
+      return dispatch({
+        type: "PUT_PRODUCT",
+        payload: data.data.payload,
       });
+    });
   };
 }
 
-/* // ---------- CREACIÓN DE COMERCIO ---------- \\
+// ---------- CREACIÓN DE COMERCIO ---------- \\
 export function postCommerce(payload, token) {
   let auth = {
     headers: {
@@ -218,7 +212,7 @@ export function updateCommerce(payload, id, token) {
       type: "PUT_COMMERCE",
     });
   };
-} */
+}
 
 // ---------- OBTENER USUARIOS ---------- \\
 export function getUsers(payload, token) {
@@ -300,7 +294,7 @@ export function changeSettings(payload) {
 }
 
 // ---------- OBTENER ORDENES DE SALON---------- \\
-export function getSalonOrders(token, id_user) {
+export function getSalonOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -308,7 +302,7 @@ export function getSalonOrders(token, id_user) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Salon&userId=${id_user}`, auth)
+      .get(`http://localhost:3001/orders/active?type=Salon`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_SALON_ORDERS",
@@ -322,7 +316,7 @@ export function getSalonOrders(token, id_user) {
 }
 
 // ---------- OBTENER ORDENES DE TAKE AWAY---------- \\
-export function getTakeAwayOrders(token, id_user) {
+export function getTakeAwayOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -330,7 +324,7 @@ export function getTakeAwayOrders(token, id_user) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Take%20Away&userId=${id_user}`, auth)
+      .get(`http://localhost:3001/orders/active?type=Take%20Away`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_TAKE_AWAY_ORDERS",
@@ -344,7 +338,7 @@ export function getTakeAwayOrders(token, id_user) {
 }
 
 // ---------- OBTENER ORDENES DE DELIVERY---------- \\
-export function getDeliveryOrders(token, id_user) {
+export function getDeliveryOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -352,7 +346,7 @@ export function getDeliveryOrders(token, id_user) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?type=Delivery&userId=${id_user}`, auth)
+      .get(`http://localhost:3001/orders/active?type=Delivery`, auth)
       .then((data) => {
         return dispatch({
           type: "GET_DELIVERY_ORDERS",
@@ -366,18 +360,15 @@ export function getDeliveryOrders(token, id_user) {
 }
 
 // ---------- OBTENER MESAS---------- \\
-export function getMesas(token, userId) {
+export function getMesas(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
-  console.log(userId);
   return function (dispatch) {
-    axios.get(`http://localhost:3001/mesas?userId=${userId}`, auth).then((data) => {
-      if (data.data.succes) {
-        return dispatch({ type: "GET_MESAS", payload: data.data.payload });
-      }
+    axios.get("http://localhost:3001/mesas", auth).then((data) => {
+      return dispatch({ type: "GET_MESAS", payload: data.data.payload });
     });
   };
 }
@@ -403,7 +394,7 @@ export function changeStatus(payload, token) {
 }
 
 // ---------- MODIFICAR PRODUCTOS ORDEN ---------- \\
-export function updateOrder(id, payload, token, id_user) {
+export function updateOrder(id, payload, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -412,15 +403,15 @@ export function updateOrder(id, payload, token, id_user) {
   return async function (dispatch) {
     await axios.put(`http://localhost:3001/orders/${id}`, payload, auth);
     return (
-      dispatch(getSalonOrders(token, id_user)),
-      dispatch(getDeliveryOrders(token, id_user)),
-      dispatch(getTakeAwayOrders(token, id_user))
+      dispatch(getSalonOrders(token)),
+      dispatch(getDeliveryOrders(token)),
+      dispatch(getTakeAwayOrders(token))
     );
   };
 }
 
 // OBTENER CATEGORÍAS DE PRODUCTOS \\
-export function getCategories(token, id_user) {
+export function getCategories(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -428,7 +419,7 @@ export function getCategories(token, id_user) {
   };
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/productTypes?userId=${id_user}`, auth)
+      .get("http://localhost:3001/productTypes", auth)
       .then((data) => {
         return dispatch({
           type: "GET_PRODUCT_TYPES",
@@ -530,16 +521,15 @@ export function deleteToken() {
   };
 }
 
-export function getKitchenOrders(token, userId) {
+export function getKitchenOrders(token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
-  console.log({ userId });
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/orders/active?userId=${userId}`, auth)
+      .get("http://localhost:3001/orders/active", auth)
       .then((data) => {
         return dispatch({
           type: "GET_KITCHEN_ORDERS",
@@ -547,21 +537,24 @@ export function getKitchenOrders(token, userId) {
         });
       })
       .catch((err) => {
-        console.log("error del catch------", err);
+        console.log(err);
       });
   };
 }
 
 export function updateOrderKitchen(id, payload, token) {
+  console.log(payload);
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
   return function (dispatch) {
-    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
-      console.log(err);
-    });
+    axios
+      .put(`http://localhost:3001/orders/${id}`, payload, auth)
+      .catch((err) => {
+        console.log(err);
+      });
     return dispatch(getKitchenOrders(token));
   };
 }

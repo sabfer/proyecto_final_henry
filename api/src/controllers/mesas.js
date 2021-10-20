@@ -62,7 +62,7 @@ mesasController.findMesas = async (req, res, next) => {
 mesasController.addMesa = async (req, res, next) => {
   const payload = req.body;
   try {
-    const mesas = await Mesas.findOne({ tableNumber: payload.tableNumber });
+    const mesas = await Mesas.findOne({ numero: payload.numero });
     if (mesas) {
       res.json({
         succes: false,
