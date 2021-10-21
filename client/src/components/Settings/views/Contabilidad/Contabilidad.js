@@ -61,7 +61,8 @@ export default function Contabilidad() {
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(1)}
             >
               Por hora
@@ -69,7 +70,8 @@ export default function Contabilidad() {
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(2)}
             >
               Por fecha
@@ -77,7 +79,8 @@ export default function Contabilidad() {
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(3)}
             >
               Total
@@ -109,11 +112,6 @@ export default function Contabilidad() {
       )}
       {render === undefined && (
         <>
-          <br />
-          <br />
-          <center>
-            <header></header>
-          </center>
           <div>
             {ordenes && (
               <BarChart

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AjustesIzquierda = styled.div`
   padding: 1.5rem;
   height: 100%;
-  width: 25%;
+  width: 16%;
   display: block;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
@@ -35,7 +35,7 @@ export const OpcionesIzquierda = styled.div`
 
 
 export const AjustesDerecha = styled(AjustesIzquierda)`
-  width: 70%;
+  width: 80%;
   padding: 3rem;
 `;
 
@@ -110,4 +110,7 @@ export const ExportExcel = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .Excel{
+    color: white;
+  }
 `;

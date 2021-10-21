@@ -1,32 +1,24 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getNameProducts } from "../../../../../actions";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { filterOrdersNumber, getOrders } from "../../../../../actions";
 import { SearchContainer } from "../../../../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchOrders() {
+  // const ordersTotal = useSelector((state) => state.totalOrders);
+  const token = useSelector((state) => state.userToken);
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
 
-  function handleInputChange(e) {
-    e.preventDefault();
-    setName(e.target.value);
-    setName((prevState) => {
-      dispatch(getNameProducts(prevState));
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getNameProducts(name));
-    setName("");
+  function handleFilterNumber(e) {
+    if (e.target.value === "") 
+    return dispatch(getOrders(token));
+    let number = Number(e.target.value)
+    dispatch(filterOrdersNumber(number, token));
   }
 
   function handleKeyPress(e) {
     if (e.charCode === 13) {
-      dispatch(getNameProducts(name));
-      setName("");
     }
   }
 
@@ -34,17 +26,11 @@ export default function SearchOrders() {
     <SearchContainer>
       <div className="input">
         <input
-          type="text"
+          type="number"
           placeholder="Buscar órdenes..."
-          value={name}
-          onChange={(e) => handleInputChange(e)}
+          onChange={(e) => handleFilterNumber(e)}
           onKeyPress={(e) => handleKeyPress(e)}
         />
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="icon"
-          onClick={(e) => handleSubmit(e)}
-        ></FontAwesomeIcon>
       </div>
     </SearchContainer>
   );

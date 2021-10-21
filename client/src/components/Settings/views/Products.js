@@ -254,21 +254,20 @@ export default function Productos() {
       <ExportExcel>
         {products && (
           <NumberOfProducts
-            title=" productos cargados exitosamente"
+            cantidad=" productos cargados exitosamente"
             total={products.length}
           />
         )}
 
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
-          <FontAwesomeIcon icon={faFileExcel} size="lg">
-            <ReactHTMLTableToExcel
-              id="botonExportarProd"
-              table="productsTable"
-              className="Excel"
-              filename="Productos_cargados_en_el_sistema"
-              sheet="Productos"
-            />
-          </FontAwesomeIcon>
+          <ReactHTMLTableToExcel
+            id="botonExportarProd"
+            table="productsTable"
+            className="Excel"
+            filename="Productos_cargados_en_el_sistema"
+            sheet="Productos"
+            buttonText={<FontAwesomeIcon icon={faFileExcel} size="lg" />}
+          />
         </Button>
       </ExportExcel>
 
