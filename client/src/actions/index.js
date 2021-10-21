@@ -121,9 +121,16 @@ export function sortByDate(payload) {
 }
 
 // ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
-export function orderTheProducts(payload) {
+export function orderTheProductInv(payload) {
   return {
     type: "ORDER_BY_NAME_INV",
+    payload,
+  };
+}
+
+export function orderTheProducts(payload) {
+  return {
+    type: "ORDER_BY_NAME",
     payload,
   };
 }
@@ -285,7 +292,7 @@ export function getUserId(token) {
     },
   };
   return async function (dispatch) {
-    console.log('estoy en getUserId');
+    // console.log('estoy en getUserId');
     axios
       .get(`http://localhost:3001/getId`, auth)
       .then((data) => {
@@ -313,10 +320,10 @@ export function updateSettings(token, payload) {
       Authorization: "Bearer " + token,
     },
   };
-  console.log('payload de action updateSettings: ', payload)
+  console.log("payload de action updateSettings: ", payload);
   return function (dispatch) {
     axios
-      .post('http://localhost:3001/postId', payload, auth)
+      .post("http://localhost:3001/postId", payload, auth)
       .then((data) => {
         // console.log('-----------data.data de axios: ', data.data)
         return dispatch({
@@ -325,8 +332,8 @@ export function updateSettings(token, payload) {
         });
       })
       .catch((err) => {
-        console.log('Error en updateSettings con err: ', err);
-      })
+        console.log("Error en updateSettings con err: ", err);
+      });
   };
 }
 
@@ -586,11 +593,9 @@ export function updateOrderKitchen(id, payload, token) {
     },
   };
   return function (dispatch) {
-    axios
-      .put(`http://localhost:3001/orders/${id}`, payload, auth)
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
+      console.log(err);
+    });
     return dispatch(getKitchenOrders(token));
   };
 }

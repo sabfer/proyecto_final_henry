@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsInv, deleteProductInv, orderTheProducts } from "../../../../../../actions";
+import {
+  getProductsInv,
+  deleteProductInv,
+  orderTheProductsInv,
+} from "../../../../../../actions";
 //------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -55,19 +59,19 @@ export default function Inventario() {
   const [order, setOrder] = useState(false);
   const [inputModalProduct, setInputModalProduct] = useState({
     _id: "",
-    fecha:"",
+    fecha: "",
     name: "",
     price: "",
     cant: "",
     prodInvType: "",
-    proveeType:""
+    proveeType: "",
   });
 
   useEffect(() => {
-      dispatch(getProductsInv(token));
+    dispatch(getProductsInv(token));
   }, [dispatch, token]);
 
-/////////////// ELIMINAR/////////////////
+  /////////////// ELIMINAR/////////////////
   function handleDelete(e) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -99,12 +103,12 @@ export default function Inventario() {
     e.preventDefault();
     setInputModalProduct({
       _id: props._id,
-      fecha:props.fecha,
+      fecha: props.fecha,
       name: props.name,
       price: props.price,
-      cant:props.cant,
+      cant: props.cant,
       prodInvType: props.prodInvType,
-      proveeType:props.proveeType
+      proveeType: props.proveeType,
     });
     setEditProductModal(!editProductModal);
   }
@@ -112,7 +116,7 @@ export default function Inventario() {
   //////////////ORDENAR/////////////////
   function handleOrder(e) {
     setOrder(!order);
-    dispatch(orderTheProducts(order));
+    dispatch(orderTheProductsInv(order));
   }
 
   ////////////RESSTABLECER/////////////
@@ -160,8 +164,8 @@ export default function Inventario() {
         </Button>
       </AjustesDerechaTop>
       <SearchBarContainer>
-        <SearchInv/>
-        <FilterProveedores/>
+        <SearchInv />
+        <FilterProveedores />
         <Button
           width="12rem"
           padding="0.8rem"
@@ -180,10 +184,10 @@ export default function Inventario() {
           state={newProductModal}
           setStateModal={setNewProductModal}
           title="Insertar Compra"
-          label1="Nombre"//
-          label3="Precio"//
-          label4="Tipo de Producto"//
-          label5="Tipo de Proveedor"//
+          label1="Nombre" //
+          label3="Precio" //
+          label4="Tipo de Producto" //
+          label5="Tipo de Proveedor" //
           label6="Cant"
           label7="Fecha"
           modalContainerBox={true}
@@ -268,7 +272,6 @@ export default function Inventario() {
         </Loading>
       )}
 
-
       <ExportExcel>
       {productsInv4 && (<NumberOfProductsInv title=" Productos cargados exitosamente" total={productsInv4.length}/>)}
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
@@ -303,14 +306,14 @@ export default function Inventario() {
           style={{ cursor: "pointer" }}
         ></FontAwesomeIcon>
       </Paginado>
-       {/* EDITAR PRODUCTO INVENTARIO */}
+      {/* EDITAR PRODUCTO INVENTARIO */}
       <Modal
         idElement={inputModalProduct._id}
         id={9}
         state={editProductModal}
         setStateModal={setEditProductModal}
         title="Modificar Producto"
-        label6="Fecha"
+        label7="Fecha"
         label1="Nombre"
         label3="Precio"
         label6="Cant"

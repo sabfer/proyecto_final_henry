@@ -49,7 +49,7 @@ export const Button = styled.button`
   margin: ${(props) => props.margin};
   margin-left: ${(props) => props.marginLeft || "unset"};
   font-size: ${(props) => props.textSize};
-  display: ${props => props.display || "flex"};
+  display: ${(props) => props.display || "flex"};
   align-items: center;
   align-self: ${(props) => props.alignself};
   justify-self: ${(props) => props.justifySelf};
@@ -64,6 +64,7 @@ export const Button = styled.button`
   position: ${(props) => props.position};
   bottom: ${(props) => props.bottom};
   .Excel {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     background: none;

@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../css";
-import { LeyendaError, Label, InputContainer } from "../../../css/StyleForm";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import {
-  getUserId,
-  updateSettings,
-  getGenerals,
-  changeSettings,
-  getProducts,
-  getCategories,
-  deleteToken,
-  getTakeAwayOrders,
-  getDeliveryOrders,
-} from "../../../actions/index";
+import { getUserId, updateSettings } from "../../../actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMarker,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMarker } from "@fortawesome/free-solid-svg-icons";
+import { Inputs, InputContainers } from "../../../css/LandingStyles";
 
 export default function Generales() {
   const token = useSelector((state) => state.userToken);
@@ -27,15 +15,15 @@ export default function Generales() {
   const id = useSelector((state) => state.userId);
   const email = useSelector((state) => state.userEmail);
   const name = useSelector((state) => state.userName);
-  const tables = useSelector((state) => state.userMesas);
-  const waiters = useSelector((state) => state.waiters);
+  /* const tables = useSelector((state) => state.userMesas);
+  const waiters = useSelector((state) => state.waiters); */
   const expirationTime = useSelector((state) => state.expSession);
 
   if (token && (!id || !email || !name || !expirationTime)) {
     dispatch(getUserId(token));
   }
 
-
+  console.log({ id }, { name }, { expirationTime });
 
   const [input, setInput] = useState({
     id: id,
@@ -43,15 +31,19 @@ export default function Generales() {
     expirationTime: expirationTime,
   });
 
+  console.log({ id }, { name }, { expirationTime });
+
   useEffect(() => {
     setInput({
       id: id,
       name: name,
       expirationTime: expirationTime,
-    })
-  },[id, name, expirationTime]);
+    });
+  }, [id, name, expirationTime]);
 
-  console.log(
+  console.log({ id }, { name }, { expirationTime });
+
+  /* console.log(
     id ?? "sin id",
     email ?? "sin email",
     name ?? "sin nombre",
@@ -59,6 +51,7 @@ export default function Generales() {
     waiters ?? "sin mozos",
     expirationTime ?? "sin t. exp"
   );
+ */
 
   function handleChange(e) {
     setInput({
@@ -82,9 +75,6 @@ export default function Generales() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateSettings(token, input));
-        // setTimeout(() => {
-        //   dispatch(getProducts(token));
-        // }, 300);
         MySwal.fire({
           title: "Actualizacón exitosa",
           text: "Valores actualizados correctaente.",
@@ -95,66 +85,67 @@ export default function Generales() {
     });
   }
 
-
   return (
     <div>
       <h1>Generales</h1>
       <div>
-        <InputContainer>
-          <h2>Email:
-            <input
-              type="text"
-              name="name"
-              leyenda='texto'
-              onChange={(e) => handleChange(e)}
-              disabled={true}
-              value={email}
-            />
-          </h2>
-        </InputContainer>
+        <InputContainers align="flex-start">
+          <h2>Email:</h2>
+          <Inputs
+            width="50%"
+            bgcolor="rgba(0,0,0,0.1)"
+            color="#000"
+            border="2px solid #000"
+            type="text"
+            name="email"
+            onChange={(e) => handleChange(e)}
+            disabled={true}
+            value={email}
+          />
+        </InputContainers>
       </div>
-      <hr />
       <div>
-        <InputContainer>
-          <h2>Nombre de usuario:
-            <input
-              type="text"
-              name="name"
-              leyenda='texto'
-              onChange={(e) => handleChange(e)}
-              value={input.name ?? name}
-            />
-          </h2>
-        </InputContainer>
+        <InputContainers align="flex-start">
+          <h2>Nombre de usuario:</h2>
+          <Inputs
+            width="50%"
+            bgcolor="white"
+            color="#000"
+            border="2px solid #000"
+            type="text"
+            name="name"
+            onChange={(e) => handleChange(e)}
+            value={input.name ?? name}
+          />
+        </InputContainers>
       </div>
-      <hr />
       <div>
-        <InputContainer>
-          <h2>Tiempo de expiración de sesión:
-            <input
-              type="text"
-              name="expirationTime"
-              leyenda='texto'
-              onChange={(e) => handleChange(e)}
-              value={input.expirationTime ?? expirationTime}
-            />
-          </h2>
-        </InputContainer>
+        <InputContainers align="flex-start">
+          <h2>Tiempo de expiración de sesión:</h2>
+          <Inputs
+            width="50%"
+            bgcolor="white"
+            color="#000"
+            border="2px solid #000"
+            type="text"
+            name="expirationTime"
+            onChange={(e) => handleChange(e)}
+            value={input.expirationTime ?? expirationTime}
+          />
+        </InputContainers>
       </div>
-      <hr />
-      <InputContainer>
-        <Button
-          marginLeft='1rem'
-          display='inline'
-          width="auto"
-          height="2rem"
-          buttonColor="rgb(2, 101, 210)"
-          onClick={(e) => handleClick(e)}
-        >
-          Actualizar datos
-          <FontAwesomeIcon icon={faMarker}></FontAwesomeIcon>
-        </Button>
-      </InputContainer>
+      <Button
+        justify="space-between"
+        display="flex"
+        width="12rem"
+        padding="1.4rem 1rem"
+        height="2rem"
+        buttonColor="rgb(2, 101, 210)"
+        onClick={(e) => handleClick(e)}
+      >
+        Actualizar datos
+        <FontAwesomeIcon icon={faMarker}></FontAwesomeIcon>
+      </Button>
     </div>
   );
 }
