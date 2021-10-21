@@ -52,12 +52,12 @@ export default function Settings() {
     switch (param) {
       case "products":
         return <Products />;
-      case "mesas":
-        // return <Mesas />;
+      /* case "mesas":
+        return <Mesas />;
         return;
       case "mozos":
-        // return <Mozos />;
-        return;
+        return <Mozos />;
+        return; */
       case "categorias":
         return <Categorias />;
       case "generales":
@@ -81,9 +81,9 @@ export default function Settings() {
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="10rem" height="2.5rem" padding="1.3rem">
-            <FontAwesomeIcon icon={faHome} size="lg" />
+          <Button width="13rem" height="2.5rem" padding="1rem" justify="space-between">
             Regresar a Home
+            <FontAwesomeIcon icon={faHome} size="lg" />
           </Button>
         </StyledLink>
       </Header>
@@ -110,7 +110,7 @@ export default function Settings() {
             <p>Categorías</p>
           </OpcionesIzquierda>
 
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
+          {/* <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mesas</p>
           </OpcionesIzquierda>
@@ -118,7 +118,7 @@ export default function Settings() {
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "mozos")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mozos</p>
-          </OpcionesIzquierda>
+          </OpcionesIzquierda> */}
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />

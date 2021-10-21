@@ -263,88 +263,6 @@ export function updateProductInv(payload, id, token) {
   };
 }
 
-// ---------- CREACIÓN DE COMERCIO ---------- \\
-/* export function postCommerce(payload, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return async function (dispatch) {
-    var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
-    return data;
-  };
-} */
-
-/* export function getCommerces(token) {
-  console.log("el token en getCommerces es: ", token);
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return function (dispatch) {
-    axios
-      // .get("http://localhost:3001/commerce?token=" + token)
-      .get("http://localhost:3001/commerce", auth)
-      .then((data) => {
-        return dispatch({ type: "GET_COMMERCES", payload: data.data.payload });
-      })
-      .catch((err) => {
-        console.log("estoy en el error del catch de getCommerces, con err: ", err);
-      });
-  };
-} */
-
-// ---------- ELIMINAR COMERCIO ---------- \\
-/* export function deleteCommerce(payload, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/commerce/${payload}`, auth);
-    return dispatch({
-      type: "DELETE_COMMERCE",
-    });
-  };
-} */
-
-// ---------- MODIFICAR COMERCIO ---------- \\
-/* export function updateCommerce(payload, id, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return async function (dispatch) {
-    await axios.put(`http://localhost:3001/commerce/${id}`, payload, auth);
-    return dispatch({
-      type: "PUT_COMMERCE",
-    });
-  };
-} */
-
-// ---------- OBTENER USUARIOS ---------- \\
-/* export function getUsers(payload, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return function (dispatch) {
-    axios
-      .get("http://localhost:3001/users", payload, auth)
-      .then((data) => {
-        return dispatch({ type: "GET_USERS", payload: data.data.payload });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-} */
-
 // ---------- OBTENER ID USUARIO PARA STORE ---------- \\
 export function getUserId(token) {
   let auth = {
@@ -353,7 +271,7 @@ export function getUserId(token) {
     },
   };
   return async function (dispatch) {
-    console.log('estoy en getUserId');
+    // console.log('estoy en getUserId');
     axios
       .get(`http://localhost:3001/getId`, auth)
       .then((data) => {
@@ -367,36 +285,6 @@ export function getUserId(token) {
       });
   };
 }
-
-// ---------- ELIMINAR USUARIOS ---------- \\
-/* export function deleteUser(payload, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/users/${payload}`, auth);
-    return dispatch({
-      type: "DELETE_USER",
-    });
-  };
-} */
-
-// ---------- MODIFICAR USUARIOS ---------- \\
-/* export function updateUsers(payload, id, token) {
-  let auth = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  return async function (dispatch) {
-    await axios.put(`http://localhost:3001/users/${id}`, payload, auth);
-    return dispatch({
-      type: "PUT_USER",
-    });
-  };
-} */
 
 // ---------- MODIFICAR SETTINGS ---------- \\
 export function changeSettings(payload) {

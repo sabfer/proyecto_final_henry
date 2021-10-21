@@ -139,12 +139,12 @@ export const InputContainers = styled.div`
 `;
 
 export const Inputs = styled.input`
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 80%;
+  background-color: ${(props) => props.bgcolor || "rgba(0, 0, 0, 0.5)"};
+  width: ${props => props.width || "80%"};
   padding: 0 20px 0;
   border-radius: 12px;
-  border: 2px solid rgb(255, 255, 255);
-  color: rgb(255, 255, 255);
+  border: ${(props) => props.border || "2px solid rgb(255, 255, 255)"};
+  color: ${(props) => props.color || "rgb(255, 255, 255)"};
   font-size: 16px;
   height: 45px;
   &:focus ~ .placeholder {

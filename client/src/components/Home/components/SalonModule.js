@@ -23,12 +23,13 @@ export default function SalonModule() {
     tableNumber: undefined,
   });
 
+  console.log(mesas);
+
   useEffect(() => {
     dispatch(getSalonOrders(token));
-    if (mesas === undefined) {
-      dispatch(getMesas(token));
-    }
-  }, [dispatch, mesas, token]);
+    dispatch(getMesas(token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   function handleUpdateModal(e, props) {
     e.preventDefault();
