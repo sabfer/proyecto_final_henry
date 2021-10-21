@@ -71,6 +71,13 @@ export function orderTheProducts(payload) {
     payload,
   };
 }
+// ---------- ORDENAR PRODUCTOS POR NUMBERO DE ORDEN ---------- \
+// export function orderOrders(payload) {
+//   return {
+//     type: "ORDER_BY_NUMBER",
+//     payload,
+//   };
+// }
 
 // ---------- BUSCAR POR NOMBRE DE PRODUCTO ---------- \\
 export function getNameProducts(payload) {
@@ -84,6 +91,22 @@ export function getNameProducts(payload) {
 export function filterProductsType(payload) {
   return {
     type: "FILTER_PRODUCTS_TYPE",
+    payload,
+  };
+}
+
+// ---------- FILTRAR ORDENES POR TIPO ---------- \\
+export function filterOrdersType(payload) {
+  return {
+    type: "FILTER_ORDERS_TYPE",
+    payload,
+  };
+}
+
+// ---------- FILTRAR POR NÚMERO DE ÓRDEN ---------- \\
+export function filterOrdersNumber(payload) {
+  return {
+    type: "FILTER_ORDERS_NUMBER",
     payload,
   };
 }

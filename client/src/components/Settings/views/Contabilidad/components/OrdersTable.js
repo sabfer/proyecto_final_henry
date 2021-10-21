@@ -41,8 +41,6 @@ export default function OrdersTable(props) {
 
   function handleDateOrder(e) {}
 
-  function handleClientOrder(e) {}
-
   function handleCashOrder(e) {}
 
   //BOTON RESTABLECER PÁGINA
@@ -133,16 +131,7 @@ export default function OrdersTable(props) {
                   <p>Tipo</p>
                 </TableHd>
                 <TableHd width="20%">
-                  <span className="productName">
-                    <p style={{ margin: 0 }}>Nombre Cliente</p>
-                    <FontAwesomeIcon
-                      onClick={(e) => handleClientOrder(e)}
-                      color={ordersTotal ? "#FF846A" : "#A2DFFF"}
-                      icon={ordersTotal ? faAngleDoubleUp : faAngleDoubleDown}
-                      size="lg"
-                      style={{ cursor: "pointer" }}
-                    ></FontAwesomeIcon>
-                  </span>
+                  <p>Nombre Cliente</p>
                 </TableHd>
                 <TableHd width="20%">
                   <p>Productos</p>
@@ -188,7 +177,7 @@ export default function OrdersTable(props) {
                       ${" "}
                       {new Intl.NumberFormat()
                         .format(el.totalPrice)
-                        .replaceAll(",", ".")+",00"}
+                        .replaceAll(",", ".") + ",00"}
                     </TableData>
                   </TableRow>
                 );

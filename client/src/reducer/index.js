@@ -20,6 +20,7 @@ const initialState = {
     deliveryOrders: undefined,
   },
   totalOrders: undefined,
+  totalOrders2: undefined,
   kitchenOrders: {
     inProgress: undefined,
     toBeDone: undefined,
@@ -82,6 +83,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: arrayOrderName,
       };
 
+    // case "ORDER_BY_NUMBER": ---> COMPLETAR
+    //   let ordersNumber = state.totalOrders;
+
+    //   ordersNumber = ordersNumber.map(e => e.orderNumber).sort((a, b) => a - b)
+    //   return {
+    //     ...state,
+    //     totalOrders2: ordersNumber,
+    //   };
+
     case "FILTER_PRODUCTS_TYPE":
       const array = [...state.productsCopy].filter(
         (e) => e.productType === payload
@@ -89,6 +99,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         products: array,
+      };
+
+    case "FILTER_ORDERS_TYPE":
+      const arrayOrders = [...state.totalOrders2].filter(
+        (e) => e.type === payload
+      );
+      return {
+        ...state,
+        totalOrders: arrayOrders,
+      };
+
+    case "FILTER_ORDERS_NUMBER":
+      const arrayOrdersNumbers = [...state.totalOrders2].filter(
+        (e) => e.orderNumber === payload
+      );      
+      return {
+        ...state,
+        totalOrders: arrayOrdersNumbers,
       };
 
     case "GET_PRODUCTS":
@@ -158,6 +186,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         totalOrders: payload,
+        totalOrders2: payload,
       };
 
     case "GET_TAKE_AWAY_ORDERS":

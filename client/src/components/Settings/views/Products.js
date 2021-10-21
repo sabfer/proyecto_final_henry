@@ -260,15 +260,14 @@ export default function Productos() {
         )}
 
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
-          <FontAwesomeIcon icon={faFileExcel} size="lg">
-            <ReactHTMLTableToExcel
-              id="botonExportarProd"
-              table="productsTable"
-              className="Excel"
-              filename="Productos_cargados_en_el_sistema"
-              sheet="Productos"
-            />
-          </FontAwesomeIcon>
+          <ReactHTMLTableToExcel
+            id="botonExportarProd"
+            table="productsTable"
+            className="Excel"
+            filename="Productos_cargados_en_el_sistema"
+            sheet="Productos"
+            buttonText={<FontAwesomeIcon icon={faFileExcel} size="lg" />}
+          />
         </Button>
       </ExportExcel>
 
