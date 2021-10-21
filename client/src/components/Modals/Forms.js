@@ -6,7 +6,7 @@ export const conditionalForm = (
   input,
   onChange,
   { label1, label2, label3, label4, label5, label6, label7 },
-  { name, user, pass, productType, prodInvType, fecha, price },
+  { name, user, pass, productType, prodInvType, fecha, price,cant },
   { ley1, ley2, ley3, ley4, ley5, ley6 },
   inpValido,
   validacion,
@@ -167,6 +167,7 @@ export const conditionalForm = (
           <input
             type="text"
             name="name"
+            placeholder=" ingrese nombre"
             required
             onChange={(e) => onChange(e)}
             leyenda={ley1}
@@ -358,6 +359,16 @@ export const conditionalForm = (
             name="price"
             value={input.price}
             placeholder={price}
+            onChange={(e) => onChange(e)}
+          />
+        </InputContainer>
+        <InputContainer>
+          <label>{label6}</label>
+          <input
+            type="number"
+            name="cant"
+            value={input.cant}
+            placeholder={cant}
             onChange={(e) => onChange(e)}
           />
         </InputContainer>

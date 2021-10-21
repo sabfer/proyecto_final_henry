@@ -16,12 +16,13 @@ import {
   faTasks,
   faUsers,
   faUtensils,
+  faWrench
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
 import InformesGenerales from "./views/Informes/InformesGenerales"
-import Users from "./views/Users";
+//import Users from "./views/Users";
 
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
@@ -47,10 +48,10 @@ export default function Settings() {
     switch (param) {
       case "products":
         return <Products />;
-      case "users":
-        return <Users />;
-      case "commerce":
-        return <Comercios />;
+      // case "users":
+      //   return <Users />;
+      // case "commerce":
+      //   return <Comercios />;
       case "categorias":
         return <Categorias />;
       case "generales":

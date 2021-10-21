@@ -33,8 +33,8 @@ export default function Contabilidad() {
         <center>
           <h1>INFORMES GENERALES</h1>
           <button onClick={(e) => handleRender(1)}>INVENTARIO</button>
-          <button onClick={(e) => handleRender(2)}>PROVEEDORES</button>
-          <button onClick={(e) => handleRender(3)}>COMPRAS</button>
+          {/* <button onClick={(e) => handleRender(2)}>PROVEEDORES</button>
+          <button onClick={(e) => handleRender(3)}>COMPRAS</button> */}
         </center>
       </div>
 
