@@ -52,7 +52,6 @@ function Login() {
       [e.target.name]: e.target.value,
     });
     //console.log("token: ", token);
-
   }
 
   useEffect(() => {
@@ -105,11 +104,7 @@ function Login() {
         <NavBar>
           <ul>
             <li>
-              <StyledLink
-                to="/"
-                margin="12px"
-                hover="underline solid rgb(255,255,255)"
-              >
+              <StyledLink to="/" margin="12px" hover="underline solid rgb(255,255,255)">
                 Inicio
               </StyledLink>
             </li>

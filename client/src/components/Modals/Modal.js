@@ -34,7 +34,7 @@ export default function Modal({
 }) {
   const token = useSelector((state) => state.userToken);
   const categories = useSelector((state) => state.productTypes);
-  
+
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
@@ -65,7 +65,7 @@ export default function Modal({
       price: "" || price,
       productType: "" || productType,
     });
-  }, [name, price, productType ]);
+  }, [name, price, productType]);
 
   let labels = { label1, label2, label3, label4 };
   let productValues = {

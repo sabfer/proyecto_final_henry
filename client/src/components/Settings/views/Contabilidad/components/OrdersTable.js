@@ -13,13 +13,7 @@ import SearchOrders from "../components/SearchOrders";
 import FilterOrdersTypes from "../components/FilterOrdersTypes";
 import NumberOfProducts from "../../../components/NumberOfProduct";
 import { Paginado } from "../../../../../css";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../../../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../../../../css/Table";
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
@@ -156,17 +150,11 @@ export default function OrdersTable(props) {
                   <TableRow key={el._id}>
                     <TableData>{el.orderNumber}</TableData>
                     <TableData>
-                      {el.date
-                        .split("/")
-                        .reverse()
-                        .toString()
-                        .replaceAll(",", "/")}
+                      {el.date.split("/").reverse().toString().replaceAll(",", "/")}
                     </TableData>
                     <TableData>{el.hour}</TableData>
                     <TableData>{el.type}</TableData>
-                    <TableData>
-                      {el.nameClient ? el.nameClient : "--"}
-                    </TableData>
+                    <TableData>{el.nameClient ? el.nameClient : "--"}</TableData>
                     <TableData>
                       {el.products
                         .map((e) => e.name)
@@ -188,11 +176,7 @@ export default function OrdersTable(props) {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img
-            src="https://i.imgur.com/5JQ02CS.gif"
-            alt="loading gif"
-            width="100px"
-          />
+          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
         </Loading>
       )}
 

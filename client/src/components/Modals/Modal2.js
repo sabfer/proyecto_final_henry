@@ -144,7 +144,6 @@ export default function Modal({
 
   function handleSubmit(e) {
     // e.preventDefault();
-
     /////////////////CREACION PROD INV//////////////////////////////////
     if (id === 4) {
       if (inpValido.name === "true") {
