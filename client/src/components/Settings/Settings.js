@@ -19,9 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
-import Comercios from "./views/Comercios";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
-import Users from "./views/Users";
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
@@ -98,7 +96,6 @@ export default function Settings() {
             <FontAwesomeIcon icon={faTasks} size="lg" />
             <p>Categorías</p>
           </OpcionesIzquierda>
-
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
             <FontAwesomeIcon icon={faUsers} size="lg" />
             <p>Usuarios</p>
