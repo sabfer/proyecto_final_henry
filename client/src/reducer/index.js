@@ -40,6 +40,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userToken: payload.token,
         userId: payload.id,
         userEmail: payload.email,
+        userName: payload.name,
       };
 
     case "GET_USER_ID":

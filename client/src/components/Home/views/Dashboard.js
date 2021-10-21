@@ -27,6 +27,7 @@ export default function Dashboard() {
   console.log(ordersTakeAway)  */
   const token = useSelector((state) => state.userToken);
   const id = useSelector((state) => state.userId);
+  const name = useSelector((state) => state.userName);
   //Estado de las ventanas modales
   const [stateModal1, setStateModal1] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
@@ -46,6 +47,18 @@ export default function Dashboard() {
     dispatch(getDeliveryOrders(token));
   }, [dispatch, token]);
 
+
+  // ver esto que no toma el nombre de entrada
+  const [n, setN] = useState({
+    n: name,
+  })
+
+  useEffect(() => {
+    setN({
+      name: name,
+    })
+  }, [name]);
+
   function handleLogOut() {
     dispatch(deleteToken());
     history.push("/");
@@ -58,7 +71,7 @@ export default function Dashboard() {
   return (
     <div>
       <Header>
-        <Title>Bienvenido "nombre"</Title>
+        <Title>Bienvenido {n.name ?? name}</Title>
         <Button
           buttonColor="rgb(255, 0, 0)"
           width="5rem"

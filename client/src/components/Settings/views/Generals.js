@@ -31,18 +31,11 @@ export default function Generales() {
   const waiters = useSelector((state) => state.waiters);
   const expirationTime = useSelector((state) => state.expSession);
 
-  if (token && (!id || !email || !name)) {
+  if (token && (!id || !email || !name || !expirationTime)) {
     dispatch(getUserId(token));
   }
 
-  console.log(
-    id ?? "sin id",
-    email ?? "sin email",
-    name ?? "sin nombre",
-    tables?.length ?? "sin mesas",
-    waiters ?? "sin mozos",
-    expirationTime ?? "sin t. exp"
-  );
+
 
   const [input, setInput] = useState({
     id: id,
@@ -57,6 +50,15 @@ export default function Generales() {
       expirationTime: expirationTime,
     })
   },[id, name, expirationTime]);
+
+  console.log(
+    id ?? "sin id",
+    email ?? "sin email",
+    name ?? "sin nombre",
+    tables?.length ?? "sin mesas",
+    waiters ?? "sin mozos",
+    expirationTime ?? "sin t. exp"
+  );
 
   function handleChange(e) {
     setInput({
