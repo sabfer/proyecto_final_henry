@@ -1,4 +1,21 @@
 import styled, { css } from "styled-components";
+
+export const TableContainer = styled.div`
+  overflow-y: scroll;
+  max-height: 530px;
+  scrollbar-color: #888888 #eaeaea;
+  scrollbar-width: thin;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #eaeaea;
+  }
+  ::-webkit-scrollbar-thumb,
+  mo {
+    background: #888;
+  }
+`;
 export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;

@@ -12,9 +12,7 @@ import {
   faChartLine,
   faCogs,
   faHome,
-  faSitemap,
   faTasks,
-  faUsers,
   faUtensils,
   faWrench,
 } from "@fortawesome/free-solid-svg-icons";
@@ -31,10 +29,10 @@ import Error403 from "../Home/views/Error403";
 export default function Settings() {
   const settings = useSelector((state) => state.settings || "generales");
   const token = useSelector((state) => state.userToken);
-  const userName = useSelector((state) => state.userName);
+  /* const userName = useSelector((state) => state.userName);
   const tables = useSelector((state) => state.mesas);
   const waiters = useSelector((state) => state.waiters);
-  const expSession = useSelector((state) => state.expSession);
+  const expSession = useSelector((state) => state.expSession); */
   const dispatch = useDispatch();
 
   useEffect(() => {

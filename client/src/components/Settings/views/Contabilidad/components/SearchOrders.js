@@ -2,8 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterOrdersNumber, getOrders } from "../../../../../actions";
 import { SearchContainer } from "../../../../../css/SettingStyles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchOrders() {
   // const ordersTotal = useSelector((state) => state.totalOrders);

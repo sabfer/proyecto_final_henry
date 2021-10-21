@@ -13,6 +13,7 @@ export default function Contabilidad() {
   const dispatch = useDispatch();
   let [render, setRender] = useState(undefined);
   let ordenes = useSelector((state) => state.totalOrders);
+  // eslint-disable-next-line no-unused-vars
   let [week, setWeek] = useState(calculateWeek());
 
   function handleRender(e) {
@@ -30,6 +31,7 @@ export default function Contabilidad() {
   useEffect(() => {
     dispatch(getOrders(token));
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       ordenes = null;
     };
   }, []);

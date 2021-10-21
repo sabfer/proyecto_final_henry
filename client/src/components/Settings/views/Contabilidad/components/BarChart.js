@@ -85,7 +85,7 @@ export default function BarChart({ salOrds, taOrds, devOrds, week }) {
     };
   };
 
-  let stackedOptions = {
+  /* let stackedOptions = {
     maintainAspectRatio: false,
     aspectRatio: 0.8,
     plugins: {
@@ -119,7 +119,7 @@ export default function BarChart({ salOrds, taOrds, devOrds, week }) {
         },
       },
     },
-  };
+  }; */
 
   const { basicOptions } = getLightTheme();
 

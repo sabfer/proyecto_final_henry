@@ -5,7 +5,6 @@ import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/Mod
 import {
   postProduct,
   updateProduct,
-  postCommerce,
   getProducts,
   postCategories,
   getCategories,
