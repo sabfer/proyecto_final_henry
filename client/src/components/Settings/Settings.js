@@ -16,12 +16,12 @@ import {
   faTasks,
   faUsers,
   faUtensils,
-  faWrench
+  faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
-import InformesGenerales from "./views/Informes/InformesGenerales"
+import InformesGenerales from "./views/Informes/InformesGenerales";
 //import Users from "./views/Users";
 
 import Categorias from "./views/Categorias";
@@ -57,10 +57,9 @@ export default function Settings() {
       case "generales":
         return <Generals />;
       case "contabilidad":
-
-        return <Contabilidad/>;
+        return <Contabilidad />;
       case "informesGrles":
-        return <InformesGenerales/>;  
+        return <InformesGenerales />;
 
       default:
         return <Generals />;
@@ -104,25 +103,13 @@ export default function Settings() {
             <FontAwesomeIcon icon={faTasks} size="lg" />
             <p>Categorías</p>
           </OpcionesIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
-            <FontAwesomeIcon icon={faUsers} size="lg" />
-            <p>Usuarios</p>
-          </OpcionesIzquierda>
-
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
-            <FontAwesomeIcon icon={faSitemap} size="lg" />
-            <p>Comercios</p>
-          </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Informes Generales</p>
           </OpcionesIzquierda>
-
         </AjustesIzquierda>
-        <AjustesDerecha>
-          {settings && renderSwitch(settings.show)}
-        </AjustesDerecha>
+        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );
