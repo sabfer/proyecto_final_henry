@@ -3,7 +3,11 @@ import { Chart } from "primereact/chart";
 
 export default function DoughnutChart(props) {
   const chartData = {
-    labels: [`Salón: ${props.salon}`, `Delivery: ${props.delivery}`, `Take Away: ${props.takeAway}`],
+    labels: [
+      `Salón: ${props.salon}`,
+      `Delivery: ${props.delivery}`,
+      `Take Away: ${props.takeAway}`,
+    ],
     datasets: [
       {
         data: [props.salon, props.delivery, props.takeAway],

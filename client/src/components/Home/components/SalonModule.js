@@ -23,8 +23,6 @@ export default function SalonModule() {
     tableNumber: undefined,
   });
 
-  console.log(mesas);
-
   useEffect(() => {
     dispatch(getSalonOrders(token));
     dispatch(getMesas(token));

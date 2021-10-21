@@ -33,7 +33,6 @@ export const OpcionesIzquierda = styled.div`
   }
 `;
 
-
 export const AjustesDerecha = styled(AjustesIzquierda)`
   width: 80%;
   padding: 3rem;
@@ -110,7 +109,7 @@ export const ExportExcel = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .Excel{
+  .Excel {
     color: white;
   }
 `;

@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, changeStatus } from "../../actions/index";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../css/Table";
 import { Button } from "../../css";
 import { Select } from "../../css/Select";
 import {
@@ -327,17 +321,11 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                         ordenActual.products.map((product) => {
                           return (
                             <TableRow key={product.name}>
-                              <TableData align="center">
-                                {product.name}
-                              </TableData>
-                              <TableData align="center">
-                                {product.price}
-                              </TableData>
+                              <TableData align="center">{product.name}</TableData>
+                              <TableData align="center">{product.price}</TableData>
                               <TableData align="center">
                                 <input
-                                  onChange={(e) =>
-                                    handleInputAmount(e, product.name)
-                                  }
+                                  onChange={(e) => handleInputAmount(e, product.name)}
                                   placeholder={product.amount}
                                 />
                               </TableData>
@@ -349,9 +337,7 @@ export default function UptadeTable({ state, setStateModal, tableNumber }) {
                                     height="2rem"
                                     buttonColor="rgba(255, 0, 0, 1)"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                    ></FontAwesomeIcon>
+                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                                   </Button>
                                 </div>
                               </TableData>

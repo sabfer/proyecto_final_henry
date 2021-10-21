@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../controllers/commerceType.js");
 
 const auth = require("../controllers/auth.js");
-router.use(auth.secret);    // todas las rutas autenticadas
+router.use(auth.secret); // todas las rutas autenticadas
 
 router.get("/filter", controller.filtersCommerceType);
 router.get("/", controller.findCommerceType);

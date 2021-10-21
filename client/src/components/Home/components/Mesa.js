@@ -2,12 +2,7 @@ import React from "react";
 import { Mesa } from "../../../css/HomeStyles";
 import MesaIco from "../../../assets/MesaIco";
 
-export default function Mesas({
-  tableNumber,
-  status,
-  handleUpdate,
-  setStateModal,
-}) {
+export default function Mesas({ tableNumber, status, handleUpdate, setStateModal }) {
   return (
     <div>
       <Mesa

@@ -6,7 +6,7 @@ import { Select } from "../../../css/Select";
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productTypes);
-  
+
   let array;
   if (Array.isArray(products)) {
     products = products.map((e) => e.name);
