@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true },
   name: { type: String, required: false },
   isAdmin: { type: Boolean, required: false },
+  expirationTime: {type: String, required: false, default: '24h'},
   puesto: {
     type: String,
     enum: ["Mozo", "Cajero", "Cocinero"],
@@ -26,7 +27,6 @@ UserSchema.pre("save", function (next) {
           if (hashError) {
             return next(hashError);
           }
-
           user.password = hash;
           next();
         });

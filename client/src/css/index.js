@@ -47,8 +47,9 @@ export const Button = styled.button`
   padding: ${(props) => props.padding || "unset"};
   height: ${(props) => props.height || "unset"};
   margin: ${(props) => props.margin};
+  margin-left: ${(props) => props.marginLeft || "unset"};
   font-size: ${(props) => props.textSize};
-  display: flex;
+  display: ${props => props.display || "flex"};
   align-items: center;
   align-self: ${(props) => props.alignself};
   justify-self: ${(props) => props.justifySelf};

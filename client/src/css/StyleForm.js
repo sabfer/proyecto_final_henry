@@ -3,9 +3,9 @@ import styled, { css } from "styled-components";
 const Label = styled.label`
 display:block;
 font-weight:700;
-padding:10 px
-min-height:40px
-cursos:pointer;
+padding:10 px;
+min-height:40px;
+cursor:pointer;
 
 
 ${(props) =>
