@@ -4,11 +4,14 @@ import moment from "moment";
 import DoughnutChart from "../components/DoughnutChart";
 
 export default function PorHora() {
-  let ordersDb = useSelector((state) => state.orders);
+  let ordersDb = useSelector((state) => state.orders);  
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
-  let yesterdayDate = moment().locale("es").add(0, "days").format("YYYY/MM/DD");
+  let yesterdayDate = moment()
+    .locale("es")
+    .add(-1, "days")
+    .format("YYYY/MM/DD");
   let currentDate = moment().locale("es").format("YYYY/MM/DD");
 
   function handleChangeInit(e) {
@@ -30,8 +33,7 @@ export default function PorHora() {
       );
       let ordersTotal = [...ordersYesterday, ...ordersCurrent];
       return ordersTotal;
-
-      //Horario comercio que abarca un día
+      //   //Horario comercio que abarca un día
     } else {
       return ordersDb.filter(
         (e) => e.date === currentDate && e.hour >= init && e.hour <= finish
@@ -40,6 +42,8 @@ export default function PorHora() {
   };
 
   let ordersTotal = currentOrders();
+
+  console.log("soy OrdersTotal--->",ordersTotal);
 
   const totalFact = () => {
     if (init !== undefined && finish !== undefined) {
@@ -56,34 +60,44 @@ export default function PorHora() {
     }
   };
 
+  // function salon() {
+  //   if (ordersTotal) {
+  //     let orders = ordersTotal.filter((e) => e.type === " Salon");
+  //     console.log("Salon --->", orders.length);
+  //     return orders.length;
+  //   }
+  //   return null;
+  // }
+
   function salon() {
     if (ordersTotal) {
-      let salonOrders = ordersTotal.filter((e) => e.type === "Salon");
-      return salonOrders.length;
+      let orders = ordersTotal.filter((e) => e.type === "Salon");
+      return orders.length;
     }
     return null;
-  };
-
+  }
+  
   function delivery() {
     if (ordersTotal) {
-      let salonOrders = ordersTotal.filter((e) => e.type === "Delivery");
-      return salonOrders.length;
+      let orders = ordersTotal.filter((e) => e.type === "Delivery");
+      return orders.length;
     }
     return null;
-  };
+  }
 
   function taway() {
     if (ordersTotal) {
-      let salonOrders = ordersTotal.filter((e) => e.type === "Take Away");
-      return salonOrders.length;
+      let orders = ordersTotal.filter((e) => e.type === "Take Away");
+      return orders.length;
     }
     return null;
-  };
-  
+  }
+
   return (
     <>
       <header>
         <h1>Informe del turno del Servicio</h1>
+        <h2>Informe del turno del Servicio</h2>
       </header>
       <div>
         <label> Horario Inicio </label>
@@ -101,10 +115,13 @@ export default function PorHora() {
       </div>
       <h3>{totalFact()}</h3>
       {ordersTotal.length && <h3>Total de órdenes: {ordersTotal.length}</h3>}
-
       <br />
       <div>
-        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
+        <DoughnutChart
+          salon={salon()}
+          delivery={delivery()}
+          takeAway={taway()}
+        />
       </div>
     </>
   );
