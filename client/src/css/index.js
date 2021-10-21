@@ -63,13 +63,6 @@ export const Button = styled.button`
   transition: all 350ms ease-out;
   position: ${(props) => props.position};
   bottom: ${(props) => props.bottom};
-  .Excel {
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    background: none;
-    border: none;
-  }
   &:hover {
     background-color: ${(props) => props.hoverBgColor};
     color: ${(props) => props.hoverColor};

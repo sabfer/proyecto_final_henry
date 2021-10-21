@@ -174,8 +174,8 @@ export const conditionalForm = (
           <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
         </InputContainer>
 
-        <div class="InputsNC">
-          <div class="InputN">
+        <div className="InputsNC">
+          <div className="InputN">
             <InputContainer>
               <Label>{label3}</Label>
               <input
@@ -196,7 +196,7 @@ export const conditionalForm = (
               {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
             </InputContainer>
           </div>
-          <div class="InputC">
+          <div className="InputC">
             <InputContainer>
               <Label>{label6}</Label>
               <input
