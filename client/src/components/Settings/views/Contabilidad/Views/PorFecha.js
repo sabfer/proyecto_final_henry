@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 
 export default function PorFecha() {
-  let ordersDb = useSelector((state) => state.orders);
+  let ordersDb = useSelector((state) => state.totalOrders);
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
@@ -16,11 +16,11 @@ export default function PorFecha() {
   }
 
   const currentOrders = () => {
-    let filter = ordersDb.filter((e) => e.date >= init );
+    let filter = ordersDb.filter((e) => e.date >= init);
     console.log("acá-->", filter);
   };
 
-  currentOrders()
+  currentOrders();
 
   return (
     <>

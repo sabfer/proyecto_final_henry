@@ -4,7 +4,7 @@ import moment from "moment";
 import DoughnutChart from "../components/DoughnutChart";
 
 export default function PorHora() {
-  let ordersDb = useSelector((state) => state.orders);
+  let ordersDb = useSelector((state) => state.totalOrders);
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
@@ -62,7 +62,7 @@ export default function PorHora() {
       return salonOrders.length;
     }
     return null;
-  };
+  }
 
   function delivery() {
     if (ordersTotal) {
@@ -70,7 +70,7 @@ export default function PorHora() {
       return salonOrders.length;
     }
     return null;
-  };
+  }
 
   function taway() {
     if (ordersTotal) {
@@ -78,8 +78,8 @@ export default function PorHora() {
       return salonOrders.length;
     }
     return null;
-  };
-  
+  }
+
   return (
     <>
       <header>
@@ -104,7 +104,11 @@ export default function PorHora() {
 
       <br />
       <div>
-        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
+        <DoughnutChart
+          salon={salon()}
+          delivery={delivery()}
+          takeAway={taway()}
+        />
       </div>
     </>
   );
