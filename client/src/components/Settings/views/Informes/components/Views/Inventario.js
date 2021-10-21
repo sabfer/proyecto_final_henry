@@ -18,7 +18,7 @@ import {
 import Modal from "../../../../../Modals/Modal2";
 import SearchInv from "../../../../components/SearchInv";
 import FilterProveedores from "../../../../components/FilterProveedores";
-import NumberOfProducts from "../../../../components/NumberOfProduct";
+import NumberOfProductsInv from "../../../../components/NumberOfProductsInv";
 import { Paginado } from "../../../../../../css";
 import {
   Table,
@@ -48,6 +48,7 @@ export default function Inventario() {
   ///////////////////PRODUCTOS INVENTARIO///////////////////////
 
   const categories = useSelector((state) => state.productTypes);
+  const productsInv4=useSelector((state)=>state.productsInv)
   const productsInv3=useSelector((state)=>state.productsInv)
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
@@ -269,7 +270,13 @@ export default function Inventario() {
 
 
       <ExportExcel>
-        <NumberOfProducts />
+        {productsInv4 && (
+          <NumberOfProductsInv
+            title=" productos cargados exitosamente"
+            total={productsInv4.length}
+          />
+        )}
+        
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel

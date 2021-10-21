@@ -101,9 +101,8 @@ export default function Modal({
       cant:""|| cant,
       prodInvType: "" || prodInvType,
       proveeType: "" || proveeType,
-      
     });
-  }, [name,cant,price, prodInvType,proveeType,fecha]);
+  }, [name,cant,price,prodInvType,proveeType,fecha]);
 
   let labels = { label1, label2, label3, label4, label5,label6,label7};
   let productValues = {
