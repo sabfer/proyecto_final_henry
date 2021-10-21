@@ -1,12 +1,11 @@
 import { LeyendaError, Label, InputContainer } from "../../css/StyleForm";
 import { Select } from "../../css/Select";
-import Forms from "../../css/Forms.css"
 export const conditionalForm = (
   id,
   input,
   onChange,
   { label1, label2, label3, label4, label5, label6, label7 },
-  { name, user, pass, productType, prodInvType, fecha, price,cant },
+  { name, user, pass, productType, prodInvType, fecha, price, cant },
   { ley1, ley2, ley3, ley4, ley5, ley6 },
   inpValido,
   validacion,
@@ -14,7 +13,6 @@ export const conditionalForm = (
   categoriesProducts,
   categoriesProv
 ) => {
-
   //Formulario: "CREAR USUARIO"
   if (id === 1) {
     return (
@@ -141,7 +139,6 @@ export const conditionalForm = (
 
   //Formulario: "CREAR COMPRA INVENTARIO"
   if (id === 4) {
-
     return (
       <form>
         <InputContainer>
@@ -152,12 +149,12 @@ export const conditionalForm = (
             //required
             //value={input.name}
             onChange={(e) => onChange(e)}
-          //leyenda={ley1}
-          //cuando precionas una tecla se la presiona hacia adentro y cuando se
-          //levanta el dedo es donde se ejecuta esta funcion
-          //onKeyUp={validacion}
-          //cuando se hace click fuiera del input
-          //onBlur={validacion}
+            //leyenda={ley1}
+            //cuando precionas una tecla se la presiona hacia adentro y cuando se
+            //levanta el dedo es donde se ejecuta esta funcion
+            //onKeyUp={validacion}
+            //cuando se hace click fuiera del input
+            //onBlur={validacion}
           />
           {/* <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError> */}
         </InputContainer>
@@ -181,19 +178,20 @@ export const conditionalForm = (
           <div class="InputN">
             <InputContainer>
               <Label>{label3}</Label>
-              <input className="inp"
+              <input
+                className="inp"
                 type="number"
                 name="price"
                 min="1"
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-              //leyenda={ley2}
-              //cuando precionas una tecla se la presiona hacia adentro y cuando se
-              //levanta el dedo es donde se ejecuta esta funcion
-              //onKeyUp={validacion}
-              //cuando se hace click fuiera del input
-              //onBlur={validacion}
+                //leyenda={ley2}
+                //cuando precionas una tecla se la presiona hacia adentro y cuando se
+                //levanta el dedo es donde se ejecuta esta funcion
+                //onKeyUp={validacion}
+                //cuando se hace click fuiera del input
+                //onBlur={validacion}
               />
               {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
             </InputContainer>
@@ -201,7 +199,8 @@ export const conditionalForm = (
           <div class="InputC">
             <InputContainer>
               <Label>{label6}</Label>
-              <input className="inp"
+              <input
+                className="inp"
                 type="number"
                 name="cant"
                 width="30px"
@@ -209,12 +208,12 @@ export const conditionalForm = (
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-              //leyenda={ley2}
-              //cuando precionas una tecla se la presiona hacia adentro y cuando se
-              //levanta el dedo es donde se ejecuta esta funcion
-              //onKeyUp={validacion}
-              //cuando se hace click fuiera del input
-              //onBlur={validacion}
+                //leyenda={ley2}
+                //cuando precionas una tecla se la presiona hacia adentro y cuando se
+                //levanta el dedo es donde se ejecuta esta funcion
+                //onKeyUp={validacion}
+                //cuando se hace click fuiera del input
+                //onBlur={validacion}
               />
               {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
             </InputContainer>
@@ -227,8 +226,8 @@ export const conditionalForm = (
             name="prodInvType"
             required
             margin="0 0 1rem 0"
-          //onKeyUp={validacion}
-          //onBlur={validacion}
+            //onKeyUp={validacion}
+            //onBlur={validacion}
           >
             <option defaultValue="none" name="categorías" hidden>
               Categorias
@@ -248,8 +247,8 @@ export const conditionalForm = (
             name="proveeType"
             required
             margin="0 0 1rem 0"
-          //onKeyUp={validacion}
-          //onBlur={validacion}
+            //onKeyUp={validacion}
+            //onBlur={validacion}
           >
             <option defaultValue="none" name="categoríasProvee" hidden>
               Categorias Proveedores
@@ -262,16 +261,15 @@ export const conditionalForm = (
               ))}
           </Select>
         </InputContainer>
-
       </form>
     );
   }
-  
+
   if (id === 7) {
     return (
       <form>
         <InputContainer>
-          <label>{label1}</label>
+          <Label>{label1}</Label>
           <input
             type="text"
             name="name"
@@ -281,7 +279,7 @@ export const conditionalForm = (
           />
         </InputContainer>
         <InputContainer>
-          <label>{label2}</label>
+          <Label>{label2}</Label>
           <input
             type="number"
             name="price"
@@ -314,7 +312,7 @@ export const conditionalForm = (
     return (
       <form>
         <InputContainer>
-          <label>{label1}</label>
+          <Label>{label1}</Label>
           <input
             type="text"
             name="name"
@@ -332,7 +330,7 @@ export const conditionalForm = (
     return (
       <form>
         <InputContainer>
-          <label>{label7}</label>
+          <Label>{label7}</Label>
           <input
             type="date"
             name="fecha"
@@ -343,7 +341,7 @@ export const conditionalForm = (
         </InputContainer>
 
         <InputContainer>
-          <label>{label1}</label>
+          <Label>{label1}</Label>
           <input
             type="text"
             name="name"
@@ -353,7 +351,7 @@ export const conditionalForm = (
           />
         </InputContainer>
         <InputContainer>
-          <label>{label3}</label>
+          <Label>{label3}</Label>
           <input
             type="number"
             name="price"
@@ -363,7 +361,7 @@ export const conditionalForm = (
           />
         </InputContainer>
         <InputContainer>
-          <label>{label6}</label>
+          <Label>{label6}</Label>
           <input
             type="number"
             name="cant"
@@ -413,5 +411,4 @@ export const conditionalForm = (
       </form>
     );
   }
-
 };

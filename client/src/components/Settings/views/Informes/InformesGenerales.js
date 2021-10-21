@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import Proveedores from "./components/Views/Proveedores";
 import Compras from "./components/Views/Compras";
 import Inventario from "./components/Views/Inventario";
 
-
 export default function Contabilidad() {
-  const token = useSelector((state) => state.userToken);
-  const dispatch = useDispatch();
+  /* const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch(); */
   let [render, setRender] = useState(undefined);
   //const ordenes = useSelector((state) => state.orders);
 
@@ -23,9 +22,9 @@ export default function Contabilidad() {
     }
   }
 
-//   useEffect(() => {
-//     dispatch(getOrders(token));
-//   }, [dispatch, token]);
+  //   useEffect(() => {
+  //     dispatch(getOrders(token));
+  //   }, [dispatch, token]);
 
   return (
     <>

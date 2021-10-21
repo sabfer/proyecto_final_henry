@@ -1,35 +1,38 @@
-import { } from "../actions/index";
+import {} from "../actions/index";
 
 const initialState = {
   signUpData: undefined,
   userToken: undefined,
   userId: undefined,
-  // userName: undefined,
+  userEmail: undefined,
+  userName: undefined,
   products: undefined,
   productsInv: undefined,
   proveedores: undefined,
   productTypes: undefined,
   productsCopy: undefined,
   productsCopyInv: undefined,
-  
+
   users: undefined,
   commerces: undefined,
   settings: {
     show: "generales",
   },
   mesas: undefined,
+  waiters: undefined,
+  expSession: undefined,
   orders: {
     salonOrders: undefined,
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
   totalOrders: undefined,
+  totalOrders2: undefined,
   kitchenOrders: {
     inProgress: undefined,
     toBeDone: undefined,
   },
 };
-
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -45,12 +48,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userToken: payload.token,
         userId: payload.id,
+        userEmail: payload.email,
+        userName: payload.name,
       };
 
     case "GET_USER_ID":
       return {
         ...state,
-        userId: payload,
+        userId: payload.id,
+        userName: payload.name,
+        userEmail: payload.email,
+        // mesas: payload.tables,
+        waiters: payload.waiters,
+        expSession: payload.expSession,
       };
 
     case "GET_NAME_PRODUCT":
@@ -65,7 +75,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_NAME_PRODUCT_INV":
-   
       const allProductsIncludeInv = state.productsCopyInv.filter((e) =>
         e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
       );
@@ -81,63 +90,73 @@ const rootReducer = (state = initialState, { type, payload }) => {
       let arrayOrderName =
         payload === true
           ? products.sort(function (a, b) {
-            const aName = a.name.toLocaleLowerCase();
-            const bName = b.name.toLocaleLowerCase();
-            if (aName > bName) return 1;
-            if (bName > aName) return -1;
-            return 0;
-          })
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return 1;
+              if (bName > aName) return -1;
+              return 0;
+            })
           : products.sort(function (a, b) {
-            const aName = a.name.toLocaleLowerCase();
-            const bName = b.name.toLocaleLowerCase();
-            if (aName > bName) return -1;
-            if (bName < aName) return 1;
-            return 0;
-          });
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return -1;
+              if (bName < aName) return 1;
+              return 0;
+            });
       return {
         ...state,
         products: arrayOrderName,
       };
+
     //////////////////////////////////////////////////////////
     case "ORDER_BY_NAME_INV":
       const productsInv = state.productsInv;
       let arrayOrderNameInv =
         payload === true
           ? productsInv.sort(function (a, b) {
-            const aName = a.name.toLocaleLowerCase();
-            const bName = b.name.toLocaleLowerCase();
-            if (aName > bName) return 1;
-            if (bName > aName) return -1;
-            return 0;
-          })
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return 1;
+              if (bName > aName) return -1;
+              return 0;
+            })
           : productsInv.sort(function (a, b) {
-            const aName = a.name.toLocaleLowerCase();
-            const bName = b.name.toLocaleLowerCase();
-            if (aName > bName) return -1;
-            if (bName < aName) return 1;
-            return 0;
-          });
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return -1;
+              if (bName < aName) return 1;
+              return 0;
+            });
       return {
         ...state,
         productsInv: arrayOrderNameInv,
       };
     ///////////////////////////////////////////////////////////
     case "FILTER_PRODUCTS_TYPE":
-
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
 
       return {
         ...state,
         products: array,
       };
 
+    case "FILTER_ORDERS_TYPE":
+      const arrayOrders = [...state.totalOrders2].filter((e) => e.type === payload);
+      return {
+        ...state,
+        totalOrders: arrayOrders,
+      };
+
+    case "FILTER_ORDERS_NUMBER":
+      const arrayOrdersNumbers = [...state.totalOrders2].filter(
+        (e) => e.orderNumber === payload
+      );
+      return {
+        ...state,
+        totalOrders: arrayOrdersNumbers,
+      };
     case "FILTER_PROVEEDORES":
-      console.log(state.productsCopyInv,"reducer productsC")
       const arrayP = [...state.productsCopyInv].filter((e) => e.proveeType === payload);
-      console.log(payload,"reducer seleccionado")
-      console.log(arrayP,"reducer array")
       return {
         ...state,
         productsInv: arrayP,
@@ -150,17 +169,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         productsCopy: payload,
       };
 
-    /////////////////////////////////////
-
     case "GET_PRODUCTS_INV":
-
       return {
         ...state,
         productsInv: payload,
         productsCopyInv: payload,
-      }
-
-    /////////////////////////////////////
+      };
 
     case "POST_PRODUCTS":
       return {
@@ -168,27 +182,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: payload,
       };
 
-    ///////////////////////////////
-
     case "POST_PRODUCTS_INV":
       return {
         ...state,
         productsInv: payload,
       };
-    ///////////////////////////////
 
     case "DELETE_PRODUCT":
       return {
         ...state,
       };
 
-    /////////////////////////////////
-
     case "DELETE_PRODUCT_INV":
       return {
         ...state,
       };
-    /////////////////////////////////
 
     case "DELETE_CATEGORY":
       return {
@@ -241,10 +249,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         settings: payload,
       };
 
+    case "UPDATE_SETTINGS":
+      return {
+        ...state,
+        userName: payload.data.name,
+        expSession: payload.data.expirationTime,
+      };
     case "GET_ORDERS":
       return {
         ...state,
         totalOrders: payload,
+        totalOrders2: payload,
       };
 
     case "GET_TAKE_AWAY_ORDERS":

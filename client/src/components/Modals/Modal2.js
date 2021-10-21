@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
 import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
-import {
-  updateProduct,
-  getProductsInv,
-  postProductInv,
-  updateProductInv
-} from "../../actions";
+import { getProductsInv, postProductInv, updateProductInv } from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -19,12 +14,12 @@ export default function Modal({
   state,
   setStateModal,
   title,
-  label1,//name
-  label2,//user
-  label3,//price
-  label4,//
-  label5,//prodInvType
-  label6,//cant
+  label1, //name
+  label2, //user
+  label3, //price
+  label4, //
+  label5, //prodInvType
+  label6, //cant
   label7,
   modalContainerBox,
   id,
@@ -41,32 +36,35 @@ export default function Modal({
   /////////////////////////////////////////////////////////////
 
   //const categoriesProducts = useSelector((state) => state.prodInvTypesInv);
-  const categoriesProducts = [{ _id: "10", name: "Carnes" },
-  { _id: "11", name: "Pescados" },
-  { _id: "12", name: "Bebidas" },
-  { _id: "13", name: "Bebidas Alcoholicas" },
-  { _id: "14", name: "Verduras" },
-  { _id: "15", name: "Mercaderias"},
-  { _id: "15", name: "Insumos" }]
+  const categoriesProducts = [
+    { _id: "10", name: "Carnes" },
+    { _id: "11", name: "Pescados" },
+    { _id: "12", name: "Bebidas" },
+    { _id: "13", name: "Bebidas Alcoholicas" },
+    { _id: "14", name: "Verduras" },
+    { _id: "15", name: "Mercaderias" },
+    { _id: "16", name: "Insumos" },
+  ];
 
-  const categoriesProv = [{ _id: "20", name: "CocaCola" },
-  { _id: "21", name: "Carniceria Bermejo" },
-  { _id: "22", name: "Jumbo" },
-  { _id: "23", name: "Super Vea" },
-  { _id: "24", name: "Polleria 9 de Julio" },
-  { _id: "25", name: "Libreria San Marcos" },
-  { _id: "26", name: "Panaderia Milagros" },
-  { _id: "27", name: "PepsiCo" }
-]
+  const categoriesProv = [
+    { _id: "20", name: "CocaCola" },
+    { _id: "21", name: "Carniceria Bermejo" },
+    { _id: "22", name: "Jumbo" },
+    { _id: "23", name: "Super Vea" },
+    { _id: "24", name: "Polleria 9 de Julio" },
+    { _id: "25", name: "Libreria San Marcos" },
+    { _id: "26", name: "Panaderia Milagros" },
+    { _id: "27", name: "PepsiCo" },
+  ];
   /////////////////////////////////////////////////////////////
-  const categories = useSelector((state) => state.prodInvTypes);//no borrar
+  const categories = useSelector((state) => state.prodInvTypes); //no borrar
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     fecha: "" || fecha,
     name: "" || name,
     price: "" || price,
-    cant:""|| cant,
+    cant: "" || cant,
     prodInvType: "" || prodInvType,
     proveeType: "" || proveeType,
     description: "",
@@ -78,19 +76,19 @@ export default function Modal({
     fecha: "",
     name: "",
     price: "",
-    cant:"",
+    cant: "",
     prodInvType: "",
     proveeType: "",
   });
-  console.log(input)
-  console.log(inpValido)
+  console.log(input);
+  console.log(inpValido);
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
     prodInvType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     proveeType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     price: /^.{0,100}$/,
-    cant:/^.{0,100}$/
+    cant: /^.{0,100}$/,
   };
 
   useEffect(() => {
@@ -98,18 +96,18 @@ export default function Modal({
       fecha: "" || fecha,
       name: "" || name,
       price: "" || price,
-      cant:""|| cant,
+      cant: "" || cant,
       prodInvType: "" || prodInvType,
       proveeType: "" || proveeType,
     });
   }, [name,cant,price,prodInvType,proveeType,fecha]);
 
-  let labels = { label1, label2, label3, label4, label5,label6,label7};
+  let labels = { label1, label2, label3, label4, label5, label6, label7 };
   let productValues = {
     fecha: fecha,
     name: name,
     price: price,
-    cant:cant,
+    cant: cant,
     prodInvType: prodInvType,
     proveeType: proveeType,
   };
@@ -147,19 +145,17 @@ export default function Modal({
   function handleSubmit(e) {
     // e.preventDefault();
 
-    /////////////////CREACION PROD INV////////////////////////////////// 
+    /////////////////CREACION PROD INV//////////////////////////////////
     if (id === 4) {
-      if (
-        inpValido.name === "true"
-      ) {
-        const objeto={
-          fecha:input.fecha,
-          name:input.name,
-          price:input.price,
-          cant:input.cant,
-          prodInvType:input.prodInvType,
-          proveeType:input.proveeType,
-        }
+      if (inpValido.name === "true") {
+        const objeto = {
+          fecha: input.fecha,
+          name: input.name,
+          price: input.price,
+          cant: input.cant,
+          prodInvType: input.prodInvType,
+          proveeType: input.proveeType,
+        };
         dispatch(postProductInv(objeto, token));
         MySwal.fire({
           title: "¡Inventario creado correctamente!",
@@ -173,12 +169,12 @@ export default function Modal({
             }
             setStateModal(!state);
             setInput({
-              fecha:"",
+              fecha: "",
               name: "",
               price: "",
-              cant:"",
+              cant: "",
               prodInvType: "",
-              proveeType:"",
+              proveeType: "",
             });
           }
         });
@@ -195,12 +191,12 @@ export default function Modal({
 
     if (id === 9) {
       const payload = {
-        fecha:input.fecha,
+        fecha: input.fecha,
         name: input.name,
         price: input.price,
-        cant:input.cant,
+        cant: input.cant,
         prodInvType: input.prodInvType,
-        proveeType:input.proveeType
+        proveeType: input.proveeType,
       };
       dispatch(updateProductInv(payload, idElement, token));
       MySwal.fire({
@@ -214,26 +210,25 @@ export default function Modal({
         }
       });
     }
-
   }
 
   function handleClose(e) {
     setStateModal(!state);
     setInput({
       ...input,
-      fecha:"",
+      fecha: "",
       name: "",
       price: "",
-      cant:"",
+      cant: "",
       prodInvType: "",
-      proveeType:""
+      proveeType: "",
     });
   }
 
   return (
     <div>
       <Overlay display={state ? "flex" : "none"}>
-        <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
+        <ModalContainer modalContainerBox={modalContainerBox} minwidth="450px">
           <HeaderModal>
             <h2>{title}</h2>
           </HeaderModal>
@@ -250,10 +245,8 @@ export default function Modal({
             inpValido,
             validacion,
             categories,
-            //////////////////
             categoriesProducts,
             categoriesProv
-            //////////////////
           )}
           <Button
             width="100%"

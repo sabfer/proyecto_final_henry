@@ -3,37 +3,37 @@ import DoughnutChart from "../components/DoughnutChart";
 import OrdersTable from "../components/OrdersTable";
 
 export default function Total() {
-  let ordersDb = useSelector((state) => state.orders);
+  let ordersTotal = useSelector((state) => state.totalOrders);
 
   const totalFact = () => {
-    let totalFact = ordersDb.map((e) => e.totalPrice);
+    let totalFact = ordersTotal.map((e) => e.totalPrice);
     if (totalFact.length) {
       totalFact = totalFact.reduce((a, b) => a + b);
-      totalFact = new Intl.NumberFormat().format(totalFact);
-      return `La facturación Total es de: $${totalFact}`;
+      totalFact = new Intl.NumberFormat().format(totalFact).replaceAll(",", ".")+",00"
+      return `La facturación Total es de:  $ ${totalFact}`;
     }
     return "No hay ingresos registrados";
   };
 
   function salon() {
-    if (ordersDb) {
-      let salonOrders = ordersDb.filter((e) => e.type === "Salon");
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Salon");
       return salonOrders.length;
     }
     return null;
   }
 
   function delivery() {
-    if (ordersDb) {
-      let salonOrders = ordersDb.filter((e) => e.type === "Delivery");
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Delivery");
       return salonOrders.length;
     }
     return null;
   }
 
   function taway() {
-    if (ordersDb) {
-      let salonOrders = ordersDb.filter((e) => e.type === "Take Away");
+    if (ordersTotal) {
+      let salonOrders = ordersTotal.filter((e) => e.type === "Take Away");
       return salonOrders.length;
     }
     return null;
@@ -42,9 +42,9 @@ export default function Total() {
   return (
     <>
       <div>
-        <h1>Informe Total</h1>
+        <h2>Total</h2>
         <h3>{totalFact()}</h3>
-        <h3>Total de órdenes: {ordersDb.length}</h3>
+        <h3>Total de órdenes: {ordersTotal.length}</h3>
       </div>
       <div>
         <DoughnutChart
@@ -54,7 +54,7 @@ export default function Total() {
         />
       </div>
       <div>
-        <OrdersTable />
+        <OrdersTable ordenes={ordersTotal} title = "Todas las Ordenes"/>
       </div>
     </>
   );

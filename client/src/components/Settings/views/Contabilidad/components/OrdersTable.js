@@ -29,18 +29,17 @@ import {
   faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function OrdersTable() {
+export default function OrdersTable(props) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userToken);
 
-  const ordersTotal = useSelector((state) => state.orders);
+  // const ordersTotal = useSelector((state) => state.totalOrders);
+  const ordersTotal = props.ordenes;
 
   function handleNumberOrder(e) {}
 
   function handleDateOrder(e) {}
-
-  function handleClientOrder(e) {}
 
   function handleCashOrder(e) {}
 
@@ -76,7 +75,7 @@ export default function OrdersTable() {
   return (
     <div>
       <AjustesDerechaTop>
-        <h1>Órdenes Totales</h1>
+        <h1>{props.title}</h1>
       </AjustesDerechaTop>
       <SearchBarContainer>
         <SearchOrders />
@@ -132,16 +131,7 @@ export default function OrdersTable() {
                   <p>Tipo</p>
                 </TableHd>
                 <TableHd width="20%">
-                  <span className="productName">
-                    <p style={{ margin: 0 }}>Nombre Cliente</p>
-                    <FontAwesomeIcon
-                      onClick={(e) => handleClientOrder(e)}
-                      color={ordersTotal ? "#FF846A" : "#A2DFFF"}
-                      icon={ordersTotal ? faAngleDoubleUp : faAngleDoubleDown}
-                      size="lg"
-                      style={{ cursor: "pointer" }}
-                    ></FontAwesomeIcon>
-                  </span>
+                  <p>Nombre Cliente</p>
                 </TableHd>
                 <TableHd width="20%">
                   <p>Productos</p>
@@ -184,7 +174,10 @@ export default function OrdersTable() {
                         .replaceAll(",", ", ")}
                     </TableData>
                     <TableData>
-                      $ {new Intl.NumberFormat().format(el.totalPrice)}
+                      ${" "}
+                      {new Intl.NumberFormat()
+                        .format(el.totalPrice)
+                        .replaceAll(",", ".") + ",00"}
                     </TableData>
                   </TableRow>
                 );
@@ -205,7 +198,7 @@ export default function OrdersTable() {
 
       <ExportExcel>
         <NumberOfProducts
-          title=" ordenes cargadas exitosamente"
+          cantidad=" ordenes cargadas exitosamente"
           total={ordersTotal.length}
         />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">

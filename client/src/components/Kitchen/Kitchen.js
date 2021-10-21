@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Title, Body, Loading } from "../../css/";
+import { Header, Title, Body, Loading, StyledLink, Button } from "../../css/";
 import Orders from "./OrderCard.js";
 import {
   OrdersContainerInProgress,
@@ -9,7 +9,7 @@ import {
 import Error403 from "../Home/views/Error403";
 import { getKitchenOrders } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Kitchen() {
   const dispatch = useDispatch();
@@ -33,6 +33,12 @@ export default function Kitchen() {
     <div>
       <Header>
         <Title>Cocina</Title>
+        <StyledLink to="/home">
+          <Button width="13rem" height="2.5rem" padding="1rem" justify="space-between">
+            Regresar a Home
+            <FontAwesomeIcon icon={faHome} size="lg" />
+          </Button>
+        </StyledLink>
       </Header>
       <Body display="flex" gap="0 3rem">
         <OrdersContainerPending>

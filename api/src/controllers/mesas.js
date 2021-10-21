@@ -27,6 +27,7 @@ mesasController.findMesaByNum = async (req, res, next) => {
 mesasController.findMesas = async (_req, res, next) => {
   try {
     const mesas = await Mesas.find();
+    // console.log('---------- payload mesas luego del await: ', mesas)-
     if (mesas.length) {
       res.json({
         succes: true,
@@ -47,7 +48,7 @@ mesasController.findMesas = async (_req, res, next) => {
 
 // POST
 mesasController.addMesa = async (req, res, _next) => {
-  const payload = req.body;
+  const mesas = await Mesas.find();
   try {
     const mesas = await Mesas.findOne({ tableNumber: payload.tableNumber });
     if (mesas) {

@@ -15,3 +15,4 @@ const CommerceSchema = new Schema({
 });
 
 module.exports = mongoose.model("Commerce", CommerceSchema);
+  

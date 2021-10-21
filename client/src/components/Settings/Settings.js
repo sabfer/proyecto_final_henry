@@ -12,16 +12,14 @@ import {
   faChartLine,
   faCogs,
   faHome,
-  faSitemap,
   faTasks,
-  faUsers,
   faUtensils,
-  faWrench
+  faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
-import InformesGenerales from "./views/Informes/InformesGenerales"
+import InformesGenerales from "./views/Informes/InformesGenerales";
 //import Users from "./views/Users";
 
 import Categorias from "./views/Categorias";
@@ -29,8 +27,12 @@ import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
 
 export default function Settings() {
-  const settings = useSelector((state) => state.settings);
+  const settings = useSelector((state) => state.settings || "generales");
   const token = useSelector((state) => state.userToken);
+  /* const userName = useSelector((state) => state.userName);
+  const tables = useSelector((state) => state.mesas);
+  const waiters = useSelector((state) => state.waiters);
+  const expSession = useSelector((state) => state.expSession); */
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,19 +50,20 @@ export default function Settings() {
     switch (param) {
       case "products":
         return <Products />;
-      // case "users":
-      //   return <Users />;
-      // case "commerce":
-      //   return <Comercios />;
+      /* case "mesas":
+        return <Mesas />;
+        return;
+      case "mozos":
+        return <Mozos />;
+        return; */
       case "categorias":
         return <Categorias />;
       case "generales":
         return <Generals />;
       case "contabilidad":
-
-        return <Contabilidad/>;
+        return <Contabilidad />;
       case "informesGrles":
-        return <InformesGenerales/>;  
+        return <InformesGenerales />;
 
       default:
         return <Generals />;
@@ -76,9 +79,9 @@ export default function Settings() {
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="10rem" height="2.5rem" padding="1.3rem">
-            <FontAwesomeIcon icon={faHome} size="lg" />
+          <Button width="13rem" height="2.5rem" padding="1rem" justify="space-between">
             Regresar a Home
+            <FontAwesomeIcon icon={faHome} size="lg" />
           </Button>
         </StyledLink>
       </Header>
@@ -104,25 +107,23 @@ export default function Settings() {
             <FontAwesomeIcon icon={faTasks} size="lg" />
             <p>Categorías</p>
           </OpcionesIzquierda>
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
-            <FontAwesomeIcon icon={faUsers} size="lg" />
-            <p>Usuarios</p>
+
+          {/* <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Mesas</p>
           </OpcionesIzquierda>
 
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
-            <FontAwesomeIcon icon={faSitemap} size="lg" />
-            <p>Comercios</p>
-          </OpcionesIzquierda>
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "mozos")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Mozos</p>
+          </OpcionesIzquierda> */}
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Informes Generales</p>
           </OpcionesIzquierda>
-
         </AjustesIzquierda>
-        <AjustesDerecha>
-          {settings && renderSwitch(settings.show)}
-        </AjustesDerecha>
+        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );

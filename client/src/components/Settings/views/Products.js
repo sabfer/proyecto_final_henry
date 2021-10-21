@@ -19,7 +19,6 @@ import Modal from "../../Modals/Modal";
 import Search from "../components/Search";
 import FilterProductTypes from "../components/FilterProductTypes";
 import NumberOfProducts from "../components/NumberOfProduct";
-import { Paginado } from "../../../css";
 import {
   Table,
   TableHead,
@@ -27,6 +26,7 @@ import {
   TableHd,
   TableRow,
   Options,
+  TableContainer,
 } from "../../../css/Table";
 import {
   faPenSquare,
@@ -35,8 +35,6 @@ import {
   faPlus,
   faSyncAlt,
   faFileExcel,
-  faAngleDoubleRight,
-  faAngleDoubleLeft,
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -48,7 +46,6 @@ export default function Productos() {
   const products = useSelector((state) => state.products);
 
   const categories = useSelector((state) => state.productTypes);
-  const products2 = useSelector((state) => state.products);
 
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
@@ -112,30 +109,6 @@ export default function Productos() {
     dispatch(getProducts(token));
   }
 
-  const productPerPag = 10;
-  var cantPaginas = 0;
-  if (products2) {
-    cantPaginas = Math.ceil(products2.length / productPerPag);
-  }
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pagAct, setPagAct] = useState(1);
-  const getFilter = () => {
-    return products2.slice(currentPage, currentPage + productPerPag);
-  };
-  const handlePrev = () => {
-    if (pagAct > 1) {
-      setCurrentPage(currentPage - productPerPag);
-      setPagAct(pagAct - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (pagAct >= 1 && pagAct < cantPaginas) {
-      setCurrentPage(currentPage + productPerPag);
-      setPagAct(pagAct + 1);
-    }
-  };
-
   return (
     <div>
       <AjustesDerechaTop>
@@ -183,7 +156,7 @@ export default function Productos() {
       </SearchBarContainer>
 
       {Array.isArray(products) ? (
-        <div>
+        <TableContainer>
           <Table id="productsTable">
             <TableHead>
               <TableRow>
@@ -205,92 +178,72 @@ export default function Productos() {
               </TableRow>
             </TableHead>
             <tbody>
-              {getFilter().map((el) => {
-                return (
-                  <TableRow key={el._id}>
-                    <TableData>{el.name}</TableData>
-                    <TableData>{el.productType}</TableData>
-                    <TableData>$ {el.price}</TableData>
-                    <TableData>
-                      <Options justify="space-between">
-                        <Button
-                          onClick={(e) =>
-                            handleClick(e, {
-                              name: el.name,
-                              price: el.price,
-                              productType: el.productType,
-                              _id: el._id,
-                            })
-                          }
-                          width="2rem"
-                          height="2rem"
-                          buttonColor="rgb(2, 101, 210)"
-                        >
-                          <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
-                        </Button>
-                        <Button
-                          onClick={(e) => handleDelete(el._id)}
-                          width="2rem"
-                          height="2rem"
-                          buttonColor="rgba(255, 0, 0, 1)"
-                        >
-                          <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                        </Button>
-                      </Options>
-                    </TableData>
-                  </TableRow>
-                );
-              })}
+              {products &&
+                products.map((el) => {
+                  return (
+                    <TableRow key={el._id}>
+                      <TableData>{el.name}</TableData>
+                      <TableData>{el.productType}</TableData>
+                      <TableData>$ {el.price}</TableData>
+                      <TableData>
+                        <Options justify="space-between">
+                          <Button
+                            onClick={(e) =>
+                              handleClick(e, {
+                                name: el.name,
+                                price: el.price,
+                                productType: el.productType,
+                                _id: el._id,
+                              })
+                            }
+                            width="2rem"
+                            height="2rem"
+                            buttonColor="rgb(2, 101, 210)"
+                          >
+                            <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
+                          </Button>
+                          <Button
+                            onClick={(e) => handleDelete(el._id)}
+                            width="2rem"
+                            height="2rem"
+                            buttonColor="rgba(255, 0, 0, 1)"
+                          >
+                            <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                          </Button>
+                        </Options>
+                      </TableData>
+                    </TableRow>
+                  );
+                })}
             </tbody>
           </Table>
-        </div>
+        </TableContainer>
       ) : (
         <Loading gridcolumn="span 5">
           <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-          <p>Aún no hay ordenes</p>
+          <p>Aún no hay productos</p>
         </Loading>
       )}
 
       <ExportExcel>
         {products && (
           <NumberOfProducts
-            title=" productos cargados exitosamente"
+            cantidad=" productos cargados exitosamente"
             total={products.length}
           />
         )}
 
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
-          <FontAwesomeIcon icon={faFileExcel} size="lg">
-            <ReactHTMLTableToExcel
-              id="botonExportarProd"
-              table="productsTable"
-              className="Excel"
-              filename="Productos_cargados_en_el_sistema"
-              sheet="Productos"
-            />
-          </FontAwesomeIcon>
+          <ReactHTMLTableToExcel
+            id="botonExportarProd"
+            table="productsTable"
+            className="Excel"
+            filename="Productos_cargados_en_el_sistema"
+            sheet="Productos"
+            buttonText={<FontAwesomeIcon icon={faFileExcel} size="lg" />}
+          />
         </Button>
       </ExportExcel>
-
-      <Paginado>
-        <FontAwesomeIcon
-          onClick={() => handlePrev()}
-          icon={faAngleDoubleLeft}
-          size="lg"
-          style={{ cursor: "pointer" }}
-        ></FontAwesomeIcon>
-        <span> </span>
-        <span>
-          {pagAct} de {cantPaginas}
-        </span>
-        <span> </span>
-        <FontAwesomeIcon
-          onClick={() => handleNext()}
-          icon={faAngleDoubleRight}
-          size="lg"
-          style={{ cursor: "pointer" }}
-        ></FontAwesomeIcon>
-      </Paginado>
 
       <Modal
         idElement={inputModalProduct._id}
