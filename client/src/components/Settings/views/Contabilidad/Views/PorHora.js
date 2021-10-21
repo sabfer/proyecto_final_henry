@@ -41,7 +41,7 @@ export default function PorHora() {
 
   let ordersTotal = currentOrders();
 
-  console.log("soy OrdersTotal--->", ordersTotal);
+  //console.log("soy OrdersTotal--->", ordersTotal);
 
   const totalFact = () => {
     if (init !== undefined && finish !== undefined) {

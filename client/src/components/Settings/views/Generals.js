@@ -23,7 +23,7 @@ export default function Generales() {
     dispatch(getUserId(token));
   }
 
-  console.log({ id }, { name }, { expirationTime });
+  //console.log({ id }, { name }, { expirationTime });
 
   const [input, setInput] = useState({
     id: id,
@@ -31,7 +31,7 @@ export default function Generales() {
     expirationTime: expirationTime,
   });
 
-  console.log({ id }, { name }, { expirationTime });
+  //console.log({ id }, { name }, { expirationTime });
 
   useEffect(() => {
     setInput({
@@ -41,7 +41,7 @@ export default function Generales() {
     });
   }, [id, name, expirationTime]);
 
-  console.log({ id }, { name }, { expirationTime });
+  //console.log({ id }, { name }, { expirationTime });
 
   /* console.log(
     id ?? "sin id",
