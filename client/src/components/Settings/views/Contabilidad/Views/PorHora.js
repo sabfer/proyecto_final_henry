@@ -9,10 +9,7 @@ export default function PorHora() {
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
-  let yesterdayDate = moment()
-    .locale("es")
-    .add(-1, "days")
-    .format("YYYY/MM/DD");
+  let yesterdayDate = moment().locale("es").add(-1, "days").format("YYYY/MM/DD");
   let currentDate = moment().locale("es").format("YYYY/MM/DD");
 
   function handleChangeInit(e) {
@@ -44,14 +41,15 @@ export default function PorHora() {
 
   let ordersTotal = currentOrders();
 
-  console.log("soy OrdersTotal--->", ordersTotal);
+  //console.log("soy OrdersTotal--->", ordersTotal);
 
   const totalFact = () => {
     if (init !== undefined && finish !== undefined) {
       let totalFact = currentOrders().map((e) => e.totalPrice);
       if (totalFact.length) {
         totalFact = totalFact.reduce((a, b) => a + b);
-        totalFact = new Intl.NumberFormat().format(totalFact).replaceAll(",", ".")+",00"
+        totalFact =
+          new Intl.NumberFormat().format(totalFact).replaceAll(",", ".") + ",00";
         return `La facturación del día es: $ ${totalFact}`;
       }
       return "No hay ingresos registrados";
@@ -90,27 +88,15 @@ export default function PorHora() {
       <h2>Turno Diario</h2>
       <div>
         <label> Horario Inicio </label>
-        <input
-          type="time"
-          name="init"
-          onChange={(e) => handleChangeInit(e)}
-        ></input>
+        <input type="time" name="init" onChange={(e) => handleChangeInit(e)}></input>
         <label> Horario Cierre </label>
-        <input
-          type="time"
-          name="finish"
-          onChange={(e) => handleChangeFinish(e)}
-        ></input>
+        <input type="time" name="finish" onChange={(e) => handleChangeFinish(e)}></input>
       </div>
       <h3>{totalFact()}</h3>
       {ordersTotal.length && <h3>Total de órdenes: {ordersTotal.length}</h3>}
       <br />
       <div>
-        <DoughnutChart
-          salon={salon()}
-          delivery={delivery()}
-          takeAway={taway()}
-        />
+        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
       </div>
       <div>
         <OrdersTable ordenes={ordersTotal} title="Ordenes Filtradas" />

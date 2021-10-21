@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const WaiterSchema = new Schema({
   name: { type: String, required: true },
   phone: { type: Number, required: true },

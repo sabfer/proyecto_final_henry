@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { faCogs, faUtensils, faCog } from "@fortawesome/free-solid-svg-icons";
+import { faUtensils, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Body, Button, Header, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
@@ -23,9 +23,6 @@ export default function Dashboard() {
   const id = useSelector((state) => state.userId);
   const name = useSelector((state) => state.userName);
   //Estado de las ventanas modales
-  const [stateModal1, setStateModal1] = useState(false);
-  const [stateModal2, setStateModal2] = useState(false);
-  const [stateModal3, setStateModal3] = useState(false);
 
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
@@ -33,16 +30,15 @@ export default function Dashboard() {
     dispatch(getProducts(token));
   }, [dispatch, token]);
 
-
   // ver esto que no toma el nombre de entrada
   const [n, setN] = useState({
     n: name,
-  })
+  });
 
   useEffect(() => {
     setN({
       name: name,
-    })
+    });
   }, [name]);
 
   function handleLogOut() {

@@ -64,7 +64,7 @@ export default function Contabilidad() {
               width="7rem"
               height="2rem"
               hoverBgColor="rgb(61, 61, 61, 70%)"
-              buttonColor= "rgb(61, 61, 61)"
+              buttonColor="rgb(61, 61, 61)"
               onClick={(e) => handleRender(1)}
             >
               Por hora
@@ -73,7 +73,7 @@ export default function Contabilidad() {
               width="7rem"
               height="2rem"
               hoverBgColor="rgb(61, 61, 61, 70%)"
-              buttonColor= "rgb(61, 61, 61)"
+              buttonColor="rgb(61, 61, 61)"
               onClick={(e) => handleRender(2)}
             >
               Por fecha
@@ -82,7 +82,7 @@ export default function Contabilidad() {
               width="7rem"
               height="2rem"
               hoverBgColor="rgb(61, 61, 61, 70%)"
-              buttonColor= "rgb(61, 61, 61)"
+              buttonColor="rgb(61, 61, 61)"
               onClick={(e) => handleRender(3)}
             >
               Total

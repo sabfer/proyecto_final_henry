@@ -52,7 +52,6 @@ function Login() {
       [e.target.name]: e.target.value,
     });
     //console.log("token: ", token);
-
   }
 
   useEffect(() => {
@@ -65,12 +64,12 @@ function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     let validateEmail = await emailValidation(input); // if true means that user exists
-    console.log("email: " + input.email, " // email existe:" + validateEmail);
+    //console.log("email: " + input.email, " // email existe:" + validateEmail);
     // let validatePwd = await
     if (validateEmail && input.password) {
-      console.log("debo despachar inicio sesion, con input: ", input);
+      //console.log("debo despachar inicio sesion, con input: ", input);
       dispatch(loginUser(input));
-      console.log("token: ", token);
+      //console.log("token: ", token);
 
       setInput({
         email: "",
@@ -83,7 +82,7 @@ function Login() {
       });
     }
     if (!validateEmail) {
-      console.log("estoy en validateEmail: FALSE");
+      //console.log("estoy en validateEmail: FALSE");
       setSignUpErrors({
         ...signUpErrors,
         emailSuccess: false,
@@ -105,11 +104,7 @@ function Login() {
         <NavBar>
           <ul>
             <li>
-              <StyledLink
-                to="/"
-                margin="12px"
-                hover="underline solid rgb(255,255,255)"
-              >
+              <StyledLink to="/" margin="12px" hover="underline solid rgb(255,255,255)">
                 Inicio
               </StyledLink>
             </li>

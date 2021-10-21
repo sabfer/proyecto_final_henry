@@ -41,10 +41,10 @@ class ExcelToJson extends React.Component {
     e.stopPropagation();
     e.preventDefault();
     var file = e.target.files[0];
-    console.log(file);
+    //console.log(file);
     this.setState({ file });
 
-    console.log(this.state.file);
+    //console.log(this.state.file);
   }
 
   readFile() {
@@ -61,10 +61,11 @@ class ExcelToJson extends React.Component {
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
+      // eslint-disable-next-line no-unused-vars
       const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
       /* Update state */
-      console.log("Data>>>" + data); // shows that excel data is read
-      console.log(this.convertToJson(data)); // shows data in json format
+      //console.log("Data>>>" + data); // shows that excel data is read
+      //console.log(this.convertToJson(data)); // shows data in json format
     };
     reader.readAsBinaryString(f);
   }

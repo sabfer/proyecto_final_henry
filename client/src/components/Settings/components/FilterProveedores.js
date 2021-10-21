@@ -1,10 +1,11 @@
 import React from "react";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterProveedores } from "../../../actions";
 import { Select } from "../../../css/Select";
 
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
+
   let proveedores = 
   [{ _id: "20", name: "CocaCola" },
   { _id: "21", name: "Carniceria Bermejo" },

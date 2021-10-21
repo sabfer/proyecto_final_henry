@@ -9,9 +9,8 @@ export default function SearchOrders() {
   const dispatch = useDispatch();
 
   function handleFilterNumber(e) {
-    if (e.target.value === "") 
-    return dispatch(getOrders(token));
-    let number = Number(e.target.value)
+    if (e.target.value === "") return dispatch(getOrders(token));
+    let number = Number(e.target.value);
     dispatch(filterOrdersNumber(number, token));
   }
 

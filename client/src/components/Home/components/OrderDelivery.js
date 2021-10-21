@@ -22,7 +22,7 @@ export default function OrderDelivery({ orderNumber, handleUpdate }) {
     setOrderTime({
       demora: diferencia,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   setInterval(() => {
@@ -34,27 +34,28 @@ export default function OrderDelivery({ orderNumber, handleUpdate }) {
     });
   }, 60000);
   return (
-      <DeliveryCard
-        onClick={(e) => {
-          handleUpdate(e, { orderNumber: orderNumber });
-        }}
-      >
-        <div>
-          <Time>{orderTime.demora} min.</Time>
-        </div>
-        <FontAwesomeIcon 
-          icon={faMotorcycle} 
-          size="4x" 
-          color={
-            orderTime.demora > 25
-              ? "#ED4245"
-              : orderTime.demora > 15
-              ? "#FFA43D"
-              : orderTime.demora < 15
-              ? "#4DD87A"
-              : null
-          }/>
-        <p>Pedido: {orderNumber}</p>
-      </DeliveryCard>
+    <DeliveryCard
+      onClick={(e) => {
+        handleUpdate(e, { orderNumber: orderNumber });
+      }}
+    >
+      <div>
+        <Time>{orderTime.demora} min.</Time>
+      </div>
+      <FontAwesomeIcon
+        icon={faMotorcycle}
+        size="4x"
+        color={
+          orderTime.demora > 25
+            ? "#ED4245"
+            : orderTime.demora > 15
+            ? "#FFA43D"
+            : orderTime.demora < 15
+            ? "#4DD87A"
+            : null
+        }
+      />
+      <p>Pedido: {orderNumber}</p>
+    </DeliveryCard>
   );
 }

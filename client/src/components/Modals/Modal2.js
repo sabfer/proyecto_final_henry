@@ -83,8 +83,9 @@ export default function Modal({
     prodInvType: "",
     proveeType: "",
   });
-  console.log(input);
-  console.log(inpValido);
+
+  /* console.log(input);
+  console.log(inpValido); */
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
@@ -150,7 +151,6 @@ export default function Modal({
 
   function handleSubmit(e) {
     // e.preventDefault();
-
     /////////////////CREACION PROD INV//////////////////////////////////
     if (id === 4) {
       if (inpValido.name === "true" && inpValido.fecha == "true" && inpValido.prodInvType == "true"

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getProductsInv,
   deleteProductInv,
+  getProductsInv,
   orderTheProductsInv,
 } from "../../../../../../actions";
 //------------------------------------------\\
@@ -54,7 +54,6 @@ export default function Inventario() {
   const categories = useSelector((state) => state.productTypes);
   const productsInv4=useSelector((state)=>state.productsInv)
   const productsInv3=useSelector((state)=>state.productsInv)
-
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -276,6 +275,7 @@ export default function Inventario() {
       )}
 
       <ExportExcel>
+
         {productsInv4 && (
           <NumberOfProductsInv
             title=" productos cargados exitosamente"
@@ -284,6 +284,9 @@ export default function Inventario() {
         )}
         
         {/* <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
+      {productsInv4 && (<NumberOfProductsInv title=" Productos cargados exitosamente" total={productsInv4.length}/>)}
+        <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
+
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel
               id="botonExportarProd"

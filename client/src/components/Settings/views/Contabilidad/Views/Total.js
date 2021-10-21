@@ -9,7 +9,7 @@ export default function Total() {
     let totalFact = ordersTotal.map((e) => e.totalPrice);
     if (totalFact.length) {
       totalFact = totalFact.reduce((a, b) => a + b);
-      totalFact = new Intl.NumberFormat().format(totalFact).replaceAll(",", ".")+",00"
+      totalFact = new Intl.NumberFormat().format(totalFact).replaceAll(",", ".") + ",00";
       return `La facturación Total es de:  $ ${totalFact}`;
     }
     return "No hay ingresos registrados";
@@ -47,14 +47,10 @@ export default function Total() {
         <h3>Total de órdenes: {ordersTotal.length}</h3>
       </div>
       <div>
-        <DoughnutChart
-          salon={salon()}
-          delivery={delivery()}
-          takeAway={taway()}
-        />
+        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
       </div>
       <div>
-        <OrdersTable ordenes={ordersTotal} title = "Todas las Ordenes"/>
+        <OrdersTable ordenes={ordersTotal} title="Todas las Ordenes" />
       </div>
     </>
   );

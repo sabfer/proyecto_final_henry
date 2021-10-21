@@ -32,8 +32,7 @@ export default function PorFecha() {
       if (totalFact.length) {
         totalFact = totalFact.reduce((a, b) => a + b);
         totalFact =
-          new Intl.NumberFormat().format(totalFact).replaceAll(",", ".") +
-          ",00";
+          new Intl.NumberFormat().format(totalFact).replaceAll(",", ".") + ",00";
         return `La facturación total del periodo es: $ ${totalFact}`;
       }
       return "No hay ingresos registrados";
@@ -74,27 +73,15 @@ export default function PorFecha() {
       </header>
       <div>
         <label> Desde la fecha: </label>
-        <input
-          type="date"
-          name="init"
-          onChange={(e) => handleChangeInit(e)}
-        ></input>
+        <input type="date" name="init" onChange={(e) => handleChangeInit(e)}></input>
         <label> Hasta la fecha </label>
-        <input
-          type="date"
-          name="finish"
-          onChange={(e) => handleChangeFinish(e)}
-        ></input>
+        <input type="date" name="finish" onChange={(e) => handleChangeFinish(e)}></input>
       </div>
       <h3>{totalFact()}</h3>
       {ordersTotal.length && <h3>Total de órdenes: {ordersTotal.length}</h3>}
       <br />
       <div>
-        <DoughnutChart
-          salon={salon()}
-          delivery={delivery()}
-          takeAway={taway()}
-        />
+        <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
       </div>
       <div>
         <OrdersTable ordenes={ordersTotal} title="Ordenes Filtradas" />

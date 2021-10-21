@@ -3,13 +3,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "../../../../../css";
 import { ExportExcel } from "../../../../../css/SettingStyles";
-import {
-  Table,
-  TableHead,
-  TableData,
-  TableHd,
-  TableRow,
-} from "../../../../../css/Table";
+import { Table, TableHead, TableData, TableHd, TableRow } from "../../../../../css/Table";
 import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 export default function OrdersTable() {
