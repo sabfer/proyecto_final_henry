@@ -98,13 +98,13 @@ export function orderTheProductsInv(payload) {
     payload,
   };
 }
-// ---------- ORDENAR PRODUCTOS POR NUMBERO DE ORDEN ---------- \
-// export function orderOrders(payload) {
-//   return {
-//     type: "ORDER_BY_NUMBER",
-//     payload,
-//   };
-// }
+// ---------- ORDENAR PRODUCTOS POR NUMBER DE ORDEN ---------- \
+export function orderOrders(payload) {
+  return {
+    type: "ORDER_BY_NUMBER",
+    payload,
+  };
+}
 
 // ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
 export function orderTheProducts(payload) {

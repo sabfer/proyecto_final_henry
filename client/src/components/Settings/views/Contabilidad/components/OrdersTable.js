@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../../../../../actions";
+import { getOrders, orderOrders } from "../../../../../actions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Loading } from "../../../../../css";
@@ -29,15 +29,20 @@ import {
   faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 export default function OrdersTable(props) {
   const dispatch = useDispatch();
+  const[state, setState] = useState(false)
 
   const token = useSelector((state) => state.userToken);
 
   // const ordersTotal = useSelector((state) => state.totalOrders);
   const ordersTotal = props.ordenes;
 
-  function handleNumberOrder(e) {}
+  function handleNumberOrder(e) {
+    setState(!state)    
+    dispatch(orderOrders(state))
+  }
 
   function handleDateOrder(e) {}
 
@@ -105,8 +110,8 @@ export default function OrdersTable(props) {
                     <p style={{ margin: 0 }}>N° Orden</p>
                     <FontAwesomeIcon
                       onClick={(e) => handleNumberOrder(e)}
-                      color={ordersTotal ? "#FF846A" : "#A2DFFF"}
-                      icon={ordersTotal ? faAngleDoubleUp : faAngleDoubleDown}
+                      color={state ? "#FF846A" : "#A2DFFF"}
+                      icon={state ? faAngleDoubleUp : faAngleDoubleDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
                     ></FontAwesomeIcon>

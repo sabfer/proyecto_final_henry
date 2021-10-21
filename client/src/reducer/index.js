@@ -98,16 +98,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: arrayOrderName,
       };
 
-    // case "ORDER_BY_NUMBER": ---> COMPLETAR
-    //   let ordersNumber = state.totalOrders;
+    case "ORDER_BY_NUMBER":
+      let ordersNumber = state.totalOrders;
+      payload
+        ? (ordersNumber = ordersNumber.sort(
+            (a, b) => b.orderNumber - a.orderNumber
+          ))
+        : (ordersNumber = ordersNumber.sort(
+            (a, b) => a.orderNumber - b.orderNumber
+          ));
+      return {
+        ...state,
+        totalOrders: ordersNumber,
+      };
 
-    //   ordersNumber = ordersNumber.map(e => e.orderNumber).sort((a, b) => a - b)
-    //   return {
-    //     ...state,
-    //     totalOrders2: ordersNumber,
-    //   };
-
-    //////////////////////////////////////////////////////////
     case "ORDER_BY_NAME_INV":
       const productsInv = state.productsInv;
       let arrayOrderNameInv =
@@ -130,7 +134,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productsInv: arrayOrderNameInv,
       };
-    ///////////////////////////////////////////////////////////
+      
     case "FILTER_PRODUCTS_TYPE":
       const array = [...state.productsCopy].filter(
         (e) => e.productType === payload
