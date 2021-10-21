@@ -53,17 +53,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_USER_ID":
-      console.log('reducer getuserid, payload: ', payload);
       return {
         ...state,
         userId: payload.id,
         userName: payload.name,
         userEmail: payload.email,
-        mesas: payload.tables,
+        // mesas: payload.tables,
         waiters: payload.waiters,
         expSession: payload.expSession,
       };
-
 
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
@@ -148,9 +146,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
       
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter(
-        (e) => e.productType === payload
-      );
+      const array = [...state.productsCopy].filter((e) => e.productType === payload);
 
       return {
         ...state,
@@ -158,9 +154,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_ORDERS_TYPE":
-      const arrayOrders = [...state.totalOrders2].filter(
-        (e) => e.type === payload
-      );
+      const arrayOrders = [...state.totalOrders2].filter((e) => e.type === payload);
       return {
         ...state,
         totalOrders: arrayOrders,
@@ -175,12 +169,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         totalOrders: arrayOrdersNumbers,
       };
     case "FILTER_PROVEEDORES":
-      console.log(state.productsCopyInv, "reducer productsC");
-      const arrayP = [...state.productsCopyInv].filter(
-        (e) => e.proveeType === payload
-      );
-      console.log(payload, "reducer seleccionado");
-      console.log(arrayP, "reducer array");
+      const arrayP = [...state.productsCopyInv].filter((e) => e.proveeType === payload);
       return {
         ...state,
         productsInv: arrayP,
@@ -274,12 +263,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "UPDATE_SETTINGS":
-      console.log('payload.data.expirationTime de UPDATE_SETTINGS, ', payload.data.expirationTime)
       return {
         ...state,
         userName: payload.data.name,
-        expSession: payload.data.expirationTime
-      }
+        expSession: payload.data.expirationTime,
+      };
     case "GET_ORDERS":
       return {
         ...state,
