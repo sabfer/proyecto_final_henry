@@ -3,7 +3,7 @@ import DoughnutChart from "../components/DoughnutChart";
 import OrdersTable from "../components/OrdersTable";
 
 export default function Total() {
-  let ordersDb = useSelector((state) => state.orders);
+  let ordersDb = useSelector((state) => state.totalOrders);
 
   const totalFact = () => {
     let totalFact = ordersDb.map((e) => e.totalPrice);

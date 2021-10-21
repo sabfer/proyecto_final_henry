@@ -1,22 +1,16 @@
 import React from "react";
 import { Chart } from "primereact/chart";
+import moment from "moment";
 
-export default function BarChart({ salOrds, taOrds, devOrds }) {
-  console.log("Ordenes Salon por dia:", salOrds);
+export default function BarChart({ salOrds, taOrds, devOrds, week }) {
+  const weekLabel = week.map((date) => moment(date).format("DD/MM"));
+
   const basicData = {
-    labels: [
-      "14-10-21",
-      "15-10-21",
-      "16-10-21",
-      "17-10-21",
-      "18-10-21",
-      "19-10-21",
-      "20-10-21",
-    ],
+    labels: weekLabel,
     datasets: [
       {
         label: "Salon",
-        backgroundColor: "#002366",
+        backgroundColor: "#FF6384",
         data: [
           salOrds[1],
           salOrds[2],
@@ -29,7 +23,7 @@ export default function BarChart({ salOrds, taOrds, devOrds }) {
       },
       {
         label: "Delivery",
-        backgroundColor: "#008891",
+        backgroundColor: "#36A2EB",
         data: [
           taOrds[1],
           taOrds[2],
@@ -42,7 +36,7 @@ export default function BarChart({ salOrds, taOrds, devOrds }) {
       },
       {
         label: "Take away",
-        backgroundColor: "#16C79A",
+        backgroundColor: "#FFCE56",
         data: [
           devOrds[1],
           devOrds[2],
