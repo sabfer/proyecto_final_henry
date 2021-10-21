@@ -19,6 +19,7 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
+  totalOrders: undefined,
   kitchenOrders: undefined,
 };
 
@@ -79,7 +80,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter((e) => e.productType === payload);
+      const array = [...state.productsCopy].filter(
+        (e) => e.productType === payload
+      );
       return {
         ...state,
         products: array,
@@ -151,7 +154,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "GET_ORDERS":
       return {
         ...state,
-        orders: payload,
+        totalOrders: payload,
       };
 
     case "GET_TAKE_AWAY_ORDERS":

@@ -11,7 +11,7 @@ export default function Contabilidad() {
   const dispatch = useDispatch();
   let [render, setRender] = useState(undefined);
 
-  const ordenes = useSelector((state) => state?.orders);
+  let ordenes = useSelector((state) => state.totalOrders);
 
   function handleRender(e) {
     if (e === 1) {
@@ -27,22 +27,26 @@ export default function Contabilidad() {
 
   useEffect(() => {
     dispatch(getOrders(token));
+    return () => {
+      ordenes = null;
+    };
   }, []);
 
   function ordersSalonCantByWeek() {
-    const ordersSalon = ordenes.filter((ord) => ord.type === "Salon");
+    console.log("ORDENES QUE NO ES ARRAY:", ordenes);
+    const ordersSalon = ordenes?.filter((ord) => ord.type === "Salon");
     const ordsByday = ordersbyWeek(ordersSalon, { ...ordersByWeek });
     return ordsByday;
   }
 
   function ordersTaCantByWeek() {
-    const ordersDev = ordenes.filter((ord) => ord.type === "Delivery");
+    const ordersDev = ordenes?.filter((ord) => ord.type === "Delivery");
     const ordsByday = ordersbyWeek(ordersDev, { ...ordersByWeek });
     return ordsByday;
   }
 
   function ordersDevCantByWeek() {
-    const ordersTa = ordenes.filter((ord) => ord.type === "Take Away");
+    const ordersTa = ordenes?.filter((ord) => ord.type === "Take Away");
     const ordsByday = ordersbyWeek(ordersTa, { ...ordersByWeek });
     return ordsByday;
   }
