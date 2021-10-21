@@ -1,38 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Title, Body } from "../../css/";
+import { Header, Title, Body, Loading } from "../../css/";
+import Orders from "./OrderCard.js";
 import {
-  OrdersContainer,
-  OrderCard,
-  OrderDetails,
-  OrderProducts,
+  OrdersContainerInProgress,
+  OrdersContainerPending,
 } from "../../css/KitchenStyles";
-import { Button } from "../../css/";
 import Error403 from "../Home/views/Error403";
-import { getKitchenOrders, updateOrderKitchen } from "../../actions";
+import { getKitchenOrders } from "../../actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Kitchen() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userToken);
-  const orders = useSelector((state) => state.kitchenOrders);
+  const toBeDone = useSelector((state) => state.kitchenOrders?.toBeDone);
+  const inProgress = useSelector((state) => state.kitchenOrders?.inProgress);
 
   useEffect(() => {
     dispatch(getKitchenOrders(token));
     setInterval(() => {
       dispatch(getKitchenOrders(token));
-    }, 60000);
+    }, 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, []);
 
   if (!token) {
     return <Error403 />;
-  }
-
-  function cambiarEstado(id, estado, orden) {
-    if (estado === 1 || estado === 2) {
-      dispatch(updateOrderKitchen(id, orden, token));
-      dispatch(getKitchenOrders(token));
-    }
   }
 
   return (
@@ -40,64 +34,34 @@ export default function Kitchen() {
       <Header>
         <Title>Cocina</Title>
       </Header>
-      <Body display="flex" direction="column">
-        <Title color="#000">Pedidos</Title>
-        <OrdersContainer>
-          {orders &&
-            orders.map((order) => {
-              console.log(order);
-              return (
-                <OrderCard key={order._id}>
-                  <h2>Pedido N° {order.orderNumber}</h2>
-                  <p>
-                    Tipo: <b>{order.type}</b>
-                  </p>
-                  <OrderDetails>
-                    <p>Productos</p>
-                    <p>Cant.</p>
-                    {order.products &&
-                      order.products.map((product) => {
-                        return (
-                          <OrderProducts key={product._id}>
-                            <p>{product.name}</p>
-                            <p>{product.amount}</p>
-                          </OrderProducts>
-                        );
-                      })}
-                  </OrderDetails>
-                  <Button
-                    onClick={() =>
-                      order.estado === 1
-                        ? cambiarEstado(order._id, order.estado, { ...order, estado: 2 })
-                        : order.estado === 2
-                        ? cambiarEstado(order._id, order.estado, { ...order, estado: 3 })
-                        : null
-                    }
-                    width="78%"
-                    height="2.5rem"
-                    padding="0.6rem"
-                    color={order.estado === 1 ? "rgb(0, 0, 0) " : null}
-                    buttonColor={
-                      order.estado === 1
-                        ? "rgb(254, 228, 64)"
-                        : order.estado === 2
-                        ? "rgb(0, 168, 120)"
-                        : null
-                    }
-                    alignSelf="center"
-                    position="absolute"
-                    bottom="2rem"
-                  >
-                    {order.estado === 1
-                      ? "Empezar orden"
-                      : order.estado === 2
-                      ? "Orden completada"
-                      : null}
-                  </Button>
-                </OrderCard>
-              );
-            })}
-        </OrdersContainer>
+      <Body display="flex" gap="0 3rem">
+        <OrdersContainerPending>
+          <Title color="#000">Pedidos pendientes</Title>
+          {Array.isArray(toBeDone) && toBeDone.length ? (
+            toBeDone.map((order) => {
+              return <Orders ordenPendiente={order} key={order._id} />;
+            })
+          ) : (
+            <Loading gridcolumn="1/-1">
+              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+              <p>Aún no hay ordenes pendientes</p>
+            </Loading>
+          )}
+        </OrdersContainerPending>
+        <OrdersContainerInProgress>
+          <Title color="#000">Pedidos en preparación</Title>
+
+          {Array.isArray(inProgress) && inProgress.length ? (
+            inProgress.map((order) => {
+              return <Orders ordenPendiente={order} key={order._id} />;
+            })
+          ) : (
+            <Loading gridcolumn="1/-1">
+              <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+              <p>Aún no hay ordenes pendientes</p>
+            </Loading>
+          )}
+        </OrdersContainerInProgress>
       </Body>
     </div>
   );

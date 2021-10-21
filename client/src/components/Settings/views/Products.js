@@ -37,6 +37,7 @@ import {
   faFileExcel,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Productos() {
@@ -186,7 +187,7 @@ export default function Productos() {
           <Table id="productsTable">
             <TableHead>
               <TableRow>
-                <TableHd width="40%">
+                <TableHd width="38%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
                     <FontAwesomeIcon
@@ -198,13 +199,12 @@ export default function Productos() {
                     ></FontAwesomeIcon>
                   </span>
                 </TableHd>
-                <TableHd width="40%">Tipo de producto</TableHd>
-                <TableHd width="10%">Precio</TableHd>
-                <TableHd width="10%">Opciones</TableHd>
+                <TableHd width="36%">Tipo de producto</TableHd>
+                <TableHd width="12%">Precio</TableHd>
+                <TableHd width="12%">Opciones</TableHd>
               </TableRow>
             </TableHead>
             <tbody>
-              {/* {products.map((el) => { */}
               {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
@@ -245,15 +245,20 @@ export default function Productos() {
           </Table>
         </div>
       ) : (
-        <Loading>
-          <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+        <Loading gridcolumn="span 5">
+          <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+          <p>Aún no hay ordenes</p>
         </Loading>
       )}
 
-
       <ExportExcel>
-        <NumberOfProducts />
+        {products && (
+          <NumberOfProducts
+            title=" productos cargados exitosamente"
+            total={products.length}
+          />
+        )}
+
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel

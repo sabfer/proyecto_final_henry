@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { faCog, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCogs, faUtensils, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Body, Button, Header, OptionsBar, StyledLink, Title } from "../../../css";
+import { Body, Button, Header, StyledLink, Title } from "../../../css";
 import { BodyTop } from "../../../css/HomeStyles";
-import Modal from "../../Modals/Modal";
 import DeliveryModule from "../components/DeliveryModule";
 import SalonModule from "../components/SalonModule";
 import TakeAwayModule from "../components/TakeOutModule";
@@ -15,16 +14,11 @@ import {
   getProducts,
   getCategories,
   deleteToken,
-  getTakeAwayOrders,
-  getDeliveryOrders,
 } from "../../../actions/index";
 
 export default function Dashboard() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.productTypes);
-  /* const ordersTakeAway = useSelector((state) => state.orders.salonOrders);  
-  console.log(ordersTakeAway)  */
   const token = useSelector((state) => state.userToken);
   const id = useSelector((state) => state.userId);
   const name = useSelector((state) => state.userName);
@@ -36,15 +30,7 @@ export default function Dashboard() {
   useEffect(() => {
     dispatch(changeSettings({ show: "" }));
     dispatch(getCategories(token));
-    setTimeout(() => {
-      dispatch(getProducts(token));
-      //dispatch(getCommerces(token));
-    }, 1000);
-  }, [dispatch, token]);
-
-  useEffect(() => {
-    dispatch(getTakeAwayOrders(token));
-    dispatch(getDeliveryOrders(token));
+    dispatch(getProducts(token));
   }, [dispatch, token]);
 
 
@@ -72,88 +58,53 @@ export default function Dashboard() {
     <div>
       <Header>
         <Title>Bienvenido {n.name ?? name}</Title>
-        <Button
-          buttonColor="rgb(255, 0, 0)"
-          width="5rem"
-          height="2.5rem"
-          padding="0.5rem"
-          textSize="18px"
-          onClick={handleLogOut}
-        >
-          Salir
-        </Button>
-      </Header>
-      <OptionsBar>
-        <Button
-          onClick={() => setStateModal3(!stateModal3)}
-          width="10.5rem"
-          height="2.5rem"
-          justify="space-between"
-          padding="0.5rem"
-          buttonColor="rgb(2, 101, 210)"
-        >
-          Crear producto
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-        <StyledLink to="/settings">
+        <div style={{ display: "flex" }}>
+          <StyledLink to="/kitchenDashboard">
+            <Button
+              width="9rem"
+              height="2.5rem"
+              justify="space-between"
+              padding="0.5rem"
+              buttonColor="rgb(42, 194, 209)"
+              margin="0 1rem 0 0"
+            >
+              Ir a la cocina
+              <FontAwesomeIcon icon={faUtensils} size="lg" />
+            </Button>
+          </StyledLink>
+          <StyledLink to="/settings">
+            <Button
+              width="7rem"
+              height="2.5rem"
+              justify="space-between"
+              padding="0.5rem"
+              buttonColor="rgb(128, 128, 128)"
+              hoverColor="rgb(166, 166, 166)"
+              margin="0 1rem 0 0"
+            >
+              Ajustes
+              <FontAwesomeIcon icon={faCog} size="lg" />
+            </Button>
+          </StyledLink>
           <Button
-            width="7rem"
+            buttonColor="rgb(255, 0, 0)"
+            width="5rem"
             height="2.5rem"
-            justify="space-between"
             padding="0.5rem"
-            buttonColor="rgb(128, 128, 128)"
-            hoverColor="rgb(166, 166, 166)"
+            textSize="18px"
+            onClick={handleLogOut}
           >
-            Ajustes
-            <FontAwesomeIcon icon={faCog} size="lg" />
+            Salir
           </Button>
-        </StyledLink>
-      </OptionsBar>
-
-      <Body>
+        </div>
+      </Header>
+      <Body padding="3rem 3rem 0 3rem">
         <BodyTop>
           <DeliveryModule />
           <TakeAwayModule />
         </BodyTop>
         <SalonModule />
       </Body>
-
-      {/* Modal 1 */}
-      <Modal
-        id={1}
-        state={stateModal1}
-        setStateModal={setStateModal1}
-        title="Crear Usuario Nuevo"
-        label1="Nombre"
-        label2="Usuario"
-        label3="Contraseña"
-        modalContainerBox={true}
-      />
-
-      {/* Modal 2 */}
-      <Modal
-        id={2}
-        state={stateModal2}
-        setStateModal={setStateModal2}
-        title="Crear Comercio"
-        label1="Nombre"
-        label2="Ubicación del Comercio"
-        modalContainerBox={false}
-      />
-
-      {/* Modal 3 */}
-      <Modal
-        id={3}
-        state={stateModal3}
-        setStateModal={setStateModal3}
-        title="Crear un Producto"
-        label1="Nombre"
-        label2="Descripción"
-        label3="Precio"
-        label4="Tipo de Producto"
-        modalContainerBox={true}
-        categories={categories}
-      />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { Select } from "../../../css/Select";
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productTypes);
+  
   let array;
   if (Array.isArray(products)) {
     products = products.map((e) => e.name);
@@ -25,7 +26,6 @@ export default function FilterProductTypes() {
           <option hidden defaultValue>
             Categorías
           </option>
-          {/* <option value="-1">Categorías</option> */}
           {array &&
             array.map((e, i) => (
               <option key={i++} value={e}>

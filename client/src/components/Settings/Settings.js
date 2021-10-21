@@ -8,11 +8,22 @@ import {
   AjustesDerecha,
 } from "../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartLine,
+  faCogs,
+  faHome,
+  faSitemap,
+  faTasks,
+  faUsers,
+  faUtensils,
+  faWrench
+} from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
-import Comercios from "./views/Comercios";
-import Users from "./views/Users";
+import Contabilidad from "./views/Contabilidad/Contabilidad";
+import InformesGenerales from "./views/Informes/InformesGenerales"
+//import Users from "./views/Users";
+
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
@@ -40,17 +51,25 @@ export default function Settings() {
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products></Products>;
-      case "users":
-        return <Users></Users>;
-      case "commerce":
-        return <Comercios></Comercios>;
+        return <Products />;
+      case "mesas":
+        // return <Mesas />;
+        return;
+      case "mozos":
+        // return <Mozos />;
+        return;
       case "categorias":
-        return <Categorias></Categorias>;
+        return <Categorias />;
+      case "generales":
+        return <Generals />;
+      case "contabilidad":
+
+        return <Contabilidad />;
+      case "informesGrles":
+        return <InformesGenerales />;
+
       default:
-        return <Generals></Generals>;
-      // default:
-        // return <Generals></Generals>;
+        return <Generals />;
     }
   }
 
@@ -63,7 +82,8 @@ export default function Settings() {
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="11.5rem" height="2.5rem" padding="0.5rem">
+          <Button width="10rem" height="2.5rem" padding="1.3rem">
+            <FontAwesomeIcon icon={faHome} size="lg" />
             Regresar a Home
           </Button>
         </StyledLink>
@@ -72,41 +92,44 @@ export default function Settings() {
         <AjustesIzquierda>
           <TituloIzquierda>Opciones</TituloIzquierda>
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "generales")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faCogs} size="lg" />
             <p>Generales</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "products")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faUtensils} size="lg" />
             <p>Productos</p>
           </OpcionesIzquierda>
 
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "contabilidad")}>
+            <FontAwesomeIcon icon={faChartLine} size="lg" />
+            <p>Informes Contables</p>
+          </OpcionesIzquierda>
+
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faTasks} size="lg" />
             <p>Categorías</p>
           </OpcionesIzquierda>
-          
+
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mesas</p>
           </OpcionesIzquierda>
-          
+
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "mozos")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mozos</p>
           </OpcionesIzquierda>
 
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
-            <p>Usuarios</p>
+            <p>Informes Generales</p>
           </OpcionesIzquierda>
 
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
-            <p>Comercios</p>
-          </OpcionesIzquierda>
         </AjustesIzquierda>
-        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
+        <AjustesDerecha>
+          {settings && renderSwitch(settings.show)}
+        </AjustesDerecha>
       </Body>
     </div>
   );

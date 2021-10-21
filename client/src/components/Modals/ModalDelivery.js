@@ -35,6 +35,7 @@ import { Select } from "../../css/Select";
 import { Table, TableHead, TableData, TableHd, TableRow, Options } from "../../css/Table";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import FilterProductTypes from "../Settings/components/FilterProductTypes";
+moment.suppressDeprecationWarnings = true;
 
 export default function ModalDelivery({ state, setState }) {
   const token = useSelector((state) => state.userToken);
@@ -51,7 +52,6 @@ export default function ModalDelivery({ state, setState }) {
   const [order, setOrder] = useState({
     type: "Delivery",
     name: "",
-
     products: [],
     estado: 1,
     totalPrice: 0,
@@ -62,9 +62,10 @@ export default function ModalDelivery({ state, setState }) {
   useEffect(() => {
     setOrder({
       ...order,
-      date: moment().locale("es").format("DD/MM/YYYY"),
-      hour: moment().format("h:mm:ss a"),
+      date: moment().locale("es").format("YYYY/MM/DD"),
+      hour: moment().format("HH:mm:ss"),
     });
+    return function () {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
@@ -72,7 +73,7 @@ export default function ModalDelivery({ state, setState }) {
     setState(!state);
     setOrder({
       ...order,
-      type: "Salon",
+      type: "Delivery",
       tableNumber: undefined,
       products: [],
       estado: 1,
@@ -200,10 +201,8 @@ export default function ModalDelivery({ state, setState }) {
   }
   function aumentar() {
     var aux = 0;
-    console.log(order.tableNumber);
     if (producto.amount < 30) {
       aux = producto.amount + 1;
-      console.log(aux);
       aux = aux - (aux - producto.amount);
       aux = aux + 1;
       setProducto({
@@ -214,14 +213,12 @@ export default function ModalDelivery({ state, setState }) {
   }
 
   function disminuir() {
-    //setProducto(producto.amount+5)
     if (producto.amount >= 2) {
       setProducto({
         ...producto,
         amount: producto.amount - 1,
       });
     }
-    console.log(producto.amount);
   }
 
   return (
@@ -247,14 +244,14 @@ export default function ModalDelivery({ state, setState }) {
               <DivInfo>
                 <InputClient
                   type="text"
-                  name="name"
+                  name="nameClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre Cliente"
                   margin="10px 0 0 0 "
                 ></InputClient>
                 <InputClient
                   type="number"
-                  name="name"
+                  name="phoneClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Teléfono"
                   margin="10px 0 0 12px "
@@ -262,7 +259,7 @@ export default function ModalDelivery({ state, setState }) {
               </DivInfo>
               <InputClient
                 type="text"
-                name="name"
+                name="directionClient"
                 onChange={(e) => handleChange(e)}
                 placeholder="Dirección"
                 margin="7px 0 "
@@ -382,7 +379,7 @@ export default function ModalDelivery({ state, setState }) {
             width="9rem"
             height="2.5rem"
             buttonColor="#00C72C"
-            alignSelf="center"
+            alignself="center"
             margin="1rem 0 0 0"
           >
             Crear Pedido

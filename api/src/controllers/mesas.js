@@ -51,15 +51,22 @@ mesasController.addMesa = async (req, res, _next) => {
   const mesas = await Mesas.find();
   console.log('longitud mesas: ', mesas.length);
   try {
-    const newMesa = await new Mesas({
-      tableNumber: mesas.length + 1
-    });
-    await newMesa.save();
-    res.json({
-      succes: true,
-      msg: "Mesa Creada exitosamente!",
-      payload: newMesa,
-    });
+    const mesas = await Mesas.findOne({ tableNumber: payload.tableNumber });
+    if (mesas) {
+      res.json({
+        succes: false,
+        msg: "Esta mesa ya existe",
+        payload: null,
+      });
+    } else {
+      const newMesa = await new Mesas({ tableNumber, userId });
+      await newMesa.save();
+      res.json({
+        succes: true,
+        msg: "Mesa Creada exitosamente!",
+        payload: newMesa,
+      });
+    }
   } catch (err) {
     res.json({
       succes: false,

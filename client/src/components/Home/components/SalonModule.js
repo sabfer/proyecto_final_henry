@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
 // import Modal from "../../Modals/Modal";
 import UpdateTable from "../../Modals/UpdateTable";
 import ModalSalon from "../../Modals/ModalSalon";
@@ -12,7 +12,6 @@ import Mesas from "./Mesa";
 
 export default function SalonModule() {
   const token = useSelector((state) => state.userToken);
-
   const [stateModal, setStateModal] = useState({
     tableNumber: "",
     status: false,
@@ -40,62 +39,56 @@ export default function SalonModule() {
   }
 
   return (
-    <Salon>
-      <ModuleTop>
-        <h3>Salón</h3>
-        <Button
-          onClick={() => setStateModal({ status: true, tableNumber: "" })}
-          width="9.4rem"
-          height="2.5rem"
-          alignSelf="flex-end"
-          justify="space-between"
-          padding="0.6rem"
-          buttonColor="rgba(0, 41, 107, 1)"
-        >
-          Crear pedido
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-      </ModuleTop>
-      <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
-      <OrdersContainer>
-        <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {mesas && mesas ? (
-            mesas.map((mesa) => {
-              return (
-                <Mesas
-                  tableNumber={mesa.tableNumber}
-                  status={mesa.isOccupated}
-                  key={mesa._id}
-                  setStateModal={setStateModal}
-                  handleUpdate={handleUpdateModal}
-                />
-              );
-            })
-          ) : (
-            <Loading gridcolumn="span 5">
-              <p>Loading...</p>
-              <img
-                src="https://i.imgur.com/5JQ02CS.gif"
-                alt="loading gif"
-                width="100px"
+    <>
+      <Salon>
+        <ModuleTop>
+          <h3>Salón</h3>
+          <Button
+            onClick={() => setStateModal({ status: true, tableNumber: "" })}
+            width="9.4rem"
+            height="2.5rem"
+            alignself="flex-end"
+            justify="space-between"
+            padding="0.6rem"
+            buttonColor="rgba(0, 41, 107, 1)"
+          >
+            Crear pedido
+            <FontAwesomeIcon icon={faPlus} size="lg" />
+          </Button>
+        </ModuleTop>
+        <OrdersContainer>
+          <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+            {mesas && mesas ? (
+              mesas.map((mesa) => {
+                return (
+                  <Mesas
+                    tableNumber={mesa.tableNumber}
+                    status={mesa.isOccupated}
+                    key={mesa._id}
+                    setStateModal={setStateModal}
+                    handleUpdate={handleUpdateModal}
+                  />
+                );
+              })
+            ) : (
+              <Loading gridcolumn="1/-1">
+                <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+                <p>Aún no hay ordenes</p>
+              </Loading>
+            )}
+            {updateModal && (
+              <UpdateTable
+                state={updateModal}
+                setStateModal={setUpdateModal}
+                tableNumber={tableDetails.tableNumber}
               />
-            </Loading>
-          )}
-          {updateModal && (
-            <UpdateTable
-              state={updateModal}
-              setStateModal={setUpdateModal}
-              tableNumber={tableDetails.tableNumber}
-            />
-          )}
-          {/* buscar la orden que coincida con el numero de mesa
-            1 modal mesa obtiene por props el numero de la mesa
-            2 el modal busca en el estado de redux la orden que este pendiente o en proceso 
-            que coincida con el numero de la mesa  en el estado de ordenes
-           3 se edita la orden por el numero de id1 
-         */}
-        </Orders>
-      </OrdersContainer>
-    </Salon>
+            )}
+          </Orders>
+        </OrdersContainer>
+      </Salon>
+      {stateModal.status && (
+        <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
+      )}
+    </>
   );
 }

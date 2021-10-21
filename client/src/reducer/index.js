@@ -7,8 +7,12 @@ const initialState = {
   userEmail: undefined,
   userName: undefined,
   products: undefined,
+  productsInv: undefined,
+  proveedores: undefined,
   productTypes: undefined,
   productsCopy: undefined,
+  productsCopyInv: undefined,
+  
   users: undefined,
   commerces: undefined,
   settings: {
@@ -22,19 +26,24 @@ const initialState = {
     takeAwayOrders: undefined,
     deliveryOrders: undefined,
   },
-  kitchenOrders: undefined,
+  totalOrders: undefined,
+  kitchenOrders: {
+    inProgress: undefined,
+    toBeDone: undefined,
+  },
 };
+
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "REGISTER_USER":
-      console.log("-------------signUpData: payload = ", payload);
+      // console.log("-------------signUpData: payload = ", payload);
       return {
         ...state,
         signUpData: payload,
       };
     case "LOGIN_USER":
-      console.log("reducer LOGIN_USER, payload: ", payload);
+      // console.log("reducer LOGIN_USER, payload: ", payload);
       return {
         ...state,
         userToken: payload.token,
@@ -67,6 +76,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [allProductsInclude],
       };
 
+    case "GET_NAME_PRODUCT_INV":
+   
+      const allProductsIncludeInv = state.productsCopyInv.filter((e) =>
+        e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
+      );
+      return {
+        ...state,
+        productsInv: Array.isArray(allProductsIncludeInv)
+          ? allProductsIncludeInv
+          : [allProductsIncludeInv],
+      };
+
     case "ORDER_BY_NAME":
       const products = state.products;
       let arrayOrderName =
@@ -89,12 +110,49 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         products: arrayOrderName,
       };
-
+    //////////////////////////////////////////////////////////
+    case "ORDER_BY_NAME_INV":
+      const productsInv = state.productsInv;
+      let arrayOrderNameInv =
+        payload === true
+          ? productsInv.sort(function (a, b) {
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return 1;
+            if (bName > aName) return -1;
+            return 0;
+          })
+          : productsInv.sort(function (a, b) {
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return -1;
+            if (bName < aName) return 1;
+            return 0;
+          });
+      return {
+        ...state,
+        productsInv: arrayOrderNameInv,
+      };
+    ///////////////////////////////////////////////////////////
     case "FILTER_PRODUCTS_TYPE":
-      const array = [...state.productsCopy].filter((e) => e.productType === payload);
+
+      const array = [...state.productsCopy].filter(
+        (e) => e.productType === payload
+      );
+
       return {
         ...state,
         products: array,
+      };
+
+    case "FILTER_PROVEEDORES":
+      console.log(state.productsCopyInv,"reducer productsC")
+      const arrayP = [...state.productsCopyInv].filter((e) => e.proveeType === payload);
+      console.log(payload,"reducer seleccionado")
+      console.log(arrayP,"reducer array")
+      return {
+        ...state,
+        productsInv: arrayP,
       };
 
     case "GET_PRODUCTS":
@@ -104,16 +162,45 @@ const rootReducer = (state = initialState, { type, payload }) => {
         productsCopy: payload,
       };
 
+    /////////////////////////////////////
+
+    case "GET_PRODUCTS_INV":
+
+      return {
+        ...state,
+        productsInv: payload,
+        productsCopyInv: payload,
+      }
+
+    /////////////////////////////////////
+
     case "POST_PRODUCTS":
       return {
         ...state,
         products: payload,
       };
 
+    ///////////////////////////////
+
+    case "POST_PRODUCTS_INV":
+      return {
+        ...state,
+        productsInv: payload,
+      };
+    ///////////////////////////////
+
     case "DELETE_PRODUCT":
       return {
         ...state,
       };
+
+    /////////////////////////////////
+
+    case "DELETE_PRODUCT_INV":
+      return {
+        ...state,
+      };
+    /////////////////////////////////
 
     case "DELETE_CATEGORY":
       return {
@@ -121,6 +208,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "PUT_PRODUCT":
+      return {
+        ...state,
+        products: payload,
+      };
+
+    case "PUT_PRODUCT_INV":
       return {
         ...state,
         products: payload,
@@ -167,6 +260,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userName: payload.data.name,
         expSession: payload.data.expirationTime
       }
+    case "GET_ORDERS":
+      return {
+        ...state,
+        totalOrders: payload,
+      };
 
     case "GET_TAKE_AWAY_ORDERS":
       return {
@@ -202,18 +300,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_PRODUCT_TYPES":
-      let sortedArray = payload.sort(function (a, b) {
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (b.name > a.name) {
-          return -1;
-        }
-        return 0;
-      });
       return {
         ...state,
-        productTypes: sortedArray,
+        productTypes: payload,
       };
 
     case "POST_ORDER":
@@ -270,15 +359,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "GET_KITCHEN_ORDERS":
-      let ordersToKitchen = [];
+      let inProgress = [];
+      let toBeDone = [];
       for (let order in payload) {
-        if (payload[order].estado === 1 || payload[order].estado === 2) {
-          ordersToKitchen.push(payload[order]);
-        }
+        if (payload[order].estado === 1) toBeDone.push(payload[order]);
+        if (payload[order].estado === 2) inProgress.push(payload[order]);
       }
       return {
         ...state,
-        kitchenOrders: ordersToKitchen,
+        kitchenOrders: {
+          inProgress,
+          toBeDone,
+        },
       };
 
     default:
