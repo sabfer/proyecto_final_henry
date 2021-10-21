@@ -31,12 +31,13 @@ export default function Contabilidad() {
       <div>
         <center>
           <h1>INFORMES GENERALES</h1>
-          <button onClick={(e) => handleRender(1)}>INVENTARIO</button>
+          {/* <button onClick={(e) => handleRender(1)}>INVENTARIO</button> */}
+          <Inventario/>
           {/* <button onClick={(e) => handleRender(2)}>PROVEEDORES</button>
           <button onClick={(e) => handleRender(3)}>COMPRAS</button> */}
         </center>
       </div>
-
+{/* 
       <div></div>
 
       {render === 1 && (
@@ -59,7 +60,7 @@ export default function Contabilidad() {
             <Compras text aling="center" />
           </center>
         </div>
-      )}
+      )} */}
     </>
   );
 }

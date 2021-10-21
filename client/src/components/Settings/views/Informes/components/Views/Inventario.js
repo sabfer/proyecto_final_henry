@@ -205,13 +205,15 @@ export default function Inventario() {
                 <TableHd width="30%">
                   <span className="productName">
                     <p style={{ margin: 0 }}>Nombre</p>
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       onClick={(e) => handleOrder(e)}
                       color={order ? "#FF846A" : "#A2DFFF"}
                       icon={faSortAlphaDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
-                    ></FontAwesomeIcon>
+                    ></FontAwesomeIcon> 
+                    NO HACE FALTA YA QUE AL INGRESAR YA LO INSERTA ORDENADO
+                    */}
                   </span>
                 </TableHd>
                 <TableHd width="20%">Tipo de producto</TableHd>
@@ -281,7 +283,7 @@ export default function Inventario() {
           />
         )}
         
-        <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
+        {/* <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
           <FontAwesomeIcon icon={faFileExcel} size="lg">
             <ReactHTMLTableToExcel
               id="botonExportarProd"
@@ -291,7 +293,7 @@ export default function Inventario() {
               sheet="Productos"
             />
           </FontAwesomeIcon>
-        </Button>
+        </Button> */}
       </ExportExcel>
 
       <Paginado>

@@ -6,7 +6,7 @@ export const conditionalForm = (
   onChange,
   { label1, label2, label3, label4, label5, label6, label7 },
   { name, user, pass, productType, prodInvType, fecha, price, cant },
-  { ley1, ley2, ley3, ley4, ley5, ley6 },
+  { ley1, ley2, ley3, ley4, ley5, ley6, ley7, ley8 },
   inpValido,
   validacion,
   categories,
@@ -146,17 +146,18 @@ export const conditionalForm = (
           <input
             type="date"
             name="fecha"
-            //required
-            //value={input.name}
+            required
+            //value={input.fecha}
             onChange={(e) => onChange(e)}
-            //leyenda={ley1}
+            leyenda={ley8}
+            validacion={validacion}
             //cuando precionas una tecla se la presiona hacia adentro y cuando se
             //levanta el dedo es donde se ejecuta esta funcion
-            //onKeyUp={validacion}
+            onKeyUp={validacion}
             //cuando se hace click fuiera del input
-            //onBlur={validacion}
+            onBlur={validacion}
           />
-          {/* <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError> */}
+          <LeyendaError valido={inpValido.fecha}>{ley8}</LeyendaError>
         </InputContainer>
 
         <InputContainer>
@@ -186,14 +187,14 @@ export const conditionalForm = (
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-                //leyenda={ley2}
-                //cuando precionas una tecla se la presiona hacia adentro y cuando se
-                //levanta el dedo es donde se ejecuta esta funcion
-                //onKeyUp={validacion}
-                //cuando se hace click fuiera del input
-                //onBlur={validacion}
+              leyenda={ley2}
+              //cuando precionas una tecla se la presiona hacia adentro y cuando se
+              //levanta el dedo es donde se ejecuta esta funcion
+              onKeyUp={validacion}
+              //cuando se hace click fuiera del input
+              onBlur={validacion}
               />
-              {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
+              <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError>
             </InputContainer>
           </div>
           <div class="InputC">
@@ -208,14 +209,14 @@ export const conditionalForm = (
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-                //leyenda={ley2}
-                //cuando precionas una tecla se la presiona hacia adentro y cuando se
-                //levanta el dedo es donde se ejecuta esta funcion
-                //onKeyUp={validacion}
-                //cuando se hace click fuiera del input
-                //onBlur={validacion}
+              //leyenda={ley2}
+              //cuando precionas una tecla se la presiona hacia adentro y cuando se
+              //levanta el dedo es donde se ejecuta esta funcion
+              onKeyUp={validacion}
+              //cuando se hace click fuiera del input
+              onBlur={validacion}
               />
-              {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
+              <LeyendaError valido={inpValido.cant}>{ley2}</LeyendaError>
             </InputContainer>
           </div>
         </div>
@@ -226,10 +227,11 @@ export const conditionalForm = (
             name="prodInvType"
             required
             margin="0 0 1rem 0"
-            //onKeyUp={validacion}
-            //onBlur={validacion}
+            onKeyUp={validacion}
+            onBlur={validacion}
+            leyenda={ley7}
           >
-            <option defaultValue="none" name="categorías" hidden>
+            <option defaultValue="none" name="categorías" hidden >
               Categorias
             </option>
             {categoriesProducts &&
@@ -238,6 +240,7 @@ export const conditionalForm = (
                   {ctg.name}
                 </option>
               ))}
+            <LeyendaError valido={inpValido.name}>{ley7}</LeyendaError>
           </Select>
         </InputContainer>
         <InputContainer>
@@ -247,8 +250,9 @@ export const conditionalForm = (
             name="proveeType"
             required
             margin="0 0 1rem 0"
-            //onKeyUp={validacion}
-            //onBlur={validacion}
+            onKeyUp={validacion}
+            onBlur={validacion}
+            leyenda={ley7}
           >
             <option defaultValue="none" name="categoríasProvee" hidden>
               Categorias Proveedores
@@ -259,6 +263,7 @@ export const conditionalForm = (
                   {ctg.name}
                 </option>
               ))}
+            <LeyendaError valido={inpValido.name}>{ley7}</LeyendaError>
           </Select>
         </InputContainer>
       </form>
@@ -335,7 +340,7 @@ export const conditionalForm = (
             type="date"
             name="fecha"
             value={input.fecha}
-            placeholder={fecha}
+            //placeholder={fecha} 
             onChange={(e) => onChange(e)}
           />
         </InputContainer>
@@ -346,7 +351,7 @@ export const conditionalForm = (
             type="text"
             name="name"
             value={input.name}
-            placeholder={name}
+            //placeholder={name} 
             onChange={(e) => onChange(e)}
           />
         </InputContainer>
@@ -356,7 +361,7 @@ export const conditionalForm = (
             type="number"
             name="price"
             value={input.price}
-            placeholder={price}
+            //placeholder={price}
             onChange={(e) => onChange(e)}
           />
         </InputContainer>
@@ -366,7 +371,7 @@ export const conditionalForm = (
             type="number"
             name="cant"
             value={input.cant}
-            placeholder={cant}
+            //placeholder={cant}
             onChange={(e) => onChange(e)}
           />
         </InputContainer>
