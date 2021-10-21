@@ -12,105 +12,6 @@ export const conditionalForm = (
   validacion,
   categories
 ) => {
-  //Formulario: "CREAR USUARIO"
-  if (id === 1) {
-    return (
-      <form>
-        <InputContainer>
-          <Label valido={inpValido.name}>{label1}</Label>
-          <input
-            type="text"
-            name="name"
-            required
-            //value={input.name}
-            onChange={(e) => onChange(e)}
-            leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
-        </InputContainer>
-        <InputContainer>
-          <Label valido={inpValido.user}>{label2}</Label>
-          <input
-            type="text"
-            name="user"
-            required
-            //value={input.user}
-            onChange={(e) => onChange(e)}
-            leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.user}>{ley4}</LeyendaError>
-        </InputContainer>
-        <InputContainer>
-          <Label valido={inpValido.pass}>{label3}</Label>
-          <input
-            type="text"
-            name="pass"
-            required
-            //value={input.pass}
-            onChange={(e) => onChange(e)}
-            leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.pass}>{ley5}</LeyendaError>
-        </InputContainer>
-      </form>
-    );
-  }
-  /* //Formulario: "CREAR COMERCIO"
-  if (id === 2) {
-    return (
-      <form>
-        <InputContainer>
-          <Label valido={inpValido.name}>{label1}</Label>
-          <input
-            type="text"
-            name="name"
-            required
-            value={input.name}
-            onChange={(e) => onChange(e)}
-            leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
-        </InputContainer>
-        <InputContainer>
-          <Label valido={inpValido.name}>{label2}</Label>
-          <input
-            type="text"
-            name="location"
-            required
-            value={input.location}
-            onChange={(e) => onChange(e)}
-            leyenda={ley6}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
-            onKeyUp={validacion}
-            //cuando se hace click fuiera del input
-            onBlur={validacion}
-          />
-          <LeyendaError valido={inpValido.location}>{ley6}</LeyendaError>
-        </InputContainer>
-      </form>
-    );
-  } */
   //Formulario: "CREAR PRODUCTO"
   if (id === 3) {
     return (
@@ -121,13 +22,9 @@ export const conditionalForm = (
             type="text"
             name="name"
             required
-            //value={input.name}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
             onKeyUp={validacion}
-            //cuando se hace click fuiera del input
             onBlur={validacion}
           />
           <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
@@ -139,13 +36,9 @@ export const conditionalForm = (
             name="price"
             min="1"
             required
-            //value={input.price}
             onChange={(e) => onChange(e)}
             leyenda={ley2}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
             onKeyUp={validacion}
-            //cuando se hace click fuiera del input
             onBlur={validacion}
           />
 
@@ -175,57 +68,6 @@ export const conditionalForm = (
       </form>
     );
   }
-  /* 
-  // Formulario: "CREAR PEDIDO PARA LLEVAR"
-  if (id === 5) {
-    return (
-      <form>
-        <InputContainer>
-          <label>{label1}</label>
-          <input
-            type="text"
-            name="orderD"
-            value={input.orderD}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-        <InputContainer>
-          <label>{label2}</label>
-          <input
-            type="text"
-            name="products"
-            value={input.products}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-      </form>
-    );
-  }
-  // Formulario: "CREAR PEDIDO TAKE AWAY"
-  if (id === 6) {
-    return (
-      <form>
-        <InputContainer>
-          <label>{label1}</label>
-          <input
-            type="text"
-            name="orderTA"
-            value={input.orderTA}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-        <InputContainer>
-          <label>{label2}</label>
-          <input
-            type="text"
-            name="products"
-            value={input.products}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-      </form>
-    );
-  } */
   // Formulario: "MODIFICAR PRODUCTO"
   if (id === 7) {
     return (
@@ -269,7 +111,7 @@ export const conditionalForm = (
       </form>
     );
   }
-
+  /* FORMULARIO PARA CREAR CATEGORIAS */
   if (id === 8) {
     return (
       <form>

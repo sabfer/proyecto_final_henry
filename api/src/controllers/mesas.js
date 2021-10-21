@@ -49,7 +49,7 @@ mesasController.findMesas = async (_req, res, next) => {
 mesasController.addMesa = async (req, res, _next) => {
   const payload = req.body;
   try {
-    const mesas = await Mesas.findOne({ numero: payload.numero });
+    const mesas = await Mesas.findOne({ tableNumber: payload.tableNumber });
     if (mesas) {
       res.json({
         succes: false,
@@ -57,7 +57,7 @@ mesasController.addMesa = async (req, res, _next) => {
         payload: null,
       });
     } else {
-      const newMesa = await new Mesas(payload);
+      const newMesa = await new Mesas({ tableNumber, userId });
       await newMesa.save();
       res.json({
         succes: true,

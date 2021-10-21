@@ -13,6 +13,7 @@ const products = require("./routes/products");
 const mesas = require("./routes/mesas");
 const orders = require("./routes/orders");
 const auth = require("./routes/auth.js");
+const ProductsInv = require("./routes/productsInv.js");
 
 require("./db.js");
 
@@ -35,7 +36,6 @@ server.use((_req, res, next) => {
   next();
 });
 
-
 server.use("/", auth);
 
 server.use("/users", users);
@@ -44,6 +44,7 @@ server.use("/commerce", commerce);
 server.use("/clients", clients);
 server.use("/products", products);
 server.use("/productTypes", productTypes);
+server.use("/productsInv", ProductsInv);
 server.use("/mesas", mesas);
 server.use("/orders", orders);
 

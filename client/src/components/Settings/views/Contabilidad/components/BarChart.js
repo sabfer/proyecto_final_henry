@@ -1,42 +1,57 @@
 import React from "react";
 import { Chart } from "primereact/chart";
 
-export default function BarChart() {
+export default function BarChart({ salOrds, taOrds, devOrds }) {
+  console.log("Ordenes Salon por dia:", salOrds);
   const basicData = {
     labels: [
-      "09-10-21",
-      "10-10-21",
-      "11-10-21",
-      "12-10-21",
-      "13-10-21",
       "14-10-21",
       "15-10-21",
+      "16-10-21",
+      "17-10-21",
+      "18-10-21",
+      "19-10-21",
+      "20-10-21",
     ],
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: "#42A5F5",
-        data: [65, 59, 80, 81, 56, 55, 40, 75, 56, 35],
+        label: "Salon",
+        backgroundColor: "#002366",
+        data: [
+          salOrds[1],
+          salOrds[2],
+          salOrds[3],
+          salOrds[4],
+          salOrds[5],
+          salOrds[6],
+          salOrds[7],
+        ],
       },
       {
-        label: "My Second dataset",
-        backgroundColor: "#FFA726",
-        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
+        label: "Delivery",
+        backgroundColor: "#008891",
+        data: [
+          taOrds[1],
+          taOrds[2],
+          taOrds[3],
+          taOrds[4],
+          taOrds[5],
+          taOrds[6],
+          taOrds[7],
+        ],
       },
       {
-        label: "My Second dataset",
-        backgroundColor: "#FFA726",
-        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
-      },
-      {
-        label: "cualquiercosa",
-        backgroundColor: "#FF6344",
-        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
-      },
-      {
-        label: "My Second dataset",
-        backgroundColor: "#FFA726",
-        data: [28, 48, 40, 19, 86, 27, 90, 56, 55, 40],
+        label: "Take away",
+        backgroundColor: "#16C79A",
+        data: [
+          devOrds[1],
+          devOrds[2],
+          devOrds[3],
+          devOrds[4],
+          devOrds[5],
+          devOrds[6],
+          devOrds[7],
+        ],
       },
     ],
   };
@@ -48,7 +63,7 @@ export default function BarChart() {
       plugins: {
         legend: {
           labels: {
-            color: "#FF6344",
+            color: "#FFFFF",
           },
         },
       },
@@ -117,7 +132,6 @@ export default function BarChart() {
   return (
     <>
       <div className="card">
-        <h5>Vertical</h5>
         <Chart type="bar" data={basicData} options={basicOptions} />
       </div>
     </>
