@@ -46,7 +46,7 @@ export default function Modal({
     { _id: "16", name: "Insumos" },
     { _id: "16", name: "Pollo" }
   ];
-
+console.log(categoriesProducts)
   const categoriesProv = [
     { _id: "20", name: "CocaCola" },
     { _id: "21", name: "Carniceria Bermejo" },
