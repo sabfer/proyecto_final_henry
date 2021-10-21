@@ -33,7 +33,7 @@ export default function Contabilidad() {
   }, []);
 
   function ordersSalonCantByWeek() {
-    console.log("ORDENES QUE NO ES ARRAY:", ordenes);
+    // console.log("ORDENES QUE NO ES ARRAY:", ordenes);
     const ordersSalon = ordenes?.filter((ord) => ord.type === "Salon");
     const ordsByday = ordersbyWeek(ordersSalon, { ...ordersByWeek });
     return ordsByday;
@@ -55,14 +55,12 @@ export default function Contabilidad() {
     <>
       <div>
         <center>
-          <h1>INFORMES CONTABLES</h1>
-
+          <h1>INFORMES</h1>
           <button onClick={(e) => handleRender(1)}>Informe por Hora</button>
           <button onClick={(e) => handleRender(2)}>Informe por Fecha</button>
           <button onClick={(e) => handleRender(3)}>Informe Total</button>
         </center>
       </div>
-      <h2>Informe semanal</h2>
       {render === 1 && (
         <div>
           <center>
@@ -86,19 +84,19 @@ export default function Contabilidad() {
       )}
       {render === undefined && (
         <>
-          <br />
-          <br />
-          <center>
-            <header></header>
-          </center>
           <div>
-            {ordenes && (
-              <BarChart
-                salOrds={ordersSalonCantByWeek()}
-                taOrds={ordersTaCantByWeek()}
-                devOrds={ordersDevCantByWeek()}
-              />
-            )}
+              <header>
+                <h2>Resumen Semanal</h2>
+              </header>
+            <center>
+              {ordenes && (
+                <BarChart
+                  salOrds={ordersSalonCantByWeek()}
+                  taOrds={ordersTaCantByWeek()}
+                  devOrds={ordersDevCantByWeek()}
+                />
+              )}
+            </center>
           </div>
         </>
       )}

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import DoughnutChart from "../components/DoughnutChart";
+import OrdersTable from "../components/OrdersTable";
 
 export default function PorHora() {
-  let ordersDb = useSelector((state) => state.orders);  
+  let ordersDb = useSelector((state) => state.totalOrders);
   let [init, setInit] = useState(undefined);
   let [finish, setFinish] = useState(undefined);
 
@@ -43,15 +44,15 @@ export default function PorHora() {
 
   let ordersTotal = currentOrders();
 
-  console.log("soy OrdersTotal--->",ordersTotal);
+  console.log("soy OrdersTotal--->", ordersTotal);
 
   const totalFact = () => {
     if (init !== undefined && finish !== undefined) {
       let totalFact = currentOrders().map((e) => e.totalPrice);
       if (totalFact.length) {
         totalFact = totalFact.reduce((a, b) => a + b);
-        totalFact = new Intl.NumberFormat().format(totalFact);
-        return `La facturación del día es: $${totalFact}`;
+        totalFact = new Intl.NumberFormat().format(totalFact).replaceAll(",", ".")+",00"
+        return `La facturación del día es: $ ${totalFact}`;
       }
       return "No hay ingresos registrados";
     } else {
@@ -60,15 +61,6 @@ export default function PorHora() {
     }
   };
 
-  // function salon() {
-  //   if (ordersTotal) {
-  //     let orders = ordersTotal.filter((e) => e.type === " Salon");
-  //     console.log("Salon --->", orders.length);
-  //     return orders.length;
-  //   }
-  //   return null;
-  // }
-
   function salon() {
     if (ordersTotal) {
       let orders = ordersTotal.filter((e) => e.type === "Salon");
@@ -76,7 +68,7 @@ export default function PorHora() {
     }
     return null;
   }
-  
+
   function delivery() {
     if (ordersTotal) {
       let orders = ordersTotal.filter((e) => e.type === "Delivery");
@@ -93,12 +85,10 @@ export default function PorHora() {
     return null;
   }
 
+
   return (
     <>
-      <header>
-        <h1>Informe del turno del Servicio</h1>
-        <h2>Informe del turno del Servicio</h2>
-      </header>
+      <h2>Turno Diario</h2>
       <div>
         <label> Horario Inicio </label>
         <input
@@ -122,6 +112,9 @@ export default function PorHora() {
           delivery={delivery()}
           takeAway={taway()}
         />
+      </div>
+      <div>
+        <OrdersTable ordenes={ordersTotal} title="Ordenes Filtradas" />
       </div>
     </>
   );

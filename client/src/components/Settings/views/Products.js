@@ -254,7 +254,7 @@ export default function Productos() {
       <ExportExcel>
         {products && (
           <NumberOfProducts
-            title=" productos cargados exitosamente"
+            cantidad=" productos cargados exitosamente"
             total={products.length}
           />
         )}

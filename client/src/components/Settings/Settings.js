@@ -44,10 +44,10 @@ export default function Settings() {
     switch (param) {
       case "products":
         return <Products />;
-      case "users":
-        return <Users />;
-      case "commerce":
-        return <Comercios />;
+      // case "users":
+      //   return <Users />;
+      // case "commerce":
+      //   return <Comercios />;
       case "categorias":
         return <Categorias />;
       case "generales":

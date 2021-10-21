@@ -29,12 +29,13 @@ import {
   faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function OrdersTable() {
+export default function OrdersTable(props) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userToken);
 
-  const ordersTotal = useSelector((state) => state.orders);
+  // const ordersTotal = useSelector((state) => state.totalOrders);
+  const ordersTotal = props.ordenes;
 
   function handleNumberOrder(e) {}
 
@@ -76,7 +77,7 @@ export default function OrdersTable() {
   return (
     <div>
       <AjustesDerechaTop>
-        <h1>Órdenes Totales</h1>
+        <h1>{props.title}</h1>
       </AjustesDerechaTop>
       <SearchBarContainer>
         <SearchOrders />
@@ -184,7 +185,10 @@ export default function OrdersTable() {
                         .replaceAll(",", ", ")}
                     </TableData>
                     <TableData>
-                      $ {new Intl.NumberFormat().format(el.totalPrice)}
+                      ${" "}
+                      {new Intl.NumberFormat()
+                        .format(el.totalPrice)
+                        .replaceAll(",", ".")+",00"}
                     </TableData>
                   </TableRow>
                 );
@@ -205,7 +209,7 @@ export default function OrdersTable() {
 
       <ExportExcel>
         <NumberOfProducts
-          title=" ordenes cargadas exitosamente"
+          cantidad=" ordenes cargadas exitosamente"
           total={ordersTotal.length}
         />
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
