@@ -80,8 +80,9 @@ export default function Modal({
     prodInvType: "",
     proveeType: "",
   });
-  console.log(input);
-  console.log(inpValido);
+
+  /* console.log(input);
+  console.log(inpValido); */
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
