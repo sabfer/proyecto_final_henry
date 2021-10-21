@@ -6,8 +6,12 @@ const initialState = {
   userId: undefined,
   // userName: undefined,
   products: undefined,
+  productsInv: undefined,
+  proveedores: undefined,
   productTypes: undefined,
   productsCopy: undefined,
+  productsCopyInv: undefined,
+
   users: undefined,
   commerces: undefined,
   settings: {
@@ -60,6 +64,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : [allProductsInclude],
       };
 
+    case "GET_NAME_PRODUCT_INV":
+      const allProductsIncludeInv = state.productsCopyInv.filter((e) =>
+        e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
+      );
+      return {
+        ...state,
+        productsInv: Array.isArray(allProductsIncludeInv)
+          ? allProductsIncludeInv
+          : [allProductsIncludeInv],
+      };
+
     case "ORDER_BY_NAME":
       const products = state.products;
       let arrayOrderName =
@@ -92,10 +107,35 @@ const rootReducer = (state = initialState, { type, payload }) => {
     //     totalOrders2: ordersNumber,
     //   };
 
+    //////////////////////////////////////////////////////////
+    case "ORDER_BY_NAME_INV":
+      const productsInv = state.productsInv;
+      let arrayOrderNameInv =
+        payload === true
+          ? productsInv.sort(function (a, b) {
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return 1;
+              if (bName > aName) return -1;
+              return 0;
+            })
+          : productsInv.sort(function (a, b) {
+              const aName = a.name.toLocaleLowerCase();
+              const bName = b.name.toLocaleLowerCase();
+              if (aName > bName) return -1;
+              if (bName < aName) return 1;
+              return 0;
+            });
+      return {
+        ...state,
+        productsInv: arrayOrderNameInv,
+      };
+    ///////////////////////////////////////////////////////////
     case "FILTER_PRODUCTS_TYPE":
       const array = [...state.productsCopy].filter(
         (e) => e.productType === payload
       );
+
       return {
         ...state,
         products: array,
@@ -113,10 +153,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "FILTER_ORDERS_NUMBER":
       const arrayOrdersNumbers = [...state.totalOrders2].filter(
         (e) => e.orderNumber === payload
-      );      
+      );
       return {
         ...state,
         totalOrders: arrayOrdersNumbers,
+      };
+    case "FILTER_PROVEEDORES":
+      console.log(state.productsCopyInv, "reducer productsC");
+      const arrayP = [...state.productsCopyInv].filter(
+        (e) => e.proveeType === payload
+      );
+      console.log(payload, "reducer seleccionado");
+      console.log(arrayP, "reducer array");
+      return {
+        ...state,
+        productsInv: arrayP,
       };
 
     case "GET_PRODUCTS":
@@ -126,13 +177,31 @@ const rootReducer = (state = initialState, { type, payload }) => {
         productsCopy: payload,
       };
 
+    case "GET_PRODUCTS_INV":
+      return {
+        ...state,
+        productsInv: payload,
+        productsCopyInv: payload,
+      };
+
     case "POST_PRODUCTS":
       return {
         ...state,
         products: payload,
       };
 
+    case "POST_PRODUCTS_INV":
+      return {
+        ...state,
+        productsInv: payload,
+      };
+
     case "DELETE_PRODUCT":
+      return {
+        ...state,
+      };
+
+    case "DELETE_PRODUCT_INV":
       return {
         ...state,
       };
@@ -143,6 +212,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "PUT_PRODUCT":
+      return {
+        ...state,
+        products: payload,
+      };
+
+    case "PUT_PRODUCT_INV":
       return {
         ...state,
         products: payload,

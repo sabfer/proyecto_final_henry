@@ -1,0 +1,18 @@
+.InputsNC{
+    display: inline-block;
+}
+.InputN{
+    float: left;
+    margin-right: 20px;
+    margin-top: 1px;
+}
+
+.InputC{
+    float: right;
+    margin-top: 1px;
+}
+
+.inp {
+    width: 70px !important;
+}
+

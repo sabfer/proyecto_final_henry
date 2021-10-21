@@ -16,10 +16,14 @@ import {
   faTasks,
   faUsers,
   faUtensils,
+  faWrench
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
+import InformesGenerales from "./views/Informes/InformesGenerales"
+//import Users from "./views/Users";
+
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
@@ -53,7 +57,11 @@ export default function Settings() {
       case "generales":
         return <Generals />;
       case "contabilidad":
-        return <Contabilidad />;
+
+        return <Contabilidad/>;
+      case "informesGrles":
+        return <InformesGenerales/>;  
+
       default:
         return <Generals />;
     }
@@ -105,6 +113,12 @@ export default function Settings() {
             <FontAwesomeIcon icon={faSitemap} size="lg" />
             <p>Comercios</p>
           </OpcionesIzquierda>
+
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Informes Generales</p>
+          </OpcionesIzquierda>
+
         </AjustesIzquierda>
         <AjustesDerecha>
           {settings && renderSwitch(settings.show)}

@@ -35,6 +35,7 @@ export default function Modal({
 }) {
   const token = useSelector((state) => state.userToken);
   const categories = useSelector((state) => state.productTypes);
+  
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({

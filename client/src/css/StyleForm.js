@@ -16,9 +16,12 @@ ${(props) =>
 
 `;
 
+
+
 const InputContainer = styled.div`
   margin: 1rem 0;
 `;
+
 
 const colores = {
   borde: "#0075FF",
@@ -47,4 +50,4 @@ const LeyendaError = styled.p`
     `}
 `;
 
-export { LeyendaError, Label, InputContainer };
+export { LeyendaError, Label, InputContainer};

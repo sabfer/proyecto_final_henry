@@ -74,6 +74,12 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+`;
+
 export const Title = styled.h1`
   color: ${(props) => props.color || "rgb(255, 255, 255)"};
   font-size: 2rem;

@@ -85,7 +85,10 @@ export default function PorHora() {
     return null;
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
   return (
     <>
       <h2>Turno Diario</h2>
@@ -112,9 +115,12 @@ export default function PorHora() {
           delivery={delivery()}
           takeAway={taway()}
         />
+<<<<<<< HEAD
       </div>
       <div>
         <OrdersTable ordenes={ordersTotal} title="Ordenes Filtradas" />
+=======
+>>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
       </div>
     </>
   );
