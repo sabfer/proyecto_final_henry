@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import moment from "moment";
+import React from "react";
 
 export default function Compras() {
-  
-
   return (
     <>
       <header>
         <h1>Compras</h1>
       </header>
-      <div>
-        
-      </div>
+      <div></div>
     </>
   );
 }

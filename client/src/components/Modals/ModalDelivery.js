@@ -229,7 +229,7 @@ export default function ModalDelivery({ state, setState }) {
             <img src="https://i.imgur.com/vM38VRe.png?1" alt="img not found" />
             <HeaderModalTitle>
               <h3>Delivery</h3>
-              <h4>Fede "Chime"</h4>
+              {/* <h4>Fede "Chime"</h4> */}
             </HeaderModalTitle>
             <HeaderModalDetails>
               <p>Fecha: {order.date}</p>
@@ -244,6 +244,7 @@ export default function ModalDelivery({ state, setState }) {
               <DivInfo>
                 <InputClient
                   type="text"
+                  width="50%"
                   name="nameClient"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre Cliente"
@@ -252,6 +253,7 @@ export default function ModalDelivery({ state, setState }) {
                 <InputClient
                   type="number"
                   name="phoneClient"
+                  width="50%"
                   onChange={(e) => handleChange(e)}
                   placeholder="Teléfono"
                   margin="10px 0 0 12px "
@@ -263,7 +265,7 @@ export default function ModalDelivery({ state, setState }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Dirección"
                 margin="7px 0 "
-                width="25rem"
+                width="100%"
               ></InputClient>
               <CategoriasPedidos>
                 <FilterProductTypes />

@@ -12,9 +12,7 @@ import {
   faChartLine,
   faCogs,
   faHome,
-  faSitemap,
   faTasks,
-  faUsers,
   faUtensils,
   faWrench,
 } from "@fortawesome/free-solid-svg-icons";
@@ -31,10 +29,10 @@ import Error403 from "../Home/views/Error403";
 export default function Settings() {
   const settings = useSelector((state) => state.settings || "generales");
   const token = useSelector((state) => state.userToken);
-  const userName = useSelector((state) => state.userName);
+  /* const userName = useSelector((state) => state.userName);
   const tables = useSelector((state) => state.mesas);
   const waiters = useSelector((state) => state.waiters);
-  const expSession = useSelector((state) => state.expSession);
+  const expSession = useSelector((state) => state.expSession); */
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,12 +50,12 @@ export default function Settings() {
     switch (param) {
       case "products":
         return <Products />;
-      case "mesas":
-        // return <Mesas />;
+      /* case "mesas":
+        return <Mesas />;
         return;
       case "mozos":
-        // return <Mozos />;
-        return;
+        return <Mozos />;
+        return; */
       case "categorias":
         return <Categorias />;
       case "generales":
@@ -81,9 +79,9 @@ export default function Settings() {
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="10rem" height="2.5rem" padding="1.3rem">
-            <FontAwesomeIcon icon={faHome} size="lg" />
+          <Button width="13rem" height="2.5rem" padding="1rem" justify="space-between">
             Regresar a Home
+            <FontAwesomeIcon icon={faHome} size="lg" />
           </Button>
         </StyledLink>
       </Header>
@@ -110,7 +108,7 @@ export default function Settings() {
             <p>Categorías</p>
           </OpcionesIzquierda>
 
-          <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
+          {/* <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mesas</p>
           </OpcionesIzquierda>
@@ -118,7 +116,7 @@ export default function Settings() {
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "mozos")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Mozos</p>
-          </OpcionesIzquierda>
+          </OpcionesIzquierda> */}
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />

@@ -20,7 +20,7 @@ export const ModalContainer = styled.div`
   align-items: ${(props) => props.align || "center"};
   max-width: ${(props) => props.maxwidth};
   min-width: ${(props) => props.minwidth};
-  padding: 3rem;
+  padding: 2rem;
   background: #fff;
   position: relative;
   border-radius: 0.6rem;
@@ -37,10 +37,6 @@ export const ModalContainer = styled.div`
           outline: 0;
           box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
-      }
-      label {
-        margin-bottom: 0.5rem;
-        font-weight: bold;
       }
     }
   }
@@ -141,10 +137,11 @@ export const InputModal = styled.div`
 
 export const InputClient = styled.input`
   width: ${(props) => props.width};
-  height: 2rem;
+  height: 2.5rem;
+  padding: 1rem;
   margin: ${(props) => props.margin};
-  border: solid 1px black;
-  border-radius: 5px;
+  border: solid 2px black;
+  border-radius: 8px;
   input::placeholder {
     text-align: center;
     font-size: 12px;

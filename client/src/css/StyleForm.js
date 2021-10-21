@@ -1,27 +1,21 @@
 import styled, { css } from "styled-components";
 
 const Label = styled.label`
-display:block;
-font-weight:700;
-padding:10 px;
-min-height:40px;
-cursor:pointer;
+  text-align: left;
+  display: block;
+  font-weight: 700;
+  padding: 10px;
 
-
-${(props) =>
-  props.valido === "false" &&
-  css`
-    color: ${colores.error};
-  `}
-
+  ${(props) =>
+    props.valido === "false" &&
+    css`
+      color: ${colores.error};
+    `}
 `;
-
-
 
 const InputContainer = styled.div`
   margin: 1rem 0;
 `;
-
 
 const colores = {
   borde: "#0075FF",
@@ -50,4 +44,4 @@ const LeyendaError = styled.p`
     `}
 `;
 
-export { LeyendaError, Label, InputContainer};
+export { LeyendaError, Label, InputContainer };
