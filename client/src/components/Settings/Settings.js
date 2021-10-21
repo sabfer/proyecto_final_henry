@@ -16,12 +16,12 @@ import {
   faTasks,
   faUsers,
   faUtensils,
-  faWrench
+  faWrench,
 } from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
-import InformesGenerales from "./views/Informes/InformesGenerales"
+import InformesGenerales from "./views/Informes/InformesGenerales";
 //import Users from "./views/Users";
 
 import Categorias from "./views/Categorias";
@@ -63,7 +63,6 @@ export default function Settings() {
       case "generales":
         return <Generals />;
       case "contabilidad":
-
         return <Contabilidad />;
       case "informesGrles":
         return <InformesGenerales />;
@@ -125,11 +124,8 @@ export default function Settings() {
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Informes Generales</p>
           </OpcionesIzquierda>
-
         </AjustesIzquierda>
-        <AjustesDerecha>
-          {settings && renderSwitch(settings.show)}
-        </AjustesDerecha>
+        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
       </Body>
     </div>
   );

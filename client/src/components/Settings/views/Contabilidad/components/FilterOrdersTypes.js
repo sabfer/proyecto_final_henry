@@ -1,13 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Select } from "../../../../../css/Select"
-// import { getOrders } from "../../../../../actions";
+import { filterOrdersType, getOrders } from "../../../../../actions";
+import { Select } from "../../../../../css/Select";
 
 export default function FilterOrdersTypes() {
-  const dispatch = useDispatch()
+  // let ordersTotal = useSelector((state) => state.totalOrders);
+  const token = useSelector((state) => state.userToken);
+  const dispatch = useDispatch();
 
   function handleFilterType(e) {
-    // dispatch(filterOrdersType(e.target.value));
+    if (e.target.value === "Todas") 
+    return dispatch(getOrders(token));
+    dispatch(filterOrdersType(e.target.value, token));
   }
 
   return (
@@ -22,9 +26,10 @@ export default function FilterOrdersTypes() {
           <option hidden defaultValue>
             Seleccione el tipo de orden...
           </option>
-          <option>Salón</option>
-          <option>Delivery</option>
-          <option>Take Away</option>
+          <option value="Salon">Salón</option>
+          <option value="Delivery">Delivery</option>
+          <option value="Take Away">Take Away</option>
+          <option value="Todas">Todas las Ordenes</option>
         </Select>
       </div>
     </div>

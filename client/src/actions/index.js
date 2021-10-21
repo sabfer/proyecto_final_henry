@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
   return function (dispatch) {
@@ -77,7 +76,10 @@ export function getProductsInv(token) {
     axios
       .get("http://localhost:3001/productsInv", auth)
       .then((data) => {
-        return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
+        return dispatch({
+          type: "GET_PRODUCTS_INV",
+          payload: data.data.payload,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -87,8 +89,7 @@ export function getProductsInv(token) {
   // return function (dispatch) {
   //       return dispatch({ type: "GET_PRODUCTS_INV", payload: productsInv3});
   //     }
-     
-  };
+}
 
 // ---------- ORDENAR PRODUCTOS POR NOMBRE ---------- \
 export function orderTheProductsInv(payload) {
@@ -97,6 +98,13 @@ export function orderTheProductsInv(payload) {
     payload,
   };
 }
+// ---------- ORDENAR PRODUCTOS POR NUMBERO DE ORDEN ---------- \
+// export function orderOrders(payload) {
+//   return {
+//     type: "ORDER_BY_NUMBER",
+//     payload,
+//   };
+// }
 
 // ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
 export function orderTheProducts(payload) {
@@ -130,6 +138,21 @@ export function filterProductsType(payload) {
   };
 }
 
+// ---------- FILTRAR ORDENES POR TIPO ---------- \\
+export function filterOrdersType(payload) {
+  return {
+    type: "FILTER_ORDERS_TYPE",
+    payload,
+  };
+}
+
+// ---------- FILTRAR POR NÚMERO DE ÓRDEN ---------- \\
+export function filterOrdersNumber(payload) {
+  return {
+    type: "FILTER_ORDERS_NUMBER",
+  };
+}
+
 // ---------- FILTRAR PROVEEDORES ---------- \\
 export function filterProveedores(payload) {
   return {
@@ -157,7 +180,7 @@ export function postProduct(payload, token) {
 
 // ---------- CREACIÓN DE PRODUCTO INVENTARIO---------- \\
 export function postProductInv(payload, token) {
-  console.log(payload,"actions")
+  console.log(payload, "actions");
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -172,7 +195,6 @@ export function postProductInv(payload, token) {
     return data;
   };
 }
-
 
 // ---------- ELIMINAR PRODUCTO ---------- \\
 export function deleteProduct(payload, token) {
@@ -237,8 +259,8 @@ export function updateProductInv(payload, id, token) {
     //     payload: data.data.payload,
     //   });
     // });
-  return dispatch(getProductsInv(token))
-  } 
+    return dispatch(getProductsInv(token));
+  };
 }
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
@@ -662,9 +684,11 @@ export function updateOrderKitchen(id, payload, token) {
     },
   };
   return function (dispatch) {
-    axios.put(`http://localhost:3001/orders/${id}`, payload, auth).catch((err) => {
-      console.log(err);
-    });
+    axios
+      .put(`http://localhost:3001/orders/${id}`, payload, auth)
+      .catch((err) => {
+        console.log(err);
+      });
     return dispatch(getKitchenOrders(token));
   };
 }

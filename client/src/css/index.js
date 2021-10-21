@@ -99,6 +99,7 @@ export const OptionsBar = styled.div`
 `;
 
 export const Loading = styled.div`
+  color: rgba(0, 0, 0, 0.3);
   grid-column: ${(props) => props.gridcolumn};
   grid-row: ${(props) => props.gridrow};
   text-align: center;
