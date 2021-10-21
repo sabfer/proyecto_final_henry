@@ -17,7 +17,6 @@ export default function PorFecha() {
   }
 
   const currentOrders = () => {
-<<<<<<< HEAD
     if (ordersDb) {
       let filter = ordersDb.filter((e) => e.date >= init && e.date <= finish);
       return filter;
@@ -67,13 +66,6 @@ export default function PorFecha() {
     }
     return null;
   }
-=======
-    let filter = ordersDb.filter((e) => e.date >= init);
-    console.log("acá-->", filter);
-  };
-
-  currentOrders();
->>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
 
   return (
     <>

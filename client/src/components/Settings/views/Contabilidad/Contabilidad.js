@@ -35,10 +35,6 @@ export default function Contabilidad() {
   }, []);
 
   function ordersSalonCantByWeek() {
-<<<<<<< HEAD
-    // console.log("ORDENES QUE NO ES ARRAY:", ordenes);
-=======
->>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
     const ordersSalon = ordenes?.filter((ord) => ord.type === "Salon");
     const ordsByday = ordersbyWeek(ordersSalon, { ...ordersByWeek }, week);
     return ordsByday;
@@ -60,20 +56,13 @@ export default function Contabilidad() {
     <>
       <div>
         <center>
-<<<<<<< HEAD
-          <h1>INFORMES</h1>
-          <button onClick={(e) => handleRender(1)}>Informe por Hora</button>
-          <button onClick={(e) => handleRender(2)}>Informe por Fecha</button>
-          <button onClick={(e) => handleRender(3)}>Informe Total</button>
-        </center>
-      </div>
-=======
           <h1>INFORMES CONTABLES</h1>
           <ButtonContainer>
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(1)}
             >
               Por hora
@@ -81,7 +70,8 @@ export default function Contabilidad() {
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(2)}
             >
               Por fecha
@@ -89,7 +79,8 @@ export default function Contabilidad() {
             <Button
               width="7rem"
               height="2rem"
-              hoverBgColor="#36A2EB"
+              hoverBgColor="rgb(61, 61, 61, 70%)"
+              buttonColor= "rgb(61, 61, 61)"
               onClick={(e) => handleRender(3)}
             >
               Total
@@ -98,7 +89,6 @@ export default function Contabilidad() {
         </center>
       </div>
       <h3>Resumen semanal de ventas</h3>
->>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
       {render === 1 && (
         <div>
           <center>
@@ -123,20 +113,6 @@ export default function Contabilidad() {
       {render === undefined && (
         <>
           <div>
-<<<<<<< HEAD
-              <header>
-                <h2>Resumen Semanal</h2>
-              </header>
-            <center>
-              {ordenes && (
-                <BarChart
-                  salOrds={ordersSalonCantByWeek()}
-                  taOrds={ordersTaCantByWeek()}
-                  devOrds={ordersDevCantByWeek()}
-                />
-              )}
-            </center>
-=======
             {ordenes && (
               <BarChart
                 week={week}
@@ -145,7 +121,6 @@ export default function Contabilidad() {
                 devOrds={ordersDevCantByWeek()}
               />
             )}
->>>>>>> 74829194b5ecc93f52375f9664066db3a1455a3d
           </div>
         </>
       )}
