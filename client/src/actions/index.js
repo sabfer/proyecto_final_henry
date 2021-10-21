@@ -216,6 +216,7 @@ export function getUserId(token) {
   };
   // console.log('estoy en actions funcion getUserId');
   return async function (dispatch) {
+    console.log('estoy en getUserId');
     axios
       .get(`http://localhost:3001/getId`, auth)
       .then((data) => {
@@ -264,6 +265,29 @@ export function updateUsers(payload, id, token) {
 export function changeSettings(payload) {
   return function (dispatch) {
     return dispatch({ type: "CHANGE_SETTINGS", payload: payload });
+  };
+}
+
+export function updateSettings(token, payload) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  console.log('payload de action updateSettings: ', payload)
+  return function (dispatch) {
+    axios
+      .post('http://localhost:3001/postId', payload, auth)
+      .then((data) => {
+        // console.log('-----------data.data de axios: ', data.data)
+        return dispatch({
+          type: "UPDATE_SETTINGS",
+          payload: data.data,
+        });
+      })
+      .catch((err) => {
+        console.log('Error en updateSettings con err: ', err);
+      })
   };
 }
 

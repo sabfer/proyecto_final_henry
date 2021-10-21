@@ -1,10 +1,11 @@
-import {} from "../actions/index";
+import { } from "../actions/index";
 
 const initialState = {
   signUpData: undefined,
   userToken: undefined,
   userId: undefined,
-  // userName: undefined,
+  userEmail: undefined,
+  userName: undefined,
   products: undefined,
   productTypes: undefined,
   productsCopy: undefined,
@@ -14,6 +15,8 @@ const initialState = {
     show: "generales",
   },
   mesas: undefined,
+  waiters: undefined,
+  expSession: undefined,
   orders: {
     salonOrders: undefined,
     takeAwayOrders: undefined,
@@ -36,13 +39,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userToken: payload.token,
         userId: payload.id,
+        userEmail: payload.email,
       };
 
     case "GET_USER_ID":
+      console.log('reducer getuserid, payload: ', payload);
       return {
         ...state,
-        userId: payload,
+        userId: payload.id,
+        userName: payload.name,
+        userEmail: payload.email,
+        mesas: payload.tables,
+        waiters: payload.waiters,
+        expSession: payload.expSession,
       };
+
 
     case "GET_NAME_PRODUCT":
       const allProductsInclude = state.productsCopy.filter((e) =>
@@ -60,19 +71,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
       let arrayOrderName =
         payload === true
           ? products.sort(function (a, b) {
-              const aName = a.name.toLocaleLowerCase();
-              const bName = b.name.toLocaleLowerCase();
-              if (aName > bName) return 1;
-              if (bName > aName) return -1;
-              return 0;
-            })
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return 1;
+            if (bName > aName) return -1;
+            return 0;
+          })
           : products.sort(function (a, b) {
-              const aName = a.name.toLocaleLowerCase();
-              const bName = b.name.toLocaleLowerCase();
-              if (aName > bName) return -1;
-              if (bName < aName) return 1;
-              return 0;
-            });
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName > bName) return -1;
+            if (bName < aName) return 1;
+            return 0;
+          });
       return {
         ...state,
         products: arrayOrderName,
@@ -147,6 +158,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         settings: payload,
       };
+
+    case "UPDATE_SETTINGS":
+      console.log('payload.data.expirationTime de UPDATE_SETTINGS, ', payload.data.expirationTime)
+      return {
+        ...state,
+        userName: payload.data.name,
+        expSession: payload.data.expirationTime
+      }
 
     case "GET_TAKE_AWAY_ORDERS":
       return {

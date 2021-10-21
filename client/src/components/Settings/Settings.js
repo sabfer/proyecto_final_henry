@@ -18,8 +18,12 @@ import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
 
 export default function Settings() {
-  const settings = useSelector((state) => state.settings);
+  const settings = useSelector((state) => state.settings || "generales");
   const token = useSelector((state) => state.userToken);
+  const userName = useSelector((state) => state.userName);
+  const tables = useSelector((state) => state.mesas);
+  const waiters = useSelector((state) => state.waiters);
+  const expSession = useSelector((state) => state.expSession);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,10 +47,10 @@ export default function Settings() {
         return <Comercios></Comercios>;
       case "categorias":
         return <Categorias></Categorias>;
-      case "generales":
-        return <Generals></Generals>;
       default:
         return <Generals></Generals>;
+      // default:
+        // return <Generals></Generals>;
     }
   }
 
@@ -80,6 +84,16 @@ export default function Settings() {
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
             <p>Categorías</p>
+          </OpcionesIzquierda>
+          
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "mesas")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Mesas</p>
+          </OpcionesIzquierda>
+          
+          <OpcionesIzquierda onClick={(e) => handleOptions(e, "mozos")}>
+            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <p>Mozos</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
