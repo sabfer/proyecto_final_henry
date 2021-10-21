@@ -98,13 +98,27 @@ export function orderTheProductsInv(payload) {
     payload,
   };
 }
-// ---------- ORDENAR PRODUCTOS POR NUMBERO DE ORDEN ---------- \
-// export function orderOrders(payload) {
-//   return {
-//     type: "ORDER_BY_NUMBER",
-//     payload,
-//   };
-// }
+// ---------- ORDENAR PRODUCTOS POR NUMBER DE ORDEN ---------- \
+export function orderOrders(payload) {
+  return {
+    type: "ORDER_BY_NUMBER",
+    payload,
+  };
+}
+
+export function sortByPrice(payload) {
+  return {
+    type: "ORDER_BY_PRICE",
+    payload,
+  };
+}
+
+export function sortByDate(payload) {
+  return {
+    type: "ORDER_BY_DATE",
+    payload,
+  };
+}
 
 // ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
 export function orderTheProductInv(payload) {
