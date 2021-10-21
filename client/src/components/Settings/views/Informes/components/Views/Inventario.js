@@ -116,7 +116,7 @@ export default function Inventario() {
 
   ////////////RESSTABLECER/////////////
   function handleButton(e) {
-    dispatch(getProducts(token));
+    dispatch(getProductsInv(token));
   }
 
   const productPerPag = 10;
