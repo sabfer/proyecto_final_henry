@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, orderOrders } from "../../../../../actions";
+import { getOrders, orderOrders, sortByPrice, sortByDate } from "../../../../../actions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Loading } from "../../../../../css";
@@ -32,21 +32,43 @@ import {
 
 export default function OrdersTable(props) {
   const dispatch = useDispatch();
-  const[state, setState] = useState(false)
+  const[state, setStateOrder] = useState({
+    number: false,
+    date: false,
+    price: false,
+  })
 
   const token = useSelector((state) => state.userToken);
 
   // const ordersTotal = useSelector((state) => state.totalOrders);
   const ordersTotal = props.ordenes;
 
-  function handleNumberOrder(e) {
-    setState(!state)    
-    dispatch(orderOrders(state))
+  function handleNumberOrder() {
+    setStateOrder((prev) => {
+    return {
+      ...prev,
+      number: !prev.number,
+    }});    
+    dispatch(orderOrders(state.number))
   }
 
-  function handleDateOrder(e) {}
+  function handleDateOrder() {
+    setStateOrder((prev) => {
+      return {
+        ...prev,
+        date: !prev.date,
+      }});      
+    dispatch(sortByDate(state.date))
+  }
 
-  function handleCashOrder(e) {}
+  function handleCashOrder() {
+    setStateOrder((prev) => {
+      return {
+        ...prev,
+        price: !prev.price,
+      }});      
+    dispatch(sortByPrice(state.price))
+  }
 
   //BOTON RESTABLECER PÁGINA
   function handleButton(e) {
@@ -109,9 +131,9 @@ export default function OrdersTable(props) {
                   <span className="productName">
                     <p style={{ margin: 0 }}>N° Orden</p>
                     <FontAwesomeIcon
-                      onClick={(e) => handleNumberOrder(e)}
-                      color={state ? "#FF846A" : "#A2DFFF"}
-                      icon={state ? faAngleDoubleUp : faAngleDoubleDown}
+                      onClick={handleNumberOrder}
+                      color={state.number ? "#FF846A" : "#A2DFFF"}
+                      icon={state.number ? faAngleDoubleUp : faAngleDoubleDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
                     ></FontAwesomeIcon>
@@ -121,9 +143,9 @@ export default function OrdersTable(props) {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Fecha</p>
                     <FontAwesomeIcon
-                      onClick={(e) => handleDateOrder(e)}
-                      color={ordersTotal ? "#FF846A" : "#A2DFFF"}
-                      icon={ordersTotal ? faAngleDoubleUp : faAngleDoubleDown}
+                      onClick={handleDateOrder}
+                      color={state.date ? "#FF846A" : "#A2DFFF"}
+                      icon={state.date ? faAngleDoubleUp : faAngleDoubleDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
                     ></FontAwesomeIcon>
@@ -145,9 +167,9 @@ export default function OrdersTable(props) {
                   <span className="productName">
                     <p style={{ margin: 0 }}>Ingreso</p>
                     <FontAwesomeIcon
-                      onClick={(e) => handleCashOrder(e)}
-                      color={ordersTotal ? "#FF846A" : "#A2DFFF"}
-                      icon={ordersTotal ? faAngleDoubleUp : faAngleDoubleDown}
+                      onClick={handleCashOrder}
+                      color={state.price ? "#FF846A" : "#A2DFFF"}
+                      icon={state.price ? faAngleDoubleUp : faAngleDoubleDown}
                       size="lg"
                       style={{ cursor: "pointer" }}
                     ></FontAwesomeIcon>

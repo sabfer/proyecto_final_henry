@@ -121,6 +121,34 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         totalOrders: ordersNumber,
       };
+      
+    case "ORDER_BY_DATE":
+      let ordersDate = state.totalOrders;
+      payload
+        ? (ordersDate = ordersDate.sort(
+            (a, b) => b.date.replaceAll("/", "") - a.date.replaceAll("/", "")
+          ))
+        : (ordersDate = ordersDate.sort(
+            (a, b) => a.date.replaceAll("/", "") - b.date.replaceAll("/", "")
+          ));
+      return {
+        ...state,
+        totalOrders: ordersDate,
+      };
+
+    case "ORDER_BY_PRICE":
+      let ordersPrice = state.totalOrders;
+      payload
+        ? (ordersPrice = ordersPrice.sort(
+            (a, b) => b.totalPrice - a.totalPrice
+          ))
+        : (ordersPrice = ordersPrice.sort(
+            (a, b) => a.totalPrice - b.totalPrice
+          ));
+      return {
+        ...state,
+        totalOrders: ordersPrice,
+      };
 
     case "ORDER_BY_NAME_INV":
       const productsInv = state.productsInv;

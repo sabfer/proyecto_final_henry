@@ -122,7 +122,7 @@ export default function Settings() {
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "informesGrles")}>
             <FontAwesomeIcon icon={faWrench} size="lg" />
-            <p>Informes Generales</p>
+            <p>Inventario</p>
           </OpcionesIzquierda>
         </AjustesIzquierda>
         <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
