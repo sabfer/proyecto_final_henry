@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsInv,getProducts, deleteProduct, orderTheProducts } from "../../../../../../actions";
+import { getProductsInv,getProducts, deleteProductInv, orderTheProducts } from "../../../../../../actions";
 //------------------------------------------\\
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -16,8 +16,8 @@ import {
   ExportExcel,
 } from "../../../../../../css/SettingStyles";
 import Modal from "../../../../../Modals/Modal2";
-import Search from "../../../../components/Search";
-import FilterProductTypes from "../../../../components/FilterProductTypes";
+import SearchInv from "../../../../components/SearchInv";
+import FilterProveedores from "../../../../components/FilterProveedores";
 import NumberOfProducts from "../../../../components/NumberOfProduct";
 import { Paginado } from "../../../../../../css";
 import {
@@ -54,17 +54,19 @@ export default function Inventario() {
   const [order, setOrder] = useState(false);
   const [inputModalProduct, setInputModalProduct] = useState({
     _id: "",
+    fecha:"",
     name: "",
     price: "",
-    cant: ""
+    cant: "",
+    prodInvType: "",
+    proveeType:""
   });
 
   useEffect(() => {
-    setTimeout(() => {
       dispatch(getProductsInv(token));
-    }, 1000);
   }, [dispatch, token]);
 
+/////////////// ELIMINAR/////////////////
   function handleDelete(e) {
     MySwal.fire({
       title: "¿Estas seguro?",
@@ -77,9 +79,9 @@ export default function Inventario() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(e, token));
+        dispatch(deleteProductInv(e, token));
         setTimeout(() => {
-          dispatch(getProducts(token));
+          dispatch(getProductsInv(token));
         }, 300);
         MySwal.fire({
           title: "Producto borrado",
@@ -91,10 +93,12 @@ export default function Inventario() {
     });
   }
 
+  /////////////EDITAR////////////////////
   function handleClick(e, props) {
     e.preventDefault();
     setInputModalProduct({
       _id: props._id,
+      fecha:props.fecha,
       name: props.name,
       price: props.price,
       cant:props.cant,
@@ -104,11 +108,13 @@ export default function Inventario() {
     setEditProductModal(!editProductModal);
   }
 
+  //////////////ORDENAR/////////////////
   function handleOrder(e) {
     setOrder(!order);
     dispatch(orderTheProducts(order));
   }
 
+  ////////////RESSTABLECER/////////////
   function handleButton(e) {
     dispatch(getProducts(token));
   }
@@ -153,8 +159,8 @@ export default function Inventario() {
         </Button>
       </AjustesDerechaTop>
       <SearchBarContainer>
-        <Search />
-        {/* <FilterProductTypes/>este es que muestra los select en la parte de arriba */}
+        <SearchInv/>
+        <FilterProveedores/>
         <Button
           width="12rem"
           padding="0.8rem"
@@ -178,6 +184,7 @@ export default function Inventario() {
           label4="Tipo de Producto"//
           label5="Tipo de Proveedor"//
           label6="Cant"
+          label7="Fecha"
           modalContainerBox={true}
           showInSettings={true}
           categories={categories}
@@ -218,7 +225,7 @@ export default function Inventario() {
                     <TableData>{el.prodInvType}</TableData>
                     <TableData>$ {el.price}</TableData>
                     <TableData>{el.cant}</TableData>
-                    <TableData>{""}</TableData>
+                    <TableData>{el.fecha}</TableData>
                     <TableData>{el.proveeType}</TableData>
                     <TableData>
                       <Options justify="space-between">
@@ -295,19 +302,25 @@ export default function Inventario() {
           style={{ cursor: "pointer" }}
         ></FontAwesomeIcon>
       </Paginado>
-
+       {/* EDITAR PRODUCTO INVENTARIO */}
       <Modal
         idElement={inputModalProduct._id}
-        id={7}
+        id={9}
         state={editProductModal}
         setStateModal={setEditProductModal}
         title="Modificar Producto"
+        label6="Fecha"
         label1="Nombre"
-        label2="Precio"
-        label3="Tipo de Producto"
+        label3="Precio"
+        label6="Cant"
+        label4="Tipo de Producto"
+        label5="Proveedor"
+        fecha={inputModalProduct.fecha}
         name={inputModalProduct.name}
         price={inputModalProduct.price}
+        cant={inputModalProduct.cant}
         prodInvType={inputModalProduct.prodInvType}
+        proveeType={inputModalProduct.proveeType}
         modalContainerBox={true}
       />
     </div>

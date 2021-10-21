@@ -1,11 +1,5 @@
 import axios from "axios";
 
-const productsInv3=[{ _id: "6163535ae098f3500c2d35dc", name: "Pechuga",cant:4,price:155,prodInvType:"Pollo",proveeType:"Polleria 9 de Julio"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Salsa de Tomate",cant:20,price:35,prodInvType:"Mercaderia",proveeType:"Jumbo"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Cerveza Quilmes" ,cant:40,price:160,prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Coca Cola",cant:15,price:182,prodInvType:"Coca Cola",proveeType:"Coca Cola"},
-  { _id: "6163535ae098f3500c2d35dc", name: "Vino Balbo",cant:10,price:215, prodInvType:"Bebidas Alcoholicas",proveeType:"Super Vea"}]
-
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
@@ -85,21 +79,20 @@ export function getProductsInv(token) {
     },
   };
 
-  // return function (dispatch) {
-  //   axios
-  //     .get("http://localhost:3001/products", auth)
-  //     .then((data) => {
-  //       return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  console.log(productsInv3)
   return function (dispatch) {
-        return dispatch({ type: "GET_PRODUCTS_INV", payload: productsInv3});
-        
-      }
+    axios
+      .get("http://localhost:3001/productsInv", auth)
+      .then((data) => {
+        return dispatch({ type: "GET_PRODUCTS_INV", payload: data.data.payload });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // console.log(productsInv3)
+  // return function (dispatch) {
+  //       return dispatch({ type: "GET_PRODUCTS_INV", payload: productsInv3});
+  //     }
      
   };
 
@@ -127,10 +120,26 @@ export function getNameProducts(payload) {
   };
 }
 
+// ---------- BUSCAR POR NOMBRE DE PRODUCTO INVENTARIO ---------- \\
+export function getNameProductsInv(payload) {
+  return {
+    type: "GET_NAME_PRODUCT_INV",
+    payload,
+  };
+}
+
 // ---------- FILTRAR PRODUCTOS POR TIPO ---------- \\
 export function filterProductsType(payload) {
   return {
     type: "FILTER_PRODUCTS_TYPE",
+    payload,
+  };
+}
+
+// ---------- FILTRAR PROVEEDORES ---------- \\
+export function filterProveedores(payload) {
+  return {
+    type: "FILTER_PROVEEDORES",
     payload,
   };
 }
@@ -152,8 +161,9 @@ export function postProduct(payload, token) {
   };
 }
 
-// ---------- CREACIÓN DE PRODUCTO ---------- \\
+// ---------- CREACIÓN DE PRODUCTO INVENTARIO---------- \\
 export function postProductInv(payload, token) {
+  console.log(payload,"actions")
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -161,7 +171,7 @@ export function postProductInv(payload, token) {
   };
   return async function (dispatch) {
     var data = await axios
-      .post("http://localhost:3001/productsinv/add", payload, auth)
+      .post("http://localhost:3001/productsInv", payload, auth)
       .then((data) => {
         return data;
       });
@@ -193,7 +203,7 @@ export function deleteProductInv(payload, token) {
     },
   };
   return async function (dispatch) {
-    await axios.delete(`http://localhost:3001/products/${payload}`, auth);
+    await axios.delete(`http://localhost:3001/productsInv/${payload}`, auth);
     return dispatch({
       type: "DELETE_PRODUCT_INV",
     });
@@ -216,6 +226,25 @@ export function updateProduct(payload, id, token) {
       });
     });
   };
+}
+
+// /---------- MODIFICAR PRODUCTO INVENTARIO ---------- \\
+export function updateProductInv(payload, id, token) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  return async function (dispatch) {
+    await axios.put(`http://localhost:3001/productsInv/${id}`, payload, auth);
+    // await axios.get("http://localhost:3001/productsInv/", auth).then((data) => {
+    //   return dispatch({
+    //     type: "PUT_PRODUCT_INV",
+    //     payload: data.data.payload,
+    //   });
+    // });
+  return dispatch(getProductsInv(token))
+  } 
 }
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\

@@ -6,7 +6,7 @@ export const conditionalForm = (
   input,
   onChange,
   { label1, label2, label3, label4, label5, label6, label7 },
-  { name, price, fecha },
+  { name, user, pass, productType, prodInvType, fecha, price },
   { ley1, ley2, ley3, ley4, ley5, ley6 },
   inpValido,
   validacion,
@@ -14,6 +14,7 @@ export const conditionalForm = (
   categoriesProducts,
   categoriesProv
 ) => {
+  console.log(categories, "forms")
   //Formulario: "CREAR USUARIO"
   if (id === 1) {
     return (
@@ -189,14 +190,14 @@ export const conditionalForm = (
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-                leyenda={ley2}
-                //cuando precionas una tecla se la presiona hacia adentro y cuando se
-                //levanta el dedo es donde se ejecuta esta funcion
-                onKeyUp={validacion}
-                //cuando se hace click fuiera del input
-                onBlur={validacion}
+              //leyenda={ley2}
+              //cuando precionas una tecla se la presiona hacia adentro y cuando se
+              //levanta el dedo es donde se ejecuta esta funcion
+              //onKeyUp={validacion}
+              //cuando se hace click fuiera del input
+              //onBlur={validacion}
               />
-              <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError>
+              {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
             </InputContainer>
           </div>
           <div class="InputC">
@@ -210,14 +211,14 @@ export const conditionalForm = (
                 required
                 //value={input.price}
                 onChange={(e) => onChange(e)}
-                leyenda={ley2}
-                //cuando precionas una tecla se la presiona hacia adentro y cuando se
-                //levanta el dedo es donde se ejecuta esta funcion
-                onKeyUp={validacion}
-                //cuando se hace click fuiera del input
-                onBlur={validacion}
+              //leyenda={ley2}
+              //cuando precionas una tecla se la presiona hacia adentro y cuando se
+              //levanta el dedo es donde se ejecuta esta funcion
+              //onKeyUp={validacion}
+              //cuando se hace click fuiera del input
+              //onBlur={validacion}
               />
-              <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError>
+              {/* <LeyendaError valido={inpValido.price}>{ley2}</LeyendaError> */}
             </InputContainer>
           </div>
         </div>
@@ -225,7 +226,7 @@ export const conditionalForm = (
           <Label>{label4}</Label>
           <Select
             onChange={(e) => onChange(e)}
-            name="productType"
+            name="prodInvType"
             required
             margin="0 0 1rem 0"
           //onKeyUp={validacion}
@@ -378,4 +379,82 @@ export const conditionalForm = (
       </form>
     );
   }
+
+  // Formulario: "MODIFICAR PRODUCTO INVENTARIO"
+  if (id === 9) {
+    return (
+      <form>
+        <InputContainer>
+          <label>{label7}</label>
+          <input
+            type="date"
+            name="fecha"
+            value={input.fecha}
+            placeholder={fecha}
+            onChange={(e) => onChange(e)}
+          />
+        </InputContainer>
+
+        <InputContainer>
+          <label>{label1}</label>
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            placeholder={name}
+            onChange={(e) => onChange(e)}
+          />
+        </InputContainer>
+        <InputContainer>
+          <label>{label3}</label>
+          <input
+            type="number"
+            name="price"
+            value={input.price}
+            placeholder={price}
+            onChange={(e) => onChange(e)}
+          />
+        </InputContainer>
+        <InputContainer>
+          <Label>{label4}</Label>
+          <Select
+            onChange={(e) => onChange(e)}
+            name="productType"
+            required
+            margin="0 0 1rem 0"
+          >
+            <option defaultValue="none" name="categorías" hidden>
+              Categorías
+            </option>
+            {categoriesProducts &&
+              categoriesProducts.map((ctg) => (
+                <option key={ctg._id} name={ctg.name} value={ctg.name}>
+                  {ctg.name}
+                </option>
+              ))}
+          </Select>
+        </InputContainer>
+        <InputContainer>
+          <Label>{label5}</Label>
+          <Select
+            onChange={(e) => onChange(e)}
+            name="proveetType"
+            required
+            margin="0 0 1rem 0"
+          >
+            <option defaultValue="none" name="categorías" hidden>
+              Categorías
+            </option>
+            {categoriesProv &&
+              categoriesProv.map((ctg) => (
+                <option key={ctg._id} name={ctg.name} value={ctg.name}>
+                  {ctg.name}
+                </option>
+              ))}
+          </Select>
+        </InputContainer>
+      </form>
+    );
+  }
+
 };

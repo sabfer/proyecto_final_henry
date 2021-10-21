@@ -7,8 +7,11 @@ const initialState = {
   // userName: undefined,
   products: undefined,
   productsInv: undefined,
+  proveedores: undefined,
   productTypes: undefined,
   productsCopy: undefined,
+  productsCopyInv: undefined,
+  
   users: undefined,
   commerces: undefined,
   settings: {
@@ -55,6 +58,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: Array.isArray(allProductsInclude)
           ? allProductsInclude
           : [allProductsInclude],
+      };
+
+    case "GET_NAME_PRODUCT_INV":
+   
+      const allProductsIncludeInv = state.productsCopyInv.filter((e) =>
+        e.name.toLocaleLowerCase().includes(payload.toLocaleLowerCase())
+      );
+      return {
+        ...state,
+        productsInv: Array.isArray(allProductsIncludeInv)
+          ? allProductsIncludeInv
+          : [allProductsIncludeInv],
       };
 
     case "ORDER_BY_NAME":
@@ -104,10 +119,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
     ///////////////////////////////////////////////////////////
     case "FILTER_PRODUCTS_TYPE":
+      console.log(state.productsCopy,"****reducer")
       const array = [...state.productsCopy].filter((e) => e.productType === payload);
+     
       return {
         ...state,
         products: array,
+      };
+
+    case "FILTER_PROVEEDORES":
+      console.log(state.productsCopyInv,"reducer productsC")
+      const arrayP = [...state.productsCopyInv].filter((e) => e.proveeType === payload);
+      console.log(payload,"reducer seleccionado")
+      console.log(arrayP,"reducer array")
+      return {
+        ...state,
+        productsInv: arrayP,
       };
 
     case "GET_PRODUCTS":
@@ -120,13 +147,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
     /////////////////////////////////////
 
     case "GET_PRODUCTS_INV":
-      
+
       return {
         ...state,
         productsInv: payload,
-        productaInvCopy: payload,
+        productsCopyInv: payload,
       }
-     
+
     /////////////////////////////////////
 
     case "POST_PRODUCTS":
@@ -149,13 +176,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
 
-   /////////////////////////////////
-   
+    /////////////////////////////////
+
     case "DELETE_PRODUCT_INV":
       return {
         ...state,
       };
-   /////////////////////////////////
+    /////////////////////////////////
 
     case "DELETE_CATEGORY":
       return {
@@ -163,6 +190,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case "PUT_PRODUCT":
+      return {
+        ...state,
+        products: payload,
+      };
+
+    case "PUT_PRODUCT_INV":
       return {
         ...state,
         products: payload,

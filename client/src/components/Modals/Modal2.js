@@ -5,9 +5,8 @@ import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/Mod
 import {
   updateProduct,
   getProductsInv,
-  postCategories,
-  getCategories,
-  postProductInv
+  postProductInv,
+  updateProductInv
 } from "../../actions";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,27 +19,21 @@ export default function Modal({
   state,
   setStateModal,
   title,
-  label1,//nombre
-  label2,
-  label3,//precio
-  label4,//tipoProd
-  ////////
-  label5,//tipoProvee
+  label1,//name
+  label2,//user
+  label3,//price
+  label4,//
+  label5,//prodInvType
   label6,//cant
-  label7,//fecha
-
-  ///////
+  label7,
   modalContainerBox,
   id,
+  fecha,
   name,
   price,
-  prodInvType,
-  ///////
-  proveeType,
-  fecha,
   cant,
-  ///////
-  
+  prodInvType,
+  proveeType,
   idElement,
   showInSettings,
 }) {
@@ -48,42 +41,46 @@ export default function Modal({
   /////////////////////////////////////////////////////////////
 
   //const categoriesProducts = useSelector((state) => state.prodInvTypesInv);
-  const categoriesProducts = [{ _id: "6163535ae098f3500c2d35dc", name: "Carnes" },
+  const categoriesProducts = [{ _id: "10", name: "Carnes" },
   { _id: "11", name: "Pescados" },
   { _id: "12", name: "Bebidas" },
   { _id: "13", name: "Bebidas Alcoholicas" },
   { _id: "14", name: "Verduras" },
-  { _id: "15", name: "Mercaderias" }]
+  { _id: "15", name: "Mercaderias"},
+  { _id: "15", name: "Insumos" }]
 
-  const categoriesProv = [{ _id: "6163535ae098f3500c2d35dc", name: "CocaCola" },
+  const categoriesProv = [{ _id: "20", name: "CocaCola" },
   { _id: "21", name: "Carniceria Bermejo" },
   { _id: "22", name: "Jumbo" },
   { _id: "23", name: "Super Vea" },
   { _id: "24", name: "Polleria 9 de Julio" },
-  { _id: "25", name: "Libreria San Marcos" }]
+  { _id: "25", name: "Libreria San Marcos" },
+  { _id: "26", name: "Panaderia Milagros" },
+  { _id: "27", name: "PepsiCo" }
+]
   /////////////////////////////////////////////////////////////
-  const categories = useSelector((state) => state.prodInvTypes);
+  const categories = useSelector((state) => state.prodInvTypes);//no borrar
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const [input, setInput] = useState({
+    fecha: "" || fecha,
     name: "" || name,
     price: "" || price,
+    cant:""|| cant,
     prodInvType: "" || prodInvType,
+    proveeType: "" || proveeType,
     description: "",
     orderD: "",
     orderTA: "",
-    proveeType: "" || proveeType,
-    fecha: "" || fecha,
-    cant:""|| cant
   });
 
   const [inpValido, setInputvalido] = useState({
+    fecha: "",
     name: "",
     price: "",
+    cant:"",
     prodInvType: "",
     proveeType: "",
-    fecha: "",
-    cant:""
   });
   console.log(input)
   console.log(inpValido)
@@ -98,23 +95,24 @@ export default function Modal({
 
   useEffect(() => {
     setInput({
+      fecha: "" || fecha,
       name: "" || name,
       price: "" || price,
+      cant:""|| cant,
       prodInvType: "" || prodInvType,
       proveeType: "" || proveeType,
-      fecha: "" || fecha,
-      cant:""|| cant
+      
     });
-  }, [name, price, prodInvType,proveeType, fecha,cant,fecha]);
+  }, [name,cant,price, prodInvType,proveeType,fecha]);
 
   let labels = { label1, label2, label3, label4, label5,label6,label7};
   let productValues = {
+    fecha: fecha,
     name: name,
     price: price,
+    cant:cant,
     prodInvType: prodInvType,
     proveeType: proveeType,
-    fecha: fecha,
-    cant:cant
   };
   let leyendaError = {
     ley1: "El nombre tiene que tener mas de 2 digitos",
@@ -150,21 +148,18 @@ export default function Modal({
   function handleSubmit(e) {
     // e.preventDefault();
 
-    /////////////////////////////////////////////////// 
+    /////////////////CREACION PROD INV////////////////////////////////// 
     if (id === 4) {
       if (
-        inpValido.name === "true" &&
-        inpValido.price === "true" &&
-        inpValido.prodInvType === "true" &&
-        inpValido.proveeType==="true" &&
-        inpValido.cant==="true"
+        inpValido.name === "true"
       ) {
         const objeto={
+          fecha:input.fecha,
           name:input.name,
-          prodInvType:input.prodInvType,
           price:input.price,
           cant:input.cant,
-          proveedor:input.proveeType
+          prodInvType:input.prodInvType,
+          proveeType:input.proveeType,
         }
         dispatch(postProductInv(objeto, token));
         MySwal.fire({
@@ -179,12 +174,12 @@ export default function Modal({
             }
             setStateModal(!state);
             setInput({
+              fecha:"",
               name: "",
               price: "",
+              cant:"",
               prodInvType: "",
               proveeType:"",
-              cant:"",
-              fecha:""
             });
           }
         });
@@ -199,13 +194,16 @@ export default function Modal({
     }
     ///////////////////////////////////////////////
 
-    if (id === 7) {
+    if (id === 9) {
       const payload = {
+        fecha:input.fecha,
         name: input.name,
         price: input.price,
+        cant:input.cant,
         prodInvType: input.prodInvType,
+        proveeType:input.proveeType
       };
-      dispatch(updateProduct(payload, idElement, token));
+      dispatch(updateProductInv(payload, idElement, token));
       MySwal.fire({
         title: "¡Producto actualizado!",
         icon: "success",
@@ -218,34 +216,18 @@ export default function Modal({
       });
     }
 
-    if (id === 8) {
-      dispatch(postCategories(input, token));
-      MySwal.fire({
-        title: "Categoría creada correctamente!",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-        confirmButtonColor: "rgb(21, 151, 67)",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(getCategories());
-          setStateModal(!state);
-          setInput({
-            name: "",
-          });
-        }
-      });
-    }
   }
 
   function handleClose(e) {
     setStateModal(!state);
     setInput({
       ...input,
+      fecha:"",
       name: "",
       price: "",
+      cant:"",
       prodInvType: "",
-      fecha:"",
-      cant:""
+      proveeType:""
     });
   }
 
