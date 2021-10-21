@@ -3,7 +3,6 @@ import axios from "axios";
 
 // ---------- REGISTRO DE USUARIO ---------- \\
 export function registerUser(payload) {
-  console.log("estoy en registerUser, con payload: ", payload);
   return function (dispatch) {
     axios
       .post("http://localhost:3001/users/register", payload)
@@ -16,19 +15,14 @@ export function registerUser(payload) {
   };
 }
 export function loginUser(payload) {
-  console.log("estoy en loginUser, con payload: ", payload);
   return function (dispatch) {
     axios
       .post("http://localhost:3001/users/login", payload)
       .then((data) => {
-        console.log(
-          "estoy en then para hacer un return dispatch de LOGIN_USER, con payload: ",
-          payload
-        );
         return dispatch({ type: "LOGIN_USER", payload: data.data });
       })
       .catch((err) => {
-        console.log("estoy en catch de loginUser con err: ", err);
+        console.log(err);
       });
   };
 }
@@ -248,7 +242,7 @@ export function updateProductInv(payload, id, token) {
 }
 
 // ---------- CREACIÓN DE COMERCIO ---------- \\
-export function postCommerce(payload, token) {
+/* export function postCommerce(payload, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -258,9 +252,9 @@ export function postCommerce(payload, token) {
     var data = await axios.post("http://localhost:3001/commerce/register", payload, auth);
     return data;
   };
-}
+} */
 
-export function getCommerces(token) {
+/* export function getCommerces(token) {
   console.log("el token en getCommerces es: ", token);
   let auth = {
     headers: {
@@ -278,10 +272,10 @@ export function getCommerces(token) {
         console.log("estoy en el error del catch de getCommerces, con err: ", err);
       });
   };
-}
+} */
 
 // ---------- ELIMINAR COMERCIO ---------- \\
-export function deleteCommerce(payload, token) {
+/* export function deleteCommerce(payload, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -293,10 +287,10 @@ export function deleteCommerce(payload, token) {
       type: "DELETE_COMMERCE",
     });
   };
-}
+} */
 
 // ---------- MODIFICAR COMERCIO ---------- \\
-export function updateCommerce(payload, id, token) {
+/* export function updateCommerce(payload, id, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -308,10 +302,10 @@ export function updateCommerce(payload, id, token) {
       type: "PUT_COMMERCE",
     });
   };
-}
+} */
 
 // ---------- OBTENER USUARIOS ---------- \\
-export function getUsers(payload, token) {
+/* export function getUsers(payload, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -327,7 +321,7 @@ export function getUsers(payload, token) {
         console.log(err);
       });
   };
-}
+} */
 
 // ---------- OBTENER ID USUARIO PARA STORE ---------- \\
 export function getUserId(token) {
@@ -336,7 +330,6 @@ export function getUserId(token) {
       Authorization: "Bearer " + token,
     },
   };
-  // console.log('estoy en actions funcion getUserId');
   return async function (dispatch) {
     axios
       .get(`http://localhost:3001/getId`, auth)
@@ -347,13 +340,13 @@ export function getUserId(token) {
         });
       })
       .catch((err) => {
-        console.log("estoy en catch de axios de getUserId con err: ", err);
+        console.log(err);
       });
   };
 }
 
 // ---------- ELIMINAR USUARIOS ---------- \\
-export function deleteUser(payload, token) {
+/* export function deleteUser(payload, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -365,10 +358,10 @@ export function deleteUser(payload, token) {
       type: "DELETE_USER",
     });
   };
-}
+} */
 
 // ---------- MODIFICAR USUARIOS ---------- \\
-export function updateUsers(payload, id, token) {
+/* export function updateUsers(payload, id, token) {
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -380,7 +373,7 @@ export function updateUsers(payload, id, token) {
       type: "PUT_USER",
     });
   };
-}
+} */
 
 // ---------- MODIFICAR SETTINGS ---------- \\
 export function changeSettings(payload) {
@@ -547,7 +540,6 @@ export function postCategories(payload, token) {
 
 // ---------- ELIMINAR CATEGORÍAS DE PRODUCTOS ---------- \\
 export function deleteCategory(payload, token) {
-  console.log(payload);
   let auth = {
     headers: {
       Authorization: "Bearer " + token,
@@ -640,7 +632,6 @@ export function getKitchenOrders(token) {
 }
 
 export function updateOrderKitchen(id, payload, token) {
-  console.log(payload);
   let auth = {
     headers: {
       Authorization: "Bearer " + token,

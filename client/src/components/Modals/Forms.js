@@ -14,7 +14,7 @@ export const conditionalForm = (
   categoriesProducts,
   categoriesProv
 ) => {
-  console.log(categories, "forms")
+
   //Formulario: "CREAR USUARIO"
   if (id === 1) {
     return (
@@ -141,6 +141,7 @@ export const conditionalForm = (
 
   //Formulario: "CREAR COMPRA INVENTARIO"
   if (id === 4) {
+
     return (
       <form>
         <InputContainer>
@@ -167,13 +168,9 @@ export const conditionalForm = (
             type="text"
             name="name"
             required
-            //value={input.name}
             onChange={(e) => onChange(e)}
             leyenda={ley1}
-            //cuando precionas una tecla se la presiona hacia adentro y cuando se
-            //levanta el dedo es donde se ejecuta esta funcion
             onKeyUp={validacion}
-            //cuando se hace click fuiera del input
             onBlur={validacion}
           />
           <LeyendaError valido={inpValido.name}>{ley1}</LeyendaError>
@@ -268,58 +265,7 @@ export const conditionalForm = (
       </form>
     );
   }
-  /* 
-  // Formulario: "CREAR PEDIDO PARA LLEVAR"
-  if (id === 5) {
-    return (
-      <form>
-        <InputContainer>
-          <label>{label1}</label>
-          <input
-            type="text"
-            name="orderD"
-            value={input.orderD}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-        <InputContainer>
-          <label>{label2}</label>
-          <input
-            type="text"
-            name="products"
-            value={input.products}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-      </form>
-    );
-  }
-  // Formulario: "CREAR PEDIDO TAKE AWAY"
-  if (id === 6) {
-    return (
-      <form>
-        <InputContainer>
-          <label>{label1}</label>
-          <input
-            type="text"
-            name="orderTA"
-            value={input.orderTA}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-        <InputContainer>
-          <label>{label2}</label>
-          <input
-            type="text"
-            name="products"
-            value={input.products}
-            onChange={(e) => onChange(e)}
-          />
-        </InputContainer>
-      </form>
-    );
-  } */
-  // Formulario: "MODIFICAR PRODUCTO"
+  
   if (id === 7) {
     return (
       <form>
@@ -362,7 +308,7 @@ export const conditionalForm = (
       </form>
     );
   }
-
+  /* FORMULARIO PARA CREAR CATEGORIAS */
   if (id === 8) {
     return (
       <form>

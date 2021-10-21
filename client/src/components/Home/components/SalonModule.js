@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Salon,
-  Orders,
-  ModuleTop,
-  OrdersContainer,
-} from "../../../css/HomeStyles";
+import { Salon, Orders, ModuleTop, OrdersContainer } from "../../../css/HomeStyles";
 import { Button, Loading } from "../../../css/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -44,58 +39,56 @@ export default function SalonModule() {
   }
 
   return (
-    <Salon>
-      <ModuleTop>
-        <h3>Salón</h3>
-        <Button
-          onClick={() => setStateModal({ status: true, tableNumber: "" })}
-          width="9.4rem"
-          height="2.5rem"
-          alignself="flex-end"
-          justify="space-between"
-          padding="0.6rem"
-          buttonColor="rgba(0, 41, 107, 1)"
-        >
-          Crear pedido
-          <FontAwesomeIcon icon={faPlus} size="lg" />
-        </Button>
-      </ModuleTop>
+    <>
+      <Salon>
+        <ModuleTop>
+          <h3>Salón</h3>
+          <Button
+            onClick={() => setStateModal({ status: true, tableNumber: "" })}
+            width="9.4rem"
+            height="2.5rem"
+            alignself="flex-end"
+            justify="space-between"
+            padding="0.6rem"
+            buttonColor="rgba(0, 41, 107, 1)"
+          >
+            Crear pedido
+            <FontAwesomeIcon icon={faPlus} size="lg" />
+          </Button>
+        </ModuleTop>
+        <OrdersContainer>
+          <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
+            {mesas && mesas ? (
+              mesas.map((mesa) => {
+                return (
+                  <Mesas
+                    tableNumber={mesa.tableNumber}
+                    status={mesa.isOccupated}
+                    key={mesa._id}
+                    setStateModal={setStateModal}
+                    handleUpdate={handleUpdateModal}
+                  />
+                );
+              })
+            ) : (
+              <Loading gridcolumn="1/-1">
+                <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
+                <p>Aún no hay ordenes</p>
+              </Loading>
+            )}
+            {updateModal && (
+              <UpdateTable
+                state={updateModal}
+                setStateModal={setUpdateModal}
+                tableNumber={tableDetails.tableNumber}
+              />
+            )}
+          </Orders>
+        </OrdersContainer>
+      </Salon>
       {stateModal.status && (
-        <ModalSalon
-          state={stateModal}
-          setState={setStateModal}
-          title="Consumo Mesa: "
-        />
+        <ModalSalon state={stateModal} setState={setStateModal} title="Consumo Mesa: " />
       )}
-      <OrdersContainer>
-        <Orders ordersColumns="repeat(auto-fill, minmax(140px, 1fr))">
-          {mesas && mesas ? (
-            mesas.map((mesa) => {
-              return (
-                <Mesas
-                  tableNumber={mesa.tableNumber}
-                  status={mesa.isOccupated}
-                  key={mesa._id}
-                  setStateModal={setStateModal}
-                  handleUpdate={handleUpdateModal}
-                />
-              );
-            })
-          ) : (
-            <Loading gridcolumn="span 5">
-            <FontAwesomeIcon icon={faExclamationCircle} size="6x" />
-            <p>Aún no hay ordenes</p>
-          </Loading>
-          )}
-          {updateModal && (
-            <UpdateTable
-              state={updateModal}
-              setStateModal={setUpdateModal}
-              tableNumber={tableDetails.tableNumber}
-            />
-          )}
-        </Orders>
-      </OrdersContainer>
-    </Salon>
+    </>
   );
 }

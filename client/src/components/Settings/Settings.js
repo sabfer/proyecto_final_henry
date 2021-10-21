@@ -8,13 +8,21 @@ import {
   AjustesDerecha,
 } from "../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartLine,
+  faCogs,
+  faHome,
+  faSitemap,
+  faTasks,
+  faUsers,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
 import Products from "./views/Products";
 import Generals from "./views/Generals";
-import Comercios from "./views/Comercios";
 import Contabilidad from "./views/Contabilidad/Contabilidad";
 import InformesGenerales from "./views/Informes/InformesGenerales"
 import Users from "./views/Users";
+
 import Categorias from "./views/Categorias";
 import { changeSettings, getCategories } from "../../actions";
 import Error403 from "../Home/views/Error403";
@@ -38,21 +46,23 @@ export default function Settings() {
   function renderSwitch(param) {
     switch (param) {
       case "products":
-        return <Products/>;
+        return <Products />;
       case "users":
-        return <Users/>;
+        return <Users />;
       case "commerce":
-        return <Comercios/>;
+        return <Comercios />;
       case "categorias":
-        return <Categorias/>;
+        return <Categorias />;
       case "generales":
-        return <Generals/>;
+        return <Generals />;
       case "contabilidad":
+
         return <Contabilidad/>;
       case "informesGrles":
         return <InformesGenerales/>;  
+
       default:
-        return <Generals/>;
+        return <Generals />;
     }
   }
 
@@ -65,7 +75,8 @@ export default function Settings() {
       <Header>
         <Title>Ajustes</Title>
         <StyledLink to="/home">
-          <Button width="11.5rem" height="2.5rem" padding="0.5rem">
+          <Button width="10rem" height="2.5rem" padding="1.3rem">
+            <FontAwesomeIcon icon={faHome} size="lg" />
             Regresar a Home
           </Button>
         </StyledLink>
@@ -74,32 +85,31 @@ export default function Settings() {
         <AjustesIzquierda>
           <TituloIzquierda>Opciones</TituloIzquierda>
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "generales")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faCogs} size="lg" />
             <p>Generales</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "products")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faUtensils} size="lg" />
             <p>Productos</p>
           </OpcionesIzquierda>
-          
+
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "contabilidad")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faChartLine} size="lg" />
             <p>Informes Contables</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "categorias")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faTasks} size="lg" />
             <p>Categorías</p>
           </OpcionesIzquierda>
-
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "users")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faUsers} size="lg" />
             <p>Usuarios</p>
           </OpcionesIzquierda>
 
           <OpcionesIzquierda onClick={(e) => handleOptions(e, "commerce")}>
-            <FontAwesomeIcon icon={faWrench} size="lg" />
+            <FontAwesomeIcon icon={faSitemap} size="lg" />
             <p>Comercios</p>
           </OpcionesIzquierda>
 
@@ -109,7 +119,9 @@ export default function Settings() {
           </OpcionesIzquierda>
 
         </AjustesIzquierda>
-        <AjustesDerecha>{settings && renderSwitch(settings.show)}</AjustesDerecha>
+        <AjustesDerecha>
+          {settings && renderSwitch(settings.show)}
+        </AjustesDerecha>
       </Body>
     </div>
   );

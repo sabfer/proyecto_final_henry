@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../css";
-import {
-  Overlay,
-  ModalContainer,
-  HeaderModal,
-  CloseButton,
-} from "../../css/ModalStyles";
+import { Overlay, ModalContainer, HeaderModal, CloseButton } from "../../css/ModalStyles";
 import {
   postProduct,
   updateProduct,
@@ -35,9 +30,6 @@ export default function Modal({
   name,
   price,
   productType,
-  user,
-  pass,
-  location,
   idElement,
   showInSettings,
 }) {
@@ -50,20 +42,12 @@ export default function Modal({
     name: "" || name,
     price: "" || price,
     productType: "" || productType,
-    user: "" || user,
-    pass: "" || pass,
-    location: "",
     description: "",
-    orderD: "",
-    orderTA: "",
   });
 
   const [inpValido, setInputvalido] = useState({
     name: "",
     price: "",
-    user: "",
-    pass: "",
-    location: "",
     productType: "",
   });
 
@@ -81,21 +65,16 @@ export default function Modal({
       name: "" || name,
       price: "" || price,
       productType: "" || productType,
-      user: "" || user,
-      pass: "" || pass,
-      location: "" || location,
     });
-  }, [name, price, productType, user, pass, location]);
+  }, [name, price, productType ]);
 
   let labels = { label1, label2, label3, label4 };
   let productValues = {
     name: name,
     price: price,
     productType: productType,
-    user: user,
-    pass: pass,
-    location: location,
   };
+
   let leyendaError = {
     ley1: "El nombre tiene que tener mas de 2 digitos",
     ley2: "Ingresar números positivos",
@@ -128,66 +107,7 @@ export default function Modal({
   };
 
   function handleSubmit(e) {
-    // e.preventDefault();
-    if (id === 1) {
-      if (
-        inpValido.name === "true" &&
-        inpValido.user === "true" &&
-        inpValido.pass === "true"
-      ) {
-        dispatch(input);
-        MySwal.fire({
-          title: "¡Usuario creado correctamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              user: "",
-              pass: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
-
-    if (id === 2) {
-      if (inpValido.name === "true" && inpValido.location === "true") {
-        dispatch(postCommerce(input, token));
-        MySwal.fire({
-          title: "¡Comercio creado corectamente!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setStateModal(!state);
-            setInput({
-              name: "",
-              location: "",
-            });
-          }
-        });
-      } else
-        MySwal.fire({
-          title: "¡Espera!",
-          text: "Faltan campos por llenar",
-          icon: "error",
-          confirmButtonText: "Cool",
-          confirmButtonColor: "rgb(21, 151, 67)",
-        });
-    }
-
+    // e.preventDefault()
     if (id === 3) {
       if (
         inpValido.name === "true" &&
@@ -222,8 +142,6 @@ export default function Modal({
           confirmButtonColor: "rgb(21, 151, 67)",
         });
     }
-
-    // if (id === 4) {}
 
     if (id === 7) {
       const payload = {
@@ -276,11 +194,8 @@ export default function Modal({
   return (
     <div>
       {state && (
-        <Overlay>
-          <ModalContainer
-            modalContainerBox={modalContainerBox}
-            minwidth="390px"
-          >
+        <Overlay display="flex">
+          <ModalContainer modalContainerBox={modalContainerBox} minwidth="390px">
             <HeaderModal>
               <h2>{title}</h2>
             </HeaderModal>
