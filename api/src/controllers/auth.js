@@ -47,9 +47,9 @@ auth.login = async function (req, res) {
         var email = req.body.email;
         var password = req.body.password;
     }
-    console.log('---------------req email, psw: ', req.body.email, req.body.password);
+    // console.log('---------------req email, psw: ', req.body.email, req.body.password);
     let [user] = await Users.find({ email: email });
-    console.log('--------------user:', user);
+    // console.log('--------------user:', user);
 
     if (!user) {
         res.status(401).json({ message: "Usuario no encontrado" });
@@ -61,8 +61,8 @@ auth.login = async function (req, res) {
     if (validPassword) {
         var payload = { id: user.id };
         var token = jwt.sign(payload, jwtOptions.secretOrKey, { expiresIn: expirationTime });
-        console.log('id:', user.id);
-        res.json({ message: "Logueo correcto, te va el token...", token: token, id: user.id, email: user.email });
+        console.log('--------------------id:', user.id, 'name: ', user.name);
+        res.json({ message: "Logueo correcto, te va el token...", token: token, id: user.id, email: user.email, name: user.name });
     } else {
         res.json({ message: "Password inválido.", token: null })
             .status(401);
