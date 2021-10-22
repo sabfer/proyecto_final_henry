@@ -13,6 +13,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //------------------------------------------\\
 import { Button, Loading } from "../../../../../../css";
+import { Chart } from "primereact/chart";
 
 import {
   SearchBarContainer,
@@ -52,8 +53,8 @@ export default function Inventario() {
   ///////////////////PRODUCTOS INVENTARIO///////////////////////
 
   const categories = useSelector((state) => state.productTypes);
-  const productsInv4=useSelector((state)=>state.productsInv)
-  const productsInv3=useSelector((state)=>state.productsInv)
+  const productsInv4 = useSelector((state) => state.productsInv)
+  const productsInv3 = useSelector((state) => state.productsInv)
   const [newProductModal, setNewProductModal] = useState(false);
   const [editProductModal, setEditProductModal] = useState(false);
   const [order, setOrder] = useState(false);
@@ -131,9 +132,12 @@ export default function Inventario() {
   }
   const [currentPage, setCurrentPage] = useState(0);
   const [pagAct, setPagAct] = useState(1);
+
+
   const getFilter = () => {
     return productsInv3.slice(currentPage, currentPage + productPerPag);
   };
+
   const handlePrev = () => {
     if (pagAct > 1) {
       setCurrentPage(currentPage - productPerPag);
@@ -148,8 +152,35 @@ export default function Inventario() {
     }
   };
 
+  var labels = []
+  var data3 = []
+
+  if (productsInv3) {
+    labels = productsInv3.map(e => e.name)
+    data3 = productsInv3.map(e => e.cant)
+  }
+
+  const data = {
+   
+    labels,
+    datasets: [
+      {
+        data: data3,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#cacfd2', '#a93226', '#d1f2eb'
+        ],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#cacfd2', '#a93226', '#d1f2eb']
+      }
+    ]
+  };
+
+
   return (
     <div>
+      <div style={{ width: 600 }}>
+        <Chart type='pie' data={data} />
+      </div>
+
+
       <AjustesDerechaTop>
         <h1>Productos</h1>
         <Button
@@ -282,7 +313,7 @@ export default function Inventario() {
             total={productsInv4.length}
           />
         )}
-        
+
         {/* <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
       {productsInv4 && (<NumberOfProductsInv title=" Productos cargados exitosamente" total={productsInv4.length}/>)}
         <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
