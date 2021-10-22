@@ -18,7 +18,7 @@ export default function Mesas({ tableNumber, status, handleUpdate, setStateModal
         }}
       >
         <div>
-          <MesaIco color={status ? "#ED4245" : !status ? "#4DD87A" : "#000"}  />
+          <MesaIco color={status ? "#1772a5" : !status ? "#80dbff" : "#000"}  />
         </div>
         <p>Mesa {tableNumber}</p>
       </Mesa>
