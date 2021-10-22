@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { MONGODB_HOST, MONGODB_DATABASE, NODE_ENV, MONGODB_LOCAL } = process.env;
 const MONGODB_URI = `${MONGODB_HOST}/${MONGODB_DATABASE}`;
 
+
 console.log("LOCAL DE MONGO: ", MONGODB_LOCAL);
 if (NODE_ENV === "development") {
   console.log("conectando db local development");
