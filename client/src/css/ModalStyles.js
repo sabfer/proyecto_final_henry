@@ -24,6 +24,7 @@ export const ModalContainer = styled.div`
   background: #fff;
   position: relative;
   border-radius: 0.6rem;
+  z-index: 10;
   form {
     width: 100%;
     div {

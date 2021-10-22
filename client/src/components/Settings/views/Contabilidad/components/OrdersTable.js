@@ -130,7 +130,6 @@ export default function OrdersTable(props) {
           <FontAwesomeIcon icon={faSyncAlt}></FontAwesomeIcon>
         </Button>
       </SearchBarContainer>
-
       {Array.isArray(ordersTotal) ? (
         <div>
           <Table id="ordersTable">
@@ -190,7 +189,7 @@ export default function OrdersTable(props) {
               {getFilter().map((el) => {
                 return (
                   <TableRow key={el._id}>
-                    <TableData>{el.orderNumber}</TableData>
+                    <TableData align="center">{el.orderNumber}</TableData>
                     <TableData>
                       {el.date
                         .split("/")
@@ -198,9 +197,9 @@ export default function OrdersTable(props) {
                         .toString()
                         .replaceAll(",", "/")}
                     </TableData>
-                    <TableData>{el.hour}</TableData>
-                    <TableData>{el.type}</TableData>
-                    <TableData>
+                    <TableData align="center">{el.hour}</TableData>
+                    <TableData align="center">{el.type}</TableData>
+                    <TableData align="center">
                       {el.nameClient ? el.nameClient : "--"}
                     </TableData>
                     <TableData>

@@ -8,3 +8,7 @@ body {
   font-family: "Open Sans", sans-serif;
   background-color: rgb(234, 234, 234);
 }
+path {
+  -webkit-filter: drop-shadow(5px 5px 5px  rgba(34, 34, 34, 1))
+  /* border: 1px; */
+}
