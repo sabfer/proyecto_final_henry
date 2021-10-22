@@ -286,6 +286,7 @@ export default function Generales() {
             name="tableDelete"
             value={inputMesas.tableDelete}
             onChange={(e) => mesasOnChange(e)}
+            autoComplete="off"
           />
           <Button
             marginLeft="1rem"

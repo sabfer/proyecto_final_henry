@@ -183,7 +183,7 @@ export default function Productos() {
                     <TableRow key={el._id}>
                       <TableData>{el.name}</TableData>
                       <TableData>{el.productType}</TableData>
-                      <TableData>$ {el.price}</TableData>
+                      <TableData align="center">$ {el.price}</TableData>
                       <TableData>
                         <Options justify="space-between">
                           <Button

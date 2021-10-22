@@ -48,11 +48,11 @@ export default function OrderTakeAway({ handleUpdate, orderNumber, estado }) {
         icon={faShoppingBag}
         size="4x"
         color={
-          orderTime.demora >= 25
+          order.estado === 1
             ? "#ED4245"
-            : orderTime.demora > 15
+            : order.estado === 2
             ? "#FFA43D"
-            : orderTime.demora <= 15
+            : order.estado === 3
             ? "#4DD87A"
             : null
         }

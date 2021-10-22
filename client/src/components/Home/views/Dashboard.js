@@ -54,6 +54,7 @@ export default function Dashboard() {
     <div>
       <Header>
         <Title>Bienvenido {n.name ?? name}</Title>
+        {/* <img src="https://naurua.com/img/don-mario-logo.jpg" width= "75px"/> */}
         <div style={{ display: "flex" }}>
           <StyledLink to="/kitchenDashboard">
             <Button
