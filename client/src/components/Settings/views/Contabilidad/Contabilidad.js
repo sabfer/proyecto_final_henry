@@ -90,7 +90,7 @@ export default function Contabilidad() {
           </ButtonContainer>
         </center>
       </div>
-      <h3>Resumen semanal de ventas</h3>
+
       {render === 1 && (
         <div>
           <center>
@@ -114,6 +114,7 @@ export default function Contabilidad() {
       )}
       {render === undefined && (
         <>
+          <h3>Resumen semanal de ventas</h3>
           <div>
             {ordenes && (
               <BarChart

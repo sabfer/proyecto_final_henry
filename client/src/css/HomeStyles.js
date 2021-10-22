@@ -88,6 +88,7 @@ export const Mesa = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  
   .available {
     color: rgb(30, 215, 96);
   }
