@@ -14,19 +14,11 @@ export default function PaymentCheckBox({ handlePaymentInput }) {
           Efectivo
         </label>
         <label>
-          <input
-            type="checkbox"
-            name="Debito"
-            onChange={(e) => handlePaymentInput(e)}
-          />
+          <input type="checkbox" name="Debito" onChange={(e) => handlePaymentInput(e)} />
           Debito
         </label>
         <label>
-          <input
-            type="checkbox"
-            name="Credito"
-            onChange={(e) => handlePaymentInput(e)}
-          />
+          <input type="checkbox" name="Credito" onChange={(e) => handlePaymentInput(e)} />
           Credito
         </label>
         <label>

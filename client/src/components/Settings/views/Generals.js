@@ -23,15 +23,11 @@ export default function Generales() {
     dispatch(getUserId(token));
   }
 
-  console.log({ id }, { name }, { expirationTime });
-
   const [input, setInput] = useState({
-    id: id,
-    name: name,
-    expirationTime: expirationTime,
+    id,
+    name,
+    expirationTime,
   });
-
-  console.log({ id }, { name }, { expirationTime });
 
   useEffect(() => {
     setInput({
@@ -40,8 +36,6 @@ export default function Generales() {
       expirationTime: expirationTime,
     });
   }, [id, name, expirationTime]);
-
-  console.log({ id }, { name }, { expirationTime });
 
   /* console.log(
     id ?? "sin id",
@@ -58,7 +52,6 @@ export default function Generales() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // console.log(e.target.name, e.target.value)
   }
 
   function handleClick(e) {
@@ -97,10 +90,10 @@ export default function Generales() {
             color="#000"
             border="2px solid #000"
             type="text"
-            name="email"
-            onChange={(e) => handleChange(e)}
-            disabled={true}
-            value={email}
+            // name="email"
+            // onChange={(e) => handleChange(e)}
+            disabled
+            defaultValue={email}
           />
         </InputContainers>
       </div>
@@ -115,7 +108,7 @@ export default function Generales() {
             type="text"
             name="name"
             onChange={(e) => handleChange(e)}
-            value={input.name ?? name}
+            defaultValue={input.name ?? name}
           />
         </InputContainers>
       </div>
@@ -130,7 +123,7 @@ export default function Generales() {
             type="text"
             name="expirationTime"
             onChange={(e) => handleChange(e)}
-            value={input.expirationTime ?? expirationTime}
+            defaultValue={input.expirationTime ?? expirationTime}
           />
         </InputContainers>
       </div>

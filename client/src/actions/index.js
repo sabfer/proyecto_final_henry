@@ -106,6 +106,20 @@ export function orderOrders(payload) {
   };
 }
 
+export function sortByPrice(payload) {
+  return {
+    type: "ORDER_BY_PRICE",
+    payload,
+  };
+}
+
+export function sortByDate(payload) {
+  return {
+    type: "ORDER_BY_DATE",
+    payload,
+  };
+}
+
 // ---------- ORDENAR PRODUCTOS POR NOMBRE EN INVENTARIO ---------- \
 export function orderTheProductInv(payload) {
   return {

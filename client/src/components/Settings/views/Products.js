@@ -34,7 +34,6 @@ import {
   faSortAlphaDown,
   faPlus,
   faSyncAlt,
-  faFileExcel,
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -233,16 +232,14 @@ export default function Productos() {
           />
         )}
 
-        <Button width="2.5rem" height="2.5rem" buttonColor="rgb(14, 116, 59)">
-          <ReactHTMLTableToExcel
-            id="botonExportarProd"
-            table="productsTable"
-            className="Excel"
-            filename="Productos_cargados_en_el_sistema"
-            sheet="Productos"
-            buttonText={<FontAwesomeIcon icon={faFileExcel} size="lg" />}
-          />
-        </Button>
+        <ReactHTMLTableToExcel
+          id="botonExportarProd"
+          table="productsTable"
+          className="Excel"
+          filename="Productos_cargados_en_el_sistema"
+          sheet="Productos"
+          buttonText=""
+        />
       </ExportExcel>
 
       <Modal

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getNameProductsInv} from "../../../actions";
+import { getNameProductsInv } from "../../../actions";
 import { SearchContainer } from "../../../css/SettingStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";

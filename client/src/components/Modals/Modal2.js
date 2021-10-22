@@ -44,8 +44,9 @@ export default function Modal({
     { _id: "14", name: "Verduras" },
     { _id: "15", name: "Mercaderias" },
     { _id: "16", name: "Insumos" },
+    { _id: "16", name: "Pollo" }
   ];
-
+console.log(categoriesProducts)
   const categoriesProv = [
     { _id: "20", name: "CocaCola" },
     { _id: "21", name: "Carniceria Bermejo" },
@@ -53,8 +54,10 @@ export default function Modal({
     { _id: "23", name: "Super Vea" },
     { _id: "24", name: "Polleria 9 de Julio" },
     { _id: "25", name: "Libreria San Marcos" },
-    { _id: "26", name: "Panaderia Milagros" },
-    { _id: "27", name: "PepsiCo" },
+    { _id: "26", name: "Panaderia Mariano" },
+    { _id: "27", name: "PepsiCo"},
+    { _id: "28", name: "Verduleria Sabino"},
+    { _id: "29", name: "Pescaderia Alejandro"}
   ];
   /////////////////////////////////////////////////////////////
   const categories = useSelector((state) => state.prodInvTypes); //no borrar
@@ -80,15 +83,17 @@ export default function Modal({
     prodInvType: "",
     proveeType: "",
   });
-  console.log(input);
-  console.log(inpValido);
+
+  /* console.log(input);
+  console.log(inpValido); */
 
   const expresiones = {
     name: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
     prodInvType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
     proveeType: /^[a-zA-Z0-9_\\-\s\u00f1\u00d1\u00C0-\u017F]{4,32}$/,
-    price: /^.{0,100}$/,
-    cant: /^.{0,100}$/,
+    price:/^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/,
+    cant: /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/,
+    fecha: /^[a-zA-Z0-9_\\-\u00f1\u00d1\u00C0-\u017F]{3,32}\s?/,
   };
 
   useEffect(() => {
@@ -118,6 +123,8 @@ export default function Modal({
     ley4: "Ingrese usuario con formato de correo sin espacio y sin acentos",
     ley5: "Ingrese una contraseña con mas de 4 digitos sin espacios",
     ley6: "Primera palabra tiene que tener mas de 3 digitos",
+    ley7: "seleccione una opcion",
+    ley8: "ingrese una fecha"
   };
 
   function handleChange(e) {
@@ -144,10 +151,10 @@ export default function Modal({
 
   function handleSubmit(e) {
     // e.preventDefault();
-
     /////////////////CREACION PROD INV//////////////////////////////////
     if (id === 4) {
-      if (inpValido.name === "true") {
+      if (inpValido.name === "true" && inpValido.fecha == "true" && inpValido.prodInvType == "true"
+       && inpValido.price == "true" && inpValido.cant == "true" && inpValido.proveeType == "true") {
         const objeto = {
           fecha: input.fecha,
           name: input.name,

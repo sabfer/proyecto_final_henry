@@ -9,20 +9,20 @@ usersController.filterByEmail = async (email) => {
     return user.email.toLocaleLowerCase().includes(email.toLocaleLowerCase());
   });
   return filterByEmail.length ? filterByEmail : null;
-}
+};
 
 usersController.filterUser = async (req, res, next) => {
   const { key, value } = req.body;
   try {
     const list = await Users.find();
     const filters = list.filter((user) => {
-      return user[key].includes(value.toLocaleLowerCase())
+      return user[key].includes(value.toLocaleLowerCase());
     });
     if (filters.length) {
       res.json({
         succes: true,
         msg: "Coincidencias encontradas",
-        payload: filters
+        payload: filters,
       });
     }
   } catch (err) {
@@ -49,14 +49,14 @@ usersController.findUsers = async (req, res, next) => {
       res.json({
         succes: true,
         msg: "Usuarios encontrados",
-        payload: users
-      })
+        payload: users,
+      });
     } else {
       res.json({
         succes: false,
         msg: "Usuarios no encontrados",
-        payload: null
-      })
+        payload: null,
+      });
     }
   } catch (err) {
     console.log(err);
@@ -71,14 +71,14 @@ usersController.addUser = async (req, res, _next) => {
   // console.log('en addUser con payload.email: ', payload.email);
   try {
     // console.log('entre al try de addUser');
-    const users = await Users.find({ email: payload.email })
+    const users = await Users.find({ email: payload.email });
     // console.log('------- users: ', users);
     if (users.length) {
       res.json({
         succes: false,
         msg: "Este usuario ya existe",
-        payload: null
-      })
+        payload: null,
+      });
     } else {
       // console.log('ingreso al ELSE para tirar el newUser, con payload: ', payload);
       const newUser = await new Users(payload);
@@ -87,15 +87,15 @@ usersController.addUser = async (req, res, _next) => {
       res.json({
         succes: true,
         msg: "Usuario Creado",
-        payload: newUser
-      })
+        payload: newUser,
+      });
     }
   } catch (err) {
     // console.log('estoy en el catch de addUser con err: ', err);
     res.json({
       succes: false,
       msg: "No se pudo crear el usuario",
-      payload: err
+      payload: err,
     });
   }
 };
@@ -127,7 +127,7 @@ usersController.updateUser = async (req, res, _next) => {
     const updatedUser = await Users.findOneAndUpdate(
       { _id: `${id}` },
       payload,
-      { new: true, }
+      { new: true }
     );
     return res.json({
       succes: true,

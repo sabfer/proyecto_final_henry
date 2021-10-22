@@ -9,8 +9,7 @@ export default function FilterOrdersTypes() {
   const dispatch = useDispatch();
 
   function handleFilterType(e) {
-    if (e.target.value === "Todas") 
-    return dispatch(getOrders(token));
+    if (e.target.value === "Todas") return dispatch(getOrders(token));
     dispatch(filterOrdersType(e.target.value, token));
   }
 
@@ -18,11 +17,7 @@ export default function FilterOrdersTypes() {
     <div className="category_filter">
       <div className="actual_filter">
         <p>Filtrar Órdenes:</p>
-        <Select
-          onChange={(e) => handleFilterType(e)}
-          width="50%"
-          height="2.4rem"
-        >
+        <Select onChange={(e) => handleFilterType(e)} width="50%" height="2.4rem">
           <option hidden defaultValue>
             Seleccione el tipo de orden...
           </option>

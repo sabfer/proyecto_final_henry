@@ -33,7 +33,6 @@ export const OpcionesIzquierda = styled.div`
   }
 `;
 
-
 export const AjustesDerecha = styled(AjustesIzquierda)`
   width: 80%;
   padding: 3rem;
@@ -110,7 +109,23 @@ export const ExportExcel = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .Excel{
-    color: white;
+  .Excel {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(14, 116, 59);
+    position: relative;
+  }
+  .Excel::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 20px;
+    width: 20px;
+    background-image: url(https://i.imgur.com/A74ffJR.png);
+    background-size: cover;
   }
 `;
