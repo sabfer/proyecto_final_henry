@@ -50,7 +50,7 @@ export default function Total() {
         <DoughnutChart salon={salon()} delivery={delivery()} takeAway={taway()} />
       </div>
       <div>
-        <OrdersTable ordenes={ordersTotal} title="Todas las Ordenes" />
+        <OrdersTable ordenes={ordersTotal} title="Todas las Ordens" />
       </div>
     </>
   );

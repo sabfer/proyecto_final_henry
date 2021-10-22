@@ -130,7 +130,7 @@ export const FormTitle = styled.h2`
 
 export const InputContainers = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => props.flexdirection || "column"};
   align-items: ${(props) => props.align || "center"};
   text-align: center;
   position: relative;

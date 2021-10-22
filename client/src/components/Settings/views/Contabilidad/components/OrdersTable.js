@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, orderOrders, sortByPrice, sortByDate } from "../../../../../actions";
+import {
+  getOrders,
+  orderOrders,
+  sortByPrice,
+  sortByDate,
+} from "../../../../../actions";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Loading } from "../../../../../css";
@@ -13,7 +18,13 @@ import SearchOrders from "../components/SearchOrders";
 import FilterOrdersTypes from "../components/FilterOrdersTypes";
 import NumberOfProducts from "../../../components/NumberOfProduct";
 import { Paginado } from "../../../../../css";
-import { Table, TableHead, TableData, TableHd, TableRow } from "../../../../../css/Table";
+import {
+  Table,
+  TableHead,
+  TableData,
+  TableHd,
+  TableRow,
+} from "../../../../../css/Table";
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
@@ -23,27 +34,27 @@ import {
   faAngleDoubleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function OrdersTable(props) {
   const dispatch = useDispatch();
-  const[state, setStateOrder] = useState({
+  const [state, setStateOrder] = useState({
     number: false,
     date: false,
     price: false,
-  })
+  });
 
   const token = useSelector((state) => state.userToken);
 
-  // const ordersTotal = useSelector((state) => state.totalOrders);
   const ordersTotal = props.ordenes;
 
   function handleNumberOrder() {
     setStateOrder((prev) => {
-    return {
-      ...prev,
-      number: !prev.number,
-    }});    
-    dispatch(orderOrders(state.number))
+      return {
+        ...prev,
+        number: !prev.number,
+      };
+    });
+    orderByNumber(ordersTotal, state.number);
+    // dispatch(orderOrders(state.number))
   }
 
   function handleDateOrder() {
@@ -51,8 +62,10 @@ export default function OrdersTable(props) {
       return {
         ...prev,
         date: !prev.date,
-      }});      
-    dispatch(sortByDate(state.date))
+      };
+    });
+    orderByDate(ordersTotal, state.date);
+    // dispatch(sortByDate(state.date));
   }
 
   function handleCashOrder() {
@@ -60,8 +73,10 @@ export default function OrdersTable(props) {
       return {
         ...prev,
         price: !prev.price,
-      }});      
-    dispatch(sortByPrice(state.price))
+      };
+    });
+    orderByPrice(ordersTotal, state.price);
+    // dispatch(sortByPrice(state.price));
   }
 
   //BOTON RESTABLECER PÁGINA
@@ -177,11 +192,17 @@ export default function OrdersTable(props) {
                   <TableRow key={el._id}>
                     <TableData>{el.orderNumber}</TableData>
                     <TableData>
-                      {el.date.split("/").reverse().toString().replaceAll(",", "/")}
+                      {el.date
+                        .split("/")
+                        .reverse()
+                        .toString()
+                        .replaceAll(",", "/")}
                     </TableData>
                     <TableData>{el.hour}</TableData>
                     <TableData>{el.type}</TableData>
-                    <TableData>{el.nameClient ? el.nameClient : "--"}</TableData>
+                    <TableData>
+                      {el.nameClient ? el.nameClient : "--"}
+                    </TableData>
                     <TableData>
                       {el.products
                         .map((e) => e.name)
@@ -203,7 +224,11 @@ export default function OrdersTable(props) {
       ) : (
         <Loading>
           <p>Loading...</p>
-          <img src="https://i.imgur.com/5JQ02CS.gif" alt="loading gif" width="100px" />
+          <img
+            src="https://i.imgur.com/5JQ02CS.gif"
+            alt="loading gif"
+            width="100px"
+          />
         </Loading>
       )}
 
@@ -246,4 +271,26 @@ export default function OrdersTable(props) {
       </Paginado>
     </div>
   );
+}
+
+function orderByNumber(orders, payload) {
+  payload
+    ? (orders = orders.sort((a, b) => b.orderNumber - a.orderNumber))
+    : (orders = orders.sort((a, b) => a.orderNumber - b.orderNumber));
+}
+
+function orderByDate(orders, payload) {
+  payload
+    ? (orders = orders.sort(
+        (a, b) => b.date.replaceAll("/", "") - a.date.replaceAll("/", "")
+      ))
+    : (orders = orders.sort(
+        (a, b) => a.date.replaceAll("/", "") - b.date.replaceAll("/", "")
+      ));
+}
+
+function orderByPrice(orders, payload) {
+  payload
+    ? (orders = orders.sort((a, b) => b.totalPrice - a.totalPrice))
+    : (orders = orders.sort((a, b) => a.totalPrice - b.totalPrice));
 }

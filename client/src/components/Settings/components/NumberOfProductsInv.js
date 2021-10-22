@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -9,6 +10,7 @@ export default function NumberOfProductsInv(props) {
     <Products>
       <span>{props.total}</span>
     {props.title}
+
     </Products>
   ) : (
     <Products>Ningún producto encontrado</Products>

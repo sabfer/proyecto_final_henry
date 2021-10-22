@@ -111,17 +111,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "ORDER_BY_NUMBER":
       let ordersNumber = state.totalOrders;
       payload
-        ? (ordersNumber = ordersNumber.sort(
-            (a, b) => b.orderNumber - a.orderNumber
-          ))
-        : (ordersNumber = ordersNumber.sort(
-            (a, b) => a.orderNumber - b.orderNumber
-          ));
+        ? (ordersNumber = ordersNumber.sort((a, b) => b.orderNumber - a.orderNumber))
+        : (ordersNumber = ordersNumber.sort((a, b) => a.orderNumber - b.orderNumber));
       return {
         ...state,
         totalOrders: ordersNumber,
       };
-      
+
     case "ORDER_BY_DATE":
       let ordersDate = state.totalOrders;
       payload
@@ -139,12 +135,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case "ORDER_BY_PRICE":
       let ordersPrice = state.totalOrders;
       payload
-        ? (ordersPrice = ordersPrice.sort(
-            (a, b) => b.totalPrice - a.totalPrice
-          ))
-        : (ordersPrice = ordersPrice.sort(
-            (a, b) => a.totalPrice - b.totalPrice
-          ));
+        ? (ordersPrice = ordersPrice.sort((a, b) => b.totalPrice - a.totalPrice))
+        : (ordersPrice = ordersPrice.sort((a, b) => a.totalPrice - b.totalPrice));
       return {
         ...state,
         totalOrders: ordersPrice,
@@ -172,7 +164,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         productsInv: arrayOrderNameInv,
       };
-      
+
     case "FILTER_PRODUCTS_TYPE":
       const array = [...state.productsCopy].filter((e) => e.productType === payload);
 
@@ -409,7 +401,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
           toBeDone,
         },
       };
+    case "POST_MESAS":
+      return {
+        ...state,
+      };
 
+    case "DELETE_MESAS":
+      return {
+        ...state,
+      };
     default:
       return state;
   }

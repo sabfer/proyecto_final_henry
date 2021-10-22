@@ -5,16 +5,19 @@ import { Select } from "../../../css/Select";
 
 export default function FilterProductTypes() {
   const dispatch = useDispatch();
-  let proveedores = [
-    { _id: "20", name: "Coca Cola" },
-    { _id: "21", name: "Carniceria Bermejo" },
-    { _id: "22", name: "Jumbo" },
-    { _id: "23", name: "Super Vea" },
-    { _id: "24", name: "Polleria 9 de Julio" },
-    { _id: "25", name: "Libreria San Marcos" },
-    { _id: "26", name: "Panaderia Milagros" },
-    { _id: "27", name: "PepsiCo" },
-  ];
+
+  let proveedores = 
+  [{ _id: "20", name: "CocaCola" },
+  { _id: "21", name: "Carniceria Bermejo" },
+  { _id: "22", name: "Jumbo" },
+  { _id: "23", name: "Super Vea" },
+  { _id: "24", name: "Polleria 9 de Julio" },
+  { _id: "25", name: "Libreria San Marcos" },
+  { _id: "26", name: "Panaderia Mariano" },
+  { _id: "27", name: "PepsiCo"},
+  { _id: "28", name: "Verduleria Sabino"},
+  { _id: "29", name: "Pescaderia Alejandro"}
+  ]
 
   let array;
   if (Array.isArray(proveedores)) {
