@@ -417,6 +417,38 @@ export function getMesas(token) {
   };
 }
 
+// ---------- POST MESAS---------- \\
+export function postMesas(token, payload) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  console.log({ payload });
+  let mesa = {
+    tableNumber: payload,
+  };
+  return function (dispatch) {
+    axios.post("http://localhost:3001/mesas/add", mesa, auth).then((data) => {
+      return dispatch({ type: "POST_MESAS", payload: data.data.payload });
+    });
+  };
+}
+
+export function deleteMesas(token, id) {
+  let auth = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  console.log(id);
+  return function (dispatch) {
+    axios.delete(`http://localhost:3001/mesas/${id}`, auth).then((data) => {
+      return dispatch({ type: "DELETE_MESAS", payload: data.data.payload });
+    });
+  };
+}
+
 // ---------- CHANGE STATUS---------- \\
 export function changeStatus(payload, token) {
   let auth = {
