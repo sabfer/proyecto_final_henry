@@ -98,11 +98,11 @@ auth.updateId = async function (req, res) {
   let expirationTime = req.body.expirationTime;
   let userId = req.body.id;
 
-  // let user = await Users.find({ _id: userId });
+  let user = await Users.find({ _id: userId });
 
-  // console.log('userId: ',user)
-  // console.log('name: ', name)
-  // console.log('expirationTime: ', expirationTime)
+  console.log('userId: ',user)
+  console.log('name: ', name)
+  console.log('expirationTime: ', expirationTime)
   try {
     const updateUserData = await Users.findOneAndUpdate(
       { _id: `${userId}` },
