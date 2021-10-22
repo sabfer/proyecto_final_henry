@@ -157,6 +157,7 @@ export default function Inventario() {
 
   if (productsInv3) {
     labels = productsInv3.map(e => e.name)
+    console.log(labels)
     data3 = productsInv3.map(e => e.cant)
   }
 
