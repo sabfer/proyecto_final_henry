@@ -383,9 +383,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case "DELETE_TOKEN":
-      return {
-        userToken: null,
-      };
+      return initialState;
 
     case "GET_KITCHEN_ORDERS":
       let inProgress = [];

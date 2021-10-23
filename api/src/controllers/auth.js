@@ -100,7 +100,7 @@ auth.updateId = async function (req, res) {
 
   let user = await Users.find({ _id: userId });
 
-  console.log('userId: ',user)
+  console.log('userId: ', user)
   console.log('name: ', name)
   console.log('expirationTime: ', expirationTime)
   try {
@@ -136,6 +136,8 @@ auth.secret = (req, res, next) => {
       return next(err);
     }
     if (user) {
+      console.log('--------------req.body: ', req.body)
+      console.log('--------------req.headers: ', req.headers)
       console.log(`--------------AUTH CORRECTA. id= ${user._id} & email= ${user.email},
             & user= ${user.expirationTime} `);
       // res.json({ message: 'Token correcto', userId: user._id }).status(200);;
@@ -147,12 +149,14 @@ auth.secret = (req, res, next) => {
       // req.user.id = user._id;
       next();
     } else {
-      console.log(
-        "----- typeof info: ",
-        typeof info,
-        Object.entries(info).length
-      );
+      // console.log(
+      //   "----- typeof info: ",
+      //   typeof info,
+      //   Object.entries(info).length
+      // );
       if (Object.entries(info).length > 0) {
+        let today = new Date();
+        console.log('--------hora: ', today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
         console.log("No hay token de autenticacion. Deberia loguearse.");
         // res.json(info).status(403);
         res.sendStatus(403);

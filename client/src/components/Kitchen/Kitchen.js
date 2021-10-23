@@ -18,6 +18,7 @@ export default function Kitchen() {
   const inProgress = useSelector((state) => state.kitchenOrders?.inProgress);
 
   useEffect(() => {
+    console.log('----------------estoy en useEffect de Kitchen.')
     dispatch(getKitchenOrders(token));
     setInterval(() => {
       dispatch(getKitchenOrders(token));

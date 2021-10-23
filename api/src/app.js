@@ -19,6 +19,9 @@ require("./db.js");
 
 const server = express();
 
+let today = new Date();
+console.log('--------hora: ', today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
+
 server.name = "API";
 server.use(cors());
 server.use(express.urlencoded({ extended: true, limit: "50mb" }));
